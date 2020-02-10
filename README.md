@@ -57,7 +57,6 @@ If you encouter any error, please contact me & fill a detailed issue on this rep
 
 ### Future improvements
 
-- Adding the LULU curation step
 - Correct date due to wrong excel format in input file 
 
 
