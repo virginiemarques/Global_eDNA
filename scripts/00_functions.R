@@ -22,24 +22,6 @@ set_entrez_key("e1b887b07de1764a6e68883fce0f9f69d108") # My API key
 Sys.getenv("ENTREZ_KEY") 
 
 # ---------------------------------------------------------------------------------- # 
-#### NON FISH NAMES - MANUAL CORRECTION ----
-
-# At the moment, I cannot access the class out of obitools 
-# So, I need to filter the fishes out manually 
-# First by orders, as it is the least extensive search 
-# Then, by taxa name as well since some fish do not have their order assigned, and some assignations higher than order for other taxa remain
-# Perhaps use the taxid to make such a verification? I found a package but it was always a long computation time 
-
-non_fish_orders <- c("Primates", "Thermotogales", "Passeriformes", "Caudata", "Charadriiformes", "Deinococcales", "Chroococcales", "Pelecaniformes", "Anseriformes", "Columbiformes", "Thermales", 
-                     "Perissodactyla", "Strigiformes", "Galliformes", "Anura", "Sphaeropleales", "Sphaeropleales", "Acidithiobacillales", "Squamata", "Apodiformes", "Gruiformes", 
-                     "Psittaciformes", "Carnivora", "Falconiformes", "Piciformes", "Anabantiformes", "Cetacea", "Diadematoida")
-
-non_fish_taxa <- c("Eukaryota", "Gnathostomata", "Vertebrata", "root", "Bilateria", "Tetrapoda", "Percomorphaceae", "Clupeocephala", "Deuterostomia", "Eupercaria", 
-                   "Bacillariales", "Bacillariophyta", "Bacteria", "Cyanobacteria", "Terrabacteria group", "Accipiter nisus", "Actinobacteria", "Aegithalos", 
-                   "Bacillariales", "Blattodea", "Dendrocopos major", "Plagioscion sp. BLS-2003", "Protostomia", "Neoptera")
-
-
-# ---------------------------------------------------------------------------------- # 
 #### READ_DATA ----
 
 # This function reads the data and adds the metadata
