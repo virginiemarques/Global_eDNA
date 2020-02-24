@@ -1,0 +1,1430 @@
+﻿code_spygen;code_explo;rep;date;station;location;site;country;project;sample_type;sample_method;time_start;time_end;duration_min;volume;depth;temperature;turbidity;habitat;gps_start;latitude_start;longitude_start;gps_b;lat_gps_b;long_gps_b;gps_c;lat_gps_c;long_gps_c;gps_d;lat_gps_d;long_gps_d;gps_half_turn;latitude_turn;longitude_turn;gps_end;latitude_end;longitude_end;filter;data_manager;gps_owner;comment
+SPY181729;YPVD01;1;29/06/2018;margarita_south_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;14:07;14:45;38;;0;;0;marine;97;13.34043;-81.39829;;;;;;;;;;98;13.31942;-81.38904;97;13.34043;-81.39829;0.20;JB Juhel;JB Juhel;1 cablage corrodé inutilisable, 1 seul replicat - phanérogames marines agglomérées autour du fil du plomb (et donc crépine)
+SPY181719;YPVD01;2;30/06/2018;margarita_south_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;08:57;09:39;36;;0;;0;marine;97;13.34043;-81.39829;;;;;;;;;;98;13.31942;-81.38904;97;13.34043;-81.39829;0.20;JB Juhel;JB Juhel;phanérogames marines agglomérées autour du fil du plomb (et donc crépine)
+SPY181723;YPVD02;1;30/06/2018;providencia_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;12:50;13:48;58;;0;;1;marine;101;13.34393;-81.39777;;;;;;;;;;102;13.34926;-81.39236;101;13.34393;-81.39777;0.20;JB Juhel;JB Juhel;phanérogames marines again
+SPY181734;YPVD02;2;30/06/2018;providencia_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;12:50;13:48;58;;0;;1;marine;101;13.34393;-81.39777;;;;;;;;;;102;13.34926;-81.39236;101;13.34393;-81.39777;0.20;JB Juhel;JB Juhel;phanérogames marines again
+SPY181732;YPVD03;1;01/07/2018;providencia_north_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:25;10:09;44;;0;;1;marine;104;13.36786;-81.38864;;;;;;;;;;105;13.39011;-81.38049;104;13.36786;-81.38864;0.20;JB Juhel;JB Juhel;phanérogames marines again - 9h57 pompe mise en mode forward sans intervention (reparamétrage)
+SPY181724;YPVD03;2;01/07/2018;providencia_north_west;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:25;10:09;44;;0;;1;marine;104;13.36786;-81.38864;;;;;;;;;;105;13.39011;-81.38049;104;13.36786;-81.38864;0.20;JB Juhel;JB Juhel;phanérogames marines again
+SPY181721;YPVD04;1;02/07/2018;catalina_north;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:10;09:50;40;;0;;0;marine;108;13.39172;-81.38029;;;;;;;;;;109;13.38386;-81.35956;108;13.39172;-81.38029;0.20;JB Juhel;JB Juhel;
+SPY181730;YPVD04;2;02/07/2018;catalina_north;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:10;09:50;40;;0;;0;marine;108;13.39172;-81.38029;;;;;;;;;;109;13.38386;-81.35956;108;13.39172;-81.38029;0.20;JB Juhel;JB Juhel;
+SPY181725;YPVD05;1;02/07/2018;providencia_north;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;10:06;10:50;44;;0;;0;marine;110;13.38322;-81.35909;;;;;;;;;;111;13.36224;-81.34910;110;13.38322;-81.35909;0.20;JB Juhel;JB Juhel;
+SPY181733;YPVD05;2;02/07/2018;providencia_north;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;10:06;10:50;44;;0;;0;marine;110;13.38322;-81.35909;;;;;;;;;;111;13.36224;-81.34910;110;13.38322;-81.35909;0.20;JB Juhel;JB Juhel;
+SPY181718;YPVD06;1;03/07/2018;providencia_east;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:42;10:13;31;;0;;1;marine;113;13.36264;-81.34969;;;;;;;;;;114;13.34073;-81.35573;113;13.36264;-81.34969;0.20;JB Juhel;JB Juhel;
+SPY181727;YPVD06;2;03/07/2018;providencia_east;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:42;10:13;31;;0;;1;marine;113;13.36264;-81.34969;;;;;;;;;;114;13.34073;-81.35573;113;13.36264;-81.34969;0.20;JB Juhel;JB Juhel;
+SPY181726;YPVD07;1;03/07/2018;providencia_south_east;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;10:30;11:00;30;;0;;1;marine;115;13.34072;-81.35561;;;;;;;;;;116;13.32539;-81.37273;115;13.34072;-81.35561;0.20;JB Juhel;JB Juhel;
+SPY181731;YPVD07;2;03/07/2018;providencia_south_east;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;10:30;11:00;30;;0;;1;marine;115;13.34072;-81.35561;;;;;;;;;;116;13.32539;-81.37273;115;13.34072;-81.35561;0.20;JB Juhel;JB Juhel;Après echantillonnage, grosde pluie tropicale toute la journée et toute la nuit
+SPY181717;YPVD08;1;04/07/2018;patch1;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:10;09:40;30;;0;;0;marine;117;13.36541;-81.41025;;;;;;;;;;118;13.38515;-81.39906;117;13.36541;-81.41025;0.20;JB Juhel;JB Juhel;
+SPY181715;YPVD08;2;04/07/2018;patch1;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:10;09:40;30;;0;;0;marine;117;13.36541;-81.41025;;;;;;;;;;118;13.38515;-81.39906;117;13.36541;-81.41025;0.20;JB Juhel;JB Juhel;
+SPY181728;YPVD09;1;04/07/2018;patch2;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:56;10:34;38;;0;;0;marine;119;13.36726;-81.41335;;;;;;;;;;121;13.34492;-81.41827;119;13.36726;-81.41335;0.20;JB Juhel;JB Juhel;
+SPY181722;YPVD09;2;04/07/2018;patch2;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:56;10:34;38;;0;;0;marine;119;13.36726;-81.41335;;;;;;;;;;121;13.34492;-81.41827;119;13.36726;-81.41335;0.20;JB Juhel;JB Juhel;
+SPY181716;YPVD10;1;05/07/2018;patch3;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:27;10:07;40;;0;;0;marine;123;13.32225;-81.36716;;;;;;;;;;124;13.33839;-81.35116;123;13.32225;-81.36716;0.20;JB Juhel;JB Juhel;Zigzag entre les patates au niveau barrière interne
+SPY180774;YPVD10;2;05/07/2018;patch3;providencia;Caribbean;Columbia;megafauna;transect;transect_aller_retour;09:27;10:07;40;;0;;0;marine;123;13.32225;-81.36716;;;;;;;;;;124;13.33839;-81.35116;123;13.32225;-81.36716;0.20;JB Juhel;JB Juhel;
+SPY180581;YMPL001;1;14/03/2018;control_lab;malpelo;West_Pacific;Columbia;megafauna;control;control;15:30;15:45;15;7.2;;;;marine;;;;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;Contrôle négatif du système: sac à autoclave dans un bidon et collete de l'eau (eau milliQ) avec une bouteille niskin.  1,2L * 6 = 7,2 L / contrôle effectué dans labo sec du Yersin (JB, Florine, Claudia)
+SPY180582;YMPL003;1;15/03/2018;malpelo_20m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;14:52;15:02;15;24;20;;;marine;E011;﻿3.99820;﻿-81.56845;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180583;YMPL005;1;15/03/2018;malpelo_100m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;15:35;15:45;15;6;100;;;marine;E021;﻿3.99737;﻿-81.56515;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;Problème pompe: arrêt et remplacement
+SPY180584;YMPL004;1;17/03/2018;malpelo_50m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;8:29;08:39;15;12;50;;;marine;E031;﻿4.00307;﻿-81.57030;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180585;YMPL005;2;15/03/2018;malpelo_100m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;16:10;16:20;15;18;100;;;marine;E041;﻿4.00307;﻿-81.57030;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180586;YMPL007;1;17/03/2018;malpelo_300m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;9:00;09:10;15;12;300;;;marine;E051;﻿4.00307;﻿-81.57030;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180587;YMPL006;1;17/03/2018;malpelo_200m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;9:20;09:30;15;12;200;;;marine;E061;﻿4.00307;﻿-81.57030;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180588;YMPL002;1;17/03/2018;malpelo_10m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;8:15;08:25;15;12;10;;;marine;E071;﻿4.00307;﻿-81.57030;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180589;YMPL009;1;15/03/2018;malpelo1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;15:12;15:42;30;30;0;27.5;0;marine;E081;﻿4.01142;﻿-81.59661;E082;﻿4.02025;﻿-81.61130;E083;﻿4.01692;﻿-81.61336;;;;;;;E084;﻿4.00738;﻿-81.59895;0.20;Florine Hadjadj;megafauna;
+SPY180590;YMPL009;2;15/03/2018;malpelo1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;15:12;15:42;30;30;0;27.5;0;marine;E081;﻿4.01142;﻿-81.59661;E082;﻿4.02025;﻿-81.61130;E083;﻿4.01692;﻿-81.61336;;;;;;;E084;﻿4.00738;﻿-81.59895;0.20;Florine Hadjadj;megafauna;
+SPY180591;YMPL008;1;16/03/2018;malpelo_600m;malpelo;West_Pacific;Columbia;megafauna;point;niskin;9:50;;;12;600;;;marine;E091;﻿3.98735;﻿-81.57326;;;;;;;;;;;;;;;;0.20;JB Juhel;megafauna;
+SPY180592;YMPL010;1;15/03/2018;malpelo2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;16:13;16:43;30;30;0;27.5;0;marine;E101;﻿4.00685;﻿-81.60143;E102;﻿4.01102;﻿-81.60743;E103;﻿4.00202;﻿-81.61761;;;;;;;E105;﻿4.00278;﻿-81.61322;0.20;Florine Hadjadj;megafauna;
+SPY180593;YMPL014;1;17/03/2018;malpelo6;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;9:40;10:10;30;30;0;26.3;0;marine;E141;﻿3.98944;﻿-81.60462;E142;﻿3.97541;﻿-81.59322;E143;﻿3.97891;﻿-81.59038;;;;;;;E145;﻿3.99143;﻿-81.60401;0.20;Florine Hadjadj;megafauna;
+SPY180594;YMPL010;2;15/03/2018;malpelo2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;16:13;16:43;30;30;0;25;0;marine;E101;﻿4.00685;﻿-81.60143;E102;﻿4.01102;﻿-81.60743;E103;﻿4.00202;﻿-81.61761;;;;;;;E105;﻿4.00278;﻿-81.61322;0.20;Florine Hadjadj;megafauna;Arrêt pompe à 15min et reprise
+SPY180595;YMPL013;1;17/03/2018;malpelo5;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;8:39;9:09;30;30;0;26.3;0;marine;E131;﻿4.00885;﻿-81.60547;E132;﻿3.99963;﻿-81.61489;E133;﻿4.00166;﻿-81.61781;;;;;;;E134;﻿4.01077;﻿-81.60784;0.20;Florine Hadjadj;megafauna;
+SPY180596;YMPL011;1;16/03/2018;malpelo3;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;9:50;10:20;30;30;0;25.4;0;marine;E111;﻿4.00515;﻿-81.59995;E112;﻿4.00858;﻿-81.60355;E113;﻿3.99777;﻿-81.61281;;;;;;;E114;﻿3.99504;﻿-81.60963;0.20;Florine Hadjadj;megafauna;Observation : requin
+SPY180597;YMPL011;2;16/03/2018;malpelo3;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;9:50;10:20;30;30;0;25.4;0;marine;E111;﻿4.00515;﻿-81.59995;E112;﻿4.00858;﻿-81.60355;E113;﻿3.99777;﻿-81.61281;;;;;;;E114;﻿3.99504;﻿-81.60963;0.20;Florine Hadjadj;megafauna;Observation : requin
+SPY180598;YMPL013;2;17/03/2018;malpelo5;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;8:39;9:09;30;30;0;26.3;0;marine;E131;﻿4.00885;﻿-81.60547;E132;﻿3.99963;﻿-81.61489;E133;﻿4.00166;﻿-81.61781;;;;;;;E134;﻿4.01077;﻿-81.60784;0.20;Florine Hadjadj;megafauna;
+SPY180599;YMPL012;1;16/03/2018;malpelo4;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;10:58;11:28;30;30;0;25.4;0;marine;E121;﻿3.99871;﻿-81.62184;E122;﻿3.98932;﻿-81.60735;E123;﻿3.98549;﻿-81.61006;;;;;;;E124;﻿3.99590;﻿-81.62410;0.20;Florine Hadjadj;megafauna;
+SPY180600;YMPL015;1;20/03/2018;bois_flottant;malpelo;West_Pacific;Columbia;megafauna;point;niskin;20:15;20:30;15;12;0;;;marine;E151;﻿4.02167;﻿-81.58500;;;;;;;;;;;;;;;;0.20;Régis Hocdé;megafauna;Eau récoltée autour d'un bois  flottant, présence de poissons juvéniles, crabes, méduses, gastéropodes, copépodes, crustacés … 
+SPY180602;YMPL014;2;17/03/2018;malpelo6;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;9:40;10:10;30;30;0;26.3;0;marine;E141;﻿3.98944;﻿-81.60462;E142;﻿3.97541;﻿-81.59322;E143;﻿3.97891;﻿-81.59038;;;;;;;E145;﻿3.99143;﻿-81.60401;0.20;Florine Hadjadj;megafauna;
+SPY180604;YMPL012;2;16/03/2018;malpelo4;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;10:53;10:26;28;30;0;25.4;0;marine;E121;﻿3.99871;﻿-81.62184;E122;﻿3.98932;﻿-81.60735;E123;﻿3.98549;﻿-81.61006;;;;;;;E124;﻿3.99590;﻿-81.62410;0.20;Florine Hadjadj;megafauna;Arrêt pompe à 28min
+SPY180782;YMPL016;1;25/03/2018;camera1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;10:00;10:30;30;30;0;;2;marine;E161;﻿4.00594;﻿-81.60334;;;;;;;;;;;;;E162;﻿4.00437;﻿-81.60217;0.20;Virginie Marques;megafauna;Observation : green turtle, eagle rays
+SPY180778;YMPL016;2;25/03/2018;camera1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;10:00;10:30;30;30;0;;2;marine;E161;﻿4.00594;﻿-81.60334;;;;;;;;;;;;;E162;﻿4.00437;﻿-81.60217;0.20;Virginie Marques;megafauna;
+SPY180781;YMPL017;1;25/03/2018;camera2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;17:05;17:35;30;30;0;;2;marine;E171;﻿4.00276;﻿-81.60248;;;;;;;;;;;;;E172;﻿4.00371;﻿-81.60393;0.20;Virginie Marques;megafauna;Observation : eagle ray on surface 
+SPY180776;YMPL017;2;25/03/2018;camera2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;17:05;17:35;30;30;0;;2;marine;E171;﻿4.00276;﻿-81.60248;;;;;;;;;;;;;E172;﻿4.00371;﻿-81.60393;0.20;Virginie Marques;megafauna;
+SPY180605;YMPL018;1;26/03/2018;camera3;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;09:45;10:15;30;30;0;;2;marine;E181;﻿4.00286;﻿-81.60259;;;;;;;;;;;;;E182;﻿4.00220;﻿-81.60234;0.20;Virginie Marques;megafauna;
+SPY180601;YMPL018;2;26/03/2018;camera3;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;09:45;10:15;30;30;0;;2;marine;E181;﻿4.00286;﻿-81.60259;;;;;;;;;;;;;E182;﻿4.00220;﻿-81.60234;0.20;Virginie Marques;megafauna;
+SPY180603;YMPL019;1;27/03/2018;bruv1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;08:57;09:27;30;30;0;;2;marine;E191;﻿3.99357;﻿-81.61842;E192;﻿3.99352;﻿-81.62292;E193;﻿3.97565;﻿-81.62429;E194;﻿3.97536;﻿-81.61981;;;;E195;﻿3.98820;﻿-81.61871;0.20;Virginie Marques;megafauna;
+SPY180775;YMPL019;2;27/03/2018;bruv1;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;08:57;09:27;30;30;0;;2;marine;E191;﻿3.99357;﻿-81.61842;E192;﻿3.99352;﻿-81.62292;E193;﻿3.97565;﻿-81.62429;E194;﻿3.97536;﻿-81.61981;;;;E195;﻿3.98820;﻿-81.61871;0.20;Virginie Marques;megafauna;
+SPY180779;YMPL020;1;27/03/2018;bruv2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;10:23;10:53;30;30;0;;2;marine;E201;﻿3.99290;﻿-81.62050;E202;﻿3.97631;﻿-81.62759;E203;﻿3.97383;﻿-81.62380;E204;﻿3.98855;﻿-81.61583;;;;E204;﻿3.98855;﻿-81.61583;0.20;Virginie Marques;megafauna;Observation : commun bottlenose dolphin
+SPY180777;YMPL020;2;27/03/2018;bruv2;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rectangle;10:23;10:53;30;30;0;;2;marine;E201;﻿3.99290;﻿-81.62050;E202;﻿3.97631;﻿-81.62759;E203;﻿3.97383;﻿-81.62380;E204;﻿3.98855;﻿-81.61583;;;;E204;﻿3.98855;﻿-81.61583;0.20;Virginie Marques;megafauna;
+SPY180768;YMPL021;1;28/03/2018;camera4;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;09:40;10:10;30;30;0;;2;marine;E211;﻿4.00226;﻿-81.60371;;;;;;;;;;;;;E212;﻿4.00216;﻿-81.60266;0.20;Virginie Marques;megafauna;Pump 2 stopped, false replicat with only one pump
+SPY180769;YMPL021;2;28/03/2018;camera4;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;10:10;10:40;30;30;0;;2;marine;E213;﻿4.00202;﻿-81.60332;;;;;;;;;;;;;E214;﻿4.00471;﻿-81.60428;0.20;Virginie Marques;megafauna;
+SPY180780;YMPL022;1;28/03/2018;camera5;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;15:20;15:50;30;30;0;;2;marine;E221;﻿4.00230;﻿-81.60392;;;;;;;;;;;;;E222;﻿4.00407;﻿-81.60418;0.20;Virginie Marques;megafauna;Leak on the filter cap when filling the buffer, some drops were lost before replacement of the cap 
+SPY180773;YMPL022;2;28/03/2018;camera5;malpelo;West_Pacific;Columbia;megafauna;transect;transect_rond;15:20;15:50;30;30;0;;2;marine;E221;﻿4.00230;﻿-81.60392;;;;;;;;;;;;;E222;﻿4.00407;﻿-81.60418;0.20;Virginie Marques;megafauna;
+SPY173250;YGA001;1;26/02/2018;petit_cul_de_sac_marin_Large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;12:50;13:20;30;30;0;28;0;marine;E01;﻿16.15962;﻿-61.50619;E02;﻿16.14538;﻿-61.51763;E03;﻿16.14256;﻿-61.51380;E04;﻿16.15494;﻿-61.50335;;;;E04;﻿16.15494;﻿-61.50335;0.20;Virginie Marques;megafauna;Risque contamination homme + bateau / réplicat = SPY180501
+SPY180501;YGA001;2;26/02/2018;petit_cul_de_sac_marin_Large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;12:50;13:20;30;30;0;28;0;marine;E01;﻿16.15962;﻿-61.50619;E02;﻿16.14538;﻿-61.51763;E03;﻿16.14256;﻿-61.51380;E04;﻿16.15494;﻿-61.50335;;;;E04;﻿16.15494;﻿-61.50335;0.20;Virginie Marques;megafauna;Risque contamination homme + bateau/ réplicat = SPY1733250
+SPY173251;YGA002;1;26/02/2018;petit_cul_de_sac_marin_cote;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;15:00;15:30;30;30;0;28;0;marine;E11;﻿16.20352;﻿-61.53646;E12;﻿16.18854;﻿-61.54670;E13;﻿16.18543;﻿-61.54323;E14;﻿16.20063;﻿-61.53322;;;;E14;﻿16.20063;﻿-61.53322;0.20;Virginie Marques;megafauna;
+SPY173252;YGA002;2;26/02/2018;petit_cul_de_sac_marin_cote;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;15:00;15:30;30;30;0;28;0;marine;E11;﻿16.20352;﻿-61.53646;E12;﻿16.18854;﻿-61.54670;E13;﻿16.18543;﻿-61.54323;E14;﻿16.20063;﻿-61.53322;;;;E14;﻿16.20063;﻿-61.53322;0.20;Virginie Marques;megafauna;
+SPY173253;YGA003;1;26/02/2018;riviere_salee;guadeloupe;Caribbean;France;megafauna;transect;transect_aller_retour;17:00;17:30;30;30;0;28;3;freshwater;E21;﻿16.25520;﻿-61.54755;E22;﻿16.28299;﻿-61.55131;;;;;;;;;;E22;﻿16.28299;﻿-61.55131;0.20;Virginie Marques;megafauna;Mangrove Courant Nord vers sud
+SPY173254;YGA003;2;26/02/2018;riviere_salee;guadeloupe;Caribbean;France;megafauna;transect;transect_aller_retour;17:00;17:30;30;30;0;28;3;freshwater;E21;﻿16.25520;﻿-61.54755;E22;﻿16.28299;﻿-61.55131;;;;;;;;;;E22;﻿16.28299;﻿-61.55131;0.20;Virginie Marques;megafauna;Mangrove Courant Nord vers sud
+SPY173255;YGA004;1;27/02/2018;sec_nord;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;8:07;8:25;18;18;0;28;0;marine;E31;﻿16.24518;﻿-61.87116;E32;﻿16.23587;﻿-61.88717;E33;﻿16.23233;﻿-61.88434;E34;﻿16.23419;﻿-61.88118;;;;E34;﻿16.23419;﻿-61.88118;0.20;Virginie Marques;megafauna;Colmatage capsule car aspire de l'air car bateau trop haut sur l'eau (explotision capsule, perte à l'eau et récupérée après 5 min)
+SPY173256;YGA004;2;27/02/2018;sec_nord;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;8:07;8:25;18;18;0;28;0;marine;E31;﻿16.24518;﻿-61.87116;E32;﻿16.23587;﻿-61.88717;E33;﻿16.23233;﻿-61.88434;E34;﻿16.23419;﻿-61.88118;;;;E34;﻿16.23419;﻿-61.88118;0.20;Virginie Marques;megafauna;"Colmatage capsule car aspire de l'air car bateau trop haut sur l'eau;"
+SPY173257;YGA005;1;27/02/2018;sec_sud;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;9:58;10:20;22;22;0;28;0;marine;E41;﻿16.15732;﻿-61.87493;E42;﻿16.14000;﻿-61.86901;E43;﻿16.14120;﻿-61.86456;E44;﻿16.14581;﻿-61.86575;;;;E44;﻿16.14581;﻿-61.86575;0.20;Virginie Marques;megafauna;"Banc de dauphins Tacheté tropicaux (à 1m de la crépine pendant plusieurs minutes). Colmatage capsule car aspire de l'aire car bateau trop haut sur l'eau;"
+SPY173258;YGA005;2;27/02/2018;sec_sud;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;9:58;10:20;22;22;0;28;0;marine;E41;﻿16.15732;﻿-61.87493;E42;﻿16.14000;﻿-61.86901;E43;﻿16.14120;﻿-61.86456;E44;﻿16.14581;﻿-61.86575;;;;E44;﻿16.14581;﻿-61.86575;0.20;Virginie Marques;megafauna;Banc de dauphins Tacheté tropicaux (à 1m de la crépine pendant plusieurs minutes)
+SPY173259;YGA006;1;27/02/2018;pointe_ferry;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:36;11:50;14;14;0;28;0;marine;E51;﻿16.26170;﻿-61.82218;E52;﻿16.27359;﻿-61.82390;E53;﻿16.27940;﻿-61.82426;;;;;;;E53;﻿16.27940;﻿-61.82426;0.20;Virginie Marques;megafauna;Colmatage capsule car aspire de l'air car bateau trop haut sur l'eau (explotision capsule, perte à l'eau et récupérée après 5 min)
+SPY173260;YGA006;2;27/02/2018;pointe_ferry;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:36;11:50;14;14;0;28;0;marine;E51;﻿16.26170;﻿-61.82218;E52;﻿16.27359;﻿-61.82390;E53;﻿16.27940;﻿-61.82426;;;;;;;E53;﻿16.27940;﻿-61.82426;0.20;Virginie Marques;megafauna;"Colmatage capsule car aspire de l'air car bateau trop haut sur l'eau;"
+SPY173261;YGA007;1;28/02/2018;anse_bertrand_cote;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;15:03;15:33;30;30;0;28;0;marine;E61;﻿16.48538;﻿-61.50429;E62;﻿16.49499;﻿-61.48521;E63;﻿16.49877;﻿-61.48784;E64;﻿16.49212;﻿-61.50035;;;;E64;﻿16.49212;﻿-61.50035;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles)
+SPY173262;YGA007;2;28/02/2018;anse_bertrand_cote;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;15:03;15:33;30;30;0;28;0;marine;E61;﻿16.48538;﻿-61.50429;E62;﻿16.49499;﻿-61.48521;E63;﻿16.49877;﻿-61.48784;E64;﻿16.49212;﻿-61.50035;;;;E64;﻿16.49212;﻿-61.50035;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles)
+SPY173263;YGA008;1;28/02/2018;anse_bertrand_large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;16:12;16:42;30;30;0;28;0;marine;E71;﻿16.50096;﻿-61.51445;E72;﻿16.51337;﻿-61.50085;E73;﻿16.51668;﻿-61.50405;E74;﻿16.50611;﻿-61.51916;;;;E75;﻿16.50245;﻿-61.51697;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles)
+SPY173264;YGA008;2;28/02/2018;anse_bertrand_large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;16:12;16:42;30;30;0;28;0;marine;E71;﻿16.50096;﻿-61.51445;E72;﻿16.51337;﻿-61.50085;E73;﻿16.51668;﻿-61.50405;E74;﻿16.50611;﻿-61.51916;;;;E75;﻿16.50245;﻿-61.51697;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles)
+SPY173265;YGA009;1;28/02/2018;anse_colas;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;17:45;18:15;30;30;0;28;0;marine;E81;﻿16.47047;﻿-61.52166;E82;﻿16.45774;﻿-61.53509;E83;﻿16.46083;﻿-61.53851;E84;﻿16.46083;﻿-61.52590;;;;E84;﻿16.46083;﻿-61.52590;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles) / Pompe prototype à débit 0,91L/min théorique
+SPY173266;YGA009;2;28/02/2018;anse_colas;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;17:45;18:15;30;30;0;28;0;marine;E81;﻿16.47047;﻿-61.52166;E82;﻿16.45774;﻿-61.53509;E83;﻿16.46083;﻿-61.53851;E84;﻿16.46083;﻿-61.52590;;;;E84;﻿16.46083;﻿-61.52590;0.20;Virginie Marques;megafauna;Ecoute : petit Rorqual et Baleine à bosse mâl à grande distance (>4 miles)
+SPY173267;YGA010;1;01/03/2018;bouillante_large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;9:35;10:05;30;30;0;28;0;marine;E91;﻿16.07855;﻿-61.85716;E92;﻿16.08127;﻿-61.85252;E93;﻿16.09919;﻿-61.85313;E94;﻿16.09772;﻿-61.85753;;;;E95;﻿16.08154;﻿-61.85836;0.20;Virginie Marques;megafauna;Observation pseudoOrque (minium 6 visibles + nombreux a priori non visible sur zone)
+SPY173268;YGA010;2;01/03/2018;bouillante_large;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;9:35;10:05;30;30;0;28;0;marine;E91;﻿16.07855;﻿-61.85716;E92;﻿16.08127;﻿-61.85252;E93;﻿16.09919;﻿-61.85313;E94;﻿16.09772;﻿-61.85753;;;;E95;﻿16.08154;﻿-61.85836;0.20;Virginie Marques;megafauna;Observation pseudoOrque (minium 6 visibles + nombreux a priori non visible sur zone) /Pompe prototype à débit 0,91L/min théorique
+SPY173269;YGA011;1;01/03/2018;sec_sud;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:02;11:11;9;9;0;28;0;marine;E111;﻿16.14098;﻿-61.86440;E112;﻿16.15285;﻿-61.86782;;;;;;;;;;E112;﻿16.15285;﻿-61.86782;0.20;Virginie Marques;megafauna;Arrête pompe proto à 1,1km pb pompage air colmatage pompe
+SPY173270;YGA011;2;01/03/2018;sec_sud;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:02;11:11;9;9;0;28;0;marine;E111;﻿16.14098;﻿-61.86440;E112;﻿16.15285;﻿-61.86782;;;;;;;;;;E112;﻿16.15285;﻿-61.86782;0.20;Virginie Marques;megafauna;Arrête pompe proto à 1,1km pb pompage air colmatage pompe /Pompe prototype à débit 0,91L/min théorique
+SPY173271;YGA012;1;01/03/2018;pointe_ferry;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;12:10;12:33;23;23;0;28;0;marine;E121;﻿16.26194;﻿-61.82252;E122;﻿16.27987;﻿-61.81971;E123;﻿16.27934;﻿-61.82436;E124;﻿16.26924;﻿-61.82560;;;;E124;﻿16.26924;﻿-61.82560;0.20;Virginie Marques;megafauna;Arrête pompe proto pompage air colmatage pompe car sargasse accumulée faisant remonter le fil car portance
+SPY173272;YGA012;2;01/03/2018;pointe_ferry;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;12:10;12:33;23;2;0;28;0;marine;E121;﻿16.26194;﻿-61.82252;E122;﻿16.27987;﻿-61.81971;E123;﻿16.27934;﻿-61.82436;E124;﻿16.26924;﻿-61.82560;;;;E124;﻿16.26924;﻿-61.82560;0.20;Virginie Marques;megafauna;Arrête pompe proto pompage air colmatage pompe  car sargasse accumulée faisant remonter le fil car portance /Pompe prototype à débit 0,91L/min théorique
+SPY173273;YGA013;1;02/03/2018;jardin_eden;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;09:03;09:33;30;30;0;28;0;marine;E131;﻿16.37651;﻿-61.52821;E132;﻿16.35956;﻿-61.52274;E133;﻿16.36119;﻿-61.51821;E134;﻿16.37721;﻿-61.52417;;;;E135;﻿16.37721;﻿-61.52417;0.20;Virginie Marques;megafauna;
+SPY173274;YGA013;2;02/03/2018;jardin_eden;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;09:03;09:33;30;30;0;28;0;marine;E131;﻿16.37651;﻿-61.52821;E132;﻿16.35956;﻿-61.52274;E133;﻿16.36119;﻿-61.51821;E134;﻿16.37721;﻿-61.52417;;;;E135;﻿16.37721;﻿-61.52417;0.20;Virginie Marques;megafauna;
+SPY173275;YGA014;1;02/03/2018;fajou;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;10:10;10:40;30;30;0;28;0;marine;E141;﻿16.35900;﻿-61.57521;E142;﻿16.35994;﻿-61.59384;E143;﻿16.36443;﻿-61.59339;E144;﻿16.36451;﻿-61.57498;;;;E145;﻿16.36432;﻿-61.57496;0.20;Virginie Marques;megafauna;Proche réserve Fajou, côté barrière de corail. 
+SPY173276;YGA014;2;02/03/2018;fajou;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;10:10;10:40;30;30;0;28;0;marine;E141;﻿16.35900;﻿-61.57521;E142;﻿16.35994;﻿-61.59384;E143;﻿16.36443;﻿-61.59339;E144;﻿16.36451;﻿-61.57498;;;;E145;﻿16.36432;﻿-61.57496;0.20;Virginie Marques;megafauna;Proche réserve Fajou, côté barrière de corail. 
+SPY173278;YGA015;1;02/03/2018;st_rose;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:34;12:04;30;30;0;28;0;marine;E151;﻿16.32673;﻿-61.67195;E152;﻿16.33806;﻿-61.68644;E153;﻿16.34145;﻿-61.68335;E154;﻿16.33061;﻿-61.66848;;;;E155;﻿16.32765;﻿-61.67095;0.20;Virginie Marques;megafauna;Proche lamentin, côté lagon. 
+SPY173279;YGA015;2;02/03/2018;st_rose;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:34;12:04;30;30;0;28;0;marine;E151;﻿16.32673;﻿-61.67195;E152;﻿16.33806;﻿-61.68644;E153;﻿16.34145;﻿-61.68335;E154;﻿16.33061;﻿-61.66848;;;;E155;﻿16.32765;﻿-61.67095;0.20;Virginie Marques;megafauna;Proche lamentin, côté lagon. 
+SPY173280;YGA016;1;03/03/2018;pointe_chateau;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;08:52;09:22;30;30;0;28;0;marine;E161;﻿16.24619;﻿-61.21300;E162;﻿16.24393;﻿-61.19560;E163;﻿16.23943;﻿-61.19513;E164;﻿16.24471;﻿-61.21300;;;;E165;﻿16.24631;﻿-61.21234;0.20;Virginie Marques;megafauna;Problème technique pompe 2
+SPY173281;YGA017;1;03/03/2018;chateau_petite_terre;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;10:21;10:41;20;30;0;28;0;marine;E171;﻿16.20771;﻿-61.14683;E172;﻿16.22309;﻿-61.15646;E173;﻿16.22562;﻿-61.15257;E174;﻿16.22140;﻿-61.14821;;;;E174;﻿16.22140;﻿-61.14821;0.20;Virginie Marques;megafauna;Problème technique pompe 2
+SPY173282;YGA018;1;03/03/2018;petite_terre1;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;11:10;11:40;30;30;0;28;0;marine;E181;﻿16.18316;﻿-61.11949;E182;﻿16.16357;﻿-61.11470;;;;;;;;;;E182;﻿16.16357;﻿-61.11470;0.20;Virginie Marques;megafauna;Problème technique pompe 2. Transect côtier. 
+SPY173283;YGA019;1;03/03/2018;petite_terre2;guadeloupe;Caribbean;France;megafauna;transect;transect_rectangle;12:00;12:30;30;30;0;28;0;marine;E191;﻿16.17763;﻿-61.09994;E192;﻿16.17519;﻿-61.13187;;;;;;;;;;E192;﻿16.17519;﻿-61.13187;0.20;Virginie Marques;megafauna;Problème technique pompe 2, un dauphin proche côte. Zone fréquentée très majoritairement par des Tursiops. Transect côtier empiète sur Petite Terre 1. 
+SPY181920;YPF001;1;19/06/2018;lagon_faka_1;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;08:59;09:30;30;30;0;;;marine;33;-16.500305;-145.447768;;;;;;;;;;35;-16.48544;-145.430314;36;-16.498969;-145.447519;0.20;Virginie Marques;megafauna;Tuyau transp - très long à lancer
+SPY181919;YPF001;2;19/06/2018;lagon_faka_2;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;08:59;09:30;30;30;0;;;marine;33;-16.500305;-145.447768;;;;;;;;;;35;-16.48544;-145.430314;36;-16.498969;-145.447519;0.20;Virginie Marques;megafauna;Tuyau transp - très long à lancer
+SPY181941;YPF002;1;19/06/2018;lagon_faka_2;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;11:10;11:40;30;30;0;;;marine;40;-16.500979;-145.449233;;;;;;;;;;41;-16.492545;-145.439254;42;-16.504211;-145.451849;0.20;Virginie Marques;megafauna;Tuyau transp - très long à lancer
+SPY181911;YPF002;2;19/06/2018;lagon_faka_2;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;12:23;12:45;22;22;0;;;marine;43;-16.500383;-145.447721;;;;;;;;;;44;-16.485035;-145.430644;45;-16.491784;-145.439291;0.20;Virginie Marques;megafauna;Tuyau blanc - pump stopped working at 22'
+SPY181533;YPF003;1;20/06/2018;lagon_faka_3;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;08:01;08:31;30;30;0;;;marine;46;-16.500328;-145.44823;;;;;;;;;;47;-16.4854;-145.431085;48;-16.493118;-145.440181;0.20;Virginie Marques;megafauna;Problem pump - stopped multiple times: total stopped time = 5'
+SPY181914;YPF003;2;20/06/2018;lagon_faka_3;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;08:57;09:30;30;30;0;;;marine;49;-16.499774;-145.447065;;;;;;;;;;50;-16.485841;-145.434049;;;;0.20;Virginie Marques;megafauna;Problem pump - stopped for 8' and transect completed only one side
+SPY181832;YPF004;1;20/06/2018;lagon_faka_4;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;09:55;10:30;30;30;0;;;marine;51;-16.500438;-145.447461;;;;;;;;;;52;-16.485325;-145.430616;53;-16.491767;-145.438592;0.20;Virginie Marques;megafauna;Problem pump - stopped multiple times: total stopped time = 5'
+SPY181921;YPF005;1;21/06/2018;lagon_faka_5;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;13:59;14:25;26;26;0;;;marine;54;-16.499381;-145.446963;;;;;;;;;;55;-16.484506;-145.430035;56;-16.487019;-145.434149;0.20;Virginie Marques;megafauna;Problem pump - stopped at 26'
+SPY181916;YPF005;2;21/06/2018;lagon_faka_5;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;14:57;15:23;26;26;0;;;marine;57;-16.500378;-145.447254;;;;;;;;;;58;-16.484938;-145.430514;59;-16.486792;-145.433568;0.20;Virginie Marques;megafauna;Problem pump - stopped at 26'
+SPY181906;YPF006;1;22/06/2018;passe_faka_1;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;14:10;14:40;30;30;0;;;marine;61;-16.515778;-145.463558;;;;;;;;;;62;-16.511901;-145.463065;;;;0.20;Virginie Marques;megafauna;No problem - courant sortant : pas de mur de requins
+SPY181900;YPF006;2;22/06/2018;passe_faka_1;fakarava;French_Polynesia;France;megafauna;transect;transect_aller_retour;14:54;15:19;27;27;0;;;marine;64;-16.516914;-145.462426;;;;;;;;;;66;-16.512185;-145.463879;;;;0.20;Virginie Marques;megafauna;Problem pump - stopped at 25' - courant sortant : pas de mur de requins
+SPY181912;YPF007;1;23/06/2018;passe_faka_l;fakarava;French_Polynesia;France;megafauna;point;bag_underwater;11:15;11:15;;10;30;;;marine;68;-16.5209;-145.459671;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;~40 requins gris, 34m. Filtration à la main (seringues stériles 100mL) - courant rentrant
+SPY181899;YPF007;2;23/06/2018;passe_faka_l;fakarava;French_Polynesia;France;megafauna;point;bag_underwater;11:15;11:15;;10;30;;;marine;68;-16.5209;-145.459671;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;~40 requins gris, 34m. Filtration à la main (seringues stériles 100mL) - courant rentrant
+SPY181907;YPF008;1;23/06/2018;passe_faka_T;fakarava;French_Polynesia;France;megafauna;point;bag_underwater;11:15;11:15;;10;30;;;marine;68;-16.5209;-145.459671;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;~20 requins gris, 31m. Filtration à la main (seringues stériles 100mL) - courant rentrant
+SPY181888;YPF008;2;23/06/2018;passe_faka_T;fakarava;French_Polynesia;France;megafauna;point;bag_underwater;11:15;11:15;;10;30;;;marine;68;-16.5209;-145.459671;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;~20 requins gris, 31m. Filtration à la main (seringues stériles 100mL) - courant rentrant
+SPY181909;YPF009;1;25/06/2018;faka_profond_0;fakarava;French_Polynesia;France;megafauna;point;niskin;15:30;15:30;;10;0;;;marine;79;-16.531748;-145.455602;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181902;YPF010;1;25/06/2018;profond_faka_100m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:10;15:10;;10;100;;;marine;79;-16.531748;-145.455602;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181896;YPF011;1;25/06/2018;profond_faka_50m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:20;15:20;;10;50;;;marine;79;-16.531748;-145.455602;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181831;YPF012;1;26/06/2018;profond_2_faka_0m;fakarava;French_Polynesia;France;megafauna;point;niskin;09:15;09:15;;10;0;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant rentrant, par 300m de fond
+SPY181886;YPF013;1;26/06/2018;profond_2_faka_0m;fakarava;French_Polynesia;France;megafauna;point;niskin;09:15;09:15;;10;0;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant rentrant, par 300m de fond
+SPY181887;YPF014;1;26/06/2018;profond_faka_200m;fakarava;French_Polynesia;France;megafauna;point;niskin;09:15;09:15;;10;200;;;marine;79;-16.531748;-145.455602;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant rentrant, par 300m de fond
+SPY181895;YPF015;1;26/06/2018;profond_faka_150m;fakarava;French_Polynesia;France;megafauna;point;niskin;09:15;09:15;;10;150;;;marine;79;-16.531748;-145.455602;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant rentrant, par 300m de fond
+SPY181917;YPF016;1;26/06/2018;profond_2_faka_200m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:10;15:10;;10;200;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant par 300m de fond
+SPY181536;YPF017;1;26/06/2018;profond_2_faka_100m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:20;15:20;;10;100;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant par 300m de fond
+SPY181922;YPF018;1;26/06/2018;profond_2_faka_50m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:30;15:30;;10;50;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant, par 300m de fond
+SPY181885;YPF019;1;27/06/2018;faka_prof_2_150m;fakarava;French_Polynesia;France;megafauna;point;niskin;14:30;14:30;;10;150;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181918;YPF020;1;27/06/2018;faka_prof_2_200m;fakarava;French_Polynesia;France;megafauna;point;niskin;14:15;14:15;;10;200;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181905;YPF021;1;28/06/2018;faka_prof_2_150m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:10;15:10;;10;150;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181892;YPF022;1;28/06/2018;faka_prof_2_100m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:20;15:20;;10;100;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181915;YPF023;1;28/06/2018;faka_prof_2_50m;fakarava;French_Polynesia;France;megafauna;point;niskin;15:30;15:30;;10;50;;;marine;85;-16.525988;-145.450593;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Courant sortant
+SPY181512;YSM01;1;16/10/2018;estuaire_rio_don_diego_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;09:50;10:30;30;30;0;;;marine;86;11.26593;-73.69206;;;;;;;;;;87;11.26445;-73.66946;88;11.26440;73.68720;0.20;Virginie Marques;megafauna;old station name SM1, Sandy bottom, ~10m, rain day before 
+SPY181518;YSM01;2;16/10/2018;estuaire_rio_don_diego_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;09:50;10:30;30;30;0;;;marine;86;11.26593;-73.69206;;;;;;;;;;87;11.26445;-73.66946;88;11.26440;73.68720;0.20;Virginie Marques;megafauna;old station name SM1, Sandy bottom, ~10m, rain day before 
+SPY181506;YSM02;1;16/10/2018;estuaire_rio_don_diego_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;10:55;11:30;30;30;0;;;marine;89;11.2668;-73.702106;;;;;;;;;;90;﻿11.267055;﻿-73.725166;91;﻿11.265335;﻿-73.706433;0.20;Virginie Marques;megafauna;old station name SM2, Sandy bottom, ~10m, rain day before 
+SPY181520;YSM02;2;16/10/2018;estuaire_rio_don_diego_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;10:55;11:30;30;30;0;;;marine;89;11.2668;-73.702106;;;;;;;;;;90;﻿11.267055;﻿-73.725166;91;﻿11.265335;﻿-73.706433;0.20;Virginie Marques;megafauna;old station name SM2, Sandy bottom, ~10m, rain day before 
+SPY181517;YSM03;1;17/10/2018;estuaire_rio_don_diego_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;09:15;09:45;30;30;0;;;marine;93;11.266771;-73.641601;;;;;;;;;;94;﻿11.266869;﻿-73.659798;95;﻿11.266490;﻿-73.644059;0.20;Virginie Marques;megafauna;old station name SM3, Rocky area'
+SPY181498;YSM03;2;17/10/2018;estuaire_rio_don_diego_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;09:15;09:45;30;30;0;;;marine;93;11.266771;-73.641601;;;;;;;;;;94;﻿11.266869;﻿-73.659798;95;﻿11.266490;﻿-73.644059;0.20;Virginie Marques;megafauna;old station name SM3, Rocky area'
+SPY182539;YSM04;1;17/10/2018;rio_don_diego1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;11:40;12:10;30;30;0;;;freshwater;96;11.257738;-73.704129;;;;;;;;;;-;;;97;﻿11.251701;﻿-73.696224;0.45;Virginie Marques;megafauna;old station name RIO1, croco
+SPY182538;YSM04;2;17/10/2018;rio_don_diego1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;11:40;12:10;30;30;0;;;freshwater;96;11.257738;-73.704129;;;;;;;;;;-;;;97;﻿11.251701;﻿-73.696224;0.45;Virginie Marques;megafauna;old station name RIO1, croco
+SPY182537;YSM05;1;17/10/2018;rio_don_diego2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;12:34;13:04;30;30;0;;;freshwater;98;11.242452;-73.69688;;;;;;;;;;-;;;99;﻿11.233210;﻿-73.701028;0.45;Virginie Marques;megafauna;old station name RIO2, croco
+SPY182535;YSM05;2;17/10/2018;rio_don_diego2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;12:34;13:04;30;30;0;;;freshwater;98;11.242452;-73.69688;;;;;;;;;;-;;;99;﻿11.233210;﻿-73.701028;0.45;Virginie Marques;megafauna;old station name RIO2, croco
+SPY182534;YSM06;1;17/10/2018;rio_don_diego3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;13:37;14:07;30;30;0;;;freshwater;100;﻿11.226491;﻿-73.697869;;;;;;;;;;-;;;101;﻿11.226821;﻿-73.698143;0.45;Virginie Marques;megafauna;old station name RIO3 Point because river full of rocks
+SPY182536;YSM06;2;17/10/2018;rio_don_diego3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller;13:37;14:07;30;30;0;;;freshwater;100;﻿11.226491;﻿-73.697869;;;;;;;;;;-;;;101;﻿11.226821;﻿-73.698143;0.45;Virginie Marques;megafauna;old station name RIO3 Point because river full of rocks
+SPY181519;YSM07;1;18/10/2018;santamarta_deep1_53m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;10:40;10:50;;10;53;;;marine;Point andrea 70;﻿11.312972;﻿-73.780055;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep1_53m, seabed 70m
+SPY181531;YSM08;1;18/10/2018;santamarta_deep1_35m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;11:15;11:25;;10;35;;;marine;Point andrea 70;﻿11.312972;﻿-73.780055;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep1_35m, seabed 70m
+SPY181513;YSM09;1;18/10/2018;santamarta_deep1_0m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;11:40;11:50;;10;0;;;marine;Point andrea 70;﻿11.312972;﻿-73.780055;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep1_1m, seabed 70m
+SPY181521;YSM10;1;18/10/2018;santamarta_deep2_115m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;12:10;12:20;;10;115;;;marine;Point andrea 150;﻿11.347639;﻿-73.766667;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep2_115m, seabed 150
+SPY181523;YSM11;1;18/10/2018;santamarta_deep2_0m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;12:30;12:40;;10;0;;;marine;Point andrea 150;﻿11.347639;﻿-73.766667;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep2_1m, seabed 150
+SPY181527;YSM12;1;18/10/2018;santamarta_deep2_58m;santa_marta;West_Pacific;Columbia;megafauna;transect;niskin;12:50;13:00;;10;58;;;marine;Point andrea 150;﻿11.347639;﻿-73.766667;;;;;;;;;;-;;;-;;;0.20;Virginie Marques;megafauna;SMdeep2_58m, seabed 150
+SPY181508;YSM13;1;23/10/2018;tayrona_camera_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;13:00;13:30;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY1, Camera1_day1_morning, 10m
+SPY181538;YSM13;2;23/10/2018;tayrona_camera_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;13:00;13:30;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY1, Camera1_day1_morning, 10m
+SPY181515;YSM14;1;23/10/2018;tayrona_camera_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;16:15;16:45;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY2, Camera1_day1_evening
+SPY181525;YSM14;2;23/10/2018;tayrona_camera_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;16:15;16:45;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY2, Camera1_day1_evening
+SPY181501;YSM15;1;24/10/2018;tayrona_camera_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;07:40;08:10;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY3, Camera1_day2_morning
+SPY181514;YSM15;2;24/10/2018;tayrona_camera_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;07:40;08:10;30;30;0;;;marine;128;﻿11.337649;﻿-74.110443;;;;;;;;;;-;;;129;﻿11.337384;﻿-74.110499;0.20;Virginie Marques;megafauna;TAY3, Camera1_day2_morning
+SPY181500;YSM16;1;25/10/2018;tayrona_camera_4;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;11:08;11:38;30;30;0;;;marine;132;﻿11.328275;﻿-74.114845;;;;;;;;;;-;;;133;﻿11.327992;﻿-74.114391;0.20;Virginie Marques;megafauna;TAY4, Camera2_day1_morning
+SPY181516;YSM16;2;25/10/2018;tayrona_camera_4;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_rond;11:08;11:38;30;30;0;;;marine;132;﻿11.328275;﻿-74.114845;;;;;;;;;;-;;;133;﻿11.327992;﻿-74.114391;0.20;Virginie Marques;megafauna;TAY4, Camera2_day1_morning
+SPY181499;YSM17;1;25/10/2018;tayrona_saturation_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;12:02;12:32;30;30;0;;;marine;75;﻿11.330775;﻿-74.116304;;;;;;;;;;x;11.319237;-74.105329;76;﻿11.331073;﻿-74.116615;0.20;Virginie Marques;megafauna;SAT1
+SPY181539;YSM17;2;25/10/2018;tayrona_saturation_1;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;12:02;12:32;30;30;0;;;marine;75;﻿11.330775;﻿-74.116304;;;;;;;;;;x;11.319237;-74.105329;76;﻿11.331073;﻿-74.116615;0.20;Virginie Marques;megafauna;SAT1
+SPY181503;YSM18;1;25/10/2018;tayrona_saturation_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;14:07;14:37;30;30;0;;;marine;77;﻿11.340723;﻿-74.112103;;;;;;;;;;78;﻿11.320329;﻿-74.105287;79;﻿11.340310;﻿-74.111844;0.20;Virginie Marques;megafauna;SAT2
+SPY181530;YSM18;2;25/10/2018;tayrona_saturation_2;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;14:07;14:37;30;30;0;;;marine;77;﻿11.340723;﻿-74.112103;;;;;;;;;;78;﻿11.320329;﻿-74.105287;79;﻿11.340310;﻿-74.111844;0.20;Virginie Marques;megafauna;SAT2
+SPY181903;YSM19;1;25/10/2018;tayrona_saturation_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;14:55;15:25;30;30;0;;;marine;80;﻿11.341963;﻿-74.112686;;;;;;;;;;x;11.321972;-74.105442;81;﻿11.342078;﻿-74.112305;0.20;Virginie Marques;megafauna;SAT3
+SPY181534;YSM19;2;25/10/2018;tayrona_saturation_3;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;14:55;15:25;30;30;0;;;marine;80;﻿11.341963;﻿-74.112686;;;;;;;;;;x;11.321972;-74.105442;81;﻿11.342078;﻿-74.112305;0.20;Virginie Marques;megafauna;SAT3
+SPY181889;YSM20;1;25/10/2018;tayrona_saturation_4;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;15:48;16:18;30;30;0;;;marine;82;﻿11.326676;﻿-74.114275;;;;;;;;;;-;;;83;﻿11.328732;﻿-74.114753;0.20;Virginie Marques;megafauna;TAY5, Camera2_day1_evening
+SPY181891;YSM20;2;25/10/2018;tayrona_saturation_4;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;15:48;16:18;30;30;0;;;marine;82;﻿11.326676;﻿-74.114275;;;;;;;;;;-;;;83;﻿11.328732;﻿-74.114753;0.20;Virginie Marques;megafauna;TAY5, Camera2_day1_evening
+SPY181540;YSM21;1;25/10/2018;tayrona_saturation_5;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;17:25;17:55;30;30;0;;;marine;84;﻿11.330174;﻿-74.115761;;;;;;;;;;x;11.319065;-74.105460;85;﻿11.327559;﻿-74.114420;0.20;Virginie Marques;megafauna;SAT4
+SPY181504;YSM21;2;25/10/2018;tayrona_saturation_5;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;17:25;17:55;30;30;0;;;marine;84;﻿11.330174;﻿-74.115761;;;;;;;;;;x;11.319065;-74.105460;85;﻿11.327559;﻿-74.114420;0.20;Virginie Marques;megafauna;SAT4
+SPY181505;YSM22;1;26/10/2018;tayrona_saturation_6;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;06:41;07:11;30;30;0;;;marine;86;﻿11.328421;﻿-74.114296;;;;;;;;;;-;;;87;﻿11.327636;﻿-74.113831;0.20;Virginie Marques;megafauna;TAY6, Camera2_day2_morning
+SPY181509;YSM22;2;26/10/2018;tayrona_saturation_6;santa_marta;West_Pacific;Columbia;megafauna;transect;transect_aller_retour;06:41;07:11;30;30;0;;;marine;86;﻿11.328421;﻿-74.114296;;;;;;;;;;-;;;87;﻿11.327636;﻿-74.113831;0.20;Virginie Marques;megafauna;TAY6, Camera2_day2_morning
+SPY190618;MOI01;1;08/04/2019;taaf_station;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:03;12:33;30;30;0;;;marine;105;-22.33944;40.33886;;;;;;;;;;106;-22.32998;40.36085;107;-22.33347;40.34905;0.20;Virginie Marques;megafauna;Observation : green turtles
+SPY181897;MOI01;2;08/04/2019;taaf_station;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:03;12:33;30;30;0;;;marine;105;-22.33944;40.33886;;;;;;;;;;106;-22.32998;40.36085;107;-22.33347;40.34905;0.20;Virginie Marques;megafauna;Observation : green turtles
+SPY181529;MOI02;1;09/04/2019;europa_distance_0m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:01;12:39;30;30;0;;;marine;109;-22.33281;40.35581;;;;;;;;;;110;-22.33091;40.37989;112;-22.32926;40.36572;0.20;Virginie Marques;megafauna;Distance decay 0m
+SPY180771;MOI02;2;09/04/2019;europa_distance_0m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:01;12:39;30;30;0;;;marine;109;-22.33281;40.35581;;;;;;;;;;110;-22.33091;40.37989;112;-22.32926;40.36572;0.20;Virginie Marques;megafauna;Distance decay 0m
+SPY180766;MOI03;1;09/04/2019;europa_distance_50m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:06;13:36;30;30;0;;;marine;114;-22.33078;40.36129;;;;;;;;;;115;-22.32975;40.38043;116;-22.32888;40.3634;0.20;Virginie Marques;megafauna;Distance decay 50m
+SPY181720;MOI03;2;09/04/2019;europa_distance_50m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:06;13:36;30;30;0;;;marine;114;-22.33078;40.36129;;;;;;;;;;115;-22.32975;40.38043;116;-22.32888;40.3634;0.20;Virginie Marques;megafauna;Distance decay 50m
+SPY181522;MOI04;1;09/04/2019;europa_distance_300m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:56;14:26;30;30;0;;;marine;117;-22.32652;40.36433;;;;;;;;;;118;-22.32829;40.38054;119;-22.32825;40.36197;0.20;Virginie Marques;megafauna;Distance decay 300m
+SPY190611;MOI04;2;09/04/2019;europa_distance_300m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:56;14:26;30;30;0;;;marine;117;-22.32652;40.36433;;;;;;;;;;118;-22.32829;40.38054;119;-22.32825;40.36197;0.20;Virginie Marques;megafauna;Distance decay 300m
+SPY190610;MOI05;1;09/04/2019;europa_distance_600m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;14:43;15:13;30;30;0;;;marine;120;-22.32454;40.36156;;;;;;;;;;121;-22.32537;40.38092;122;-22.32384;40.36322;0.20;Virginie Marques;megafauna;Distance decay 600m
+SPY181510;MOI05;2;09/04/2019;europa_distance_600m;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;14:43;15:13;30;30;0;;;marine;120;-22.32454;40.36156;;;;;;;;;;121;-22.32537;40.38092;122;-22.32384;40.36322;0.20;Virginie Marques;megafauna;Distance decay 600m
+SPY181507;MOI06;1;10/04/2019;europa_300m_surface;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;0;27;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190620;MOI07;1;10/04/2019;europa_300m_50m;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;50;;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY180761;MOI08;1;10/04/2019;europa_300m_100m;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;100;;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY180772;MOI09;1;10/04/2019;europa_300m_150m;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;150;;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190621;MOI10;1;10/04/2019;europa_300m_200m;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;200;;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY180770;MOI11;1;10/04/2019;europa_300m_300;europa;Iles_Eparses;France;megafauna;point;niskin;11:10;;;24;300;14;;marine;;-22.33752;40.39666;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;"Temperature: 14°C. 
+~15m above ground"
+SPY181532;MOI12;1;10/04/2019;europa_1000m_surface;europa;Iles_Eparses;France;megafauna;point;niskin;15:10;;;24;0;;;marine;;-22.33644;40.41177;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190619;MOI13;1;10/04/2019;europa_1000m_500m;europa;Iles_Eparses;France;megafauna;point;niskin;15:10;;;24;500;;;marine;;-22.33644;40.41177;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY181883;MOI14;1;10/04/2019;europa_1000m_1000m;europa;Iles_Eparses;France;megafauna;point;niskin;15:10;;;24;1000;;;marine;;-22.33644;40.41177;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;"Temperature: 7°C. 
+~20m above ground. "
+SPY190629;MOI15;1;11/04/2019;taaf_station2;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:50;11:20;30;30;0;;;marine;98;-22.33879;40.33888;;;;;;;;;;99;-22.33182;40.36057;100;-22.33521;40.34951;0.20;Virginie Marques;megafauna;turtles
+SPY190627;MOI15;2;11/04/2019;taaf_station2;europa;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:50;11:20;30;30;0;;;marine;98;-22.33879;40.33888;;;;;;;;;;99;-22.33182;40.36057;100;-22.33521;40.34951;0.20;Virginie Marques;megafauna;turtles
+SPY181542;MOI16;1;12/04/2019;canyon1_0m;europa;Iles_Eparses;France;megafauna;point;niskin;16:14;;;12;0;;;marine;;-18.6225;41.77472;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Canyon 847m deep
+SPY181535;MOI17;1;12/04/2019;canyon1_840m;europa;Iles_Eparses;France;megafauna;point;niskin;16:14;;;12;840;;;marine;;-18.6225;41.77472;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Canyon 847m deep
+SPY181898;MOI18;1;12/04/2019;seamount1_0m;europa;Iles_Eparses;France;megafauna;point;niskin;18:10;;;24;0;;;marine;;-18.12441;42.04219;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Seamount 347m deep 
+SPY190625;MOI19;1;12/04/2019;seamount1_170m;europa;Iles_Eparses;France;megafauna;point;niskin;18:10;;;24;170;;;marine;;-18.12441;42.04219;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Seamount 347m deep 
+SPY190630;MOI20;1;12/04/2019;seamount1_340m;europa;Iles_Eparses;France;megafauna;point;niskin;18:10;;;24;340;;;marine;;-18.12441;42.04219;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Seamount 347m deep . T° 7°C
+SPY190623;MOI21;1;14/04/2019;juan_distance0;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;09:04;09:34;30;30;0;;;marine;102;-17.038661;42.66956;;;;;;;;;;;;;103;-17.05514;42.67807;0.20;Virginie Marques;megafauna;Distance decay
+SPY190624;MOI21;2;14/04/2019;juan_distance0;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;09:04;09:34;30;30;0;;;marine;102;-17.038661;42.66956;;;;;;;;;;;;;103;-17.05514;42.67807;0.20;Virginie Marques;megafauna;Distance decay
+SPY190622;MOI22;1;14/04/2019;juan_distance1;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:00;10:30;30;30;0;;;marine;104;-17.05547;42.67851;;;;;;;;;;105;-17.03916;42.67063;106;-17.04908;42.67333;0.20;Virginie Marques;megafauna;Distance decay
+SPY190628;MOI22;2;14/04/2019;juan_distance1;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:00;10:30;30;30;0;;;marine;104;-17.05547;42.67851;;;;;;;;;;105;-17.03916;42.67063;106;-17.04908;42.67333;0.20;Virginie Marques;megafauna;Distance decay
+SPY190626;MOI23;1;14/04/2019;juan_distance2;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:47;11:20;30;30;0;;;marine;107;-17.03868;42.66977;;;;;;;;;;;;;108;-17.05603;42.67631;0.20;Virginie Marques;megafauna;Distance decay
+SPY190614;MOI23;2;14/04/2019;juan_distance2;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:47;11:20;30;30;0;;;marine;107;-17.03868;42.66977;;;;;;;;;;;;;108;-17.05603;42.67631;0.20;Virginie Marques;megafauna;Distance decay
+SPY190612;MOI24;1;14/04/2019;juan_distance3;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:47;12:17;30;30;0;;;marine;109;-17.05712;42.67116;;;;;;;;;;110;-17.03912;42.65957;111;-17.04626;42.66076;0.20;Virginie Marques;megafauna;Distance decay
+SPY180783;MOI24;2;14/04/2019;juan_distance3;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:47;12:17;30;30;0;;;marine;109;-17.05712;42.67116;;;;;;;;;;110;-17.03912;42.65957;111;-17.04626;42.66076;0.20;Virginie Marques;megafauna;Distance decay
+SPY190617;MOI25;1;15/04/2019;juan_300m_0m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;0;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY180762;MOI26;1;15/04/2019;juan_300m_50m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;50;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY181524;MOI27;1;15/04/2019;juan_300m_100m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;100;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190613;MOI28;1;15/04/2019;juan_300m_150m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;150;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190615;MOI29;1;15/04/2019;juan_300m_200m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;200;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY181528;MOI30;1;15/04/2019;juan_300m_300m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;15:30;;;24;300;;;marine;;-17.023831;42.654805;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY181901;MOI31;1;16/04/2019;juan_2;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:45;11:15;30;30;0;;;marine;112;-17.02874;42.74781;;;;;;;;;;113;-17.04155;42.76719;114;-17.03697;42.76082;0.20;Virginie Marques;megafauna;
+SPY190609;MOI31;2;16/04/2019;juan_2;juan_de_nova;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:45;11:15;30;30;0;;;marine;112;-17.02874;42.74781;;;;;;;;;;113;-17.04155;42.76719;114;-17.03697;42.76082;0.20;Virginie Marques;megafauna;
+SPY190616;MOI32;1;17/04/2019;juan_mayotte_3000m_0m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;10:00;;;24;0;;;marine;;-15.52306; 42.53472;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;Observation: orphie at surface
+SPY180760;MOI33;1;17/04/2019;juan_mayotte_3000m_3000m;juan_de_nova;Iles_Eparses;France;megafauna;point;niskin;10:00;;;12;3000;;;marine;;-15.52306; 42.53472;;;;;;;;;;;;;;;;0.20;Virginie Marques;megafauna;
+SPY190570;MOI34;1;20/04/2019;glorieuse;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;;;30;30;0;;;marine;132;-11.58652;47.28334;;;;;;;;;;133;-11.56522;47.29042;134;-11.56827;47.28640;0.20;Marco Andrello;megafauna;
+SPY190582;MOI34;2;20/04/2019;glorieuse;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;;;30;30;0;;;marine;132;-11.58652;47.28334;;;;;;;;;;133;-11.56522;47.29042;134;-11.56827;47.28640;0.20;Marco Andrello;megafauna;
+SPY190574;MOI35;1;21/04/2019;glorieuse_distance_0m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:10;11:40;30;30;0;;;marine;136;-11.56444 ;47.29144;;;;;;;;;;137;-11.58450; 47.28304;138;-11.57419;47.28065;0.20;Marco Andrello;megafauna;tortue
+SPY190554;MOI35;2;21/04/2019;glorieuse_distance_0m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:10;11:40;30;30;0;;;marine;136;-11.56444 ;47.29144;;;;;;;;;;137;-11.58450; 47.28304;138;-11.57419;47.28065;0.20;Marco Andrello;megafauna;tortue
+SPY190586;MOI36;1;21/04/2019;glorieuse_distance_50m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:05;12:35;30;30;0;;;marine;139;-11.56593;47.28871;;;;;;;;;;140;-11.58536;47.28249;141;-11.57340;47.28075;0.20;Marco Andrello;megafauna;
+SPY190561;MOI36;2;21/04/2019;glorieuse_distance_50m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;12:05;12:35;30;30;0;;;marine;139;-11.56593;47.28871;;;;;;;;;;140;-11.58536;47.28249;141;-11.57340;47.28075;0.20;Marco Andrello;megafauna;
+SPY190580;MOI37;1;21/04/2019;glorieuse_distance_100m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:05;13:35;30;30;0;;;marine;142;-11.56503;47.28774;;;;;;;;;;143;-11.58580;47.28159;144;-11.57386;47.27933;0.20;Marco Andrello;megafauna;
+SPY190575;MOI37;2;21/04/2019;glorieuse_distance_100m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;13:05;13:35;30;30;0;;;marine;142;-11.56503;47.28774;;;;;;;;;;143;-11.58580;47.28159;144;-11.57386;47.27933;0.20;Marco Andrello;megafauna;
+SPY190563;MOI38;1;21/04/2019;glorieuse_distance_300m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;14:00;14:30;30;30;0;;;marine;145;-11.56269;47.28501;;;;;;;;;;146;-11.58661;47.27867;147;-11.57662;47.27588;0.20;Marco Andrello;megafauna;Le Marion Dufresne était entre le transect MOI37 et le MOI38.
+SPY190553;MOI38;2;21/04/2019;glorieuse_distance_300m;glorieuse;Iles_Eparses;France;megafauna;transect;transect_aller_retour;14:00;14:30;30;30;0;;;marine;145;-11.56269;47.28501;;;;;;;;;;146;-11.58661;47.27867;147;-11.57662;47.27588;0.20;Marco Andrello;megafauna;
+SPY190552;MOI39;1;22/04/2019;glorieuse_300m_0m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;0;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;Observations de dauphins reportées par les équipes en zodiac
+SPY190564;MOI40;1;22/04/2019;glorieuse_300m_50m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;50;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190549;MOI41;1;22/04/2019;glorieuse_300m_100m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;100;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190571;MOI42;1;22/04/2019;glorieuse_300m_150m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;150;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190568;MOI43;1;22/04/2019;glorieuse_300m_200m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;200;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190559;MOI44;1;22/04/2019;glorieuse_300m_300m;glorieuse;Iles_Eparses;France;megafauna;point;niskin;09:40;;;24;300;;;marine;;-11.5581;47.2857;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190560;MOI45;1;27/04/2019;tromelin_300m_0m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;0;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190577;MOI46;1;27/04/2019;tromelin_300m_50m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;58;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190569;MOI47;1;27/04/2019;tromelin_300m_100m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;108;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190587;MOI48;1;27/04/2019;tromelin_300m_150m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;158;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190562;MOI49;1;27/04/2019;tromelin_300m_200m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;208;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190583;MOI50;1;27/04/2019;tromelin_300m_300m;tromelin;Iles_Eparses;France;megafauna;point;niskin;16:00;;;24;308;;;marine;;-15.89453623;54.51575373;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190578;MOI51;1;28/04/2019;tromelin_distance_0m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;09:25;09:55;30;30;0;;;marine;132;-15.89278;54.51736;;;;;;;;;;133;-15.882756;54.509334;134;-15.88345;54.50957;0.20;Marco Andrello;megafauna;
+SPY190588;MOI51;2;28/04/2019;tromelin_distance_0m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;09:25;09:55;30;30;0;;;marine;132;-15.89278;54.51736;;;;;;;;;;133;-15.882756;54.509334;134;-15.88345;54.50957;0.20;Marco Andrello;megafauna;le capuchon blanc du filtre a sauté, on l'a remplacé par le capuchon d'un autre filtre
+SPY190592;MOI52;1;28/04/2019;tromelin_distance_50m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:15;10:45;30;30;0;;;marine;135;-15.89311;54.51689;;;;;;;;;;;;;136;-15.88494;54.50617 ;0.20;Marco Andrello;megafauna;rain
+SPY190593;MOI52;2;28/04/2019;tromelin_distance_50m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;10:15;10:45;30;30;0;;;marine;135;-15.89311;54.51689;;;;;;;;;;;;;136;-15.88494;54.50617 ;0.20;Marco Andrello;megafauna;rain
+SPY190567;MOI53;1;28/04/2019;tromelin_distance_100m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:00;11:30;30;30;0;;;marine;137;-15.89239;54.51390;;;;;;;;;;138;-15.88375;54.50290;139;-15.89176; 54.50872;0.20;Marco Andrello;megafauna;rain
+SPY190557;MOI53;2;28/04/2019;tromelin_distance_100m;tromelin;Iles_Eparses;France;megafauna;transect;transect_aller_retour;11:00;11:30;30;30;0;;;marine;137;-15.89239;54.51390;;;;;;;;;;138;-15.88375;54.50290;139;-15.89176; 54.50872;0.20;Marco Andrello;megafauna;rain
+SPY190576;MOI54;1;28/04/2019;Seamount_nearTromelin_0m;tromelin;Iles_Eparses;France;megafauna;point;niskin;17:00;17:45;30;30;0;;;marine;;-15.93020533;54.50882665;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;Ces trois prélèvements (MOI54, MOI55 et MOI56) ont été faits dans une position qui corréspond à la base du seamount (environs 600m de profondeur), alors que son sommet atteint environ 25 m de profondeur. 
+SPY190572;MOI55;1;28/04/2019;Seamount_nearTromelin_300m;tromelin;Iles_Eparses;France;megafauna;point;niskin;17:00;17:45;30;30;305;;;marine;;-15.93020533;54.50882665;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY190581;MOI56;1;28/04/2019;Seamount_nearTromelin_600m;tromelin;Iles_Eparses;France;megafauna;point;niskin;17:00;17:45;30;30;605;;;marine;;-15.93020533;54.50882665;;;;;;;;;;;;;;;;0.20;Marco Andrello;megafauna;
+SPY193064;X0442;1;23/10/2019;atlantic_1;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:45:00;06:07:00;22;24;143;15.475;;marine;;46.8961393;-4.7780248;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193063;X0442;2;23/10/2019;atlantic_1;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:45:00;06:07:00;22;24;143;15.475;;marine;;46.8961393;-4.7780248;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193061;X0448;1;24/10/2019;atlantic_2;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:47:00;06:07:00;20;24;165;16.3;;marine;;46.3147228;-4.2150256;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193059;X0448;2;24/10/2019;atlantic_2;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:47:00;06:07:00;20;24;165;16.3;;marine;;46.3147228;-4.2150256;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193068;X0450;1;24/10/2019;atlantic_3;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;12:42:00;12:02:00;20;24;151;16.862;;marine;;46.0509606;-3.8861062;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193058;X0450;2;24/10/2019;atlantic_3;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;12:42:00;12:02:00;20;24;151;16.862;;marine;;46.0509606;-3.8861062;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193062;X0454;1;25/10/2019;atlantic_4;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:52:00;05:07:00;15;24;124;16.831;;marine;;45.8907485;-3.2114348;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY193060;X0454;2;25/10/2019;atlantic_4;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:52:00;05:07:00;15;24;124;16.831;;marine;;45.8907485;-3.2114348;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192812;X0457;1;25/10/2019;atlantic_5;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;17:50:00;18:20:00;30;24;500;17.632;;marine;;45.2438012;-3.2297848;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192817;X0457;2;25/10/2019;atlantic_5;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;17:50:00;18:20:00;30;24;500;17.632;;marine;;45.2438012;-3.2297848;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192831;X0465;1;26/10/2019;atlantic_6;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:54:00;05:14:00;20;24;109;18.718;;marine;;44.8782105;-1.8595568;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192811;X0465;2;26/10/2019;atlantic_6;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:54:00;05:14:00;20;24;109;18.718;;marine;;44.8782105;-1.8595568;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192836;X0471;1;28/10/2019;atlantic_7;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:40:00;05:00:00;20;24;126;18.019;;marine;;44.2505771;-1.8937318;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192818;X0471;2;28/10/2019;atlantic_7;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:40:00;05:00:00;20;24;126;18.019;;marine;;44.2505771;-1.8937318;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192841;X0477;1;29/10/2019;atlantic_8;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:36:00;04:56:00;20;24;139;18.6;;marine;;43.8334093;-1.9882645;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192835;X0477;2;29/10/2019;atlantic_8;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:36:00;04:56:00;20;24;139;18.6;;marine;;43.8334093;-1.9882645;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192819;X0481;1;29/10/2019;atlantic_9;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;18:30:00;18:40:00;10;24;29;18.63;;marine;;44.0949793;-1.3818145;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192847;X0481;2;29/10/2019;atlantic_9;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;18:30:00;18:40:00;10;24;29;18.63;;marine;;44.0949793;-1.3818145;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192853;X0482;1;30/10/2019;atlantic_10;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:02:00;05:12:00;10;24;29;18.21;;marine;;44.5427539;-1.3295563;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192810;X0482;2;30/10/2019;atlantic_10;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:02:00;05:12:00;10;24;29;18.21;;marine;;44.5427539;-1.3295563;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192832;X0487;1;31/10/2019;atlantic_11;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:52:00;05:02:00;10;24;32;18.15;;marine;;45.5494714;-1.4159793;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192827;X0487;2;31/10/2019;atlantic_11;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;04:52:00;05:02:00;10;24;32;18.15;;marine;;45.5494714;-1.4159793;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192824;X0491;1;31/10/2019;atlantic_12;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;18:36:00;18:46:00;10;24;66;18.79;;marine;;45.7357645;-1.9193916;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192823;X0491;2;31/10/2019;atlantic_12;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;18:36:00;18:46:00;10;24;66;18.79;;marine;;45.7357645;-1.9193916;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192839;X0492;1;01/11/2019;atlantic_13;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:21:00;05:41:00;20;24;96;17.305;;marine;;45.8661842;-2.395217;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192830;X0492;2;01/11/2019;atlantic_13;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:21:00;05:41:00;20;24;96;17.305;;marine;;45.8661842;-2.395217;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192849;X0495;1;01/11/2019;atlantic_14;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;16:00:00;16:10:00;10;24;60;17.72;;marine;;46.6230167;-2.5939192;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192852;X0495;2;01/11/2019;atlantic_14;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;16:00:00;16:10:00;10;20.5;60;17.72;;marine;;46.6230167;-2.5939192;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192825;X0496;1;02/11/2019;atlantic_15;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:05:00;05:15:00;10;24;20;16.64;;marine;;46.5962065;-1.9759778;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY192826;X0496;2;02/11/2019;atlantic_15;bay_of_biscay;West_Atlantic;France;reefish;point;niskin;05:05:00;05:15:00;10;24;20;16.64;;marine;;46.5962065;-1.9759778;;;;;;;;;;;;;;;;0.20;Camille Albouy;;
+SPY180617;ME1.1;1;13/03/2018;menorca_1;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;12:35;13:08;00:33;30;0;13;2;marine;548;40.022395000000003;3.790081000000000;;40.027341000000000;3.788444000000000;;40.031863999999999;3.805155000000000;;40.028041000000002;3.807114000000000;;;;552;40.020749000000002;3.786066000000000;0.20;Emilie Boulanger;CEFE;
+SPY180606;ME1.2;2;13/03/2018;menorca_1;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;13:31;14:04;00:33;30;0;13;2;marine;553;40.022517999999998;3.790020000000000;;40.027509999999999;3.788131000000000;;40.031731999999998;3.805104000000000;;40.027746999999998;3.807303000000000;;;;557;40.020781999999997;3.786381000000000;0.20;Emilie Boulanger;CEFE;
+SPY180607;ME2.1;1;13/03/2018;menorca_2;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;16:13;16:52;00:39;30;0;13;4;marine;558;39.918649000000002;3.830327000000000;;39.913862999999999;3.852021000000000;;39.909610000000001;3.853860000000000;;39.915227999999999;3.832607000000000;;;;563;39.919701000000003;3.829884000000000;0.20;Emilie Boulanger;CEFE;
+SPY180616;ME2.2;2;13/03/2018;menorca_2;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;17:13;17:54;00:41;30;0;13;4;marine;564;39.918309000000001;3.830632000000000;;39.913874999999997;3.852205000000000;;39.909905000000002;3.853816000000000;;39.914917000000003;3.832261000000000;;;;568;39.919328000000000;3.830692000000000;0.20;Emilie Boulanger;CEFE;
+SPY180627;ME3.1;1;14/03/2018;menorca_3;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;11:05;11:42;00:37;30;0;13;1;marine;569;40.086844999999997;4.070965000000000;;40.080773000000001;4.049335000000000;;40.076324000000000;4.051532000000000;;40.084254999999999;4.072196000000000;;;;573;40.084254999999999;4.072196000000000;0.20;Emilie Boulanger;CEFE;
+SPY180611;ME3.2;2;14/03/2018;menorca_3;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;11:54;12:30;00:36;30;0;13;1;marine;574;40.088462000000000;4.070868000000000;;40.080787999999998;4.049404000000000;;40.076563999999998;4.051436000000000;;40.084283999999997;4.072006000000000;;;;578;40.084283999999997;4.072006000000000;0.20;Emilie Boulanger;CEFE;
+SPY180613;ME4.1;1;14/03/2018;menorca_4;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;13:49;14:25;00:36;30;0;13;1;marine;579;40.071449999999999;4.096724000000000;;40.062952000000003;4.116932000000000;;40.066493000000001;4.121009000000000;;40.079625999999998;40.066735000000001;;;;583;40.075972999999998;4.101476000000000;0.20;Emilie Boulanger;CEFE;
+SPY180621;ME4.2;2;14/03/2018;menorca_4;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;14:39;15:15;00:36;30;0;13;1;marine;584;40.071488000000002;4.096939000000000;;40.063009000000001;4.116949000000000;;40.066735000000001;4.120820000000000;;40.075707000000001;4.100536000000000;;;;588;40.075707000000001;4.100536000000000;0.20;Emilie Boulanger;CEFE;
+SPY180608;ME5.1;1;14/03/2018;menorca_5;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;18:01;18:36;00:35;30;0;13;2;marine;589;39.957735000000000;4.285683000000000;;39.939847999999998;4.286166000000000;;39.940016999999997;4.292055000000000;;39.957881000000000;4.291472000000000;;;;593;39.957881000000000;4.291472000000000;0.20;Emilie Boulanger;CEFE;
+SPY180626;ME5.2;2;14/03/2018;menorca_5;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;18:47;19:24;00:37;30;0;13;2;marine;594;39.957858000000002;4.285778000000000;;39.939576000000002;4.286545000000000;;39.940364000000002;4.292352000000000;;39.958063000000003;4.291502000000000;;;;598;39.958063000000003;4.291502000000000;0.20;Emilie Boulanger;CEFE;
+SPY180633;ME6.1;1;16/03/2018;menorca_6;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;10:11;10:46;00:35;30;0;13;1;marine;599;39.829577000000000;4.303324000000000;;39.813862000000000;4.292018000000000;;39.811884999999997;4.297328000000000;;39.827959000000000;4.307810000000000;;;;603;39.827959000000000;4.307810000000000;0.20;Emilie Boulanger;CEFE;
+SPY180631;ME6.2;2;16/03/2018;menorca_6;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;10:11;10:46;00:35;30;0;13;1;marine;;39.829577000000000;4.303324000000000;;39.813862000000000;4.292018000000000;;39.811884999999997;4.297328000000000;;39.827959000000000;4.307810000000000;;;;;39.827959000000000;4.307810000000000;0.20;Emilie Boulanger;CEFE;
+SPY180628;ME7.1;1;16/03/2018;menorca_7;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;12:54;13:31;00:37;30;0;13;1;marine;604;39.848846000000002;4.160777000000000;;39.837204000000000;4.178611000000000;;39.833646000000002;4.175035000000000;;39.844135999999999;4.156024000000000;;;;608;39.844135999999999;4.156024000000000;0.20;Emilie Boulanger;CEFE;
+SPY180632;ME7.2;2;16/03/2018;menorca_7;menorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;12:54;13:31;00:37;30;0;13;1;marine;;39.848846000000002;4.160777000000000;;39.837204000000000;4.178611000000000;;39.833646000000002;4.175035000000000;;39.844135999999999;4.156024000000000;;;;;39.844135999999999;4.156024000000000;0.20;Emilie Boulanger;CEFE;
+SPY180610;MAJ1.1;1;19/03/2018;mallorca_1;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;10:55;11:34;00:39;30;0;13;1;marine;609;39.771141999999998;3.405029000000000;;39.773732000000003;3.409836000000000;;39.789943000000001;3.400302000000000;;39.788738000000002;3.394617000000000;;;;613;39.788738000000002;3.394617000000000;0.20;Emilie Boulanger;CEFE;
+SPY180620;MAJ1.2;2;19/03/2018;mallorca_1;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;10:55;11:34;00:39;30;0;13;1;marine;;39.771141999999998;3.405029000000000;;39.773732000000003;3.409836000000000;;39.789943000000001;3.400302000000000;;39.788738000000002;3.394617000000000;;;;;39.788738000000002;3.394617000000000;0.20;Emilie Boulanger;CEFE;
+SPY180614;MAJ2.1;1;19/03/2018;mallorca_2;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;12:37;13:10;00:33;30;0;13;1;marine;614;39.786777000000001;3.323661000000000;;39.798234000000001;3.305588000000000;;39.795240999999997;3.301146000000000;;39.783050000000003;3.318618000000000;;;;618;39.783050000000003;3.318618000000000;0.20;Emilie Boulanger;CEFE;
+SPY180615;MAJ2.2;2;19/03/2018;mallorca_2;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;12:37;13:10;00:33;30;0;13;1;marine;;39.786777000000001;3.323661000000000;;39.798234000000001;3.305588000000000;;39.795240999999997;3.301146000000000;;39.783050000000003;3.318618000000000;;;;;39.783050000000003;3.318618000000000;0.20;Emilie Boulanger;CEFE;
+SPY180619;MAJ3.1;1;19/03/2018;mallorca_3;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;14:57;15:31;00:34;30;0;13;1;marine;619;39.746474999999997;3.468065000000000;;39.748835999999997;3.473079000000000;;39.731054000000000;3.475960000000000;;39.730462000000003;3.470135000000000;;;;623;39.730462000000003;3.470135000000000;0.20;Emilie Boulanger;CEFE;
+SPY180623;MAJ3.2;2;19/03/2018;mallorca_3;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;14:57;15:31;00:34;30;0;13;1;marine;;39.746474999999997;3.468065000000000;;39.748835999999997;3.473079000000000;;39.731054000000000;3.475960000000000;;39.730462000000003;3.470135000000000;;;;;39.730462000000003;3.470135000000000;0.20;Emilie Boulanger;CEFE;
+SPY180609;MAJ4.1;1;19/03/2018;mallorca_4;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;16:12;16:45;00:33;30;0;13;1;marine;625;39.689585000000001;3.474012000000000;;39.688870000000001;3.479804000000000;;39.671650999999997;3.473336000000000;;39.671073999999997;3.467483000000000;;;;629;39.671073999999997;3.467483000000000;0.20;Emilie Boulanger;CEFE;
+SPY180618;MAJ4.2;2;19/03/2018;mallorca_4;mallorca;Mediterranean;Spain;megafauna;transect;transect_rectangle;16:12;16:45;00:33;30;0;13;1;marine;630;39.688479000000001;3.471091000000000;;39.687041000000001;3.477201000000000;;39.669536999999998;3.472128000000000;;39.669764999999998;3.466262000000000;;;;634;39.669764999999998;3.466262000000000;0.20;Emilie Boulanger;CEFE;
+SPY180928;BA1.1;1;05/04/2018;banyuls18_1;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;13:12;13:48;00:36;30;0;13;1;marine;635;42.349021000000000;3.203946000000000;;42.359305999999997;3.223369000000000;;42.362741000000000;3.218688000000000;;42.352409000000002;3.198707000000000;;;;639;42.352409000000002;3.198707000000000;0.20;Emilie Boulanger;CEFE;
+SPY180929;BA1.2;2;05/04/2018;banyuls18_1;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;13:12;13:48;00:36;30;0;13;1;marine;;42.349021000000000;3.203946000000000;;42.359305999999997;3.223369000000000;;42.362741000000000;3.218688000000000;;42.352409000000002;3.198707000000000;;;;;42.352409000000002;3.198707000000000;0.20;Emilie Boulanger;CEFE;
+SPY180926;BA2.1;1;05/04/2018;banyuls18_2;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;14:23;14:56;00:33;30;0;13;1;marine;640;42.401302000000001;3.171352000000000;;42.418837000000003;3.176927000000000;;42.417749000000001;3.182962000000000;;42.400140000000000;3.177743000000000;;;;644;42.400140000000000;3.177743000000000;0.20;Emilie Boulanger;CEFE;
+SPY180931;BA2.2;2;05/04/2018;banyuls18_2;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;14:23;14:56;00:33;30;0;13;1;marine;;42.401302000000001;3.171352000000000;;42.418837000000003;3.176927000000000;;42.417749000000001;3.182962000000000;;42.400140000000000;3.177743000000000;;;;;42.400140000000000;3.177743000000000;0.20;Emilie Boulanger;CEFE;
+SPY180927;BA3.1;1;05/04/2018;banyuls18_3;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;15:32;16:07;00:35;30;0;13;1;marine;645;42.460386000000000;3.167352000000000;;42.477763000000003;3.159486000000000;;42.477488000000001;3.165643000000000;;42.460704999999997;3.174319000000000;;;;649;42.460704999999997;3.174319000000000;0.20;Emilie Boulanger;CEFE;
+SPY180930;BA3.2;2;05/04/2018;banyuls18_3;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;15:32;16:07;00:35;30;0;13;1;marine;;42.460386000000000;3.167352000000000;;42.477763000000003;3.159486000000000;;42.477488000000001;3.165643000000000;;42.460704999999997;3.174319000000000;;;;;42.460704999999997;3.174319000000000;0.20;Emilie Boulanger;CEFE;
+SPY180933;BA4.1;1;05/04/2018;banyuls18_4;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;16:42;17:13;00:31;30;0;13;1;marine;650;42.517347000000001;3.139620000000000;;42.520823999999998;3.143142000000000;;42.531959999999998;3.124096000000000;;42.528343999999997;3.120328000000000;;;;654;42.528343999999997;3.120328000000000;0.20;Emilie Boulanger;CEFE;
+SPY180935;BA4.2;2;05/04/2018;banyuls18_4;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;16:42;17:13;00:31;30;0;13;1;marine;;42.517347000000001;3.139620000000000;;42.520823999999998;3.143142000000000;;42.531959999999998;3.124096000000000;;42.528343999999997;3.120328000000000;;;;;42.528343999999997;3.120328000000000;0.20;Emilie Boulanger;CEFE;
+SPY180936;BA5.1;1;06/04/2018;banyuls18_5;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;10:06;10:41;00:35;30;0;13;0;marine;655;42.570987000000002;3.049600000000000;;42.588872000000002;3.047725000000000;;42.588946000000000;3.053995000000000;;42.571157999999997;3.056920000000000;;;;659;42.571157999999997;3.056920000000000;0.20;Emilie Boulanger;CEFE;
+SPY180937;BA5.2;2;06/04/2018;banyuls18_5;banyuls;Mediterranean;France;megafauna;transect;transect_rectangle;10:06;10:41;00:35;30;0;13;0;marine;;42.570987000000002;3.049600000000000;;42.588872000000002;3.047725000000000;;42.588946000000000;3.053995000000000;;42.571157999999997;3.056920000000000;;;;;42.571157999999997;3.056920000000000;0.20;Emilie Boulanger;CEFE;
+SPY181147;CV1.1;1;19/05/2018;calvi_1;calvi;Mediterranean;France;megafauna;transect;transect_aller_retour;09:30;09:59;00:29;30;0;18;0;marine;661;42.58508;8.725903;;;;;;;;;;663;42.577371;8.710253;664;42.578487;8.715049;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181160;CV1.2;2;19/05/2018;calvi_1;calvi;Mediterranean;France;megafauna;transect;transect_aller_retour;09:30;09:59;00:29;30;0;18;0;marine;661;42.58508;8.725903;;;;;;;;;;663;42.577371;8.710253;664;42.578487;8.715049;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181150;CV1.3;3;19/05/2018;calvi_1;calvi;Mediterranean;France;megafauna;transect;transect_aller;10:22;10:52;00:30;30;0;18;0;marine;;42.577371;8.709377;;;;;;;;;;;;;;42.584541;8.724821;0.20;Emilie Boulanger;CEFE;
+SPY181149;CV1.4;4;19/05/2018;calvi_1;calvi;Mediterranean;France;megafauna;transect;transect_aller;10:22;10:52;00:30;30;0;18;0;marine;;42.577371;8.709377;;;;;;;;;;;;;;42.584541;8.724821;0.20;Emilie Boulanger;CEFE;
+SPY181152;CV2.1;1;20/05/2018;calvi_2;calvi;Mediterranean;France;megafauna;transect;transect_aller;09:42;10:12;00:30;30;0;18;0;marine;;42.584972999999998;8.800770000000000;;;;;;;;;;;;;;42.592930000000003;8.809901000000000;0.20;Emilie Boulanger;CEFE;
+SPY181154;CV2.2;2;20/05/2018;calvi_2;calvi;Mediterranean;France;megafauna;transect;transect_aller;09:42;10:12;00:30;30;0;18;0;marine;;42.584972999999998;8.800770000000000;;;;;;;;;;;;;;42.592930000000003;8.809901000000000;0.20;Emilie Boulanger;CEFE;
+SPY181158;CV2.3;3;20/05/2018;calvi_2;calvi;Mediterranean;France;megafauna;transect;transect_aller;10:32;11:02;00:30;30;0;18;0;marine;;42.592607999999998;8.810375000000001;;;;;;;;;;;;;;42.584547000000001;8.801207000000000;0.20;Emilie Boulanger;CEFE;
+SPY180932;CV2.4;4;20/05/2018;calvi_2;calvi;Mediterranean;France;megafauna;transect;transect_aller;10:32;11:02;00:30;30;0;18;0;marine;;42.592607999999998;8.810375000000001;;;;;;;;;;;;;;42.584547000000001;8.801207000000000;0.20;Emilie Boulanger;CEFE;
+SPY181157;CV3.1;1;19/05/2018;calvi_3;calvi;Mediterranean;France;megafauna;transect;transect_aller;16:29;16:59;00:30;30;0;18;0;marine;;42.607429;8.840922;;;;;;;;;;;;;;42.60953;8.860017;0.20;Emilie Boulanger;CEFE;
+SPY181156;CV3.2;2;19/05/2018;calvi_3;calvi;Mediterranean;France;megafauna;transect;transect_aller;16:29;16:59;00:30;30;0;18;0;marine;;42.607429;8.840922;;;;;;;;;;;;;;42.60953;8.860017;0.20;Emilie Boulanger;CEFE;
+SPY181148;CV3.3;3;19/05/2018;calvi_3;calvi;Mediterranean;France;megafauna;transect;transect_aller;17:16;17:46;00:30;30;0;18;0;marine;;42.609901;8.860081;;;;;;;;;;;;;;42.607736;8.841421;0.20;Emilie Boulanger;CEFE;
+SPY181159;CV3.4;4;19/05/2018;calvi_3;calvi;Mediterranean;France;megafauna;transect;transect_aller;17:16;17:46;00:30;30;0;18;0;marine;;42.609901;8.860081;;;;;;;;;;;;;;42.607736;8.841421;0.20;Emilie Boulanger;CEFE;
+SPY181146;CV4.1;1;19/05/2018;calvi_4;calvi;Mediterranean;France;megafauna;transect;transect_aller;14:41;15:11;00:30;30;0;18;0;marine;;42.629439;8.879176;;;;;;;;;;;;;;42.629006;8.898414;0.20;Emilie Boulanger;CEFE;
+SPY180624;CV4.2;2;19/05/2018;calvi_4;calvi;Mediterranean;France;megafauna;transect;transect_aller;14:41;15:11;00:30;30;0;18;0;marine;;42.629439;8.879176;;;;;;;;;;;;;;42.629006;8.898414;0.20;Emilie Boulanger;CEFE;
+SPY181155;CV4.3;3;19/05/2018;calvi_4;calvi;Mediterranean;France;megafauna;transect;transect_aller;15:29;15:59;00:30;30;0;18;0;marine;;42.628935;8.898822;;;;;;;;;;;;;;42.629287;8.879104;0.20;Emilie Boulanger;CEFE;
+SPY181151;CV4.4;4;19/05/2018;calvi_4;calvi;Mediterranean;France;megafauna;transect;transect_aller;15:29;15:59;00:30;30;0;18;0;marine;;42.628935;8.898822;;;;;;;;;;;;;;42.629287;8.879104;0.20;Emilie Boulanger;CEFE;
+SPY181713;CR1.1;1;05/06/2018;carry_le_rouet_1;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller_retour;14:27;14:57;00:30;30;0;19;0;marine;691;43.328100999999997;5.169124000000000;;;;;;;;;;692;43.326203999999997;5.157189000000000;693;43.326514000000003;5.163236000000000;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181702;CR1.2;2;05/06/2018;carry_le_rouet_1;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller_retour;14:27;14:57;00:30;30;0;19;0;marine;;43.328100999999997;5.169124000000000;;;;;;;;;;;43.326203999999997;5.157189000000000;;43.326514000000003;5.163236000000000;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181705;CR1.3;3;05/06/2018;carry_le_rouet_1;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller_retour;15:15;15:45;00:30;30;0;19;0;marine;694;43.326563999999998;5.162342000000000;;;;;;;;;;692;43.326203999999997;5.157189000000000;695;43.327534999999997;5.167778000000000;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181707;CR1.4;4;05/06/2018;carry_le_rouet_1;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller_retour;15:15;15:45;00:30;30;0;19;0;marine;694;43.326563999999998;5.162342000000000;;;;;;;;;;;43.326203999999997;5.157189000000000;;43.327534999999997;5.167778000000000;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181709;CR2.1;1;05/06/2018;carry_le_rouet_2;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;12:30;13:01;00:31;30;0;19;1;marine;685;43.331556999999997;5.243485000000000;;;;;;;;;;;;;688;43.328637000000001;5.228447000000000;0.20;Emilie Boulanger;CEFE;
+SPY181712;CR2.2;2;05/06/2018;carry_le_rouet_2;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;12:30;13:01;00:31;30;0;19;1;marine;;43.331556999999997;5.243485000000000;;;;;;;;;;;;;;43.328637000000001;5.228447000000000;0.20;Emilie Boulanger;CEFE;
+SPY181714;CR2.3;3;05/06/2018;carry_le_rouet_2;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;13:18;13:48;00:30;30;0;19;1;marine;689;43.328215000000000;5.228154000000000;;;;;;;;;;;;;690;43.332174999999999;5.243995000000000;0.20;Emilie Boulanger;CEFE;
+SPY181711;CR2.4;4;05/06/2018;carry_le_rouet_2;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;13:18;13:48;00:30;30;0;19;1;marine;;43.328215000000000;5.228154000000000;;;;;;;;;;;;;;43.332174999999999;5.243995000000000;0.20;Emilie Boulanger;CEFE;
+SPY181710;CR3.1;1;05/06/2018;carry_le_rouet_3;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;10:40;11:10;00:30;30;0;19;1;marine;681;43.346750999999998;5.273740000000000;;;;;;;;;;;;;682;43.356856999999998;5.290247000000000;0.20;Emilie Boulanger;CEFE;
+SPY181704;CR3.2;2;05/06/2018;carry_le_rouet_3;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;10:40;11:10;00:30;30;0;19;1;marine;;43.346750999999998;5.273740000000000;;;;;;;;;;;;;;43.356856999999998;5.290247000000000;0.20;Emilie Boulanger;CEFE;
+SPY181706;CR3.3;3;05/06/2018;carry_le_rouet_3;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;11:30;12:03;00:33;30;0;19;1;marine;683;43.357042999999997;5.289610000000000;;;;;;;;;;;;;684;43.347535000000001;5.274233000000000;0.20;Emilie Boulanger;CEFE;
+SPY181703;CR3.4;4;05/06/2018;carry_le_rouet_3;carry_le_rouet;Mediterranean;France;megafauna;transect;transect_aller;11:30;12:03;00:33;30;0;19;1;marine;;43.357042999999997;5.289610000000000;;;;;;;;;;;;;;43.347535000000001;5.274233000000000;0.20;Emilie Boulanger;CEFE;
+SPY181818;PQ1.1;1;15/06/2018;porquerolles_1;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;10:51;11:22;00:31;30;0;21;0;marine;698;42.996874;6.247296;;;;;;;;;;;;;699;42.994184;6.231434;0.20;Emilie Boulanger;CEFE;
+SPY181819;PQ1.2;2;15/06/2018;porquerolles_1;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;10:51;11:22;00:31;30;0;21;0;marine;;42.996874;6.247296;;;;;;;;;;;;;;42.994184;6.231434;0.20;Emilie Boulanger;CEFE;
+SPY181812;PQ1.3;3;15/06/2018;porquerolles_1;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;11:41;12:11;00:30;30;0;21;0;marine;700;42.993934;6.231181;;;;;;;;;;;;;701;42.997157;6.24655;0.20;Emilie Boulanger;CEFE;
+SPY181153;PQ1.4;4;15/06/2018;porquerolles_1;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;11:41;12:11;00:30;30;0;21;0;marine;;42.993934;6.231181;;;;;;;;;;;;;;42.997157;6.24655;0.20;Emilie Boulanger;CEFE;
+SPY181816;PQ2.1;1;15/06/2018;porquerolles_2;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;12:45;13:15;00:30;30;0;21;2;marine;702;42.989867;6.19165;;;;;;;;;;;;;703;42.99493;6.178081;0.20;Emilie Boulanger;CEFE;
+SPY181813;PQ2.2;2;15/06/2018;porquerolles_2;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;12:45;13:15;00:30;30;0;21;2;marine;;42.989867;6.19165;;;;;;;;;;;;;;42.99493;6.178081;0.20;Emilie Boulanger;CEFE;
+SPY181826;PQ2.3;3;15/06/2018;porquerolles_2;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;13:35;14:05;00:30;30;0;21;2;marine;704;42.994923;6.178013;;;;;;;;;;;;;705;42.990079;6.193071;0.20;Emilie Boulanger;CEFE;
+SPY181808;PQ2.4;4;15/06/2018;porquerolles_2;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;13:35;14:05;00:30;30;0;21;2;marine;;42.994923;6.178013;;;;;;;;;;;;;;42.990079;6.193071;0.20;Emilie Boulanger;CEFE;
+SPY181825;PQ3.1;1;15/06/2018;porquerolles_3;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;14:38;15:08;00:30;30;0;21;0;marine;706;43.009209;6.184702;;;;;;;;;;;;;707;43.009493;6.171621;0.20;Emilie Boulanger;CEFE;
+SPY181815;PQ3.2;2;15/06/2018;porquerolles_3;porquerolles;Mediterranean;France;megafauna;transect;transect_aller;14:38;15:08;00:30;30;0;21;0;marine;;43.009209;6.184702;;;;;;;;;;;;;;43.009493;6.171621;0.20;Emilie Boulanger;CEFE;
+SPY181809;PQ3.3;3;15/06/2018;porquerolles_3;porquerolles;Mediterranean;France;megafauna;transect;transect_aller_retour;15:26;15:56;00:30;30;0;21;0;marine;708;43.009663;6.172318;;;;;;;;;;706;43.009209;6.184702;709;43.009313;6.180559;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181821;PQ3.4;4;15/06/2018;porquerolles_3;porquerolles;Mediterranean;France;megafauna;transect;transect_aller_retour;15:26;15:56;00:30;30;0;21;0;marine;;43.009663;6.172318;;;;;;;;;;;43.009209;6.184702;;43.009313;6.180559;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181830;CX1.1;1;21/06/2018;cap_roux_1;cap_roux;Mediterranean;France;megafauna;transect;transect_aller_retour;09:21;09:51;00:30;30;0;23;0;marine;711;43.453856;6.922852;;;;;;;;;;;;;712;43.460355;6.923572;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181829;CX1.2;2;21/06/2018;cap_roux_1;cap_roux;Mediterranean;France;megafauna;transect;transect_aller_retour;09:21;09:51;00:30;30;0;23;0;marine;;43.453856;6.922852;;;;;;;;;;;;;;43.460355;6.923572;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY181810;CX1.3;3;21/06/2018;cap_roux_1;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;10:21;10:52;00:31;30;0;23;0;marine;713;43.460438;6.923639;;;;;;;;;;;;;714;43.454636;6.92302;0.20;Emilie Boulanger;CEFE;
+SPY181814;CX1.4;4;21/06/2018;cap_roux_1;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;10:21;10:52;00:31;30;0;23;0;marine;;43.460438;6.923639;;;;;;;;;;;;;;43.454636;6.92302;0.20;Emilie Boulanger;CEFE;
+SPY181820;CX2.1;1;21/06/2018;cap_roux_2;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;11:23;11:53;00:30;30;0;23;0;marine;715;43.427908;6.88989;;;;;;;;;;;;;716;43.427377;6.880278;0.20;Emilie Boulanger;CEFE;
+SPY181811;CX2.2;2;21/06/2018;cap_roux_2;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;11:23;11:53;00:30;30;0;23;0;marine;;43.427908;6.88989;;;;;;;;;;;;;;43.427377;6.880278;0.20;Emilie Boulanger;CEFE;
+SPY180634;CX2.3;3;21/06/2018;cap_roux_2;cap_roux;Mediterranean;France;megafauna;transect;transect_aller_retour;12:12;12:42;00:30;30;0;23;0;marine;717;43.427372;6.88044;;;;;;;;;;718;43.428093;6.89;719;43.428162;6.887985;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY180934;CX2.4;4;21/06/2018;cap_roux_2;cap_roux;Mediterranean;France;megafauna;transect;transect_aller_retour;12:12;12:42;00:30;30;0;23;0;marine;;43.427372;6.88044;;;;;;;;;;;43.428093;6.89;;43.428162;6.887985;0.20;Emilie Boulanger;CEFE;court retour pour rester dans le site
+SPY180635;CX3.1;1;21/06/2018;cap_roux_3;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;14:00;14:30;00:30;30;0;23;1;marine;720;43.417858;6.829228;;;;;;;;;;;;;721;43.4147;6.814963;0.20;Emilie Boulanger;CEFE;
+SPY180630;CX3.2;2;21/06/2018;cap_roux_3;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;14:00;14:30;00:30;30;0;23;1;marine;;43.417858;6.829228;;;;;;;;;;;;;;43.4147;6.814963;0.20;Emilie Boulanger;CEFE;
+SPY181822;CX3.3;3;21/06/2018;cap_roux_3;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;14:45;15:15;00:30;30;0;23;1;marine;722;43.414792;6.8148;;;;;;;;;;;;;723;43.417892;6.828788;0.20;Emilie Boulanger;CEFE;
+SPY181823;CX3.4;4;21/06/2018;cap_roux_3;cap_roux;Mediterranean;France;megafauna;transect;transect_aller;14:45;15:15;00:30;30;0;23;1;marine;;43.414792;6.8148;;;;;;;;;;;;;;43.417892;6.828788;0.20;Emilie Boulanger;CEFE;
+SPY182540;BAN1.1;1;11/07/2019;banyuls19_1;banyuls;Mediterranean;France;megafauna;transect;transect_aller_retour;18:45;19:15;00:30;30;0;24;0;marine;180;42.461737;3.161565;;;;;;;;;;181;42.467242;3.159958;182;42.462179;3.160954;0.20;Emilie Boulanger;Megafauna;aller-retour pour rester dans la reserve
+SPY182542;BAN1.2;2;11/07/2019;banyuls19_1;banyuls;Mediterranean;France;megafauna;transect;transect_aller_retour;18:45;19:15;00:30;30;0;24;0;marine;180;42.461737;3.161565;;;;;;;;;;181;42.467242;3.159958;182;42.462179;3.160954;0.20;Emilie Boulanger;Megafauna;aller-retour pour rester dans la reserve
+SPY182168;BAN1.3;3;11/07/2019;banyuls19_1;banyuls;Mediterranean;France;megafauna;transect;transect_aller_retour;19:40;20:10;00:30;30;0;24;0;marine;183;42.468838;3.159013;;;;;;;;;;182;42.462179;3.160954;184;42.468482;3.159341;0.20;Emilie Boulanger;Megafauna;aller-retour pour rester dans la reserve
+SPY181975;BAN1.4;4;11/07/2019;banyuls19_1;banyuls;Mediterranean;France;megafauna;transect;transect_aller_retour;20:14;20:44;00:30;30;0;24;0;marine;184;42.468482;3.159341;;;;;;;;;;180;42.461737;3.161565;185;42.468189;3.159618;0.20;Emilie Boulanger;Megafauna;aller-retour pour rester dans la reserve
+SPY182160;BAN2.1;1;11/07/2019;banyuls19_2;banyuls;Mediterranean;France;megafauna;transect;transect_aller;17:00;17:30;00:30;30;0;24;0;marine;177;42.423661;3.169849;;;;;;;;;;;;;178;42.410452;3.165144;0.20;Emilie Boulanger;Megafauna;
+SPY182155;BAN2.2;2;11/07/2019;banyuls19_2;banyuls;Mediterranean;France;megafauna;transect;transect_aller;17:00;17:30;00:30;30;0;24;0;marine;;42.423661;3.169849;;;;;;;;;;;;;;42.410452;3.165144;0.20;Emilie Boulanger;Megafauna;
+SPY182544;BAN2.3;3;11/07/2019;banyuls19_2;banyuls;Mediterranean;France;megafauna;transect;transect_aller;17:47;18:17;00:30;30;0;24;0;marine;179;42.409949;3.163444;;;;;;;;;;;;;177;42.423661;3.169849;0.20;Emilie Boulanger;Megafauna;
+SPY182543;BAN2.4;4;11/07/2019;banyuls19_2;banyuls;Mediterranean;France;megafauna;transect;transect_aller;17:47;18:17;00:30;30;0;24;0;marine;;42.409949;3.163444;;;;;;;;;;;;;;42.423661;3.169849;0.20;Emilie Boulanger;Megafauna;
+SPY181827;BAN3.1;1;11/07/2019;banyuls19_3;banyuls;Mediterranean;France;megafauna;transect;transect_aller;11:35;12:05;00:30;30;0;24;0;marine;174;42.359825;3.166933;;;;;;;;;;;;;175;42.351734;3.188329;0.20;Emilie Boulanger;Megafauna;
+SPY181817;BAN3.2;2;11/07/2019;banyuls19_3;banyuls;Mediterranean;France;megafauna;transect;transect_aller;11:35;12:05;00:30;30;0;24;0;marine;;42.359825;3.166933;;;;;;;;;;;;;;42.351734;3.188329;0.20;Emilie Boulanger;Megafauna;
+SPY182546;BAN3.3;3;11/07/2019;banyuls19_3;banyuls;Mediterranean;France;megafauna;transect;transect_aller;12:30;13:00;00:30;30;0;24;0;marine;176;42.351981;3.187986;;;;;;;;;;;;;174;42.359825;3.166933;0.20;Emilie Boulanger;Megafauna;
+SPY182545;BAN3.4;4;11/07/2019;banyuls19_3;banyuls;Mediterranean;France;megafauna;transect;transect_aller;12:30;13:00;00:30;30;0;24;0;marine;;42.351981;3.187986;;;;;;;;;;;;;;42.359825;3.166933;0.20;Emilie Boulanger;Megafauna;
+SPY181884;GMED001;1;20/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.687017;7.308539;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY180765;GMED001;2;20/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.687017;7.308539;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181894;GMED001;3;20/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.686972;7.30875;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181910;GMED001;4;20/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.686972;7.30875;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181890;GMED002;1;20/03/2019;baie _de_villefranche;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.689708;7.309035;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181511;GMED002;2;20/03/2019;baie _de_villefranche;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.689708;7.309035;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY180785;GMED002;3;20/03/2019;baie _de_villefranche;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.689708;7.309035;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181893;GMED002;4;20/03/2019;baie _de_villefranche;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;;;0:30;30;0;;;marine;;43.689708;7.309035;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY180767;GMED003;1;21/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;point;niskin;;;0:10;10;150;;;marine;;43.68388;7.29903;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY180763;GMED004;1;21/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;point;bag_underwater;;;0:10;10;100;;;marine;; 43.666033;  7.252058;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181904;GMED005;1;21/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;point;bag_underwater;;;0:10;10;50;;;marine;; 43.666033;  7.252058;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY181502;GMED006;1;21/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;point;niskin;;;0:10;10;200;;;marine;; 43.682750;  7.299033;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY180764;GMED007;1;21/03/2019;cap_de_nice;cote_d_azur;Mediterranean;France;gombessa;point;boat;;;0:10;10;0;;;marine;;43.684542;7.299424;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;JB Juhel;
+SPY192314;GMED008;1;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;12:06;;0:30;30;65-10;;;marine;174;43.17606;5.40356;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;Test prototype pompe de fond, transecg sur remontée tombatn
+SPY192309;GMED008;2;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;17:06;;0:30;30;65-10;;;marine;175;43.17588;5.40324;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;Test prototype pompe de fond, transecg sur remontée tombatn
+SPY192279;GMED009;1;01/07/2019;marseille;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;08:48;09:18;0:30;30;0;;;marine;140;43.26900;5.36633;;;;;;;;;;;;;141;43.280787;5.346578;0.20;Emilie Boulanger;Megafauna;baigneurs nombreux
+SPY192323;GMED009;2;01/07/2019;marseille;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;09:35;10:05;0:30;30;0;;;marine;142;43.28088;5.34636;;;;;;;;;;;;;144;43.268709;5.367605;0.20;Emilie Boulanger;Megafauna;baigneurs nombreux
+SPY192306;GMED009;3;01/07/2019;marseille;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;10:26;10:56;0:30;30;0;;;marine;146;43.26900;5.36720;;;;;;;;;;;;;147;43.279561;5.347211;0.20;Emilie Boulanger;Megafauna;baigneurs nombreux
+SPY192316;GMED009;4;01/07/2019;marseille;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;11:16;11:47;0:30;30;0;;;marine;148;43.27953;5.34951;;;;;;;;;;;;;149;43.26864;5.367676;0.20;Emilie Boulanger;Megafauna;baigneurs nombreux
+SPY192284;GMED010;1;01/07/2019;goude;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;12:54;13:24;0:30;30;0;;;marine;150;43.23291;5.35105;;;;;;;;;;;;;151;43.21711;5.345712;0.20;Emilie Boulanger;Megafauna;
+SPY192320;GMED010;2;01/07/2019;goude;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;13:37;14:06;0:30;30;0;;;marine;152;43.21750;5.34561;;;;;;;;;;;;;153;43.232714;5.351148;0.20;Emilie Boulanger;Megafauna;
+SPY192308;GMED010;3;01/07/2019;goude;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;14:20;14:50;0:30;30;0;;;marine;154;43.23230;3.49935;;;;;;;;;;;;;155;43.217484;5.345571;0.20;Emilie Boulanger;Megafauna;
+SPY192285;GMED010;4;01/07/2019;goude;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;15:02;15:32;0:30;30;0;;;marine;156;43.21732;5.34549;;;;;;;;;;;;;157;43.23274;5.351033;0.20;Emilie Boulanger;Megafauna;
+SPY192289;GMED011;1;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;17:10;17:41;0:30;30;0;;;marine;158;43.17492;5.39804;;;;;;;;;;;;;159;43.179577;5.371579;0.20;Emilie Boulanger;Megafauna;
+SPY192280;GMED011;2;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;17:10;17:41;0:30;30;0;;;marine;158;43.17492;5.39804;;;;;;;;;;;;;159;43.179577;5.371579;0.20;Emilie Boulanger;Megafauna;
+SPY192312;GMED011;3;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;18:08;18:38;0:30;30;0;;;marine;160;43.18036;5.37254;;;;;;;;;;;;;161;43.176749;5.394;0.20;Emilie Boulanger;Megafauna;
+SPY192305;GMED011;4;01/07/2019;imperiaux;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller;18:08;18:38;0:30;30;0;;;marine;160;43.18036;5.37254;;;;;;;;;;;;;161;43.176749;5.394;0.20;Emilie Boulanger;Megafauna;
+SPY190603;GMED012;1;02/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;point;niskin;15:00;15:10;0:10;10;0;;;marine;175;43.17588;5.40324;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY190600;GMED013;1;02/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;point;niskin;15:20;15:30;0:10;10;20;;;marine;177;43.16821;5.54950;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY190566;GMED014;1;02/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;point;niskin;15:34;15:44;0:10;10;40;;;marine;178;43.16900;5.54909;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY190594;GMED015;1;02/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;point;niskin;16:00;16:10;0:10;10;60;;;marine;179;43.16862;5.54848;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY192281;GMED016;1;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;14:18;14:48;0:30;30;0;;;marine;183;43.16790;5.54591;;;;;;;;;;;;;184;43.16710;5.54800;0.20;JB Juhel;JB Juhel;nombreux bateaux
+SPY192286;GMED016;2;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;14:18;14:48;0:30;30;0;;;marine;183;43.16790;5.54591;;;;;;;;;;;;;184;43.16710;5.54800;0.20;JB Juhel;JB Juhel;nombreux bateaux
+SPY192315;GMED016;3;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;15:13;15:43;0:30;30;0;;;marine;186;43.16812;5.54567;;;;;;;;;;;;;187;43.16689;5.54771;0.20;JB Juhel;JB Juhel;nombreux bateaux
+SPY192322;GMED017;1;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;17:00;17:30;0:30;30;65;;;marine;;43.168030;5.545709;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY192313;GMED017;2;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;17:30;18:00;0:30;30;65;;;marine;;43.168030;5.545709;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY192304;GMED017;3;03/07/2019;beach_rock_cassis;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;18:00;18:30;0:30;30;65;;;marine;;43.168030;5.545709;;;;;;;;;;;;;;;;0.20;JB Juhel;JB Juhel;
+SPY192321;GMED018;1;06/07/2019;banc_de_magaud;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;19:00;19:30;0:30;30;75;;;marine;;43.056244;6.673749;;;;;;;;;;;;;;;;0.20;JB Juhel;Megafauna;
+SPY190608;GMED018;2;07/07/2019;banc_de_magaud;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;09:30;10:00;0:30;30;75;;;marine;;43.056244;6.673749;;;;;;;;;;;;;;;;0.20;JB Juhel;Megafauna;
+SPY192290;GMED018;3;07/07/2019;banc_de_magaud;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;10:00;10:30;0:30;30;75;;;marine;;43.056244;6.673749;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY190607;GMED019;1;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;08:45;09:15;0:30;30;0;;;marine;163;43.15886;6.62046;;;;;;;;;;;;;164;43.15979;6.62296;0.20;Emilie Boulanger;Megafauna;
+SPY192291;GMED019;2;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;08:45;09:15;0:30;30;0;;;marine;163;43.15886;6.62046;;;;;;;;;;;;;164;43.15979;6.62296;0.20;Emilie Boulanger;Megafauna;
+SPY190558;GMED019;3;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;09:37;10:07;0:30;30;0;;;marine;165;43.15891;6.62050;;;;;;;;;;;;;164;43.15979;6.62296;0.20;Emilie Boulanger;Megafauna;
+SPY192296;GMED020;1;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;point;niskin;14:09;14:11;00:10;10;0;;;marine;166;43.15280;6.61624;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY190602;GMED021;2;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;point;niskin;14:21;14:27;00:10;10;50;;;marine;167;43.15268;6.61693;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY190601;GMED022;3;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;point;niskin;14:40;14:49;00:10;10;100;;;marine;168;43.15025;6.61680;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY190551;GMED023;4;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;point;niskin;15:01;15:12;00:10;10;150;;;marine;169;43.14991;6.61595;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY190598;GMED024;5;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;point;niskin;16:28;16:39;00:10;10;200;;;marine;172;43.14817;6.62024;;;;;;;;;;;;;;;;0.20;Emilie Boulanger;Megafauna;
+SPY192319;GMED025;1;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;13:30;14:00;0:30;30;70;;;marine;;43.150888;6.617996;;;;;;;;;;;;;;;;0.20;JB Juhel;Megafauna;
+SPY190596;GMED025;2;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;14:00;14:30;0:30;30;70;;;marine;;43.150888;6.617996;;;;;;;;;;;;;;;;0.20;JB Juhel;Megafauna;
+SPY192288;GMED025;3;08/07/2019;cap_lardier;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;14:30;15:00;0:30;30;70;;;marine;;43.150888;6.617996;;;;;;;;;;;;;;;;0.20;JB Juhel;Megafauna;
+SPY182541;GMED026;1;14/07/2019;tombant_americain;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;09:30;10:00;0:30;30;120;;;marine;;43.681816;7.302233;;;;;;;;;;;;;;;;0.20;JB Juhel;;transects surface réalisés en mars 2019
+SPY182040;GMED026;2;14/07/2019;tombant_americain;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;10:00;10:30;0:30;30;120;;;marine;;43.681816;7.302233;;;;;;;;;;;;;;;;0.20;JB Juhel;;transects surface réalisés en mars 2019
+SPY192288;GMED026;3;14/07/2019;tombant_americain;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;10:30;11:00;0:30;30;120;;;marine;;43.681816;7.302233;;;;;;;;;;;;;;;;0.20;JB Juhel;;transects surface réalisés en mars 2019
+SPY192287;GMED027;1;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;08:51;09:21;0:30;30;0;;;marine;186;43.14227;6.43833;;;;;;;;;;;;;187;43.14342;6.44719;0.20;Nacim Guellati;Megafauna;pompe n°8 reglée sur 24,3 car à 8,0 le débit était bcp trop faible
+SPY192282;GMED027;2;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;08:51;09:21;0:30;30;0;;;marine;186;43.14227;6.43833;;;;;;;;;;;;;187;43.14342;6.44719;0.20;Nacim Guellati;Megafauna;
+SPY192294;GMED027;3;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_aller_retour;09:45;10:15;0:30;30;0;;;marine;186;43.14227;6.43833;;;;;;;;;;;;;187;43.14342;6.44719;0.20;Nacim Guellati;Megafauna;
+SPY192295;GMED028;1;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;10:00;10:30;0:30;30;130;;;marine;;43.134424;6.428435;;;;;;;;;;;;;;;;0.20;JB Juhel;;
+SPY192283;GMED028;2;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;10:30;11:00;0:30;30;130;;;marine;;43.134424;6.428435;;;;;;;;;;;;;;;;0.20;JB Juhel;;
+SPY192311;GMED028;3;19/07/2019;cap_negre;cote_d_azur;Mediterranean;France;gombessa;transect;transect_deep;11:00;11:30;0:30;30;130;;;marine;;43.134424;6.428435;;;;;;;;;;;;;;;;0.20;JB Juhel;;
+SPY181060;LENG002;1;17/10/2017;LENG002;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;0;29.5;;marine;;-04.11588;132.97463;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181049;LENG002;2;17/10/2017;LENG002;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;0;29.5;;marine;;-04.11588;132.97463;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181059;LENG003;1;18/10/2017;LENG003;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;12:00;;;2;39;29.5;;marine;;-04.11785;133.01915;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180180;LENG003;2;18/10/2017;LENG003;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;12:00;;;1.7;39;29.5;;marine;;-04.11785;133.01915;;;;;;;;;;;;;;;;0.22;JB Juhel;;Buffer does not cover all  the filter
+SPY181021;LENG004;1;18/10/2017;LENG004;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;12:15;;;2;0;30;;marine;;-04.11746;133.02032;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181047;LENG004;2;18/10/2017;LENG004;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;12:15;;;2;0;30;;marine;;-04.11746;133.02032;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181020;LENG005;1;18/10/2017;LENG005;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;0;30;;marine;;-04.06037;133.05912;;;;;;;;;;;;;;;;0.22;JB Juhel;;River estuary (saltwater)
+SPY181017;LENG005;2;18/10/2017;LENG005;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;0;30;;marine;;-04.06037;133.05912;;;;;;;;;;;;;;;;0.22;JB Juhel;;River estuary (saltwater)
+SPY181018;LENG006;1;19/10/2017;LENG006;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;07:00;;;2;0;30;;marine;;-04.11746;133.02032;;;;;;;;;;;;;;;;0.22;JB Juhel;;Replicate LENG004 - 2h before filtration
+SPY181022;LENG006;2;19/10/2017;LENG006;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;07:00;;;2;0;30;;marine;;-04.11746;133.02032;;;;;;;;;;;;;;;;0.22;JB Juhel;;Replicate LENG004 - 2h before filtration
+SPY181026;LENG007;1;20/10/2017;LENG007;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:15;;;2;0;30.8;;marine;;-04.12453;132.97571;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181019;LENG007;2;20/10/2017;LENG007;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:15;;;2;0;30.8;;marine;;-04.12453;132.97571;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181028;LENG008;1;21/10/2017;LENG008;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;09:10;;;2;100;26.5;;marine;;-04.13307;132.97514;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181015;LENG008;2;21/10/2017;LENG008;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;09:10;;;2;100;26.5;;marine;;-04.13307;132.97514;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181027;LENG009;1;21/10/2017;LENG009;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;15:00;;;2;30;29.2;;marine;;-04.13307;132.97514;;;;;;;;;;;;;;;;0.22;JB Juhel;;LENG007-8-9-10 same point, different depth
+SPY181023;LENG009;2;21/10/2017;LENG009;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;15:00;;;2;30;29.2;;marine;;-04.13307;132.97514;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181016;LENG010;1;24/10/2017;LENG010;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;2;193;16.1;;marine;;-04.13565;132.97421;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling with niskin bottle
+SPY181014;LENG010;2;24/10/2017;LENG010;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;1.3;200;15.2;;marine;;-04.13565;132.97421;;;;;;;;;;;;;;;;0.22;JB Juhel;;LENG10 under thermocline
+SPY181025;LENG011;1;24/10/2017;LENG011;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;16:00;;;2;31;;;marine;;-04.12602;132.97690;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181024;LENG011;2;24/10/2017;LENG011;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;16:00;;;2;31;;;marine;;-04.12602;132.97690;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181012;LENG012;1;25/10/2017;LENG012;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:00;;;2;35;;;marine;;-04.08471;132.91273;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181013;LENG012;2;25/10/2017;LENG012;nusa_ulan;West_Papua;Indonesia;lengguru;point;bag_underwater;10:00;;;1.9;35;;;marine;;-04.08471;132.91273;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180181;LENG013;1;26/10/2017;LENG013;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;10:00;;;2;0;;;marine;;-04.32327;133.50134;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180182;LENG013;2;26/10/2017;LENG013;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;10:00;;;2;0;;;marine;;-04.32327;133.50134;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181057;LENG014;1;26/10/2017;LENG014;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;15:00;;;2;27;;;marine;;-04.32135;133.49826;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181044;LENG014;2;26/10/2017;LENG014;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;15:00;;;2;27;;;marine;;-04.32135;133.49826;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180183;LENG015;1;27/10/2017;LENG015;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;09:15;;;2;0;29.3;;marine;;-04.32225;133.49443;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180184;LENG015;2;27/10/2017;LENG015;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;09:15;;;2;0;29.3;;marine;;-04.32225;133.49443;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180984;LENG016;1;27/10/2017;LENG016;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;09:30;;;2;30;;;marine;;-04.33406;133.50023;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180970;LENG016;2;27/10/2017;LENG016;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;09:30;;;1.6;30;;;marine;;-04.33406;133.50023;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181050;LENG017;1;27/10/2017;LENG017;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;140;;;marine;;-04.33682;133.48660;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181052;LENG017;2;27/10/2017;LENG017;pulau_venu;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;150;;;marine;;-04.33682;133.48660;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181056;LENG018;1;31/10/2017;LENG018;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;16:30;;;2;80;;;marine;;-03.90609;134.03523;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180971;LENG018;2;31/10/2017;LENG018;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;16:30;;;2;80;;;marine;;-03.90609;134.03523;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180991;LENG019;1;31/10/2017;LENG019;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;0;;;marine;;-03.90622;134.03543;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181040;LENG019;2;31/10/2017;LENG019;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;17:00;;;2;0;;;marine;;-03.90622;134.03543;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180185;LENG020;1;01/11/2017;LENG020;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;09:50;;;2;0;;;marine;;-03.90981;134.07770;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180186;LENG020;2;01/11/2017;LENG020;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;09:50;;;1.9;0;;;marine;;-03.90981;134.07770;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180990;LENG021;1;01/11/2017;LENG021;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;2;80;;;marine;;-03.90956;134.07967;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181008;LENG021;2;01/11/2017;LENG021;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;2;80;;;marine;;-03.90956;134.07967;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181054;LENG022;1;01/11/2017;LENG022;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;2;25;;;marine;;-03.90956;134.07967;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180992;LENG022;2;01/11/2017;LENG022;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:30;;;2;25;;;marine;;-03.90956;134.07967;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180170;LENG023;1;03/11/2017;LENG023;lengguru_river;West_Papua;Indonesia;lengguru;point;bag_underwater;13:25;;;5;0;;;river;;-03.72099;134.09822;;;;;;;;;;;;;;;;0.45;JB Juhel;;
+SPY180171;LENG023;2;03/11/2017;LENG023;lengguru_river;West_Papua;Indonesia;lengguru;point;bag_underwater;13:40;;;5;0;;;river;;-03.72398;134.10167;;;;;;;;;;;;;;;;0.45;JB Juhel;;
+SPY181053;LENG024;1;03/11/2017;LENG024;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;17:30;;;2;70;;;marine;;-03.79458;134.12033;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180988;LENG024;2;03/11/2017;LENG024;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;17:30;;;2;70;;;marine;;-03.79458;134.12033;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181055;LENG025;1;03/11/2017;LENG025;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;18:00;;;2;0;;;marine;;-03.79458;134.12033;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180975;LENG025;2;03/11/2017;LENG025;triton_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;18:00;;;2;0;;;marine;;-03.79458;134.12033;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180972;LENG026;1;04/11/2017;LENG026;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;08:14;;;2;3;;;resurgence;;-03.77847;134.16130;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181000;LENG026;2;04/11/2017;LENG026;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;08:14;;;2;3;;;resurgence;;-03.77847;134.16130;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180981;LENG027;1;04/11/2017;LENG027;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;09:00;;;2;0;;;marine;;-03.77903;134.16254;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181046;LENG027;2;04/11/2017;LENG027;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;09:00;;;2;0;;;marine;;-03.77903;134.16254;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181041;LENG028;1;04/11/2017;LENG028;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;09:00;;;2;50;;;marine;;-03.83190;134.09264;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180989;LENG028;2;04/11/2017;LENG028;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;09:00;;;2;50;;;marine;;-03.83190;134.09264;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180999;LENG029;1;04/11/2017;LENG029;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;12:00;;;2;0;;;marine;;-03.83190;134.09264;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180993;LENG029;2;04/11/2017;LENG029;lobo;West_Papua;Indonesia;lengguru;point;bag_underwater;12:00;;;2;0;;;marine;;-03.83190;134.09264;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181033;LENG030;1;07/11/2017;LENG030;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;09:45;;;2;0;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181031;LENG030;2;07/11/2017;LENG030;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;09:45;;;2;0;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181061;LENG031;1;07/11/2017;LENG031;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;93;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181051;LENG031;2;07/11/2017;LENG031;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;93;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181064;LENG032;1;07/11/2017;LENG032;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;25;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180986;LENG032;2;07/11/2017;LENG032;pulau_aiduma;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;25;;;marine;;-04.01173;134.20171;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181048;LENG033;1;08/11/2017;LENG033;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;10:45;;;2;0;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181006;LENG033;2;08/11/2017;LENG033;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;10:45;;;2;0;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180982;LENG034;1;08/11/2017;LENG034;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;2;80;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181038;LENG034;2;08/11/2017;LENG034;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;2;80;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180985;LENG035;1;08/11/2017;LENG035;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;2;33;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181035;LENG035;2;08/11/2017;LENG035;tanjung_boi;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;2;33;;;marine;;-04.03573;134.48901;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180172;LENG036;1;09/11/2017;LENG036;etna_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;08:20;;;5;0;;;estuary;;-03.93996;134.74069;;;;;;;;;;;;;;;;0.45;JB Juhel;;
+SPY180173;LENG036;2;09/11/2017;LENG036;etna_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;08:58;;;5;0;;;estuary;;-03.94102;134.74156;;;;;;;;;;;;;;;;0.45;JB Juhel;;
+SPY181062;LENG037;1;09/11/2017;LENG037;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;14:50;;;2;0;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181063;LENG037;2;09/11/2017;LENG037;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;14:50;;;2;0;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181011;LENG038;1;09/11/2017;LENG038;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;70;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181058;LENG038;2;09/11/2017;LENG038;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;70;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181002;LENG039;1;09/11/2017;LENG039;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;31;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181043;LENG039;2;09/11/2017;LENG039;pulau_aiduma_ext;West_Papua;Indonesia;lengguru;point;bag_underwater;15:30;;;2;31;;;marine;;-04.03521;134.28719;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180983;LENG040;1;11/11/2017;LENG040;kamaka_lake;West_Papua;Indonesia;lengguru;point;bag_underwater;08:53;;;2;0;;;lake;;-03.77537;134.20151;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181039;LENG040;2;11/11/2017;LENG040;kamaka_lake;West_Papua;Indonesia;lengguru;point;bag_underwater;08:53;;;2;0;;;lake;;-03.77537;134.20151;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181037;LENG041;1;13/11/2017;LENG041;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;10:37;;;0.8;0;;;river;;-04.06772;133.03728;;;;;;;;;;;;;;;;0.22;JB Juhel;;River estuary (freshwater - to concentrate to filtrate 2L) 
+SPY180987;LENG041;2;13/11/2017;LENG041;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;10:37;;;0.8;0;;;river;;-04.06772;133.03728;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181007;LENG042;1;13/11/2017;LENG042;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;10:55;;;0.8;0;;;river;;-04.06683;133.03258;;;;;;;;;;;;;;;;0.22;JB Juhel;;River cascade (freshwater - to concentrate to filtrate 2L) 
+SPY181036;LENG042;2;13/11/2017;LENG042;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;10:55;;;0.8;0;;;river;;-04.06683;133.03258;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180174;LENG043;1;13/11/2017;LENG043;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;10:37;;;5;0;;;river;;-04.06683;133.03258;;;;;;;;;;;;;;;;0.45;JB Juhel;;replicate LENG042
+SPY180175;LENG044;1;13/11/2017;LENG044;nusa_ulan_river;West_Papua;Indonesia;lengguru;point;bag_underwater;15:24;;;5;0;;;river;;-04.06837;133.03748;;;;;;;;;;;;;;;;0.45;JB Juhel;;replicate LENG041
+SPY181003;LENG045;1;14/11/2017;LENG045;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;11:50;;;2;0;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181045;LENG045;1;14/11/2017;LENG045;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;11:50;;;2;0;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180974;LENG046;2;14/11/2017;LENG046;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;2;70;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180187;LENG046;1;14/11/2017;LENG046;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;12:30;;;1.1;70;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180976;LENG046;2;15/11/2017;LENG046;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;11:20;;;2;70;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;replicate LENG046 done the day after to complete the missing volume
+SPY181001;LENG047;1;14/11/2017;LENG047;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;13:00;;;2;30;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181010;LENG047;2;14/11/2017;LENG047;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;13:00;;;2;30;;;marine;;-03.93609;132.80188;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180995;LENG048;1;15/11/2017;LENG048;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;11:40;;;2;120;;;marine;;-03.93424;132.78685;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180980;LENG048_temoin;1;;LENG048_temoin;;West_Papua;Indonesia;lengguru;point;bag_underwater;;;;;;;;;;;;;;;;;;;;;;;;;;;;JB Juhel;;control - successive filtration
+SPY181042;LENG048;2;15/11/2017;LENG048;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;11:40;;;2;120;;;marine;;-03.93424;132.78685;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181009;LENG048_temoin;2;;LENG048_temoin;;West_Papua;Indonesia;lengguru;point;bag_underwater;;;;;;;;;;;;;;;;;;;;;;;;;;;;JB Juhel;;control - successive filtration
+SPY180979;LENG049;1;16/11/2017;LENG049;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;08:49;;;2;270;;;marine;;-03.93543;132.76505;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180996;LENG049;2;16/11/2017;LENG049;kitikiti;West_Papua;Indonesia;lengguru;point;bag_underwater;08:49;;;2;270;;;marine;;-03.93543;132.76505;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180188;LENG050;1;16/11/2017;LENG050;kitikiti_lake;West_Papua;Indonesia;lengguru;point;bag_underwater;15:46;;;2;0;;;lake;;-03.92841;132.82257;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180189;LENG050;2;16/11/2017;LENG050;kitikiti_lake;West_Papua;Indonesia;lengguru;point;bag_underwater;15:46;;;2;0;;;lake;;-03.92841;132.82257;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180176;LENG051;1;18/11/2017;LENG051;arguni_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:15;;;5;0;31.3;;estuary;;-03.22096;133.67038;;;;;;;;;;;;;;;;0.45;JB Juhel;;3h before conservation buffer
+SPY180177;LENG051;2;18/11/2017;LENG051;arguni_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;10:15;;;5;0;31.3;;estuary;;-03.22096;133.67038;;;;;;;;;;;;;;;;0.45;JB Juhel;;3h before conservation buffer
+SPY180178;LENG052;1;18/11/2017;LENG052;arguni_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;11:56;;;5;0;31.7;;estuary;;-03.30699;133.66507;;;;;;;;;;;;;;;;0.45;JB Juhel;;3h before conservation buffer
+SPY180179;LENG052;2;18/11/2017;LENG052;arguni_bay;West_Papua;Indonesia;lengguru;point;bag_underwater;11:56;;;5;0;31.7;;estuary;;-03.30699;133.66507;;;;;;;;;;;;;;;;0.45;JB Juhel;;3h before conservation buffer
+SPY181005;LENG053;1;21/11/2017;LENG053;cap_west;West_Papua;Indonesia;lengguru;point;bag_underwater;13:55;;;2;85;;;marine;;-02.99063;131.93184;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+SPY180973;LENG053;2;21/11/2017;LENG053;cap_west;West_Papua;Indonesia;lengguru;point;bag_underwater;13:55;;;2;85;;;marine;;-02.99063;131.93184;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+SPY181004;LENG054;1;21/11/2017;LENG054;cap_west;West_Papua;Indonesia;lengguru;point;bag_underwater;14:30;;;2;0;;;marine;;-03.00112;131.93817;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181030;LENG054;2;21/11/2017;LENG054;cap_west;West_Papua;Indonesia;lengguru;point;bag_underwater;14:30;;;2;0;;;marine;;-03.00112;131.93817;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY180978;LENG055;1;22/11/2017;LENG055;pulau_pisang;West_Papua;Indonesia;lengguru;point;bag_underwater;11:14;;;2;0;;;marine;;-02.65144;131.60634;;;;;;;;;;;;;;;;0.22;JB Juhel;;divers in the area of sampling
+SPY180998;LENG055;2;22/11/2017;LENG055;pulau_pisang;West_Papua;Indonesia;lengguru;point;bag_underwater;11:14;;;2;0;;;marine;;-02.65144;131.60634;;;;;;;;;;;;;;;;0.22;JB Juhel;;divers in the area of sampling
+SPY180994;LENG056;1;22/11/2017;LENG056;pulau_pisang;West_Papua;Indonesia;lengguru;point;bag_underwater;11:30;;;2;30;;;marine;;-02.67144;131.59814;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181032;LENG056;2;22/11/2017;LENG056;pulau_pisang;West_Papua;Indonesia;lengguru;point;bag_underwater;11:30;;;2;30;;;marine;;-02.67144;131.59814;;;;;;;;;;;;;;;;0.22;JB Juhel;;
+SPY181029;LENG057;1;23/11/2017;LENG057;channel_sorong;West_Papua;Indonesia;lengguru;point;bag_underwater;10:45;;;2;30;;;marine;;-00.95288;130.60258;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+SPY181034;LENG057;2;23/11/2017;LENG057;channel_sorong;West_Papua;Indonesia;lengguru;point;bag_underwater;10:45;;;2;30;;;marine;;-00.95288;130.60258;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+SPY180997;LENG058;1;23/11/2017;LENG058;channel_sorong;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;0;;;marine;;-00.95288;130.60258;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+SPY180977;LENG058;2;23/11/2017;LENG058;channel_sorong;West_Papua;Indonesia;lengguru;point;bag_underwater;11:00;;;2;0;;;marine;;-00.95288;130.60258;;;;;;;;;;;;;;;;0.22;JB Juhel;;sampling from the Airaha
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
