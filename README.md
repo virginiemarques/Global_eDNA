@@ -54,9 +54,3 @@ For the first reading step, some datasets are heavy enough to have a long comput
 I have already generated the list to read all dataset to ease the computer transfert. You can load it in .Rdata and proceeed to step 2 - 3 for the projects available at the moment.  
 
 If you encouter any error, please contact me & fill a detailed issue on this repo. 
-
-### Future improvements
-
-- Correct date due to wrong excel format in input file 
-
-
