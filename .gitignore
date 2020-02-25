@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+data/All/*
+data/LULU/*fasta*
+data/LULU/*match*

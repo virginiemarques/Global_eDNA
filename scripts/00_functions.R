@@ -1,6 +1,5 @@
 # Automatisation des traitements 
 # Create functions to treat data 
-# Store all non-fish in vector at the beggining of the script 
 # And maybe a table at the beggining saying whether its rapidrun or MiSeq as the treatment and filters are different 
 # OR! Clean the 0.0006 filter before all this to proceed with clean data 
 # OR! Import clean metadata to do the filter easily 
@@ -124,14 +123,20 @@ read_data <- function(taxo_motu, table_otu,
     mutate(new_species_name = case_when(
       new_rank_ncbi %in% c("species") ~ species_name
     ))
-    
+  
   # Clean the columns a bit for clarity: remove taxids for each rank, stats from swarm, outputs from ecotag
-  columns_to_remove <- c("definition", "id", "taxid", "taxid_by_db.db_embl_std", "best_identity.db_embl_std", "count", "family", "genus", "match_count.db_embl_std", "order", "rank", "scientific_name",
-                         "species", "species_list.db_embl_std", "OTU", "total", "cloud", "length", "abundance", "spread", "quality", "identity", "taxonomy", 
-                         "references", "family_name", "genus_name", "species_name") 
+  columns_to_remove <- c("definition", "id", "taxid", "count", "family", "genus", "order", "rank", "scientific_name",
+                         "species", "OTU", "total", "cloud", "length", "abundance", "spread", "quality", "identity", "taxonomy", 
+                         "references", "family_name", "genus_name", "species_name", "taxid_ncbi") 
   
   sw4 <- sw3 %>%
-    select(-one_of(columns_to_remove))
+    select(-one_of(columns_to_remove)) %>%
+    select(-starts_with("taxid_by_db")) %>%
+    select(-starts_with("best_identity.db")) %>%
+    select(-starts_with("species_list")) %>%
+    select(-starts_with("match_count")) %>%
+    select(-starts_with("best_identity:"))
+  
   
   # Return object
   return(sw4)
@@ -194,12 +199,13 @@ add_class_name <- function(edna_file){
 # **It is usually not used in tropical reef eDNA as too much information is lost, but clasfically performed in stream eDNA or for Lengguru as the protocol is different from other studies
 # habitat_select is a value allowing to filter samples based on its habitat (provided in metadata). It is a vector. You can visualize the list of habitats using the command: unique(metadata_sampling$habitat). Default is set to keep only marine. 
 # min_percentage_id is a value set to remove the sequences with a very low % of ID. There is no consensus on such a value, but some low % sequence assigned to fish could not really correspond to fish species. Default is 80%. 
+# delete_gps_col controls the deletion of multiples GPS columns -- to have a small dataset if those data are not needed. Since the protocols are different, there is a lot of ways to store GPS. Default is TRUE
 # ----------------------------------------- # 
 
 
 clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                        min_size_seq = 30, max_size_seq = 100, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
-                       min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0.80){
+                       min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0.80, delete_gps_col=TRUE){
   
   # Verification that the class column exists
   if( remove_not_fish_taxize & !('class_name' %in% colnames(edna_file)) ) stop(paste(" error: the column class_name does not exist. Please use the add_class_name function before or set the remove_not_fish_taxize option to FALSE."))
@@ -230,6 +236,10 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
       "There is ", length(unique(amplicon_control$amplicon)), " MOTUs in the blanks for the ", unique(edna_file$project_name), " project"
     ))
   }
+  
+  # Prepare columns to delete -- you can also change it here if necessary
+  columns_delete <- c("turbidity", "gps_start", "gps_b", "lat_gps_b", "long_gps_b", "gps_c", "long_gps_c", "lat_gps_d", "gps_half_turn", "longitude_turn", "latitude_end", "longitude_end", 
+                      "gps_end", "long_gps_d", "gps_d", "lat_gps_c", "latitude_turn", "data_manager", "gps_owner", "chimera")
   
   # Remove the MOTUs found in the blanks
   edna_file_filtered <- edna_file %>%
@@ -270,7 +280,10 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
     # Choose habitats
     filter(habitat %in% habitat_select) %>%
     # Select minimum % of ID
-    filter(best_identity_database > min_percentage_id) 
+    filter(best_identity_database > min_percentage_id) %>%
+    # Clean columns
+    `if`(delete_gps_col, select(., -one_of(columns_delete)), .)
+  
   
   return(edna_file_filtered)
   

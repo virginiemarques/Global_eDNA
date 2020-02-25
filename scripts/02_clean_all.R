@@ -1,6 +1,6 @@
 # This is code to control all quality thresholds applied on the ouput of 01 script + apply LULU + combine list into dataframe
 # Code developed by Virginie Marques
-# Last updated: 28 Jan. 2020
+# Last updated: 24 Fev. 2020
 
 # Lib 
 library(tidyverse)
@@ -53,7 +53,6 @@ lapply(liste_read_edna_LULU, function(x){
   length(unique(x$amplicon))
 })
 
-
 # ------------------------------------------------------------------------------------- # 
 # Assemble the lists to obtain the big dataset
 # simplify_sample_level simplifies the dataset at the sample level and not at the PCR level as before
@@ -69,3 +68,4 @@ df_all_filters_sample <- simplify_sample_level(df_all_filters)
 # List + df 
 
 save(liste_all_filters, liste_read_edna_LULU, df_all_filters, file = 'Rdata/02_clean_all.Rdata')
+

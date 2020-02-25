@@ -1,9 +1,9 @@
 # This is code to read and combine all data from available eDNA metabarcoding outputs from SWARM clustering.
 # Code developed by Virginie Marques
-# Last updated: 24 Jan. 2020
+# Last updated: 24 Fev 2020
 
 # Bugs to fix:
-# Dates are wrong due to excel file 
+# 
 
 # ----------------------------------------------------------------------------------------------------------------- # 
 # Before running this script, if you add new metabarcoding data, make sure you have all the corresponding metadata 
@@ -33,8 +33,14 @@ if(length(liste_table) != length(liste_taxo)){
 # Get the project name 
 projects <- unique(word(liste_table, 1, sep="_"))
 
-# Metadata - field
-metadata_sampling <- read_excel("metadata/Metadata_eDNA_Megafauna_EB_leng.xlsx", 1)
+# Metadata - field. Import the csv; the excel files messes with dates and dates
+# There is an issue with numerous empty columns being imported in the csv 
+# metadata_sampling <- read_excel("metadata/Metadata_eDNA_Megafauna_EB_leng.xlsx", 1)
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V2.csv", sep=";", stringsAsFactors = F)
+
+# Clean the spaces before coordinates
+metadata_sampling$longitude_start <- str_trim(metadata_sampling$longitude_start)
+metadata_sampling$latitude_start <- str_trim(metadata_sampling$latitude_start)
 
 # Metadata - sequencing
 # For later: the generation of those files should be automated to always have the same columns?
