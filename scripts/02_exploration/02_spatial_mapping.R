@@ -75,7 +75,13 @@ m
 saveWidget(m, file="02_interactive_map.html")
 system("mv 02_interactive_map.html plots/01_exploration/.")
 
+# ---------------------------------------------------------------------------------------------- #
+#                            bbox
 
+# Longitude min et max
+st_bbox(metadata_map_sf)
+# -22.33944
+# 46.89614 
 
 
 

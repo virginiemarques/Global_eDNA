@@ -96,7 +96,7 @@ plot_acc_all
 ggsave("plots/01_exploration/01_accumulation_curve_all_projects_station.png", plot_acc_all, width = 12, height = 8)
 
 
-
+# Add a global saturation curve, i.e. all samples together?
 
 
 
