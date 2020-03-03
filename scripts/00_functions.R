@@ -304,7 +304,7 @@ simplify_sample_level <- function(edna_file){
 }
 
 # ------------------------------------------------------------------------ # 
-# APPLY LULU 
+#### APPLY LULU                                                     -----
 
 # To apply this function, you need to have a UNIX OS system (The system function doesn't work on windows)
 # And you need to install the blastn tools in your local machine 

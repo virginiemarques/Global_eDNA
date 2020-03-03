@@ -2,6 +2,9 @@
 # Virginie Marques
 # Last up: 27.02.2020
 
+# To do:
+# Remove the deep water filters. Question: even in Lengguru?
+
 # Lib 
 library(tidyverse)
 library(ggplot2)
@@ -11,6 +14,9 @@ load("Rdata/02_clean_all.Rdata")
 
 # 
 '%ni%' <- Negate("%in%")
+
+# Functions
+source('scripts/02_exploration/00_functions.R')
 
 # Ajouter une colonne nom assigné unique lié aux MOTUs? Pour éviter d avoir des noms de colonnes avec des séquences?
 
@@ -96,9 +102,84 @@ plot_acc_all
 ggsave("plots/01_exploration/01_accumulation_curve_all_projects_station.png", plot_acc_all, width = 12, height = 8)
 
 
+# ----------------------------------------------------------------------------- # 
+# All samples together 
+
 # Add a global saturation curve, i.e. all samples together?
+all_accumulation <- accumulation_curve_df(df_all_filters) %>%
+  mutate(project_name = "All") %>%
+  select(project_name, richness, sd, sites)
+
+# Asymptote of all plots 
+all_asymptote <- asymptote_mm(df_all_filters) %>%
+  mutate(project_name = "All") %>%
+  select(project_name, asymptote)
+
+# Bind together
+df_all_accumulation <- rbind(df_accumulation, all_accumulation)
+df_all_asymptote <- rbind(df_asymptote, all_asymptote)
+
+# 
+df_join_all <- df_all_accumulation %>%
+  left_join(., df_all_asymptote, by = "project_name") 
+
+# Plots
+plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote, col = project_name), linetype = "dashed", size = 0.5) +
+  ylab("Number of MOTUs") +
+  xlab("Samples (filter)") +
+  theme_bw()
+
+plot_acc_all
+
+# Plot with facet
+plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  facet_wrap(~project_name, scales = "free") +
+  ylab("Number of MOTUs") +
+  xlab("Samples (filter)") +
+  theme_bw()
+
+plot_acc_all
+
+ggsave("plots/01_exploration/01_accumulation_curve_all_projects_combination.png", plot_acc_all, width = 12, height = 8)
+
+# ----------------------------------------------------------------------------- # 
+# Counts
+
+# Attention a la sur-estimations! 
+# Des erreurs peuvent se glisser dans un jeu de données, et rester plus loin et participent a sur-evaluer la diversite gamma
+# Approche par nombre de hill? q=1 ou q = 0.5?
+
+otu_names <- df_all_filters %>%
+  distinct(sequence, new_rank_ncbi, new_scientific_name_ncbi, best_identity_database)
+
+proportions <- table(otu_names$new_rank_ncbi)  
+pie(proportions)  
+
+hist(otu_names$best_identity_database, breaks=100)
+
+otu_names_family <- df_all_filters %>%
+  distinct(sequence, new_rank_ncbi, new_family_name, new_scientific_name_ncbi, best_identity_database)
 
 
+count_families <- data.frame(table(otu_names_family$new_family_name))
+
+ggplot(count_families, aes(x=reorder(Var1, -Freq), y = Freq, fill = Freq)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  theme(axis.text.x=element_text(angle = -45, hjust = 0)) 
+
+ggsave("plots/01_exploration/01_number_motus_family.png", width=16, height=6)
+
+# Leng
+leng <- df_all_filters %>%
+  filter(project_name == "Lengguru") %>%
+  distinct(sequence, new_rank_ncbi, new_family_name, new_scientific_name_ncbi, best_identity_database)
 
 
-
+# Most of the gobies are from Lengguru, i.e. 66 sp among the 95
