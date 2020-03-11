@@ -304,7 +304,7 @@ simplify_sample_level <- function(edna_file){
 }
 
 # ------------------------------------------------------------------------ # 
-# APPLY LULU 
+#### APPLY LULU                                 ----
 
 # To apply this function, you need to have a UNIX OS system (The system function doesn't work on windows)
 # And you need to install the blastn tools in your local machine 
@@ -362,3 +362,18 @@ apply_lulu <- function(edna_file, path_lulu, match_lulu = 84, co_occurence_lulu 
   # Output
   return(lulu_edna)
 }
+
+
+# ---------------------------------------------------------------------------------- # 
+#### infos_statistiques ----
+
+
+infos_statistiques <- function(file){
+  Reads <- sum(file$count_reads)
+  MOTUs <- file %>% summarise(n = n_distinct(amplicon)) %>% pull()
+  Scientific_names <-  file %>% summarise(n = n_distinct(new_scientific_name_ncbi)) %>% pull()
+
+  ab <- data.frame(Reads, MOTUs, Scientific_names)
+  return(ab)
+}
+
