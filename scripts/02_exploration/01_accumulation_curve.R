@@ -26,6 +26,24 @@ liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
     filter(new_rank_ncbi != "higher")
 })
 
+
+lapply(liste_read_edna_LULU, function(x){
+  length(unique(x$amplicon))
+})
+
+lapply(liste_read_edna_LULU, function(x){
+  length(unique(x$station))
+})
+
+leg <- df_all_filters %>%
+  filter(project_name == "Lengguru") %>%
+  distinct(amplicon, sequence, new_rank_ncbi)
+
+
+table(leg$new_rank_ncbi)
+
+length(unique(leg$sequence))
+
 # ------------------------------------------------------------------------------- # 
 # On individual filters
 # ------------------------------------------------------------------------------- # 
@@ -93,7 +111,7 @@ plot_acc_all <- ggplot(df_accumulation_all) +
   geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "MOTUs")), col = "black") +
   facet_wrap(~project_name, scales = "free") +
   ylab("Number of MOTUs") +
-  xlab("Samples (filter)") +
+  xlab("Station (pair of filters") +
   theme_bw()
 
 plot_acc_all
@@ -124,15 +142,19 @@ df_join_all <- df_all_accumulation %>%
   left_join(., df_all_asymptote, by = "project_name") 
 
 # Plots
-plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+plot_acc_all <- ggplot(df_join_all 
+                       %>% filter(project_name != "All"), 
+                       aes(fill = project_name, col = project_name)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote, col = project_name), linetype = "dashed", size = 0.5) +
   ylab("Number of MOTUs") +
   xlab("Samples (filter)") +
-  theme_bw()
+  theme_bw() # + scale_x_continuous(trans='log2') 
 
 plot_acc_all
+
+ggsave("plots/01_exploration/01_accumulation_curve_all_projects_combination_no_facet.png", plot_acc_all, width = 12, height = 8)
 
 # Plot with facet
 plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
@@ -169,12 +191,13 @@ otu_names_family <- df_all_filters %>%
 
 count_families <- data.frame(table(otu_names_family$new_family_name))
 
-ggplot(count_families, aes(x=reorder(Var1, -Freq), y = Freq, fill = Freq)) + 
+ggplot(count_families, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq)) + 
   geom_bar(stat="identity") + 
   theme_bw() +
-  theme(axis.text.x=element_text(angle = -45, hjust = 0)) 
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
+  coord_flip()
 
-ggsave("plots/01_exploration/01_number_motus_family.png", width=16, height=6)
+ggsave("plots/01_exploration/01_number_motus_family.png", width=6, height=16)
 
 # Leng
 leng <- df_all_filters %>%
