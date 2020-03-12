@@ -46,7 +46,7 @@ colnames(dist_min) <- c("dist_to_coast (m)", "code_spygen")
   # assemble with metadata
 metadata <- left_join(metadata_sampling, dist_min, by="code_spygen")
 
-write.csv(metadata, "/metadata/Metadata_eDNA_Megafauna_EB_leng_V3.xlsx")
+write.csv(metadata, "/metadata/Metadata_eDNA_Megafauna_EB_leng_V3.csv")
 
 
 
