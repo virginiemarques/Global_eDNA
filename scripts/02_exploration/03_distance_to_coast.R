@@ -7,7 +7,7 @@ library(gissr)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("/metadata/Metadata_eDNA_Megafauna_EB_leng_V2.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
 metadata_sampling$longitude_start_clean <- gsub('\\?', '', metadata_sampling$longitude_start)
 metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$latitude_start)
 
@@ -46,7 +46,7 @@ colnames(dist_min) <- c("dist_to_coast (m)", "code_spygen")
   # assemble with metadata
 metadata <- left_join(metadata_sampling, dist_min, by="code_spygen")
 
-write.csv(metadata, "metadata/Metadata_eDNA_Megafauna_EB_leng_V3.csv")
+write.csv(metadata, "metadata/Metadata_eDNA_global_V4.csv")
 
 
 
