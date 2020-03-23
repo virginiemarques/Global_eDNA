@@ -13,7 +13,7 @@ library(htmlwidgets)
 
 # data 
 # WARNING: there is some empty lines in the .csv
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V2.csv", sep=";", stringsAsFactors = F)
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V3.csv", sep=";", stringsAsFactors = F)
 
 # Clean the spaces before coordinates
 metadata_sampling$longitude_start_clean <- as.numeric(str_trim(metadata_sampling$longitude_start))
@@ -49,7 +49,7 @@ ggplot() +
         plot.title = element_text(lineheight=.8, face="bold")) 
 
 # Save
-ggsave("plots/01_exploration/02_spatial_map_global_points.png", width=8, height=6)
+ggsave("outputs/02_spatial_mapping/02_spatial_map_global_points.png", width=8, height=6)
 
 # ---------------------------------------------------------------------------------------------- #
 #                            Interactive map
@@ -73,7 +73,7 @@ m
 
 # I cant save the file where I want, for some reason. So I save it in root, then move it to wanted destination. 
 saveWidget(m, file="02_interactive_map.html")
-system("mv 02_interactive_map.html plots/01_exploration/.")
+system("mv 02_interactive_map.html outputs/02_spatial_mapping/.")
 
 # ---------------------------------------------------------------------------------------------- #
 #                            bbox
