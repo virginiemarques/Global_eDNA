@@ -13,11 +13,11 @@ library(htmlwidgets)
 
 # data 
 # WARNING: there is some empty lines in the .csv
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V3.csv", sep=";", stringsAsFactors = F)
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", sep=";", stringsAsFactors = F, na.strings=c("","NA"))
 
 # Clean the spaces before coordinates
-metadata_sampling$longitude_start_clean <- as.numeric(str_trim(metadata_sampling$longitude_start))
-metadata_sampling$latitude_start_clean <- as.numeric(str_trim(metadata_sampling$latitude_start))
+metadata_sampling$longitude_start_clean <- gsub('\\?', '', metadata_sampling$longitude_start)
+metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$latitude_start)
 
 # ---------------------------------------------------------------------------------------------- #
 #                            Some mapping 
