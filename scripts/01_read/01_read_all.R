@@ -36,7 +36,7 @@ projects <- unique(word(liste_table, 1, sep="_"))
 # Metadata - field. Import the csv; the excel files messes with dates and dates
 # There is an issue with numerous empty columns being imported in the csv 
 # metadata_sampling <- read_excel("metadata/Metadata_eDNA_Megafauna_EB_leng.xlsx", 1)
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V2.csv", sep=";", stringsAsFactors = F)
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_Megafauna_EB_leng_V3.csv", sep=";", stringsAsFactors = F)
 
 # Clean the spaces before coordinates
 metadata_sampling$longitude_start <- str_trim(metadata_sampling$longitude_start)

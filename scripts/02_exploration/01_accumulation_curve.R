@@ -78,7 +78,7 @@ plot_acc_all <- ggplot(df_accumulation_all) +
 plot_acc_all
 
 # Save
-ggsave("plots/01_exploration/01_accumulation_curve_all_projects_filters.png", plot_acc_all, width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_filters.png", plot_acc_all, width = 12, height = 8)
   
 
 
@@ -117,7 +117,7 @@ plot_acc_all <- ggplot(df_accumulation_all) +
 plot_acc_all
 
 # Save
-ggsave("plots/01_exploration/01_accumulation_curve_all_projects_station.png", plot_acc_all, width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_station.png", plot_acc_all, width = 12, height = 8)
 
 
 # ----------------------------------------------------------------------------- # 
@@ -154,7 +154,7 @@ plot_acc_all <- ggplot(df_join_all
 
 plot_acc_all
 
-ggsave("plots/01_exploration/01_accumulation_curve_all_projects_combination_no_facet.png", plot_acc_all, width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet.png", plot_acc_all, width = 12, height = 8)
 
 # Plot with facet
 plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
@@ -168,7 +168,7 @@ plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)
 
 plot_acc_all
 
-ggsave("plots/01_exploration/01_accumulation_curve_all_projects_combination.png", plot_acc_all, width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination.png", plot_acc_all, width = 12, height = 8)
 
 # ----------------------------------------------------------------------------- # 
 # Counts
@@ -197,7 +197,7 @@ ggplot(count_families, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq)) +
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
   coord_flip()
 
-ggsave("plots/01_exploration/01_number_motus_family.png", width=6, height=16)
+ggsave("outputs/03_accumulation_curves/01_number_motus_family.png", width=6, height=16)
 
 # Leng
 leng <- df_all_filters %>%

@@ -118,7 +118,7 @@ stat_by_project <- rbind(before, tenreads, blanks, fishonly, readlength, PCR_all
   select(project_name, step, colnames(.))
 
 # Write
-write.csv(stat_by_project, "outputs/01_read_data/stats_by_project.csv", row.names = FALSE)
+write.csv(stat_by_project, "outputs/01_read_data_stats/stats_by_project.csv", row.names = FALSE)
 
 
 # --------------------------------------------------------- # 
@@ -220,7 +220,7 @@ LULU_family <- lapply(liste_read_edna_LULU, function(x){
 stat_all_project <- rbind(before, tenreads, blanks, fishonly, readlength, PCR_all, LULU, LULU_family)
 
 # Write
-write.csv(stat_all_project, "outputs/01_read_data/stats_all_project.csv", row.names = FALSE)
+write.csv(stat_all_project, "outputs/01_read_data_stats/stats_all_project.csv", row.names = FALSE)
 
 
 
