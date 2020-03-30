@@ -44,14 +44,20 @@ for (i in 1:length(site)) {
 
 write.csv(count_families_site_caribbean, "outputs/05_family_proportion/family_frequency_site_caribbean.csv")
 
-ggplot(count_families_site_caribbean, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq)) + 
+count_families_site_caribbean <- count_families_site_caribbean %>%
+  ungroup() %>%
+  arrange(site, Freq) %>%
+  mutate(order = row_number())
+
+ggplot(count_families_site_caribbean, aes(order, Freq, fill = Freq)) + 
   geom_bar(stat="identity") +
-  facet_wrap(~site, scales ="free")+
+  facet_wrap(~site, scales ="free_y", as.table = FALSE)+
   theme_bw() +
   labs(x="Family", y="Frequency")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
-  coord_flip()
+  coord_flip()+
+  scale_x_continuous(breaks=count_families_site_caribbean$order, labels=count_families_site_caribbean$Var1, expand = c(0,0))
 
 ggsave("outputs/05_family_proportion/family_frequency_site_caribbean.png", width=20, height=16)
 
@@ -97,14 +103,24 @@ for (i in 1:length(site)) {
 
 write.csv(count_families_site_lengguru, "outputs/05_family_proportion/family_frequency_site_lengguru.csv")
 
+count_families_site_lengguru <- count_families_site_lengguru %>%
+  ungroup() %>%
+  arrange(site, Freq) %>%
+  mutate(order = row_number())
 
-ggplot(count_families_site_lengguru, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq)) + 
+  ## plot by 3 sites, because too big otherwise
+site_sub <- c("tanjung_boi", "triton_bay")
+subset1 <- count_families_site_lengguru %>%
+  filter(site%in%site_sub)
+ggplot(subset1, aes(order, Freq, fill = Freq)) + 
   geom_bar(stat="identity") +
-  facet_wrap(~site, scales ="free")+
+  facet_wrap(~site, scales ="free_y")+
   theme_bw() +
   labs(x="Family", y="Frequency")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
-  coord_flip()
+  coord_flip()+
+  scale_x_continuous(breaks=subset1$order, labels=subset1$Var1, expand = c(0,0))
 
-ggsave("outputs/05_family_proportion/family_frequency_site_lengguru.png", width=20, height=16)
+
+ggsave("outputs/05_family_proportion/family_frequency_lengguru_site10-11.png", width=20, height=16)
