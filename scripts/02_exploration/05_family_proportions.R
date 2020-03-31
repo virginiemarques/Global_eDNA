@@ -151,3 +151,4 @@ pomacentridae <- count_sp_family_all_site %>%
 
 ggplot(pomacentridae, aes(n_fam, perc))+
   geom_point()
+
