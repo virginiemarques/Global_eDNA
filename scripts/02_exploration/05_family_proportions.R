@@ -27,7 +27,7 @@ ggplot(count_families_caribbean, aes(x=reorder(Var1, Freq), y = Freq, fill = Fre
 ggsave("outputs/05_family_proportion/family_frequency_caribbean.png", width=6, height=16)
 write.csv(count_families_caribbean, "outputs/05_family_proportion/family_frequency_caribbean.csv")
 
-  ## Caribbean sites (je sais pas comment trier les fréquences par site dans le graph)
+  ## Caribbean sites
 site <- c(unique(caribbean$site))
 
 count_families_site_caribbean=NULL 
@@ -85,7 +85,7 @@ ggplot(count_families_lengguru, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq
 ggsave("outputs/05_family_proportion/family_frequency_lengguru.png", width=6, height=16)
 write.csv(count_families_lengguru, "outputs/05_family_proportion/family_frequency_lengguru.csv")
 
-  ## Lengguru sites (je sais pas comment trier les fréquences par site, dans le graph)
+  ## Lengguru sites
 
 site <- c(unique(lengguru$site))
 
@@ -108,7 +108,7 @@ count_families_site_lengguru <- count_families_site_lengguru %>%
   arrange(site, Freq) %>%
   mutate(order = row_number())
 
-  ## plot by 3 sites, because too big otherwise
+  ## plot by 3 sites, because plot too small otherwise
 site_sub <- c("tanjung_boi", "triton_bay")
 subset1 <- count_families_site_lengguru %>%
   filter(site%in%site_sub)
@@ -124,3 +124,30 @@ ggplot(subset1, aes(order, Freq, fill = Freq)) +
 
 
 ggsave("outputs/05_family_proportion/family_frequency_lengguru_site10-11.png", width=20, height=16)
+
+
+## frequency of families in Mediterranean
+## frequency of families in Eparses
+
+
+## Bellwood figures : proportion of families per site
+
+df_all_site <- rbind(count_families_site_caribbean[,c(-4)], count_families_site_lengguru[,c(-4)])
+
+sites <- unique(df_all_site$site)
+count_sp_family_all_site=NULL
+
+for (i in 1:length(sites)) {
+  df <- df_all_site %>%
+    filter(site==sites[i])
+  df$n_fam <- sum(df$Freq)
+  count_sp_family_all_site <- rbind(count_sp_family_all_site, df) 
+}
+
+count_sp_family_all_site$perc <- count_sp_family_all_site$Freq/count_sp_family_all_site$n_fam 
+
+pomacentridae <- count_sp_family_all_site %>%
+  filter(Var1=="Pomacentridae")
+
+ggplot(pomacentridae, aes(n_fam, perc))+
+  geom_point()

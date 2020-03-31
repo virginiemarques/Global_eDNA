@@ -81,7 +81,7 @@ plot_rich_lengguru <- ggplot(rich_lengguru_melt, aes(station, value, fill=variab
 caribbean <- df_all_filters %>%
   filter(region=="Caribbean")
 
-# total MOTUs and family richness in Lengguru region
+  # total MOTUs and family richness in Lengguru region
 rich_tot_caribbean <- data.frame(motu=numeric(1), family=numeric(1))
 rich_tot_caribbean$motu <- caribbean %>% 
   summarise(n = n_distinct(sequence))
@@ -89,7 +89,7 @@ rich_tot_caribbean$family <- caribbean %>%
   summarise(n = n_distinct(new_family_name))
 
 
-# calculate unique motus and families at each site
+  # calculate unique motus and families at each site
 site <- c(unique(caribbean$site))
 
 rich_site_caribbean <- data.frame(site=character(3), station="total", motu=numeric(3), family=numeric(3), stringsAsFactors = FALSE)
@@ -106,7 +106,7 @@ for (i in 1:length(site)) {
 }
 
 
-# caluculate unique motus and families at each station   
+  # caluculate unique motus and families at each station   
 station <- c(unique(caribbean$station))
 
 rich_station_caribbean <- data.frame(site=character(40), station=character(40), motu=numeric(40), family=numeric(40), stringsAsFactors = FALSE)
@@ -124,14 +124,14 @@ for (i in 1:length(station)) {
   rich_station_caribbean[i,4] <- fam
 }
 
-# combine tables for sites and stations
+  # combine tables for sites and stations
 rich_caribbean <- rbind(rich_site_caribbean, rich_station_caribbean)
 
 
 write.csv(rich_caribbean, "outputs/04_exploration_richness/richness_caribbean.csv", row.names = FALSE)
 
 
-# plot motu and family richness per site
+  # plot motu and family richness per site
 rich_caribbean_melt <- melt(rich_caribbean)
 
 plot_rich_caribbean <- ggplot(rich_caribbean_melt, aes(station, value, fill=variable)) +
@@ -143,3 +143,5 @@ plot_rich_caribbean <- ggplot(rich_caribbean_melt, aes(station, value, fill=vari
        y = "richness",
        fill=NULL)
 
+## Mediterranean sea data
+## Eparses data
