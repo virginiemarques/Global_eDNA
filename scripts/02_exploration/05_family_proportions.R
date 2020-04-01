@@ -4,6 +4,7 @@ library(reshape2)
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
 
+# For now, proportion is calculated as (nb of amplicons per family)/(total nb of amplicons per site/region), using only amplicons assigned to family level minimum
 
 ## frequency of families in Caribbean
 
