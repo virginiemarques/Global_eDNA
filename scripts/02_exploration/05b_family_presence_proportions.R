@@ -203,7 +203,7 @@ write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_base
 df_all_site <- rbind(count_families_site_caribbean[,c(-6)], count_families_site_lengguru[,c(-6)])
 
 
-family <- c("Serranidae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
+family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
@@ -219,7 +219,7 @@ for (i in 1:length(family)) {
 df_all_station <- rbind(count_families_station_caribbean, count_families_station_lengguru)
 
 
-family <- c("Serranidae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
+family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_station[df_all_station$family == family[i],]
