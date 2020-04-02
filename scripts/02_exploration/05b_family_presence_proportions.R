@@ -4,12 +4,39 @@ library(reshape2)
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
 
+#Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
 
-## frequency of families in Caribbean
+## Proportion of families global
+
+global <- subset(df_all_filters, region %in% c("West_Papua", "Caribbean"))
+global_motu <- global %>%
+  distinct(sequence, .keep_all = TRUE)
+
+
+count_families_global <- data.frame(table(global_motu$new_family_name))
+colnames(count_families_global) <- c("family", "n_motus")
+count_families_global$n_motus_total <- nrow(global_motu)
+count_families_global$prop <- count_families_global$n_motus / count_families_global$n_motus_total
+
+write.csv(count_families_global, "outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.csv")
+
+ggplot(count_families_global, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(legend.position = "none")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.png", width=6, height=16)
+
+
+## Proportion of families in Caribbean
 
   ## Caribbean total
 caribbean <- df_all_filters %>%
@@ -152,7 +179,7 @@ count_families_site_lengguru <- count_families_site_lengguru %>%
   mutate(order = row_number())
 
   ## plot by 3 sites, because plot too small otherwise
-site_sub <- c("pulau_pisang", "lobo", "tanjung_boi")
+site_sub <- c("pulau_aiduma", "pulau_aiduma_ext")
 subset1 <- count_families_site_lengguru %>%
   filter(site%in%site_sub)
 ggplot(subset1, aes(order, prop, fill = prop)) + 
@@ -166,7 +193,7 @@ ggplot(subset1, aes(order, prop, fill = prop)) +
   scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
 
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_lengguru_site7-9.png", width=20, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_lengguru_site10-11.png", width=20, height=16)
 
   ## Lengguru station
 
