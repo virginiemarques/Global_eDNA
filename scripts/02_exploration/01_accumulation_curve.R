@@ -194,10 +194,12 @@ count_families <- data.frame(table(otu_names_family$new_family_name))
 ggplot(count_families, aes(x=reorder(Var1, Freq), y = Freq, fill = Freq)) + 
   geom_bar(stat="identity") + 
   theme_bw() +
+  labs(x="Family", y="Frequency")+
+  theme(legend.position = "none")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
   coord_flip()
 
-ggsave("outputs/03_accumulation_curves/01_number_motus_family.png", width=6, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_frequency_global.png", width=6, height=16)
 
 # Leng
 leng <- df_all_filters %>%

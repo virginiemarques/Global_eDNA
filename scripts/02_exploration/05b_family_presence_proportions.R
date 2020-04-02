@@ -26,13 +26,13 @@ count_families_caribbean$prop <- count_families_caribbean$n_motus / count_famili
 ggplot(count_families_caribbean, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
   geom_bar(stat="identity") + 
   theme_bw() +
-  labs(x="Family", y="Frequency")+
+  labs(x="Family", y="Proportion")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
   coord_flip()
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_frequency_caribbean.png", width=6, height=16)
-write.csv(count_families_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_frequency_caribbean.csv")
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_caribbean.png", width=6, height=16)
+write.csv(count_families_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_caribbean.csv")
 
   ## Caribbean sites
 site <- c(unique(caribbean$site))
@@ -53,7 +53,7 @@ for (i in 1:length(site)) {
   count_families_site_caribbean <- rbind(count_families_site_caribbean, count_families)
 }
 
-write.csv(count_families_site_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_frequency_site_caribbean.csv")
+write.csv(count_families_site_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_caribbean.csv")
 
 count_families_site_caribbean <- count_families_site_caribbean %>%
   ungroup() %>%
@@ -64,13 +64,13 @@ ggplot(count_families_site_caribbean, aes(order, prop, fill = prop)) +
   geom_bar(stat="identity") +
   facet_wrap(~site, scales ="free_y", as.table = FALSE)+
   theme_bw() +
-  labs(x="Family", y="Frequency")+
+  labs(x="Family", y="Proportion")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
   coord_flip()+
   scale_x_continuous(breaks=count_families_site_caribbean$order, labels=count_families_site_caribbean$family, expand = c(0,0))
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_frequency_site_caribbean.png", width=20, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_caribbean.png", width=20, height=16)
 
 
   ## Caribbean station
@@ -95,7 +95,7 @@ for (i in 1:length(station)) {
   count_families_station_caribbean <- rbind(count_families_station_caribbean, count_families)
 }
 
-write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_frequency_station_caribbean.csv")
+write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_caribbean.csv")
 
 
 ## Frequency of families in Lengguru
@@ -116,13 +116,13 @@ count_families_lengguru$prop <- count_families_lengguru$n_motus / count_families
 ggplot(count_families_lengguru, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
   geom_bar(stat="identity") + 
   theme_bw() +
-  labs(x="Family", y="Frequency")+
+  labs(x="Family", y="Proportion")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
   coord_flip()
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_frequency_lengguru.png", width=6, height=16)
-write.csv(count_families_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_frequency_lengguru.csv")
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_lengguru.png", width=6, height=16)
+write.csv(count_families_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_lengguru.csv")
 
   ## Lengguru sites
 
@@ -144,7 +144,7 @@ for (i in 1:length(site)) {
   count_families_site_lengguru <- rbind(count_families_site_lengguru, count_families)
 }
 
-write.csv(count_families_site_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_frequency_site_lengguru.csv")
+write.csv(count_families_site_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_lengguru.csv")
 
 count_families_site_lengguru <- count_families_site_lengguru %>%
   ungroup() %>%
@@ -152,21 +152,21 @@ count_families_site_lengguru <- count_families_site_lengguru %>%
   mutate(order = row_number())
 
   ## plot by 3 sites, because plot too small otherwise
-site_sub <- c("pulau_aiduma", "pulau_aiduma_ext")
+site_sub <- c("pulau_pisang", "lobo", "tanjung_boi")
 subset1 <- count_families_site_lengguru %>%
   filter(site%in%site_sub)
 ggplot(subset1, aes(order, prop, fill = prop)) + 
   geom_bar(stat="identity") +
   facet_wrap(~site, scales ="free_y")+
   theme_bw() +
-  labs(x="Family", y="Frequency")+
+  labs(x="Family", y="Proportion")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
   coord_flip()+
   scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
 
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_frequency_lengguru_site10-11.png", width=20, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_lengguru_site7-9.png", width=20, height=16)
 
   ## Lengguru station
 
@@ -190,7 +190,7 @@ for (i in 1:length(station)) {
   count_families_station_lengguru <- rbind(count_families_station_lengguru, count_families)
 }
 
-write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_frequency_station_lengguru.csv")
+write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_lengguru.csv")
 
 
 
