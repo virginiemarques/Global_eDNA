@@ -77,6 +77,8 @@ plot_rich_lengguru <- ggplot(rich_lengguru_melt, aes(station, value, fill=variab
         y = "richness",
         fill=NULL)
 
+ggsave("outputs/04_exploration_richness/richness_lengguru.png")
+
 
 
 ## Caribbean data
@@ -145,6 +147,7 @@ plot_rich_caribbean <- ggplot(rich_caribbean_melt, aes(station, value, fill=vari
   labs(x=NULL,
        y = "richness",
        fill=NULL)
+ggsave("outputs/04_exploration_richness/richness_caribbean.png")
 
 
 ## Fakarava data
@@ -152,18 +155,7 @@ plot_rich_caribbean <- ggplot(rich_caribbean_melt, aes(station, value, fill=vari
 fakarava <- df_all_filters %>%
   filter(region=="French_Polynesia")
 
-# total MOTUs and family richness in fakarava region (=site)
-rich_tot_fakarava <- data.frame(site="fakarava", station="total", motu=numeric(1), family=numeric(1))
-rich_tot_fakarava$site <- "fakarava"
-rich_tot_fakarava$station <- "total"
-rich_tot_fakarava$motu <- fakarava %>% 
-  summarise(n = n_distinct(sequence))
-rich_tot_fakarava$family <- fakarava %>% 
-  summarise(n = n_distinct(new_family_name))
-
-
-
-# calculate unique motus and families at each station   
+  # calculate unique motus and families at each station   
 station <- c(unique(fakarava$station))
 
 rich_station_fakarava <- data.frame(site="fakarava", station=character(4), motu.n=numeric(4), family.n=numeric(4), stringsAsFactors = FALSE)
@@ -179,14 +171,20 @@ for (i in 1:length(station)) {
   rich_station_fakarava[i,4] <- fam
 }
 
-# combine tables for sites and stations
-rich_fakarava <- bind_rows(rich_tot_fakarava, rich_station_fakarava)
+  # total MOTUs and family richness in fakarava region (=site)
+rich_fakarava <- rich_station_fakarava
+rich_fakarava[5,1] <- "fakarava"
+rich_fakarava[5,2] <- "total"
+rich_fakarava[5,3] <- fakarava %>% 
+  summarise(n = n_distinct(sequence))
+rich_fakarava[5,4] <- fakarava %>% 
+  summarise(n = n_distinct(new_family_name))
 
 
 write.csv(rich_fakarava, "outputs/04_exploration_richness/richness_fakarava.csv", row.names = FALSE)
 
 
-# plot motu and family richness per site
+  # plot motu and family richness per site
 rich_fakarava_melt <- melt(rich_fakarava)
 
 plot_rich_fakarava <- ggplot(rich_fakarava_melt, aes(station, value, fill=variable)) +
@@ -198,7 +196,55 @@ plot_rich_fakarava <- ggplot(rich_fakarava_melt, aes(station, value, fill=variab
        y = "richness",
        fill=NULL)
 
+ggsave("outputs/04_exploration_richness/richness_fakarava.png")
 
+## malpelo data
+
+malpelo <- df_all_filters %>%
+  filter(region=="East_Pacific")
+
+  # calculate unique motus and families at each station   
+station <- c(unique(malpelo$station))
+
+rich_station_malpelo <- data.frame(site="malpelo", station=character(13), motu.n=numeric(13), family.n=numeric(13), stringsAsFactors = FALSE)
+
+for (i in 1:length(station)) {
+  st <- station[i]
+  motu <- malpelo[malpelo$station == station[i],] %>%
+    summarise(n = n_distinct(sequence))
+  fam <- malpelo[malpelo$station == station[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_station_malpelo[i,2] <- st
+  rich_station_malpelo[i,3] <- motu
+  rich_station_malpelo[i,4] <- fam
+}
+
+  # total MOTUs and family richness in malpelo region (=site)
+rich_malpelo <- rich_station_malpelo
+rich_malpelo[14,1] <- "malpelo"
+rich_malpelo[14,2] <- "total"
+rich_malpelo[14,3] <- malpelo %>% 
+  summarise(n = n_distinct(sequence))
+rich_malpelo[14,4] <- malpelo %>% 
+  summarise(n = n_distinct(new_family_name))
+
+
+write.csv(rich_malpelo, "outputs/04_exploration_richness/richness_malpelo.csv", row.names = FALSE)
+
+
+# plot motu and family richness per site
+rich_malpelo_melt <- melt(rich_malpelo)
+
+plot_rich_malpelo <- ggplot(rich_malpelo_melt, aes(station, value, fill=variable)) +
+  geom_col(position = position_dodge(), show.legend = TRUE)+
+  facet_wrap(~site, scales = "free_x")+
+  theme(axis.text.x = element_text(size = 6, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(axis.title.y = element_text(size = 15))+
+  labs(x=NULL,
+       y = "richness",
+       fill=NULL)
+
+ggsave("outputs/04_exploration_richness/richness_malpelo.png")
 
 
 
