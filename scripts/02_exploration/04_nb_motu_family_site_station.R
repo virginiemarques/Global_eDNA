@@ -1,11 +1,14 @@
 ## calculate number of unique motus and families in each site and station of Lengguru and Caribbean
 
 library(tidyverse)
-library(conflicted)
 library(reshape2)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
+
+df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+
 
 ## Lengguru data
 
@@ -37,7 +40,7 @@ for (i in 1:length(site)) {
 }
 
   
-  # caluculate unique motus and families at each station   
+  # calculate unique motus and families at each station   
 station <- c(unique(lengguru$station))
 
 rich_station_lengguru <- data.frame(site=character(46), station=character(46), motu=numeric(46), family=numeric(46), stringsAsFactors = FALSE)
@@ -81,7 +84,7 @@ plot_rich_lengguru <- ggplot(rich_lengguru_melt, aes(station, value, fill=variab
 caribbean <- df_all_filters %>%
   filter(region=="Caribbean")
 
-  # total MOTUs and family richness in Lengguru region
+  # total MOTUs and family richness in Caribbean region
 rich_tot_caribbean <- data.frame(motu=numeric(1), family=numeric(1))
 rich_tot_caribbean$motu <- caribbean %>% 
   summarise(n = n_distinct(sequence))
@@ -106,7 +109,7 @@ for (i in 1:length(site)) {
 }
 
 
-  # caluculate unique motus and families at each station   
+  # calculate unique motus and families at each station   
 station <- c(unique(caribbean$station))
 
 rich_station_caribbean <- data.frame(site=character(40), station=character(40), motu=numeric(40), family=numeric(40), stringsAsFactors = FALSE)
@@ -142,6 +145,62 @@ plot_rich_caribbean <- ggplot(rich_caribbean_melt, aes(station, value, fill=vari
   labs(x=NULL,
        y = "richness",
        fill=NULL)
+
+
+## Fakarava data
+
+fakarava <- df_all_filters %>%
+  filter(region=="French_Polynesia")
+
+# total MOTUs and family richness in fakarava region (=site)
+rich_tot_fakarava <- data.frame(site="fakarava", station="total", motu=numeric(1), family=numeric(1))
+rich_tot_fakarava$site <- "fakarava"
+rich_tot_fakarava$station <- "total"
+rich_tot_fakarava$motu <- fakarava %>% 
+  summarise(n = n_distinct(sequence))
+rich_tot_fakarava$family <- fakarava %>% 
+  summarise(n = n_distinct(new_family_name))
+
+
+
+# calculate unique motus and families at each station   
+station <- c(unique(fakarava$station))
+
+rich_station_fakarava <- data.frame(site="fakarava", station=character(4), motu.n=numeric(4), family.n=numeric(4), stringsAsFactors = FALSE)
+
+for (i in 1:length(station)) {
+  st <- station[i]
+  motu <- fakarava[fakarava$station == station[i],] %>%
+    summarise(n = n_distinct(sequence))
+  fam <- fakarava[fakarava$station == station[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_station_fakarava[i,2] <- st
+  rich_station_fakarava[i,3] <- motu
+  rich_station_fakarava[i,4] <- fam
+}
+
+# combine tables for sites and stations
+rich_fakarava <- bind_rows(rich_tot_fakarava, rich_station_fakarava)
+
+
+write.csv(rich_fakarava, "outputs/04_exploration_richness/richness_fakarava.csv", row.names = FALSE)
+
+
+# plot motu and family richness per site
+rich_fakarava_melt <- melt(rich_fakarava)
+
+plot_rich_fakarava <- ggplot(rich_fakarava_melt, aes(station, value, fill=variable)) +
+  geom_col(position = position_dodge(), show.legend = TRUE)+
+  facet_wrap(~site, scales = "free_x")+
+  theme(axis.text.x = element_text(size = 6, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(axis.title.y = element_text(size = 15))+
+  labs(x=NULL,
+       y = "richness",
+       fill=NULL)
+
+
+
+
 
 ## Mediterranean sea data
 ## Eparses data

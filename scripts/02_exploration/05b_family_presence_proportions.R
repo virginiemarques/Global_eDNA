@@ -13,8 +13,8 @@ df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 
 ## Proportion of families global
 
-global <- subset(df_all_filters, region %in% c("West_Papua", "Caribbean"))
-global_motu <- global %>%
+
+global_motu <- df_all_filters %>%
   distinct(sequence, .keep_all = TRUE)
 
 
@@ -77,6 +77,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
+  count_families$region <- "Caribbean"
   count_families_site_caribbean <- rbind(count_families_site_caribbean, count_families)
 }
 
@@ -168,6 +169,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
+  count_families$region <- "West_Papua"
   count_families_site_lengguru <- rbind(count_families_site_lengguru, count_families)
 }
 
@@ -220,6 +222,106 @@ for (i in 1:length(station)) {
 write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_lengguru.csv")
 
 
+## proportion of families in Fakarava
+  ## par site = region
+
+fakarava <- df_all_filters %>%
+  filter(region=="French_Polynesia")
+
+faka_motu <- fakarava %>%
+  distinct(sequence, .keep_all = TRUE)
+
+count_families_site_fakarava <- data.frame(table(faka_motu$new_family_name))
+colnames(count_families_site_fakarava) <- c("family", "n_motus")
+count_families_site_fakarava$n_motus_total <- nrow(faka_motu)
+count_families_site_fakarava$site <- "fakarava"
+count_families_site_fakarava$region <- "French_Polynesia"
+count_families_site_fakarava$prop <- count_families_site_fakarava$n_motus / count_families_site_fakarava$n_motus_total
+
+
+ggplot(count_families_site_fakarava, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_fakarava.png", width=6, height=16)
+write.csv(count_families_site_fakarava, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_fakarava.csv")
+
+  ## per station
+station <- c(unique(fakarava$station))
+
+count_families_station_fakarava=NULL 
+
+for (i in 1:length(station)) {
+  faka_station <- fakarava[fakarava$station == station[i],]
+  st <- station[i]
+  faka_motu_station <- faka_station%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(faka_motu_station$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(faka_motu_station)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$station <- st
+  count_families$site <- "fakarava"
+  count_families_station_fakarava <- rbind(count_families_station_fakarava, count_families)
+}
+
+write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_fakarava.csv")
+
+## proportion of families in malpelo
+  ## par site = region
+
+malpelo <- df_all_filters %>%
+  filter(region=="East_Pacific")
+
+malp_motu <- malpelo %>%
+  distinct(sequence, .keep_all = TRUE)
+
+count_families_site_malpelo <- data.frame(table(malp_motu$new_family_name))
+colnames(count_families_site_malpelo) <- c("family", "n_motus")
+count_families_site_malpelo$n_motus_total <- nrow(malp_motu)
+count_families_site_malpelo$site <- "malpelo"
+count_families_site_malpelo$region <- "East_Pacific"
+count_families_site_malpelo$prop <- count_families_site_malpelo$n_motus / count_families_site_malpelo$n_motus_total
+
+
+ggplot(count_families_site_malpelo, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_malpelo.png", width=6, height=16)
+write.csv(count_families_site_malpelo, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_malpelo.csv")
+
+  ## per station
+
+station <- c(unique(malpelo$station))
+
+count_families_station_malpelo=NULL 
+
+for (i in 1:length(station)) {
+  malp_station <- malpelo[malpelo$station == station[i],]
+  st <- station[i]
+  malp_motu_station <- malp_station%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(malp_motu_station$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(malp_motu_station)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$station <- st
+  count_families$site <- "malpelo"
+  count_families_station_malpelo <- rbind(count_families_station_malpelo, count_families)
+}
+
+write.csv(count_families_station_malpelo, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_malpelo.csv")
 
 ## frequency of families in Mediterranean
 ## frequency of families in Eparses
@@ -227,15 +329,16 @@ write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_base
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_caribbean[,c(-6)], count_families_site_lengguru[,c(-6)])
+df_all_site <- rbind(count_families_site_caribbean, count_families_site_lengguru, count_families_site_fakarava, count_families_site_malpelo)
 
 
 family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=1))+
+  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.5, colour=region))+
     geom_point()+
+    theme(legend.text = element_text(size = 6))+
     labs(title=family[i], x="total number of motus per site", y="Proportion")
   ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per site/prop_",family[i],".png", sep = ""))
 }
@@ -243,17 +346,16 @@ for (i in 1:length(family)) {
 
 ## Bellwood figures : proportion of families per station
 
-df_all_station <- rbind(count_families_station_caribbean, count_families_station_lengguru)
+df_all_station <- rbind(count_families_station_caribbean, count_families_station_lengguru, count_families_station_fakarava, count_families_station_malpelo)
 
 
 family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_station[df_all_station$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=1, colour=site))+
+  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.5, colour=site))+
     geom_point()+
     labs(title=family[i], x="total number of motus per station", y="Proportion")+
-    theme(legend.text = element_text(size = 6))+
-    scale_y_continuous(breaks=c(0, 0.2, 0.6, 1))
-  ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per station/prop_",family[i],".png", sep = ""), width=5, height=4)
+    theme(legend.text = element_text(size = 6))
+  ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per station/prop_",family[i],".png", sep = ""), width=5, height=5)
 }
