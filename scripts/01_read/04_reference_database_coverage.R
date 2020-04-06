@@ -44,8 +44,8 @@ class_vector <-function(x){
   liste_classification_class <- liste_classification %>%
     filter(rank == "class") %>%
     rename(class_name = name) %>%
-    rename(new_scientific_name_ncbi = initial_name) %>%
-    select(new_scientific_name_ncbi, class_name) 
+    rename(species_name = initial_name) %>%
+    select(species_name, class_name) 
 }
 
 # --------------------------------------------------------------------------------------- # 
@@ -80,3 +80,8 @@ class_all_sp <- rbind(class_all_sp_part1, class_all_sp_part2)
 
 # Save
 save(class_resolutive_sp, class_all_sp, file = "data/reference_database/teleo/04_teleo_database.Rdata")
+save(class_all_sp, file = "data/reference_database/teleo/04_teleo_database.Rdata")
+
+# Export csv
+write.csv(class_resolutive_sp, "data/reference_database/teleo/csv/reference_ncbi_all_species_resolutive_teleo.csv", row.names = F)
+write.csv(class_all_sp, "data/reference_database/teleo/csv/reference_ncbi_all_species_teleo.csv", row.names = F)
