@@ -1,5 +1,7 @@
 library(tidyverse)
 library(reshape2)
+library(vegan)
+library(betapart)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
@@ -100,3 +102,22 @@ div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
 write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning.csv")
+
+
+
+# check with betapart
+df_region=data.frame(motu=character())
+
+for (i in 1:length(region)) {
+  df <- df_all_filters[df_all_filters$region == region[i],] %>%
+    distinct(sequence, region)
+  colnames(df) <- c("motu", region[i])
+  df_region <- full_join(df_region, df, by="motu")
+}
+rownames(df_region) <- df_region[,1]
+df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
+df_region[is.na(df_region)] <- 0
+df_region <- as.data.frame(t(df_region))
+
+beta<- betapart.core(df_region)
+beta.multi(beta, "jaccard")
