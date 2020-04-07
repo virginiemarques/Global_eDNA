@@ -10,6 +10,13 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 
+# different tests
+  ## 1. all MOTUs
+  ## 2. all assigned MOTUs
+df_all_filters <- df_all_filters %>%
+  filter(!is.na(new_family_name))
+  ## all assigned MOTUs without cryptobenthics
+df_all_filters <- subset(df_all_filters, !(new_family_name %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae")))
 
 # gamma global =1603
 
@@ -106,7 +113,7 @@ div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
-write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning.csv")
+write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_assigned_MOTUs_no_crypto.csv")
 
 
 
@@ -190,3 +197,11 @@ for (i in 1:length(site)) {
 
 
 betatotal <- rbind(betaregion, betasite, betastation)
+
+beta_melt <- melt(betatotal)
+
+ggplot(beta_melt, aes(variable, value, colour=scale))+
+  geom_boxplot()+
+  labs(x=" Beta component", y="Jaccard dissimilarity")
+
+ggsave("outputs/06_diversity_partitioning/diversity_partitioning_assigned_MOTUs_no_crypto.png")  
