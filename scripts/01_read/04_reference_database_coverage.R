@@ -62,8 +62,18 @@ all_database_sp <- gb_to_txt(all_database)
 resolutive_database_sp <- gb_to_txt(resolutive_database)
 
 # Check who is a fish - long operation
-class_resolutive_sp <- class_vector(resolutive_database_sp) %>%
+# need to cut in two as too heavy in one shot
+resolutive_database_sp_part1 <- resolutive_database_sp[seq(1, round(length(resolutive_database_sp) /2, 0))]
+resolutive_database_sp_part2 <- resolutive_database_sp[seq(length(resolutive_database_sp_part1), length(resolutive_database_sp))]
+
+class_resolutive_sp_part1 <- class_vector(resolutive_database_sp_part1) %>%
   filter(class_name %in% c("Actinopteri", "Chondrichthyes"))
+
+class_resolutive_sp_part2 <- class_vector(resolutive_database_sp_part2) %>%
+  filter(class_name %in% c("Actinopteri", "Chondrichthyes"))
+
+# Rbind
+class_resolutive_sp <- rbind(class_resolutive_sp_part1, class_resolutive_sp_part2)
 
 # need to cut in two as too heavy in one shot
 all_database_sp_part1 <- all_database_sp[seq(1, round(length(all_database_sp) /2, 0))]
@@ -80,7 +90,6 @@ class_all_sp <- rbind(class_all_sp_part1, class_all_sp_part2)
 
 # Save
 save(class_resolutive_sp, class_all_sp, file = "data/reference_database/teleo/04_teleo_database.Rdata")
-save(class_all_sp, file = "data/reference_database/teleo/04_teleo_database.Rdata")
 
 # Export csv
 write.csv(class_resolutive_sp, "data/reference_database/teleo/csv/reference_ncbi_all_species_resolutive_teleo.csv", row.names = F)
