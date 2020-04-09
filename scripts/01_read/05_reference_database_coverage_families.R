@@ -61,6 +61,37 @@ class_resolutive_sp_family_class <- class_resolutive_sp %>%
 save(class_all_sp_family_class, class_resolutive_sp_family_class, file = "data/reference_database/teleo/05_reference_database_family.Rdata")
 
 
+## calculate indice of resolution per family
+
+family_tot <- unique(class_all_sp_family_class$family)
+
+n_total <- data.frame(family=character(451), n_total=numeric(451), stringsAsFactors = FALSE)
+
+for (i in 1:length(family_tot)) {
+  f <- family_tot[[i]]
+  tot <- class_all_sp_family_class %>%
+    filter(family==family_tot[i]) %>%
+    nrow
+  n_total[i,1] <- f
+  n_total[i,2] <- tot
+  
+}
 
 
+family_res <- unique(class_resolutive_sp_family_class$family)
+n_res <- data.frame(family=character(441), n_res=numeric(441), stringsAsFactors = FALSE)
 
+for (i in 1:length(family_res)) {
+  f <- family_res[[i]]
+  res <- class_resolutive_sp_family_class %>%
+    filter(family==family_res[i]) %>%
+    nrow
+  n_res[i,1] <- f
+  n_res[i,2] <- res
+}
+
+resolution <- left_join(n_total, n_res, by="family")
+resolution$resolution <- resolution$n_res / resolution$n_total
+resolution <- resolution[order(resolution$resolution, decreasing = TRUE),]
+resolution[is.na(resolution)] <- 0
+write.csv(resolution, "outputs/01_read_data_stats/family_resolution.csv")
