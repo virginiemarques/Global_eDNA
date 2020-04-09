@@ -34,6 +34,8 @@ gb_to_txt <- function(entry){
 # filter fish from a vector, using the class from ncbi
 class_vector <-function(x){ 
   
+  require(taxize)
+  
   # the classification
   liste_classification <- classification(x, db = "ncbi", rows=1)
   
