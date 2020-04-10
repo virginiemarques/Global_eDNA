@@ -114,7 +114,7 @@ for (i in 1:length(site)) {
   # calculate unique motus and families at each station   
 station <- c(unique(caribbean$station))
 
-rich_station_caribbean <- data.frame(site=character(40), station=character(40), motu=numeric(40), family=numeric(40), stringsAsFactors = FALSE)
+rich_station_caribbean <- data.frame(site=character(31), station=character(31), motu=numeric(31), family=numeric(31), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(caribbean[caribbean$station == station[i],]$site)
@@ -250,3 +250,38 @@ ggsave("outputs/04_exploration_richness/richness_malpelo.png")
 
 ## Mediterranean sea data
 ## Eparses data
+
+
+
+## plot station richness ~ latitude
+colnames(rich_station_fakarava) <- c("site", "station", "motu", "family")
+colnames(rich_station_malpelo) <- c("site", "station", "motu", "family")
+
+rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru, rich_station_malpelo)
+
+metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
+metadata <- metadata %>%
+  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean", "East_Pacific"))
+metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+metadata <- subset(metadata, sample_method!="niskin")
+metadata <- subset(metadata, habitat=="marine")
+metadata <- metadata[,c("station", "latitude_start_clean")]
+metadata <- metadata %>%
+  distinct(station, .keep_all = TRUE)
+
+rich_station <- left_join(rich_station, metadata, by="station")
+rich_station <- rich_station[,c(-1)]
+
+ggplot(rich_station, aes(latitude_start_clean, motu))+
+  geom_point(color="blue")+
+  labs(x="latitude",
+       y="MOTU richness")
+
+ggsave("outputs/04_exploration_richness/richness_motu_latitude.png")
+
+ggplot(rich_station, aes(latitude_start_clean, family))+
+  geom_point(color="blue")+
+  labs(x="latitude",
+       y="Family richness")
+
+ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
