@@ -280,7 +280,7 @@ ggplot(rich_station, aes(latitude_start_clean, motu))+
 ggsave("outputs/04_exploration_richness/richness_motu_latitude.png")
 
 ggplot(rich_station, aes(latitude_start_clean, family))+
-  geom_point(color="blue")+
+  geom_point(color="red")+
   labs(x="latitude",
        y="Family richness")
 
