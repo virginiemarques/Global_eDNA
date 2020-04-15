@@ -63,14 +63,16 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-station
 
-beta_station <- data.frame(site=character(16), beta=numeric(16), stringsAsFactors = FALSE)
+beta_station <- data.frame(site=character(16), alpha=numeric(16), gamma=numeric(16), beta=numeric(16), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
   gamma <- alpha_site[alpha_site$site==site[i],]$motu
   alpha <- mean(alpha_station[alpha_station$site==site[i],]$motu)
   beta_station[i,1] <- s
-  beta_station[i,2] <- gamma - alpha
+  beta_station[i,2] <- alpha
+  beta_station[i,3] <- gamma
+  beta_station[i,4] <- gamma - alpha
 }
 
 mean_beta_station <- mean(beta_station$beta)
@@ -90,14 +92,16 @@ for (i in 1:length(region)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(4), beta=numeric(4), stringsAsFactors = FALSE)
+beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4), beta=numeric(4), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
   gamma <- alpha_region[alpha_region$region==region[i],]$motu
   alpha <- mean(alpha_site[alpha_site$region==region[i],]$motu)
   beta_site[i,1] <- r
-  beta_site[i,2] <- gamma - alpha
+  beta_site[i,2] <- alpha
+  beta_site[i,3] <- gamma
+  beta_site[i,4] <- gamma - alpha
   
 }
 
@@ -106,12 +110,15 @@ sd_beta_site <- sd(beta_site$beta)
 
 # calculate beta inter-region
 
-beta_region <- gamma_global - mean_alpha_station - mean_beta_site - mean_beta_station
+beta_region <- data.frame(alpha=mean(alpha_region$motu), gamma=gamma_global, beta=numeric(1), scale="inter-region")
+beta_region$beta <- beta_region$gamma - beta_region$alpha
 
-beta_region+mean_beta_site+mean_beta_station+mean_alpha_station
+beta_region2 <- gamma_global - mean_alpha_station - mean_beta_site - mean_beta_station
+
+beta_region2+mean_beta_site+mean_beta_station+mean_alpha_station
 
 div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_region"), 
-                            value= c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region), 
+                            value= c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region2), 
                             sd=c(sd_alpha_station, sd_beta_station, sd_beta_site, 0),
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
@@ -119,6 +126,22 @@ div_partition$percent <- (div_partition$value*100)/gamma_global
 write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.csv")
 
 
+# plot alpha and beta ~ gamma at each spatial scale
+
+alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_region, beta_region)
+
+
+ggplot(alpha_beta, aes(colour=scale))+
+  geom_point(data=beta_region, aes(gamma, alpha))+
+  geom_point(data=beta_region, aes(gamma, beta))+
+  geom_smooth(method=lm, se=FALSE, aes(x=gamma, y=alpha))+
+  geom_smooth(method=lm,  linetype="longdash", se=FALSE, aes(x=gamma, y=beta))+
+  geom_abline(intercept = 0, slope=1)+
+  geom_abline(intercept = 0, slope=0.5, linetype="dotted")+
+  ylim(0,1600)+
+  labs(x="Regional richness", y="Alpha and Beta richness")
+
+ggsave("outputs/06_diversity_partitioning/alpha_beta~gamma.png")
 
 # calculate beta, turnover and nestedness with betapart
   ## beta inter-regions
