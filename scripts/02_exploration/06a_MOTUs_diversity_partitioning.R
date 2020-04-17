@@ -123,12 +123,12 @@ div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
-write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.csv")
+write.csv(div_partition, "outputs/06_diversity_partitioning/all_motus_diversity_partitioning.csv")
 
 
 # plot alpha and beta ~ gamma at each spatial scale
 
-alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_region, beta_region)
+alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_region)
 
 
 ggplot(alpha_beta, aes(colour=scale))+
@@ -139,9 +139,9 @@ ggplot(alpha_beta, aes(colour=scale))+
   geom_abline(intercept = 0, slope=1)+
   geom_abline(intercept = 0, slope=0.5, linetype="dotted")+
   ylim(0,1600)+
-  labs(x="Regional richness", y="Alpha and Beta richness")
+  labs(x="Regional MOTUs richness", y="Alpha and Beta richness")
 
-ggsave("outputs/06_diversity_partitioning/alpha_beta~gamma.png")
+ggsave("outputs/06_diversity_partitioning/motus_alpha_beta~gamma.png")
 
 # calculate beta, turnover and nestedness with betapart
   ## beta inter-regions
@@ -228,6 +228,6 @@ beta_melt <- melt(betatotal)
 
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
-  labs(x=" Beta component", y="Jaccard dissimilarity")
+  labs(x=" Beta component", y="Jaccard dissimilarity (motus)")
 
-ggsave("outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.png")  
+ggsave("outputs/06_diversity_partitioning/all_motus_diversity_partitioning.png")  

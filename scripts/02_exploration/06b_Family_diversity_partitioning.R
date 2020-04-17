@@ -10,21 +10,14 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 
-# different tests
-  ## 1. all MOTUs
-  ## 2. all assigned MOTUs
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
-  ## all assigned MOTUs without cryptobenthics
-df_all_filters <- subset(df_all_filters, !(new_family_name %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae")))
-  ## crypto uniquement
-df_all_filters <- subset(df_all_filters, new_family_name %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae"))
 
 
-# gamma global =1603
+# gamma global =130
 
 gamma_global <- as.numeric(df_all_filters %>%
-  summarise(n = n_distinct(sequence)))
+  summarise(n = n_distinct(new_family_name)))
   
 
 region <- unique(df_all_filters$region)
@@ -32,33 +25,33 @@ site <- unique(df_all_filters$site)
 station <- unique(df_all_filters$station)
 
 # calculate alpha diversity per station
-alpha_station=data.frame(site=character(94), station=character(94), motu=numeric(94), stringsAsFactors = FALSE)
+alpha_station=data.frame(site=character(94), station=character(94), family=numeric(94), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
   s <- unique(df_all_filters[df_all_filters$station == station[i],]$site)
-  motu <- df_all_filters[df_all_filters$station == station[i],] %>%
-    summarise(n = n_distinct(sequence))
+  family <- df_all_filters[df_all_filters$station == station[i],] %>%
+    summarise(n = n_distinct(new_family_name))
   alpha_station[i,1] <- s
   alpha_station[i,2] <- st
-  alpha_station[i,3] <- motu
+  alpha_station[i,3] <- family
 }
 
-mean_alpha_station <- mean(alpha_station$motu)
-sd_alpha_station <- sd(alpha_station$motu)
+mean_alpha_station <- mean(alpha_station$family)
+sd_alpha_station <- sd(alpha_station$family)
 
 # calculate alpha diversity per site
 
-alpha_site=data.frame(region=character(16), site=character(16), motu=numeric(16), stringsAsFactors = FALSE)
+alpha_site=data.frame(region=character(16), site=character(16), family=numeric(16), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
   r <- unique(df_all_filters[df_all_filters$site == site[i],]$region)
-  motu <- df_all_filters[df_all_filters$site == site[i],] %>%
-    summarise(n = n_distinct(sequence))
+  family <- df_all_filters[df_all_filters$site == site[i],] %>%
+    summarise(n = n_distinct(new_family_name))
   alpha_site[i,1] <- r
   alpha_site[i,2] <- s
-  alpha_site[i,3] <- motu
+  alpha_site[i,3] <- family
 }
 
 # calculate beta inter-station
@@ -67,8 +60,8 @@ beta_station <- data.frame(site=character(16), alpha=numeric(16), gamma=numeric(
 
 for (i in 1:length(site)) {
   s <- site[i]
-  gamma <- alpha_site[alpha_site$site==site[i],]$motu
-  alpha <- mean(alpha_station[alpha_station$site==site[i],]$motu)
+  gamma <- alpha_site[alpha_site$site==site[i],]$family
+  alpha <- mean(alpha_station[alpha_station$site==site[i],]$family)
   beta_station[i,1] <- s
   beta_station[i,2] <- alpha
   beta_station[i,3] <- gamma
@@ -80,14 +73,14 @@ sd_beta_station <- sd(beta_station$beta)
 
 # calculate alpha diversity per region
 
-alpha_region=data.frame(region=character(4), motu=numeric(4), stringsAsFactors = FALSE)
+alpha_region=data.frame(region=character(4), family=numeric(4), stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
-  motu <- df_all_filters[df_all_filters$region == region[i],] %>%
-    summarise(n = n_distinct(sequence))
+  family <- df_all_filters[df_all_filters$region == region[i],] %>%
+    summarise(n = n_distinct(new_family_name))
   alpha_region[i,1] <- r
-  alpha_region[i,2] <- motu
+  alpha_region[i,2] <- family
 }
 
 # calculate beta inter-site
@@ -96,8 +89,8 @@ beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4),
 
 for (i in 1:length(region)) {
   r <- region[i]
-  gamma <- alpha_region[alpha_region$region==region[i],]$motu
-  alpha <- mean(alpha_site[alpha_site$region==region[i],]$motu)
+  gamma <- alpha_region[alpha_region$region==region[i],]$family
+  alpha <- mean(alpha_site[alpha_site$region==region[i],]$family)
   beta_site[i,1] <- r
   beta_site[i,2] <- alpha
   beta_site[i,3] <- gamma
@@ -110,7 +103,7 @@ sd_beta_site <- sd(beta_site$beta)
 
 # calculate beta inter-region
 
-beta_region <- data.frame(alpha=mean(alpha_region$motu), gamma=gamma_global, beta=numeric(1), scale="inter-region")
+beta_region <- data.frame(alpha=mean(alpha_region$family), gamma=gamma_global, beta=numeric(1), scale="inter-region")
 beta_region$beta <- beta_region$gamma - beta_region$alpha
 
 beta_region2 <- gamma_global - mean_alpha_station - mean_beta_site - mean_beta_station
@@ -123,12 +116,12 @@ div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
-write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.csv")
+write.csv(div_partition, "outputs/06_diversity_partitioning/Family_diversity_partitioning.csv")
 
 
 # plot alpha and beta ~ gamma at each spatial scale
 
-alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_region, beta_region)
+alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_region)
 
 
 ggplot(alpha_beta, aes(colour=scale))+
@@ -138,21 +131,22 @@ ggplot(alpha_beta, aes(colour=scale))+
   geom_smooth(method=lm,  linetype="longdash", se=FALSE, aes(x=gamma, y=beta))+
   geom_abline(intercept = 0, slope=1)+
   geom_abline(intercept = 0, slope=0.5, linetype="dotted")+
-  ylim(0,1600)+
-  labs(x="Regional richness", y="Alpha and Beta richness")
+  ylim(0,130)+
+  xlim(0,130)+
+  labs(x="Regional family richness", y="Alpha and Beta richness")
 
-ggsave("outputs/06_diversity_partitioning/alpha_beta~gamma.png")
+ggsave("outputs/06_diversity_partitioning/family_alpha_beta~gamma.png")
 
 # calculate beta, turnover and nestedness with betapart
   ## beta inter-regions
 
-df_region=data.frame(motu=character())
+df_region=data.frame(family=character())
 
 for (i in 1:length(region)) {
   df <- df_all_filters[df_all_filters$region == region[i],] %>%
-    distinct(sequence, region)
-  colnames(df) <- c("motu", region[i])
-  df_region <- full_join(df_region, df, by="motu")
+    distinct(new_family_name, region)
+  colnames(df) <- c("family", region[i])
+  df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
 df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
@@ -172,12 +166,12 @@ betasite <- data.frame(scale="site", total=numeric(4), turnover=numeric(4), nest
 for (i in 1:length(region)) {
   df <- df_all_filters[df_all_filters$region == region[i],]
   site <- unique(df$site)
-  df_site[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
+  df_site[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
     for (j in 1:length(site)) {
       df2 <- df[df$site==site[j],] %>%
-        distinct(sequence, site)
-      colnames(df2) <- c("motu", site[j])
-      df_site[[i]] <- full_join(df_site[[i]], df2, by="motu")
+        distinct(new_family_name, site)
+      colnames(df2) <- c("family", site[j])
+      df_site[[i]] <- full_join(df_site[[i]], df2, by="family")
     }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
   df_site[[i]] <- decostand(df_site[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -202,12 +196,12 @@ betastation <- data.frame(scale="station", total=numeric(16), turnover=numeric(1
 for (i in 1:length(site)) {
   df <- df_all_filters[df_all_filters$site == site[i],]
   station <- unique(df$station)
-  df_station[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
+  df_station[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
   for (j in 1:length(station)) {
     df2 <- df[df$station==station[j],] %>%
-      distinct(sequence, station)
-    colnames(df2) <- c("motu", station[j])
-    df_station[[i]] <- full_join(df_station[[i]], df2, by="motu")
+      distinct(new_family_name, station)
+    colnames(df2) <- c("family", station[j])
+    df_station[[i]] <- full_join(df_station[[i]], df2, by="family")
   }
   rownames(df_station[[i]]) <- df_station[[i]][,1]
   df_station[[i]] <- decostand(df_station[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -228,6 +222,6 @@ beta_melt <- melt(betatotal)
 
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
-  labs(x=" Beta component", y="Jaccard dissimilarity")
+  labs(x=" Beta component", y="Jaccard dissimilarity (family)")
 
-ggsave("outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.png")  
+ggsave("outputs/06_diversity_partitioning/family_diversity_partitioning.png")  
