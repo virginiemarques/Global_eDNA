@@ -20,13 +20,29 @@ source('scripts/02_exploration/00_functions.R')
 
 # Ajouter une colonne nom assigné unique lié aux MOTUs? Pour éviter d avoir des noms de colonnes avec des séquences?
 
-# First, remove the assignations above family (we can remove it in the 02_read script if necessary)
+# Comptage
+uniq <- df_all_filters %>%
+  distinct(sequence, new_rank_ncbi)
+
+length(unique(uniq$sequence))
+table(uniq$new_rank_ncbi)
+494/1640
+
+# First, remove the assignations above family (we can remove it in the 02_read script if necessary) & the deep sites
 liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
   x %>%
-    filter(new_rank_ncbi != "higher")
+    filter(new_rank_ncbi != "higher") %>%
+    filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+    filter(sample_method!="niskin")
 })
 
+# On the df as well
+df_all_filters <- df_all_filters %>%
+  filter(new_rank_ncbi != "higher") %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method!="niskin")
 
+# Inspect
 lapply(liste_read_edna_LULU, function(x){
   length(unique(x$amplicon))
 })
@@ -35,14 +51,6 @@ lapply(liste_read_edna_LULU, function(x){
   length(unique(x$station))
 })
 
-leg <- df_all_filters %>%
-  filter(project_name == "Lengguru") %>%
-  distinct(amplicon, sequence, new_rank_ncbi)
-
-
-table(leg$new_rank_ncbi)
-
-length(unique(leg$sequence))
 
 # ------------------------------------------------------------------------------- # 
 # On individual filters
@@ -80,8 +88,6 @@ plot_acc_all
 # Save
 ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_filters.png", plot_acc_all, width = 12, height = 8)
   
-
-
 # ------------------------------------------------------------------------------- # 
 # On individual sites (couple of filters)
 # ------------------------------------------------------------------------------- # 
@@ -142,9 +148,8 @@ df_join_all <- df_all_accumulation %>%
   left_join(., df_all_asymptote, by = "project_name") 
 
 # Plots
-plot_acc_all <- ggplot(df_join_all 
-                       %>% filter(project_name != "All"), 
-                       aes(fill = project_name, col = project_name)) + 
+ggplot(df_join_all,
+       aes(fill = project_name, col = project_name)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote, col = project_name), linetype = "dashed", size = 0.5) +
@@ -152,9 +157,7 @@ plot_acc_all <- ggplot(df_join_all
   xlab("Samples (filter)") +
   theme_bw() # + scale_x_continuous(trans='log2') 
 
-plot_acc_all
-
-ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet.png", plot_acc_all, width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet.png", width = 12, height = 8)
 
 # Plot with facet
 plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
@@ -169,6 +172,17 @@ plot_acc_all <- ggplot(df_join_all, aes(fill = project_name, col = project_name)
 plot_acc_all
 
 ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination.png", plot_acc_all, width = 12, height = 8)
+
+# stat
+# Table
+stats<- df_join_all %>%
+  group_by(project_name) %>%
+  summarise(richness = max(richness), 
+            asymptote = round(max(asymptote), 0)) %>%
+  mutate(rank = 'MOTUs')
+
+# Write
+write.csv(stats, "outputs/03_accumulation_curves/asymptotes_MOTUs.csv", row.names = F)
 
 # ----------------------------------------------------------------------------- # 
 # Counts
@@ -205,6 +219,5 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_frequen
 leng <- df_all_filters %>%
   filter(project_name == "Lengguru") %>%
   distinct(sequence, new_rank_ncbi, new_family_name, new_scientific_name_ncbi, best_identity_database)
-
 
 # Most of the gobies are from Lengguru, i.e. 66 sp among the 95
