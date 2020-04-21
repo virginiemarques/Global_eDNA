@@ -5,6 +5,9 @@ setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
 
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+
 
 
 # Proportion is calculated as (nb of amplicons per family)/(total nb of amplicons per site/region), using only amplicons assigned to family level minimum
@@ -117,7 +120,7 @@ count_families_site_lengguru <- count_families_site_lengguru %>%
   mutate(order = row_number())
 
   ## plot by 3 sites, because plot too small otherwise
-site_sub <- c("lobo", "pulau_aiduma", "pulau_aiduma_ext")
+site_sub <- c("pulau_aiduma", "pulau_aiduma_ext")
 subset1 <- count_families_site_lengguru %>%
   filter(site%in%site_sub)
 ggplot(subset1, aes(order, prop, fill = prop)) + 
@@ -131,10 +134,10 @@ ggplot(subset1, aes(order, prop, fill = prop)) +
   scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
 
 
-ggsave("outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_lengguru_site7-9.png", width=20, height=16)
+ggsave("outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_lengguru_site10-11.png", width=20, height=16)
 
 
-## frequency of families in Mediterranean
+
 ## frequency of families in Eparses
 
 

@@ -7,6 +7,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
@@ -272,64 +273,14 @@ for (i in 1:length(station)) {
 
 write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_fakarava.csv")
 
-## proportion of families in malpelo
-  ## par site = region
-
-malpelo <- df_all_filters %>%
-  filter(region=="East_Pacific")
-
-malp_motu <- malpelo %>%
-  distinct(sequence, .keep_all = TRUE)
-
-count_families_site_malpelo <- data.frame(table(malp_motu$new_family_name))
-colnames(count_families_site_malpelo) <- c("family", "n_motus")
-count_families_site_malpelo$n_motus_total <- nrow(malp_motu)
-count_families_site_malpelo$site <- "malpelo"
-count_families_site_malpelo$region <- "East_Pacific"
-count_families_site_malpelo$prop <- count_families_site_malpelo$n_motus / count_families_site_malpelo$n_motus_total
 
 
-ggplot(count_families_site_malpelo, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
-  geom_bar(stat="identity") + 
-  theme_bw() +
-  labs(x="Family", y="Proportion")+
-  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
-  theme(legend.position = "none")+
-  coord_flip()
-
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_malpelo.png", width=6, height=16)
-write.csv(count_families_site_malpelo, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_malpelo.csv")
-
-  ## per station
-
-station <- c(unique(malpelo$station))
-
-count_families_station_malpelo=NULL 
-
-for (i in 1:length(station)) {
-  malp_station <- malpelo[malpelo$station == station[i],]
-  st <- station[i]
-  malp_motu_station <- malp_station%>%
-    distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(malp_motu_station$new_family_name))
-  colnames(count_families) <- c("family", "n_motus")
-  count_families$n_motus_total <- nrow(malp_motu_station)
-  count_families$prop <- count_families$n_motus / count_families$n_motus_total
-  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
-  count_families$station <- st
-  count_families$site <- "malpelo"
-  count_families_station_malpelo <- rbind(count_families_station_malpelo, count_families)
-}
-
-write.csv(count_families_station_malpelo, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_malpelo.csv")
-
-## frequency of families in Mediterranean
 ## frequency of families in Eparses
 
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_caribbean, count_families_site_lengguru, count_families_site_fakarava, count_families_site_malpelo)
+df_all_site <- rbind(count_families_site_caribbean[,c(-7)], count_families_site_lengguru[,c(-7)], count_families_site_fakarava)
 
 
 family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
@@ -346,7 +297,7 @@ for (i in 1:length(family)) {
 
 ## Bellwood figures : proportion of families per station
 
-df_all_station <- rbind(count_families_station_caribbean, count_families_station_lengguru, count_families_station_fakarava, count_families_station_malpelo)
+df_all_station <- rbind(count_families_station_caribbean, count_families_station_lengguru, count_families_station_fakarava)
 
 
 family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
