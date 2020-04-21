@@ -247,3 +247,38 @@ ggplot(rich_station, aes(latitude_start_clean, family))+
        y="Family richness")
 
 ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
+
+
+
+## plot station richness ~ longitude
+colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "family")
+
+rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+
+metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
+metadata <- metadata %>%
+  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean"))
+metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+metadata <- subset(metadata, sample_method!="niskin")
+metadata <- subset(metadata, habitat=="marine")
+metadata <- metadata[,c("station", "longitude_start_clean")]
+metadata <- metadata %>%
+  distinct(station, .keep_all = TRUE)
+
+rich_station <- left_join(rich_station, metadata, by="station")
+
+ggplot(rich_station, aes(longitude_start_clean, motu))+
+  geom_point(color="blue")+
+  xlim(-180, 180)+
+  labs(x="longitude",
+       y="MOTU richness")
+
+ggsave("outputs/04_exploration_richness/richness_motu_longitude.png")
+
+ggplot(rich_station, aes(longitude_start_clean, family))+
+  geom_point(color="red")+
+  xlim(-180, 180)+
+  labs(x="longitude",
+       y="Family richness")
+
+ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
