@@ -9,6 +9,8 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+
 
 # different tests
   ## 1. all MOTUs
@@ -155,7 +157,7 @@ for (i in 1:length(region)) {
   df_region <- full_join(df_region, df, by="motu")
 }
 rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
+df_region <- decostand(df_region[,2:4], "pa",na.rm = TRUE)
 df_region[is.na(df_region)] <- 0
 df_region <- as.data.frame(t(df_region))
 
@@ -166,7 +168,7 @@ betaregion <- data.frame(scale="region", total=beta$beta.JAC, turnover=beta$beta
   ## beta inter-site
 
 df_site=vector("list", 4)
-betasite <- data.frame(scale="site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
+betasite <- data.frame(scale="site", total=numeric(3), turnover=numeric(3), nestedness=numeric(3))
 
 
 for (i in 1:length(region)) {
@@ -195,8 +197,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(df_all_filters$site)
-df_station=vector("list", 16)
-betastation <- data.frame(scale="station", total=numeric(16), turnover=numeric(16), nestedness=numeric(16))
+df_station=vector("list", 15)
+betastation <- data.frame(scale="station", total=numeric(15), turnover=numeric(15), nestedness=numeric(15))
 
 
 for (i in 1:length(site)) {
