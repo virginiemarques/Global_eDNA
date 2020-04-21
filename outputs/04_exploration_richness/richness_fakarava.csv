@@ -1,6 +1,2 @@
-"site","station","motu.n","family.n"
-"fakarava","lagon_faka",119,31
-"fakarava","passe_faka_T",33,19
-"fakarava","passe_faka_l",36,19
-"fakarava","passe_faka_1",107,31
-"fakarava","total",147,34
+"region","site","motu","family","mean_motu","sd_motu","mean_family","sd_family"
+"French_Polynesia","fakarava",147,34,73.75,45.6024487646588,25,6.92820323027551
