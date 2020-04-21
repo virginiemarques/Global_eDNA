@@ -9,6 +9,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
@@ -25,7 +26,7 @@ site <- unique(df_all_filters$site)
 station <- unique(df_all_filters$station)
 
 # calculate alpha diversity per station
-alpha_station=data.frame(site=character(94), station=character(94), family=numeric(94), stringsAsFactors = FALSE)
+alpha_station=data.frame(site=character(81), station=character(81), family=numeric(81), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -42,7 +43,7 @@ sd_alpha_station <- sd(alpha_station$family)
 
 # calculate alpha diversity per site
 
-alpha_site=data.frame(region=character(16), site=character(16), family=numeric(16), stringsAsFactors = FALSE)
+alpha_site=data.frame(region=character(15), site=character(15), family=numeric(15), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -56,7 +57,7 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-station
 
-beta_station <- data.frame(site=character(16), alpha=numeric(16), gamma=numeric(16), beta=numeric(16), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(site=character(15), alpha=numeric(15), gamma=numeric(15), beta=numeric(15), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -73,7 +74,7 @@ sd_beta_station <- sd(beta_station$beta)
 
 # calculate alpha diversity per region
 
-alpha_region=data.frame(region=character(4), family=numeric(4), stringsAsFactors = FALSE)
+alpha_region=data.frame(region=character(3), family=numeric(3), stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -85,7 +86,7 @@ for (i in 1:length(region)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4), beta=numeric(4), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(region=character(3), alpha=numeric(3), gamma=numeric(3), beta=numeric(3), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -149,7 +150,7 @@ for (i in 1:length(region)) {
   df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
+df_region <- decostand(df_region[,2:4], "pa",na.rm = TRUE)
 df_region[is.na(df_region)] <- 0
 df_region <- as.data.frame(t(df_region))
 
@@ -159,8 +160,8 @@ betaregion <- data.frame(scale="region", total=beta$beta.JAC, turnover=beta$beta
 
   ## beta inter-site
 
-df_site=vector("list", 4)
-betasite <- data.frame(scale="site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
+df_site=vector("list", 3)
+betasite <- data.frame(scale="site", total=numeric(3), turnover=numeric(3), nestedness=numeric(3))
 
 
 for (i in 1:length(region)) {
@@ -189,8 +190,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(df_all_filters$site)
-df_station=vector("list", 16)
-betastation <- data.frame(scale="station", total=numeric(16), turnover=numeric(16), nestedness=numeric(16))
+df_station=vector("list", 15)
+betastation <- data.frame(scale="station", total=numeric(15), turnover=numeric(15), nestedness=numeric(15))
 
 
 for (i in 1:length(site)) {

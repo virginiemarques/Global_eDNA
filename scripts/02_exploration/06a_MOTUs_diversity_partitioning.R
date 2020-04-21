@@ -34,7 +34,7 @@ site <- unique(df_all_filters$site)
 station <- unique(df_all_filters$station)
 
 # calculate alpha diversity per station
-alpha_station=data.frame(site=character(94), station=character(94), motu=numeric(94), stringsAsFactors = FALSE)
+alpha_station=data.frame(site=character(81), station=character(81), motu=numeric(81), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -51,7 +51,7 @@ sd_alpha_station <- sd(alpha_station$motu)
 
 # calculate alpha diversity per site
 
-alpha_site=data.frame(region=character(16), site=character(16), motu=numeric(16), stringsAsFactors = FALSE)
+alpha_site=data.frame(region=character(15), site=character(15), motu=numeric(15), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -65,7 +65,7 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-station
 
-beta_station <- data.frame(site=character(16), alpha=numeric(16), gamma=numeric(16), beta=numeric(16), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(site=character(15), alpha=numeric(15), gamma=numeric(15), beta=numeric(15), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -82,7 +82,7 @@ sd_beta_station <- sd(beta_station$beta)
 
 # calculate alpha diversity per region
 
-alpha_region=data.frame(region=character(4), motu=numeric(4), stringsAsFactors = FALSE)
+alpha_region=data.frame(region=character(3), motu=numeric(3), stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -94,7 +94,7 @@ for (i in 1:length(region)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4), beta=numeric(4), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(region=character(3), alpha=numeric(3), gamma=numeric(3), beta=numeric(3), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -167,7 +167,7 @@ betaregion <- data.frame(scale="region", total=beta$beta.JAC, turnover=beta$beta
 
   ## beta inter-site
 
-df_site=vector("list", 4)
+df_site=vector("list", 3)
 betasite <- data.frame(scale="site", total=numeric(3), turnover=numeric(3), nestedness=numeric(3))
 
 
