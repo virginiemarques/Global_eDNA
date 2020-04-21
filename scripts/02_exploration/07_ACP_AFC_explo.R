@@ -10,12 +10,13 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
+df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 
 ## tableau metadata par station (region, site, prof, distance cote, latitude, methode, nb litre)
 metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
-  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean", "East_Pacific"))
+  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean"))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, !(sample_method %in% c("niskin", "control")))
 metadata <- subset(metadata, habitat=="marine")
@@ -46,7 +47,7 @@ pa_station <- left_join(pa_station, metadata, by="station")
 
   ## faire ACP / AFC / dbRDA
 
-afc_pa_station <-dudi.coa(pa_station[,1:1603])
+afc_pa_station <-dudi.coa(pa_station[,1:1517])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
@@ -83,7 +84,7 @@ pa_station <- left_join(pa_station, metadata, by="station")
 
   ## faire ACP / AFC / dbRDA
 
-afc_pa_station <-dudi.coa(pa_station[,1:130])
+afc_pa_station <-dudi.coa(pa_station[,1:125])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
