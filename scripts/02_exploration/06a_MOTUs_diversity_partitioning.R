@@ -140,6 +140,7 @@ ggplot(alpha_beta, aes(colour=scale))+
   geom_smooth(method=lm,  linetype="longdash", se=FALSE, aes(x=gamma, y=beta))+
   geom_abline(intercept = 0, slope=1)+
   geom_abline(intercept = 0, slope=0.5, linetype="dotted")+
+  xlim(0,1600)+
   ylim(0,1600)+
   labs(x="Regional MOTUs richness", y="Alpha and Beta richness")
 
