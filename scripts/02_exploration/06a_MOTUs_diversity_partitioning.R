@@ -17,10 +17,14 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
   ## 2. all assigned MOTUs
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
-  ## all assigned MOTUs without cryptobenthics
+  ## 4. all assigned MOTUs without cryptobenthics
 df_all_filters <- subset(df_all_filters, !(new_family_name %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae")))
-  ## crypto uniquement
+  ## 5. crypto only
 df_all_filters <- subset(df_all_filters, new_family_name %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae"))
+  ## 6. pelagic only
+load("Rdata/pelagic_family.Rdata")
+df_all_filters <- subset(df_all_filters, new_family_name %in% pelagic_family$family_name)
+
 
 
 # gamma global =1603
@@ -34,7 +38,7 @@ site <- unique(df_all_filters$site)
 station <- unique(df_all_filters$station)
 
 # calculate alpha diversity per station
-alpha_station=data.frame(site=character(81), station=character(81), motu=numeric(81), stringsAsFactors = FALSE)
+alpha_station=data.frame(site=character(), station=character(), motu=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -51,7 +55,7 @@ sd_alpha_station <- sd(alpha_station$motu)
 
 # calculate alpha diversity per site
 
-alpha_site=data.frame(region=character(15), site=character(15), motu=numeric(15), stringsAsFactors = FALSE)
+alpha_site=data.frame(region=character(), site=character(), motu=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -125,7 +129,7 @@ div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
-write.csv(div_partition, "outputs/06_diversity_partitioning/all_motus_diversity_partitioning.csv")
+write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.csv")
 
 
 # plot alpha and beta ~ gamma at each spatial scale
@@ -233,4 +237,4 @@ ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   labs(x=" Beta component", y="Jaccard dissimilarity (motus)")
 
-ggsave("outputs/06_diversity_partitioning/all_motus_diversity_partitioning.png")  
+ggsave("outputs/06_diversity_partitioning/diversity_partitioning_only_crypto.png")  

@@ -1,5 +1,6 @@
 library(tidyverse)
 library(reshape2)
+library(vegan)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
@@ -60,3 +61,29 @@ doubleton_replicate <- nrow(subset(df_replicate, rowSums(df_replicate[,1:1819]) 
 
 perc_sing_replicate <- (singleton_replicate*100)/gamma_global
 perc_doub_replicate <- (doubleton_replicate*100)/gamma_global
+
+
+
+# Calculate proportion of singletons in stations 
+
+
+station <- unique(df_all_filters$station)
+
+df_station=data.frame(motu=character())
+
+for (i in 1:length(station)) {
+  df <- df_all_filters[df_all_filters$station == station[i],] %>%
+    distinct(sequence, station)
+  colnames(df) <- c("motu", station[i])
+  df_station <- full_join(df_station, df, by="motu")
+}
+rownames(df_station) <- df_station[,1]
+df_station<- decostand(df_station[,2:82], "pa",na.rm = TRUE)
+df_station[is.na(df_station)] <- 0
+
+
+singleton_station <- nrow(subset(df_station, rowSums(df_station[,1:81]) == 1))
+doubleton_station <- nrow(subset(df_station, rowSums(df_station[,1:81]) == 2))
+
+perc_sing_station <- (singleton_station*100)/gamma_global
+perc_doub_station <- (doubleton_station*100)/gamma_global
