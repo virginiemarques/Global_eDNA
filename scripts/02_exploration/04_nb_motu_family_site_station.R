@@ -204,17 +204,21 @@ rich_site_fakarava_melt[2,"sd"] <- rich_site_fakarava$sd_family
 
 rich_total <- rbind(rich_site_lengguru_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
 
-plot_rich_tot <- ggplot(rich_total, aes(fill=variable)) +
+gg <- ggplot(rich_total, aes(fill=variable)) +
   geom_col(aes(site, value), position = position_dodge(), show.legend = TRUE)+
-  geom_point(aes(site, mean), position = "identity")+
-  geom_errorbar(aes(site, ymin=mean-sd, ymax=mean+sd))+
-  facet_wrap(~region, scales = "free_x")+
-  theme(axis.text.x = element_text(size = 6, angle = 90, hjust = 1, vjust = 0.5))+
+  geom_point(data=rich_total[rich_total$variable=="motu",], aes(site, mean), position = position_nudge(-0.22, 0))+
+  geom_errorbar(data=rich_total[rich_total$variable=="motu",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(-0.22, 0), width=0.45)+
+  geom_point(data=rich_total[rich_total$variable=="family",], aes(site, mean), position = position_nudge(0.22, 0))+
+  geom_errorbar(data=rich_total[rich_total$variable=="family",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(0.22, 0), width=0.45)+
+  facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 1, vjust = 0.5))+
   theme(axis.title.y = element_text(size = 15))+
   labs(x=NULL,
        y = "richness",
        fill=NULL)
 
+
+ggsave("outputs/04_exploration_richness/richness_region.png", width = 15, height = 8)
 
 
 ## plot station richness ~ latitude
