@@ -20,7 +20,7 @@ metadata <- metadata %>%
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, !(sample_method %in% c("niskin", "control")))
 metadata <- subset(metadata, habitat=="marine")
-metadata <- metadata[,c("station", "region", "site", "latitude_start_clean", "volume", "sample_method", "depth", "dist_to_coast..m.")]
+metadata <- metadata[,c("station", "region", "site")]
 metadata <- metadata %>%
   distinct(station, .keep_all = TRUE)
 
@@ -45,22 +45,23 @@ pa_station$station <- rownames(pa_station)
 
 pa_station <- left_join(pa_station, metadata, by="station")
 
-  ## faire ACP / AFC / dbRDA
+  ## AFC
 
 afc_pa_station <-dudi.coa(pa_station[,1:1517])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
 
-s.label(afc_pa_station$co, clab=0.5, boxes=FALSE, sub="MOTUs AFC1") #representation des especes
-s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des transects
+col <- c("black", "blue", "green", "yellow", "pink", "orange", "red")
+s.label(afc_pa_station$co, clab=0.5, boxes=FALSE, sub="MOTUs AFC1") #representation des motus
+s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des stations
 region<-as.factor(pa_station$region)
-s.class(afc_pa_station$li,region, col=c(1:4))
+s.class(afc_pa_station$li,region, col=col)
 
 
 
 ## For unique families
-  ## table presence-absence of each unique MOTU per station
+  ## table presence-absence of each unique family per station
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
@@ -82,14 +83,17 @@ pa_station$station <- rownames(pa_station)
 
 pa_station <- left_join(pa_station, metadata, by="station")
 
-  ## faire ACP / AFC / dbRDA
+  ## AFC
 
 afc_pa_station <-dudi.coa(pa_station[,1:125])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
 
+
+col <- c("black", "blue", "green", "yellow", "pink", "orange", "red")
 s.label(afc_pa_station$co, clab=0.5, boxes=FALSE, sub="Family") #representation des familles
-s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des transects
+s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des stations
 region<-as.factor(pa_station$region)
-s.class(afc_pa_station$li,region, col=c(1:4))
+s.class(afc_pa_station$li, region, col=col)
+
