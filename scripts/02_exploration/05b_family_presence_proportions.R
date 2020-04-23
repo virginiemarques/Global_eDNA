@@ -18,7 +18,7 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
   ## Caribbean total
 caribbean <- df_all_filters %>%
-  filter(region=="Caribbean") #& !is.na(new_family_name)
+  filter(region=="Caribbean") 
 
 cari_motu <- caribbean %>%
   distinct(sequence, .keep_all = TRUE)
@@ -316,12 +316,13 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 df_all_site <- rbind(count_families_site_caribbean[,c(-7)], count_families_site_lengguru[,c(-7)], count_families_site_fakarava)
 
 
-family <- c("Serranidae", "Labridae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
+family <- unique(df_all_site$family)
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.5, colour=region))+
     geom_point()+
+    xlim(0, 800)+
     theme(legend.text = element_text(size = 6))+
     labs(title=family[i], x="total number of motus per site", y="Proportion")
   ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per site/prop_",family[i],".png", sep = ""))
