@@ -77,7 +77,7 @@ m <- leaflet(metadata_map_sf) %>%
 m
 
 # I cant save the file where I want, for some reason. So I save it in root, then move it to wanted destination. 
-saveWidget(m, file="02_interactive_map.html")
+saveWidget(m, file="02_interactive_map_coral_samples.html")
 system("mv 02_interactive_map.html outputs/02_spatial_mapping/.")
 
 # ---------------------------------------------------------------------------------------------- #
