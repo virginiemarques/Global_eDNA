@@ -12,36 +12,13 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
 
-## Proportion of families global
-
-
-global_motu <- df_all_filters %>%
-  distinct(sequence, .keep_all = TRUE)
-
-
-count_families_global <- data.frame(table(global_motu$new_family_name))
-colnames(count_families_global) <- c("family", "n_motus")
-count_families_global$n_motus_total <- nrow(global_motu)
-count_families_global$prop <- count_families_global$n_motus / count_families_global$n_motus_total
-
-write.csv(count_families_global, "outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.csv")
-
-ggplot(count_families_global, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
-  geom_bar(stat="identity") + 
-  theme_bw() +
-  labs(x="Family", y="Proportion")+
-  theme(legend.position = "none")+
-  theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
-  coord_flip()
-
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.png", width=6, height=16)
 
 
 ## Proportion of families in Caribbean
 
   ## Caribbean total
 caribbean <- df_all_filters %>%
-  filter(region=="Caribbean" & !is.na(new_family_name))
+  filter(region=="Caribbean") #& !is.na(new_family_name)
 
 cari_motu <- caribbean %>%
   distinct(sequence, .keep_all = TRUE)
@@ -131,7 +108,7 @@ write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_bas
   ## Lengguru total
 
 lengguru <- df_all_filters %>%
-  filter(region=="West_Papua" & !is.na(new_family_name))
+  filter(region=="West_Papua") # & !is.na(new_family_name)
 
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
@@ -274,8 +251,64 @@ for (i in 1:length(station)) {
 write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_fakarava.csv")
 
 
-
 ## frequency of families in Eparses
+
+## Proportion of families global
+
+
+global_motu <- df_all_filters %>%
+  distinct(sequence, .keep_all = TRUE)
+
+
+count_families_global <- data.frame(table(global_motu$new_family_name))
+colnames(count_families_global) <- c("family", "n_motus")
+count_families_global$n_motus_total <- nrow(global_motu)
+count_families_global$prop <- count_families_global$n_motus / count_families_global$n_motus_total
+
+write.csv(count_families_global, "outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.csv")
+
+ggplot(count_families_global, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(legend.position = "none")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) + 
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global.png", width=6, height=16)
+
+
+
+  ## plot proportion of each family in each region on global scale
+families_prop_global <- left_join(count_families_global, count_families_caribbean[,1:2], by="family" )
+families_prop_global <- left_join(families_prop_global, count_families_lengguru[,1:2], by="family" )
+families_prop_global <- left_join(families_prop_global, count_families_site_fakarava[,1:2], by="family" )
+families_prop_global <- families_prop_global[, c(-3)]
+colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_caribbean", "n_lengguru", "n_fakarava")
+families_prop_global[is.na(families_prop_global)] <- 0
+
+for (i in 1:dim(families_prop_global)[1]) {
+  families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
+  families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
+  families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
+  
+}
+
+families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Ffakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
+
+families_prop_global <- families_prop_global[,c(1,10:12)]
+families_prop_global2 <- melt(families_prop_global)
+colnames(families_prop_global2) <- c("family", "Region", "prop")
+
+ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+  geom_bar(stat="identity", show.legend = TRUE) + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global_region.png", width=6, height=16)
 
 
 ## Bellwood figures : proportion of families per site
