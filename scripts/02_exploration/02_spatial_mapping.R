@@ -19,6 +19,11 @@ metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", sep=";", s
 metadata_sampling$longitude_start_clean <- gsub('\\?', '', metadata_sampling$longitude_start)
 metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$latitude_start)
 
+
+metadata_sampling <- subset(metadata_sampling, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+metadata_sampling <- subset(metadata_sampling, sample_method!="niskin")
+metadata_sampling <- subset(metadata_sampling, !region %in% c("East_Pacific", "Mediterranean"))
+
 # ---------------------------------------------------------------------------------------------- #
 #                            Some mapping 
 
@@ -49,7 +54,7 @@ ggplot() +
         plot.title = element_text(lineheight=.8, face="bold")) 
 
 # Save
-ggsave("outputs/02_spatial_mapping/02_spatial_map_global_points.png", width=8, height=6)
+ggsave("outputs/02_spatial_mapping/02_spatial_map_global_points_kept.png", width=8, height=6)
 
 # ---------------------------------------------------------------------------------------------- #
 #                            Interactive map
