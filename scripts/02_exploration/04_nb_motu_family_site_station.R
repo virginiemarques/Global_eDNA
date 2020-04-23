@@ -232,11 +232,11 @@ metadata <- metadata %>%
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
-metadata <- metadata[,c("station", "latitude_start_clean")]
+metadata <- metadata[,c("station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.")]
 metadata <- metadata %>%
   distinct(station, .keep_all = TRUE)
 
-rich_station <- left_join(rich_station, metadata, by="station")
+rich_station <- left_join(rich_station, metadata[,c("station", "latitude_start_clean")], by="station")
 
 ggplot(rich_station, aes(latitude_start_clean, motu))+
   geom_point(color="blue")+
@@ -255,21 +255,10 @@ ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 
 ## plot station richness ~ longitude
-colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "family")
 
 rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
 
-metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
-metadata <- metadata %>%
-  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean"))
-metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-metadata <- subset(metadata, sample_method!="niskin")
-metadata <- subset(metadata, habitat=="marine")
-metadata <- metadata[,c("station", "longitude_start_clean")]
-metadata <- metadata %>%
-  distinct(station, .keep_all = TRUE)
-
-rich_station <- left_join(rich_station, metadata, by="station")
+rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
 
 ggplot(rich_station, aes(longitude_start_clean, motu))+
   geom_point(color="blue")+
@@ -286,3 +275,25 @@ ggplot(rich_station, aes(longitude_start_clean, family))+
        y="Family richness")
 
 ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
+
+
+## plot station richness ~ distance_to_coast
+
+rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+
+rich_station <- left_join(rich_station, metadata[,c("station", "dist_to_coast..m.")], by="station")
+
+ggplot(rich_station, aes(dist_to_coast..m., motu))+
+  geom_point(color="blue")+
+  labs(x="distance to coast (m)",
+       y="MOTU richness")
+
+ggsave("outputs/04_exploration_richness/richness_motu_distance_to_coast.png")
+
+ggplot(rich_station, aes(dist_to_coast..m., family))+
+  geom_point(color="red")+
+  labs(x="Distance to coast (m)",
+       y="Family richness")
+
+ggsave("outputs/04_exploration_richness/richness_family_distance_to_coast.png")
+
