@@ -7,7 +7,13 @@ library(reshape2)
 library(vegan)
 library(betapart)
 library(ggpubr)
+library(conflicted)
 
+# 
+conflict_prefer("filter", "dplyr")
+conflict_prefer("summarise", "dplyr")
+
+# fct
 "%ni%" <- Negate("%in%")
 
 # data
@@ -18,9 +24,9 @@ df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_dieg
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
-# on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? 
-df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+# on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? Faire les deux
+#df_all_filters <- df_all_filters %>%
+#  filter(!is.na(new_family_name))
 
 # N global 
 Nmotus <- length(unique(df_all_filters$sequence))
@@ -28,7 +34,9 @@ Nmotus
 # 1047 MOTUs in total
 
 # N families
-Nfamily <- length(unique(df_all_filters$new_family_name))
+Nfamily <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
+  distinct(new_family_name) %>% pull() %>% length()
 Nfamily
 # 125
 
@@ -177,6 +185,7 @@ length(unique(df_all_filters$region))
 
 # Count
 motu_region <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(region)) %>%
   ungroup() %>%
@@ -195,6 +204,7 @@ length(unique(df_all_filters$site))
 
 # Count
 dataset <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(site)) %>%
   ungroup() %>%
@@ -213,6 +223,7 @@ length(unique(df_all_filters$station))
 
 # Count
 dataset <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(station)) %>%
   ungroup() %>%
@@ -231,6 +242,7 @@ length(unique(df_all_filters$sample_name_all_pcr))
 
 # Count
 dataset <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(sample_name_all_pcr)) %>%
   ungroup() %>%

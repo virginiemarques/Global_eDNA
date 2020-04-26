@@ -1,7 +1,9 @@
+# Lib
 library(UpSetR)
 library(devtools)
 #BiocManager::install("ComplexHeatmap")
 library(ComplexHeatmap)
+library(nationalparkcolors)
 
 # ---------------------------------------------------------------- # 
 
@@ -12,108 +14,443 @@ library(vegan)
 library(betapart)
 library(ggpubr)
 
+# fct
 "%ni%" <- Negate("%in%")
 
 # data
 load("Rdata/02_clean_all.Rdata")
 
-#Remove estuary stations and deep niskin station
+# Remove estuary stations and deep niskin station
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 # on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? 
-df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+# -> faire les deux et mettre les familles seulement en SI. 
+#df_all_filters <- df_all_filters %>%
+#  filter(!is.na(new_family_name))
+
+# Des que le style des figures est bien posé, faire une fonction pour simplifier le code 
 
 # the motus 
 df_regions <- split(df_all_filters, df_all_filters$region)
+df_site <- split(df_all_filters, df_all_filters$site)
+
+# ------------------------------------------------------------------------------- # 
+#### REGION - MOTUs ---- 
+
+# Color panel 
+pal <- park_palette("Everglades", 3)
+pal
 
 # Construct the inital matrix - add some important infos as a side
-sampling_effort <-  df_all_filters %>%
+motus_fam_region <-  df_all_filters %>%
   group_by(region) %>%
-  summarize(n_samples = n_distinct(sample_name_all_pcr))
+  summarize(n_motus = n_distinct(sequence), 
+            n_family = n_distinct(new_family_name)) %>%
+  as.data.frame()
 
+# metadata - needed to control colors?
+metadata1 <- df_all_filters %>%
+  distinct(region) %>% 
+  mutate(sets = region) %>%
+  select(sets, region) %>%
+  mutate(color = case_when(
+    region == "French_Polynesia" ~ pal[1], 
+    region == "Caribbean" ~ pal[2], 
+    region == "West_Papua" ~ pal[3]
+  )) %>%
+  as.data.frame() %>%
+  left_join(., motus_fam_region)
+
+# MOTUs
 matrix_motus <- df_all_filters %>%
   distinct(sequence, new_scientific_name_ncbi) %>%
   mutate(West_papua = ifelse(sequence %in% df_regions$West_Papua$sequence, 1, 0), 
          French_polynesia = ifelse(sequence %in% df_regions$French_Polynesia$sequence, 1, 0),
          Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0)) %>%
-  left_join(., sampling_effort)
-
-
-
+  as.data.frame()
 
 # contruct matrix
 mm = make_comb_mat(matrix_motus)
-mm
+# Remove the intersections with no match
+mm = mm[comb_degree(mm) > 0]
+
+# the upset plot
+p1 <- UpSet(mm, 
+      comb_order = order(-comb_size(mm)), 
+      comb_col = pal[comb_degree(mm)],
+      column_title = "Region - MOTUs")
+p1
+
+# Save
+png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=150)
+p1
+dev.off()
+
+# Supp Settings
+# Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut être ? 
+
+# Construct a nicer plot
+# Base plot
+upset(matrix_motus, 
+      order.by = c("freq"),
+      mainbar.y.label = "Number of MOTUs", 
+      sets.x.label = "Number of MOTUs", 
+      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2))
+
+# Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
+# Work in progress
+upset(matrix_motus, 
+      order.by = c("freq"),
+      mainbar.y.label = "Number of MOTUs", 
+      sets.x.label = "Number of MOTUs", 
+      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
+      # Color bar 
+      sets.bar.color=metadata1$color, 
+      # Color matrix
+      set.metadata = list(
+        data = metadata1,
+        plots = list(list(
+          type = "matrix_rows",
+          column = "region", 
+          colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
+          alpha = 1
+        ))
+      ))
+
+
+# ------------------------------------------------------------------------------- # 
+#### REGION - FAMILY ---- 
+
+# rarity in samples - by families 
+family_samples_rarity <- df_all_filters %>%
+  group_by(new_family_name) %>%
+  summarise(n_samples = n_distinct(sample_name_all_pcr))
+
+# Family
+matrix_family <- df_all_filters %>%
+  distinct(new_family_name) %>%
+  mutate(West_papua = ifelse(new_family_name %in% df_regions$West_Papua$new_family_name, 1, 0), 
+         French_polynesia = ifelse(new_family_name %in% df_regions$French_Polynesia$new_family_name, 1, 0),
+         Caribbean = ifelse(new_family_name %in% df_regions$Caribbean$new_family_name, 1, 0)) %>%
+  left_join(., family_samples_rarity) %>%
+  as.data.frame()
+
+# contruct matrix
+mm = make_comb_mat(matrix_family)
+# Remove the intersections with no match
+mm = mm[comb_degree(mm) > 0]
+
+# Color panel 
+pal <- park_palette("Everglades", 3)
+
+# the upset plot
+p2 <- UpSet(mm, 
+           comb_order = order(-comb_size(mm)), 
+           comb_col = pal[comb_degree(mm)],
+           column_title = "Region - Family")
+p2
+
+# Save
+png('outputs/09_dominance_motus_ranks/upset_plot_region_family.png', width = 6, height=3, units = "in", res=150)
+p2
+dev.off()
+
+# Alternative plot
+upset(matrix_family, 
+      order.by = c("freq"),
+      mainbar.y.label = "Number of families", 
+      sets.x.label = "Number of families", 
+      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2))
+
+# ------------------------------------------------------------------------------- # 
+#### SITE - MOTUs ---- 
+
+all_sites <- names(df_site)
+
+# Count MOTUs per site
+motus_sites <- df_all_filters %>%
+  group_by(site) %>%
+  dplyr::summarize(n_motus = n_distinct(sequence)) %>%
+  arrange(n_motus)
+
+# metadata - needed to control colors?
+metadata1 <- df_all_filters %>%
+  distinct(site, region) %>% 
+  mutate(sets = site) %>%
+  select(sets, region) %>%
+  mutate(color = case_when(
+    region == "French_Polynesia" ~ pal[1], 
+    region == "Caribbean" ~ pal[2], 
+    region == "West_Papua" ~ pal[3]
+  )) %>%
+  left_join(., motus_sites, by = c("sets" = "site")) %>%
+  # Arrange by n_motu frequency to get the color right in the plot
+  arrange(-n_motus) %>%
+  as.data.frame()
+
+# MOTUs
+matrix_motus <- df_all_filters %>%
+  distinct(sequence) %>%
+  as.data.frame()
+
+# Variables
+rank <- "sequence"
+dataset <- df_site
+
+# Fill the sites - automatic
+for (i in all_sites){
+  matrix_motus[,i] <- ifelse(matrix_motus[,rank] %in% dataset[[i]][[rank]], 1, 0)
+  print(i)
+}
+
+# contruct matrix
+mm = make_comb_mat(matrix_motus)
 
 # Remove the intersections with no match
 mm = mm[comb_degree(mm) > 0]
 
 # Color panel 
-
-library(nationalparkcolors)
 pal <- park_palette("Everglades", 3)
-pal
 
-# the upset plot
+# the upset plot - c'est illisible avec cette methode. Utiliser upset function plutôt + personnaliser les couleurs 
+UpSet(mm,comb_order = order(-comb_size(mm)),
+            column_title = "Site - MOTUs")
 
-p <- UpSet(mm, 
-      comb_order = order(-comb_size(mm)), 
-      comb_col = pal[comb_degree(mm)])
-p
+# Plotter les 40 premieres intersections pour la lisibilité
+p3 <- upset(matrix_motus, 
+            nsets = 20,
+            order.by = c("freq"),
+            mainbar.y.label = "Number of MOTUs", 
+            sets.x.label = "Number of MOTUs", 
+            nintersects = 40)
+
+p3
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_motus.png', width = 6, height=3, units = "in", res=150)
-p
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus.png', width = 12, height=8, units = "in", res=300)
+p3
+grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
+dev.off()
+
+# Alternative plot 
+# Work in progress
+
+# Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
+p3_color <- upset(matrix_motus, 
+      nsets = 20,
+      order.by = c("freq"),
+      mainbar.y.label = "Number of MOTUs", 
+      sets.x.label = "Number of MOTUs", 
+      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.7), 
+      # Color bar 
+      sets.bar.color=metadata1$color, 
+      # Color matrix
+      set.metadata = list(
+        data = metadata1,
+        plots = list(list(
+          type = "matrix_rows",
+          column = "region", 
+          colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
+          alpha = 0.8
+        ))
+      ))
+
+p3_color
+
+# Save - w/ colors
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus_colors.png', width = 12, height=8, units = "in", res=300)
+p3_color
+grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()
 
 
-# Supp Settings
+# ------------------------------------------------------------------------------- # 
+#### SITE - FAMILY ---- 
 
-# Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut être ? 
+all_sites <- names(df_site)
+
+# Count MOTUs per site
+motus_family <- df_all_filters %>%
+  group_by(site) %>%
+  dplyr::summarize(n_family = n_distinct(new_family_name)) %>%
+  arrange(n_family)
+
+# metadata - needed to control colors?
+metadata1 <- df_all_filters %>%
+  distinct(site, region) %>% 
+  mutate(sets = site) %>%
+  select(sets, region) %>%
+  mutate(color = case_when(
+    region == "French_Polynesia" ~ pal[1], 
+    region == "Caribbean" ~ pal[2], 
+    region == "West_Papua" ~ pal[3]
+  )) %>%
+  left_join(., motus_family, by = c("sets" = "site")) %>%
+  # Arrange by n_motu frequency to get the color right in the plot
+  arrange(-n_family) %>%
+  as.data.frame()
+
+# MOTUs
+matrix_family <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
+  distinct(new_family_name) %>%
+  as.data.frame()
+
+# Variables
+rank <- "new_family_name"
+dataset <- df_site
+
+# Fill the sites - automatic
+for (i in all_sites){
+  matrix_family[,i] <- ifelse(matrix_family[,rank] %in% dataset[[i]][[rank]], 1, 0)
+  print(i)
+}
+
+# contruct matrix
+mm = make_comb_mat(matrix_family)
+# Remove the intersections with no match
+mm = mm[comb_degree(mm) > 0]
+
+# Color panel 
+pal <- park_palette("Everglades", 3)
+
+# Save
+p4 <- upset(matrix_family, 
+      nsets = 20,
+      order.by = c("freq"),
+      mainbar.y.label = "Number of families", 
+      sets.x.label = "Number of families", 
+      nintersects = 13) # Above 13 intersects, there is only 1 count. I dont see any settings to choose this way (would be cleaner)
+p4
+
+# Save
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_family.png', width = 10, height=7, units = "in", res=300)
+p4
+grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
+dev.off()
+
+# Plot color
+p4_color <- upset(matrix_family, 
+                  nsets = 20,
+                  nintersects = 13,
+                  order.by = c("freq"),
+                  mainbar.y.label = "Number of families", 
+                  sets.x.label = "Number of families", 
+                  text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.7), 
+                  # Color bar 
+                  sets.bar.color=metadata1$color, 
+                  # Color matrix
+                  set.metadata = list(
+                    data = metadata1,
+                    plots = list(list(
+                      type = "matrix_rows",
+                      column = "region", 
+                      colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
+                      alpha = 0.8
+                    ))
+                  ))
+
+p4_color
+
+# Save
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_family_color.png', width = 10, height=7, units = "in", res=300)
+p4_color
+grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
+dev.off()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ------- # 
+# Old 
 
 # remove the sole intersections
 UpSet(mm[comb_degree(mm) == 2])
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # -------------------------------------- # 
-# Tuto 
+#### Tuto ----
 
 movies = read.csv(system.file("extdata", "movies.csv", package = "UpSetR"), 
                   header = TRUE, sep = ";")
 head(movies) # `make_comb_mat()` automatically ignores the first two columns
+
+# ADD METADATA 
+sets <- names(movies[3:19])
+avgRottenTomatoesScore <- round(runif(17, min = 0, max = 90))
+metadata <- as.data.frame(cbind(sets, avgRottenTomatoesScore))
+names(metadata) <- c("sets", "avgRottenTomatoesScore")
+metadata$avgRottenTomatoesScore <- as.numeric(as.character(metadata$avgRottenTomatoesScore))
+Cities <- sample(c("Boston", "NYC", "LA"), 17, replace = T)
+metadata <- cbind(metadata, Cities)
+metadata$Cities <- as.character(metadata$Cities)
+metadata[which(metadata$sets %in% c("Drama", "Comedy", "Action", "Thriller", 
+                                    "Romance")), ]
+accepted <- round(runif(17, min = 0, max = 1))
+metadata <- cbind(metadata, accepted)
+metadata[which(metadata$sets %in% c("Drama", "Comedy", "Action", "Thriller", 
+                                    "Romance")), ]
+
+
+# Plot
+upset(movies, set.metadata = list(data = metadata, 
+  plots = list(list(
+  type = "matrix_rows",
+  column = "Cities", colors = c(Boston = "green", NYC = "navy", LA = "purple"),
+  alpha = 0.5
+))))
+
+# Plot2
+upset(movies, 
+  set.metadata = list(
+  data = metadata,
+  plots = list(list(
+    type = "matrix_rows",
+    column = "Cities", colors = c(Boston = "green", NYC = "navy", LA = "purple"),
+    alpha = 0.5
+  ))
+))
+
+
+
+
+
+
 
 m = make_comb_mat(movies, top_n_sets = 6)
 m
 
 m = m[comb_degree(m) > 0]
 UpSet(m)
+
 
 
 # --------------------- # 
@@ -133,12 +470,25 @@ comb_elements = lapply(comb_name(mm), function(nm) extract_comb(mm, nm))
 
 
 
-
-
-
-
-
-
+upset(movies,
+  main.bar.color = "black", queries = list(list(
+    query = intersects,
+    params = list("Drama"), color = "red", active = F
+  ), list(
+    query = intersects,
+    params = list("Action", "Drama"), active = T
+  ), list(
+    query = intersects,
+    params = list("Drama", "Comedy", "Action"), color = "orange", active = T
+  )),
+  attribute.plots = list(gridrows = 45, plots = list(list(
+    plot = scatter_plot,
+    x = "ReleaseDate", y = "AvgRating", queries = T
+  ), list(
+    plot = scatter_plot,
+    x = "AvgRating", y = "Watches", queries = F
+  )), ncols = 2), query.legend = "bottom"
+)
 
   
 
