@@ -25,21 +25,24 @@ region <- unique(df_all_filters$region)
 site <- unique(df_all_filters$site)
 station <- unique(df_all_filters$station)
 
-# calculate alpha diversity per station
-alpha_station=data.frame(site=character(81), station=character(81), family=numeric(81), stringsAsFactors = FALSE)
 
-for (i in 1:length(station)) {
-  st <- station[i]
-  s <- unique(df_all_filters[df_all_filters$station == station[i],]$site)
-  family <- df_all_filters[df_all_filters$station == station[i],] %>%
+# calculate alpha diversity per region
+
+alpha_region=data.frame(region=character(3), family=numeric(3), stringsAsFactors = FALSE)
+
+for (i in 1:length(region)) {
+  r <- region[i]
+  family <- df_all_filters[df_all_filters$region == region[i],] %>%
     summarise(n = n_distinct(new_family_name))
-  alpha_station[i,1] <- s
-  alpha_station[i,2] <- st
-  alpha_station[i,3] <- family
+  alpha_region[i,1] <- r
+  alpha_region[i,2] <- family
 }
 
-mean_alpha_station <- mean(alpha_station$family)
-sd_alpha_station <- sd(alpha_station$family)
+
+# calculate beta inter-region
+beta_region <- data.frame(alpha=mean(alpha_region$family), gamma=gamma_global, beta=numeric(1), scale="inter-region")
+beta_region$beta <- beta_region$gamma - beta_region$alpha
+
 
 # calculate alpha diversity per site
 
@@ -55,34 +58,6 @@ for (i in 1:length(site)) {
   alpha_site[i,3] <- family
 }
 
-# calculate beta inter-station
-
-beta_station <- data.frame(site=character(15), alpha=numeric(15), gamma=numeric(15), beta=numeric(15), scale="inter-station", stringsAsFactors = FALSE)
-
-for (i in 1:length(site)) {
-  s <- site[i]
-  gamma <- alpha_site[alpha_site$site==site[i],]$family
-  alpha <- mean(alpha_station[alpha_station$site==site[i],]$family)
-  beta_station[i,1] <- s
-  beta_station[i,2] <- alpha
-  beta_station[i,3] <- gamma
-  beta_station[i,4] <- gamma - alpha
-}
-
-mean_beta_station <- mean(beta_station$beta)
-sd_beta_station <- sd(beta_station$beta)
-
-# calculate alpha diversity per region
-
-alpha_region=data.frame(region=character(3), family=numeric(3), stringsAsFactors = FALSE)
-
-for (i in 1:length(region)) {
-  r <- region[i]
-  family <- df_all_filters[df_all_filters$region == region[i],] %>%
-    summarise(n = n_distinct(new_family_name))
-  alpha_region[i,1] <- r
-  alpha_region[i,2] <- family
-}
 
 # calculate beta inter-site
 
@@ -102,17 +77,76 @@ for (i in 1:length(region)) {
 mean_beta_site <- mean(beta_site$beta)
 sd_beta_site <- sd(beta_site$beta)
 
-# calculate beta inter-region
 
-beta_region <- data.frame(alpha=mean(alpha_region$family), gamma=gamma_global, beta=numeric(1), scale="inter-region")
-beta_region$beta <- beta_region$gamma - beta_region$alpha
 
-beta_region2 <- gamma_global - mean_alpha_station - mean_beta_site - mean_beta_station
+# calculate alpha diversity per station
+alpha_station=data.frame(region=character(81), site=character(81), station=character(81), family=numeric(81), stringsAsFactors = FALSE)
 
-beta_region2+mean_beta_site+mean_beta_station+mean_alpha_station
+for (i in 1:length(station)) {
+  st <- station[i]
+  r <- unique(df_all_filters[df_all_filters$station == station[i],]$region)
+  s <- unique(df_all_filters[df_all_filters$station == station[i],]$site)
+  family <- df_all_filters[df_all_filters$station == station[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  alpha_station[i,1] <- r
+  alpha_station[i,2] <- s
+  alpha_station[i,3] <- st
+  alpha_station[i,4] <- family
+}
+
+alpha_station_car <- alpha_station %>%
+  subset(region == "Caribbean")
+mean_alpha_station_car <- mean(alpha_station_car$family)
+
+alpha_station_leng <- alpha_station %>%
+  subset(region == "West_Papua")
+mean_alpha_station_leng <- mean(alpha_station_leng$family)
+
+alpha_station_faka <- alpha_station %>%
+  subset(region == "French_Polynesia")
+mean_alpha_station_faka <- mean(alpha_station_faka$family)
+
+a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng)
+mean_alpha_station <- mean(a_station)
+sd_alpha_station <- sd(a_station)
+
+
+# calculate beta inter-station
+
+beta_station <- data.frame(region=character(15), site=character(15), alpha=numeric(15), gamma=numeric(15), beta=numeric(15), scale="inter-station", stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  r <- unique(alpha_station[alpha_station$site==site[i],]$region)
+  gamma <- alpha_site[alpha_site$site==site[i],]$family
+  alpha <- mean(alpha_station[alpha_station$site==site[i],]$family)
+  beta_station[i,1] <- r
+  beta_station[i,2] <- s
+  beta_station[i,3] <- alpha
+  beta_station[i,4] <- gamma
+  beta_station[i,5] <- gamma - alpha
+}
+
+beta_station_car <- beta_station %>%
+  subset(region == "Caribbean")
+mean_beta_station_car <- mean(beta_station_car$beta)
+
+beta_station_leng <- beta_station %>%
+  subset(region == "West_Papua")
+mean_beta_station_leng <- mean(beta_station_leng$beta)
+
+beta_station_faka <- beta_station[beta_station$region=="French_Polynesia",]$beta
+
+b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng)
+mean_beta_station <- mean(b_station)
+sd_beta_station <- sd(b_station)
+
+beta_region$beta+mean_beta_site+mean_beta_station+mean_alpha_station
+
+# calculate diversity partitioning
 
 div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_region"), 
-                            value= c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region2), 
+                            value= c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region$beta), 
                             sd=c(sd_alpha_station, sd_beta_station, sd_beta_site, 0),
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
