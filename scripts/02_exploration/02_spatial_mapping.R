@@ -56,6 +56,46 @@ ggplot() +
 # Save
 ggsave("outputs/02_spatial_mapping/02_spatial_map_global_points_kept.png", width=8, height=6)
 
+
+
+## plot lengguru mais fond de carte degueu
+lengguru <- metadata_map_sf %>%
+  filter(region=="West_Papua")
+st_bbox(lengguru)
+
+ggplot() + 
+  geom_sf(aes(), data = world, fill = "grey80") + 
+  geom_sf(fill = "blue", data= lengguru, shape=21, alpha=0.7) + 
+  coord_sf(xlim=c(125,140), ylim=c(-10,5), expand = FALSE) + 
+  theme_minimal() +
+  theme(panel.grid.minor = element_line(linetype = "blank"),
+        plot.background = element_rect(colour = NA), 
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        text = element_text(size=10),
+        legend.key.size = unit(8, "mm"),
+        panel.grid.major = element_line(colour = "gray70"),
+        plot.title = element_text(lineheight=.8, face="bold")) 
+
+
+faka <- metadata_map_sf %>%
+  filter(region=="French_Polynesia")
+st_bbox(faka)
+
+ggplot() + 
+  geom_sf(aes(), data = world, fill = "grey80") + 
+  geom_sf(fill = "blue", data= faka, shape=21, alpha=0.7) + 
+  coord_sf(xlim=c(-145.48,-145.42), ylim=c(-16.53,-16.48), expand = FALSE) + 
+  theme_minimal() +
+  theme(panel.grid.minor = element_line(linetype = "blank"),
+        plot.background = element_rect(colour = NA), 
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        text = element_text(size=10),
+        legend.key.size = unit(8, "mm"),
+        panel.grid.major = element_line(colour = "gray70"),
+        plot.title = element_text(lineheight=.8, face="bold"))
+
 # ---------------------------------------------------------------------------------------------- #
 #                            Interactive map
 
