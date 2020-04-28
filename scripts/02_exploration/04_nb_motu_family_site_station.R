@@ -11,6 +11,22 @@ df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 
+# calculate nb of reads per family at global scale
+
+df_all_filters <- df_all_filters %>%
+  filter(!is.na(new_family_name))
+
+family <- unique(df_all_filters$new_family_name)
+nb_reads_family <- data.frame(family=character(), reads=numeric(), stringsAsFactors = FALSE)
+
+for (i in 1:length(family)) {
+  df <- subset(df_all_filters, new_family_name==family[i])
+  nb_reads_family[i,1] <- family[i]
+  nb_reads_family[i,2] <- sum(df$count_reads_all_pcr)
+}
+
+save(nb_reads_family, file = "Rdata/nb_reads_per_family_global.Rdata")
+
 
 ## Lengguru data
 
