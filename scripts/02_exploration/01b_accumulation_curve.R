@@ -14,17 +14,17 @@ source('scripts/02_exploration/00_functions.R')
 
 # Ajouter une colonne nom assigné unique lié aux MOTUs? Pour éviter d avoir des noms de colonnes avec des séquences?
 
-# First, remove the assignations above family (we can remove it in the 02_read script if necessary)
+# First, remove the assignations above family (we can remove it in the 02_read script if necessary) --> keep it, put the families only in the supl. mat. 
 liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
   x %>%
-    filter(new_rank_ncbi != "higher") %>%
+    #filter(new_rank_ncbi != "higher") %>%
     filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
     filter(sample_method!="niskin")
 })
 
 # On the df as well
 df_all_filters <- df_all_filters %>%
-  filter(new_rank_ncbi != "higher") %>%
+  #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
   filter(sample_method!="niskin")
 
@@ -41,7 +41,7 @@ lapply(liste_read_edna_LULU, function(x){
 })
 
 # ------------------------------------------------------------------------------- # 
-# On Order
+#### On Order ----
 # ------------------------------------------------------------------------------- # 
 
 # rank_specify
@@ -91,7 +91,7 @@ plot_acc_order <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~project_name, scales = "free") +
-  ylab("Number of MOTUs") +
+  ylab("Number of orders") +
   xlab("Samples (filter)") +
   theme_bw() + 
   ggtitle("Orders") + 
@@ -111,8 +111,25 @@ stats<- df_join_all %>%
 # Save
 write.csv(stats, "outputs/03_accumulation_curves/asymptotes_order.csv", row.names = F)
 
+# Simple plot on all 
+df_order <- df_join_all %>% 
+  filter(project_name == "All") %>%
+  mutate(level = "order")
+
+order <- ggplot(df_order, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  ylab("Number of orders") +
+  xlab("Samples (filter)") +
+  theme_bw() + 
+  ggtitle("Orders") + 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 0), "Orders")), col = "black") 
+
+order
+
 # ------------------------------------------------------------------------------- # 
-# On family
+#### On family ----
 # ------------------------------------------------------------------------------- # 
 
 # rank_specify
@@ -192,7 +209,7 @@ plot_acc_family <- ggplot(df_join_all, aes(fill = project_name, col = project_na
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~project_name, scales = "free") +
-  ylab("Number of MOTUs") +
+  ylab("Number of families") +
   xlab("Samples (filter)") +
   theme_bw() + 
   ggtitle("Families") + 
@@ -212,8 +229,25 @@ stats_family <- df_join_all %>%
 # Save
 write.csv(stats_family, "outputs/03_accumulation_curves/asymptotes_family.csv", row.names = F)
 
+# Simple plot on all 
+df_fam <- df_join_all %>% 
+  filter(project_name == "All") %>%
+  mutate(level = "family")
+
+family <- ggplot(df_fam, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  ylab("Number of families") +
+  xlab("Samples (filter)") +
+  theme_bw() + 
+  ggtitle("Families") + 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 0), "Families")), col = "black") 
+
+family
+
 # ------------------------------------------------------------------------------- # 
-# On genus
+#### On genus ----
 # ------------------------------------------------------------------------------- # 
 
 # rank_specify
@@ -263,7 +297,7 @@ plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~project_name, scales = "free") +
-  ylab("Number of MOTUs") +
+  ylab("Number of genus") +
   xlab("Samples (filter)") +
   theme_bw() + 
   ggtitle("Genus") + 
@@ -282,3 +316,145 @@ stats<- df_join_all %>%
 
 # Save
 write.csv(stats, "outputs/03_accumulation_curves/asymptotes_genus.csv", row.names = F)
+
+# Simple plot on all 
+df_genus <- df_join_all %>% 
+  filter(project_name == "All") %>%
+  mutate(level = "genus")
+
+genus <- ggplot(df_genus, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  ylab("Number of genus") +
+  xlab("Samples (filter)") +
+  theme_bw() + 
+  ggtitle("Genus") + 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 0), "Genus")), col = "black") 
+
+genus
+
+# ------------------------------------------------------------------------------- # 
+#### On MOTUs ----
+# ------------------------------------------------------------------------------- # 
+
+# rank_specify
+rank_choice = 'sequence'
+
+# accumlation all plots
+liste_accumulation <- lapply(liste_read_edna_LULU, accumulation_curve_df, species_unit = rank_choice)
+
+# Asymptote of all plots 
+liste_asymptote <- lapply(liste_read_edna_LULU, asymptote_mm, species_unit = rank_choice)
+
+# Unlist
+df_accumulation <- bind_rows(liste_accumulation, .id = "project_name")
+df_asymptote <- bind_rows(liste_asymptote, .id = "project_name")
+
+# Dataset for plot
+df_accumulation_all <- left_join(df_accumulation, df_asymptote, by = "project_name") %>%
+  group_by(project_name) %>%
+  mutate(position_asymptote_y = 0.20 * max(asymptote), 
+         position_asymptote_x = max(sites))
+
+# Add All samples
+# Add a global saturation curve, i.e. all samples together?
+all_accumulation <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
+  mutate(project_name = "All") %>%
+  select(project_name, richness, sd, sites)
+
+# Asymptote of all plots 
+all_asymptote <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
+  mutate(project_name = "All") %>%
+  select(project_name, asymptote)
+
+# Bind together
+df_all_accumulation <- rbind(df_accumulation, all_accumulation)
+df_all_asymptote <- rbind(df_asymptote, all_asymptote)
+
+# 
+df_join_all <- df_all_accumulation %>%
+  left_join(., df_all_asymptote, by = "project_name") %>%
+  group_by(project_name) %>%
+  mutate(position_asymptote_y = 0.20 * max(asymptote), 
+         position_asymptote_x = max(sites))
+
+# Plot with facet
+plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  facet_wrap(~project_name, scales = "free") +
+  ylab("Number of genus") +
+  xlab("Samples (filter)") +
+  theme_bw() + 
+  ggtitle("Genus") + 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "Genus")), col = "black") 
+
+plot_acc_genus
+
+ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_genus.png", width = 12, height = 8)
+
+# Table
+stats<- df_join_all %>%
+  group_by(project_name) %>%
+  summarise(richness = max(richness), 
+            asymptote = round(max(asymptote), 0)) %>%
+  mutate(rank = 'Genus')
+
+# Save
+write.csv(stats, "outputs/03_accumulation_curves/asymptotes_genus.csv", row.names = F)
+
+# Simple plot on all 
+df_motus <- df_join_all %>% 
+  filter(project_name == "All") %>%
+  mutate(level = "MOTUs")
+
+motus <- ggplot(df_motus, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  ylab("Number of MOTUs") +
+  xlab("Samples (filter)") +
+  theme_bw() + 
+  ggtitle("MOTUs") + 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 0), "MOTUs")), col = "black") 
+
+motus
+
+# --------------------------------------------------------------------- # 
+# Final figure - combine all levels 
+# --------------------------------------------------------------------- # 
+
+# Trial 1: combine all in a panel 
+ggarrange(order, family, genus, motus)
+
+# Trial 2: all in a single plot 
+df_all_levels <- rbind(df_order, df_fam, df_genus, df_motus)
+
+unique(df_all_levels$asymptote)
+
+# Plot
+ggplot(df_all_levels, aes(x=sites, y = richness, group = level, fill = level)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
+  theme_classic() + 
+  scale_y_continuous(breaks = c(0,60,155,375,500,1000,1500,2000,2033))
+
+# on a facet
+neworder <- c("order","family","genus", "MOTUs")
+df_all_levels2 <- df_all_levels %>%
+  mutate(level = fct_relevel(.$level, "order", "family", "genus", "MOTUs"))
+
+# 
+ggplot(df_all_levels2, aes(x=sites, y = richness, group = level, fill = level)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
+  theme_classic() + 
+  facet_wrap(~level, scales= "free") + 
+  theme(legend.position = "none")
+
+ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels.png", width = 10, height=10)  
+
