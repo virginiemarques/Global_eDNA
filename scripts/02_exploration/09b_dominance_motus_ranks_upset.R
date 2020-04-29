@@ -32,6 +32,15 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 # Des que le style des figures est bien posé, faire une fonction pour simplifier le code 
 
+# Changer nom de code de region: a la main pour le moment (avant de tout faire re-tourner)
+df_all_filters <- df_all_filters %>%
+  mutate(region = case_when(
+    region == "West_Papua" ~ "Central_Indo-Pacific", 
+    region == "French_Polynesia" ~ "Central_Pacific", 
+    region == "Caribbean" ~ "Caribbean"))
+
+unique(df_all_filters$region)
+
 # the motus 
 df_regions <- split(df_all_filters, df_all_filters$region)
 df_site <- split(df_all_filters, df_all_filters$site)
@@ -40,7 +49,14 @@ df_site <- split(df_all_filters, df_all_filters$site)
 #### REGION - MOTUs ---- 
 
 # Color panel 
-pal <- park_palette("Everglades", 3)
+#pal <- park_palette("Everglades", 3)
+# order des regions: 
+# 1) central indo pacific (lengguru)
+# 2) Caraibes
+# 3) Central pacific 
+# 4) Western Indian
+
+pal <- c("#d7191c", "#2c7bb6", "#fdae61", "#abd9e9")
 pal
 
 # Construct the inital matrix - add some important infos as a side
@@ -48,7 +64,8 @@ motus_fam_region <-  df_all_filters %>%
   group_by(region) %>%
   summarize(n_motus = n_distinct(sequence), 
             n_family = n_distinct(new_family_name)) %>%
-  as.data.frame()
+  as.data.frame() %>%
+  arrange(n_motus)
 
 # metadata - needed to control colors?
 metadata1 <- df_all_filters %>%
@@ -56,9 +73,9 @@ metadata1 <- df_all_filters %>%
   mutate(sets = region) %>%
   select(sets, region) %>%
   mutate(color = case_when(
-    region == "French_Polynesia" ~ pal[1], 
+    region == "Central_Pacific" ~ pal[3], 
     region == "Caribbean" ~ pal[2], 
-    region == "West_Papua" ~ pal[3]
+    region == "Central_Indo-Pacific" ~ pal[1]
   )) %>%
   as.data.frame() %>%
   left_join(., motus_fam_region)
@@ -66,8 +83,8 @@ metadata1 <- df_all_filters %>%
 # MOTUs
 matrix_motus <- df_all_filters %>%
   distinct(sequence, new_scientific_name_ncbi) %>%
-  mutate(West_papua = ifelse(sequence %in% df_regions$West_Papua$sequence, 1, 0), 
-         French_polynesia = ifelse(sequence %in% df_regions$French_Polynesia$sequence, 1, 0),
+  mutate(`Central_Indo-Pacific` = ifelse(sequence %in% df_regions$`Central_Indo-Pacific`$sequence, 1, 0), 
+         Central_Pacific = ifelse(sequence %in% df_regions$Central_Pacific$sequence, 1, 0),
          Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0)) %>%
   as.data.frame()
 
@@ -84,9 +101,9 @@ p1 <- UpSet(mm,
 p1
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=150)
-p1
-dev.off()
+  #    png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=150)
+  #    p1
+  #    dev.off()
 
 # Supp Settings
 # Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut être ? 
@@ -101,38 +118,46 @@ upset(matrix_motus,
 
 # Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
 # Work in progress
-upset(matrix_motus, 
+p1 <- upset(matrix_motus, 
+            mb.ratio = c(0.7, 0.3),
       order.by = c("freq"),
       mainbar.y.label = "Number of MOTUs", 
       sets.x.label = "Number of MOTUs", 
       text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
       # Color bar 
-      sets.bar.color=metadata1$color, 
+      sets.bar.color=rev(metadata1$color), 
       # Color matrix
       set.metadata = list(
         data = metadata1,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
-          alpha = 1
+          colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], Central_Pacific =  pal[3]),
+          alpha = 0.3
         ))
       ))
+p1
 
+png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=300)
+p1
+grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+dev.off()
 
 # ------------------------------------------------------------------------------- # 
 #### REGION - FAMILY ---- 
 
 # rarity in samples - by families 
 family_samples_rarity <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n_samples = n_distinct(sample_name_all_pcr))
 
 # Family
 matrix_family <- df_all_filters %>%
+  filter(!is.na(new_family_name)) %>%
   distinct(new_family_name) %>%
-  mutate(West_papua = ifelse(new_family_name %in% df_regions$West_Papua$new_family_name, 1, 0), 
-         French_polynesia = ifelse(new_family_name %in% df_regions$French_Polynesia$new_family_name, 1, 0),
+  mutate(`Central_Indo-Pacific` = ifelse(new_family_name %in% df_regions$`Central_Indo-Pacific`$new_family_name, 1, 0), 
+         Central_Pacific = ifelse(new_family_name %in% df_regions$Central_Pacific$new_family_name, 1, 0),
          Caribbean = ifelse(new_family_name %in% df_regions$Caribbean$new_family_name, 1, 0)) %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
@@ -142,9 +167,6 @@ mm = make_comb_mat(matrix_family)
 # Remove the intersections with no match
 mm = mm[comb_degree(mm) > 0]
 
-# Color panel 
-pal <- park_palette("Everglades", 3)
-
 # the upset plot
 p2 <- UpSet(mm, 
            comb_order = order(-comb_size(mm)), 
@@ -153,9 +175,9 @@ p2 <- UpSet(mm,
 p2
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_region_family.png', width = 6, height=3, units = "in", res=150)
-p2
-dev.off()
+#   png('outputs/09_dominance_motus_ranks/upset_plot_region_family.png', width = 6, height=3, units = "in", res=150)
+#   p2
+#   dev.off()
 
 # Alternative plot
 upset(matrix_family, 
@@ -163,6 +185,31 @@ upset(matrix_family,
       mainbar.y.label = "Number of families", 
       sets.x.label = "Number of families", 
       text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2))
+
+# Alternative plot
+p2 <- upset(matrix_family, 
+            order.by = c("freq"),
+            mainbar.y.label = "Number of families", 
+            sets.x.label = "Number of families", 
+            text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
+            # Color bar 
+            sets.bar.color=rev(metadata1$color), 
+            # Color matrix
+            set.metadata = list(
+              data = metadata1,
+              plots = list(list(
+                type = "matrix_rows",
+                column = "region", 
+                colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], Central_Pacific =  pal[3]),
+                alpha = 0.3
+              ))
+            ))
+p2
+
+png('outputs/09_dominance_motus_ranks/upset_plot_region_family.png', width = 6, height=3, units = "in", res=300)
+p2
+grid.text("Regions - Family",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+dev.off()
 
 # ------------------------------------------------------------------------------- # 
 #### SITE - MOTUs ---- 
@@ -181,9 +228,9 @@ metadata1 <- df_all_filters %>%
   mutate(sets = site) %>%
   select(sets, region) %>%
   mutate(color = case_when(
-    region == "French_Polynesia" ~ pal[1], 
+    region == "Central_Pacific" ~ pal[3], 
     region == "Caribbean" ~ pal[2], 
-    region == "West_Papua" ~ pal[3]
+    region == "Central_Indo-Pacific" ~ pal[1]
   )) %>%
   left_join(., motus_sites, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -211,9 +258,6 @@ mm = make_comb_mat(matrix_motus)
 # Remove the intersections with no match
 mm = mm[comb_degree(mm) > 0]
 
-# Color panel 
-pal <- park_palette("Everglades", 3)
-
 # the upset plot - c'est illisible avec cette methode. Utiliser upset function plutôt + personnaliser les couleurs 
 UpSet(mm,comb_order = order(-comb_size(mm)),
             column_title = "Site - MOTUs")
@@ -229,10 +273,10 @@ p3 <- upset(matrix_motus,
 p3
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus.png', width = 12, height=8, units = "in", res=300)
-p3
-grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
-dev.off()
+#   png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus.png', width = 12, height=8, units = "in", res=300)
+#   p3
+#   grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
+#   dev.off()
 
 # Alternative plot 
 # Work in progress
@@ -252,8 +296,8 @@ p3_color <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
-          alpha = 0.8
+          colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], Central_Pacific =  pal[3]),
+          alpha = 0.3
         ))
       ))
 
@@ -283,9 +327,9 @@ metadata1 <- df_all_filters %>%
   mutate(sets = site) %>%
   select(sets, region) %>%
   mutate(color = case_when(
-    region == "French_Polynesia" ~ pal[1], 
+    region == "Central_Pacific" ~ pal[3], 
     region == "Caribbean" ~ pal[2], 
-    region == "West_Papua" ~ pal[3]
+    region == "Central_Indo-Pacific" ~ pal[1]
   )) %>%
   left_join(., motus_family, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -313,9 +357,6 @@ mm = make_comb_mat(matrix_family)
 # Remove the intersections with no match
 mm = mm[comb_degree(mm) > 0]
 
-# Color panel 
-pal <- park_palette("Everglades", 3)
-
 # Save
 p4 <- upset(matrix_family, 
       nsets = 20,
@@ -326,10 +367,10 @@ p4 <- upset(matrix_family,
 p4
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_sites_family.png', width = 10, height=7, units = "in", res=300)
-p4
-grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
-dev.off()
+#  png('outputs/09_dominance_motus_ranks/upset_plot_sites_family.png', width = 10, height=7, units = "in", res=300)
+#  p4
+#  grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
+#  dev.off()
 
 # Plot color
 p4_color <- upset(matrix_family, 
@@ -347,8 +388,8 @@ p4_color <- upset(matrix_family,
                     plots = list(list(
                       type = "matrix_rows",
                       column = "region", 
-                      colors = c(French_Polynesia = pal[1], Caribbean =  pal[2], West_Papua =  pal[3]),
-                      alpha = 0.8
+                      colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], Central_Pacific =  pal[3]),
+                      alpha = 0.3
                     ))
                   ))
 
