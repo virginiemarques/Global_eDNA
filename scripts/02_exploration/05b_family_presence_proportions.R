@@ -356,6 +356,8 @@ global_motu <- df_all_filters %>%
 
 count_families_global <- data.frame(table(global_motu$new_family_name))
 colnames(count_families_global) <- c("family", "n_motus")
+save(count_families_global, file = "Rdata/nb_motus_per_family_global.Rdata")
+
 count_families_global$n_motus_total <- nrow(global_motu)
 count_families_global$prop <- count_families_global$n_motus / count_families_global$n_motus_total
 
@@ -398,6 +400,8 @@ families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_
 families_prop_global <- families_prop_global[,c(1,10:13)]
 families_prop_global2 <- melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
+
+save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 

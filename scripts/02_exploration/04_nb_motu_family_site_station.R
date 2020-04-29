@@ -31,10 +31,10 @@ save(nb_reads_family, file = "Rdata/nb_reads_per_family_global.Rdata")
 ## Lengguru data
 
 lengguru <- df_all_filters %>%
-  filter(region=="West_Papua")
+  filter(region=="Central_Indo_Pacific")
 
   # total MOTUs and family richness in Lengguru region
-rich_tot_lengguru <- data.frame(motu=numeric(1), family=numeric(1), region="West_Papua")
+rich_tot_lengguru <- data.frame(motu=numeric(1), family=numeric(1), region="Central_Indo_Pacific")
 rich_tot_lengguru$motu <- lengguru %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_lengguru$family <- lengguru %>% 
@@ -44,7 +44,7 @@ rich_tot_lengguru$family <- lengguru %>%
   # calculate unique motus and families at each station   
 station <- c(unique(lengguru$station))
 
-rich_station_lengguru <- data.frame(region="West_Papua", site=character(46), station=character(46), motu=numeric(46), family=numeric(46), stringsAsFactors = FALSE)
+rich_station_lengguru <- data.frame(region="Central_Indo_Pacific", site=character(46), station=character(46), motu=numeric(46), family=numeric(46), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(lengguru[lengguru$station == station[i],]$site)
@@ -63,7 +63,7 @@ for (i in 1:length(station)) {
   # calculate unique motus and families at each site
 site <- c(unique(lengguru$site))
 
-rich_site_lengguru <- data.frame(region="West_Papua", site=character(11), motu=numeric(11), family=numeric(11), mean_motu=numeric(11), sd_motu=numeric(11), mean_family=numeric(11), sd_family=numeric(11), stringsAsFactors = FALSE)
+rich_site_lengguru <- data.frame(region="Central_Indo_Pacific", site=character(11), motu=numeric(11), family=numeric(11), mean_motu=numeric(11), sd_motu=numeric(11), mean_family=numeric(11), sd_family=numeric(11), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -169,12 +169,12 @@ rich_site_caribbean_melt[4:6,"sd"] <- rich_site_caribbean$sd_family
 ## Fakarava data
 
 fakarava <- df_all_filters %>%
-  filter(region=="French_Polynesia")
+  filter(region=="Central_Pacific")
 
   # calculate unique motus and families at each station   
 station <- c(unique(fakarava$station))
 
-rich_station_fakarava <- data.frame(region="French_Polynesia", site="fakarava", station=character(4), motu.n=numeric(4), family.n=numeric(4), stringsAsFactors = FALSE)
+rich_station_fakarava <- data.frame(region="Central_Pacific", site="fakarava", station=character(4), motu.n=numeric(4), family.n=numeric(4), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -188,7 +188,7 @@ for (i in 1:length(station)) {
 }
 
   # total MOTUs and family richness in fakarava region (=site)
-rich_site_fakarava <- data.frame(region="French_Polynesia",
+rich_site_fakarava <- data.frame(region="Central_Pacific",
                                  site="fakarava",
                                  motu=fakarava %>% 
                                    summarise(n = n_distinct(sequence)),
@@ -216,10 +216,10 @@ rich_site_fakarava_melt[2,"sd"] <- rich_site_fakarava$sd_family
 ## Eparses data
 
 eparse <- df_all_filters %>%
-  filter(region=="")
+  filter(region=="West_Indian")
 
 # total MOTUs and family richness in eparse region
-rich_tot_eparse <- data.frame(motu=numeric(1), family=numeric(1), region="")
+rich_tot_eparse <- data.frame(motu=numeric(1), family=numeric(1), region="West_Indian")
 rich_tot_eparse$motu <- eparse %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_eparse$family <- eparse %>% 
@@ -229,7 +229,7 @@ rich_tot_eparse$family <- eparse %>%
 # calculate unique motus and families at each station   
 station <- c(unique(eparse$station))
 
-rich_station_eparse <- data.frame(region="", site=character(), station=character(), motu=numeric(), family=numeric(), stringsAsFactors = FALSE)
+rich_station_eparse <- data.frame(region="West_Indian", site=character(), station=character(), motu=numeric(), family=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(eparse[eparse$station == station[i],]$site)
@@ -248,7 +248,7 @@ for (i in 1:length(station)) {
 # calculate unique motus and families at each site
 site <- c(unique(eparse$site))
 
-rich_site_eparse <- data.frame(region="", site=character(), motu=numeric(), family=numeric(), mean_motu=numeric(), sd_motu=numeric(), mean_family=numeric(), sd_family=numeric(), stringsAsFactors = FALSE)
+rich_site_eparse <- data.frame(region="West_Indian", site=character(), motu=numeric(), family=numeric(), mean_motu=numeric(), sd_motu=numeric(), mean_family=numeric(), sd_family=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]

@@ -14,6 +14,7 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 
 load("Rdata/nb_motus_per_family_global.Rdata")
 load("Rdata/nb_reads_per_family_global.Rdata")
+load("Rdata/family_proportion_global.Rdata")
 family_coverage <- read.csv("outputs/01_read_data_stats/family_resolution_coefs.csv")
 
 family <- unique(df_all_filters$new_family_name)
