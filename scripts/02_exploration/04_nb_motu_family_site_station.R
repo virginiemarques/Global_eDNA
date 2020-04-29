@@ -307,13 +307,13 @@ colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "famil
 
 rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
-metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
+metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
-  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean", ""))
+  filter(region%in%c("Central_Indo_Pacific", "Central_Pacific", "Caribbean", "West_Indian"))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
-metadata <- metadata[,c("station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.")]
+metadata <- metadata[,c("station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.", "dist_to_CT")]
 metadata <- metadata %>%
   distinct(station, .keep_all = TRUE)
 
@@ -335,27 +335,27 @@ ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 
 
-## plot station richness ~ longitude
+## plot station richness ~ distance to coral triangle
 
 rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
-rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
+rich_station <- left_join(rich_station, metadata[,c("station", "dist_to_CT")], by="station")
 
-ggplot(rich_station, aes(longitude_start_clean, motu))+
+ggplot(rich_station, aes(dist_to_CT, motu))+
   geom_point(color="blue")+
-  xlim(-180, 180)+
-  labs(x="longitude",
+  xlim(0, 20000)+
+  labs(x="Distance to center of coral triangle (km)",
        y="MOTU richness")
 
-ggsave("outputs/04_exploration_richness/richness_motu_longitude.png")
+ggsave("outputs/04_exploration_richness/richness_motu_dist_to_CT.png")
 
-ggplot(rich_station, aes(longitude_start_clean, family))+
+ggplot(rich_station, aes(dist_to_CT, family))+
   geom_point(color="red")+
-  xlim(-180, 180)+
-  labs(x="longitude",
+  xlim(0, 20000)+
+  labs(x="Distance to center of coral triangle (km)",
        y="Family richness")
 
-ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
+ggsave("outputs/04_exploration_richness/richness_family_dist_to_CT.png")
 
 
 ## plot station richness ~ distance_to_coast
