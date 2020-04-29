@@ -403,7 +403,7 @@ colnames(families_prop_global2) <- c("family", "Region", "prop")
 
 save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 
-ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region, colour=c("#2c7bb6", "#d7191c", "#fdae61", "#abd9e9"))) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(x="Family", y="Proportion")+
