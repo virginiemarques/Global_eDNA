@@ -16,7 +16,7 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 ## tableau metadata par station (region, site, prof, distance cote, latitude, methode, nb litre)
 metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
-  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean"))
+  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean", ""))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, !(sample_method %in% c("niskin", "control")))
 metadata <- subset(metadata, habitat=="marine")
@@ -47,12 +47,12 @@ pa_station <- left_join(pa_station, metadata, by="station")
 
   ## AFC
 
-afc_pa_station <-dudi.coa(pa_station[,1:1517])
+afc_pa_station <-dudi.coa(pa_station[,1:?])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
 
-col <- c("black", "blue", "green", "yellow", "pink", "orange", "red")
+col <- c()
 s.label(afc_pa_station$co, clab=0.5, boxes=FALSE, sub="MOTUs AFC1") #representation des motus
 s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des stations
 region<-as.factor(pa_station$region)
@@ -85,13 +85,13 @@ pa_station <- left_join(pa_station, metadata, by="station")
 
   ## AFC
 
-afc_pa_station <-dudi.coa(pa_station[,1:125])
+afc_pa_station <-dudi.coa(pa_station[,1:?])
 pourc=round((afc_pa_station$eig/sum(afc_pa_station$eig))*100,2)
 pourc
 cumsum(pourc)
 
 
-col <- c("black", "blue", "green", "yellow", "pink", "orange", "red")
+col <- c()
 s.label(afc_pa_station$co, clab=0.5, boxes=FALSE, sub="Family") #representation des familles
 s.label(afc_pa_station$li, clab=0.5, sub="Stations") #representation des stations
 region<-as.factor(pa_station$region)

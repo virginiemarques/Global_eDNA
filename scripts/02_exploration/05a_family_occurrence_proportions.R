@@ -140,18 +140,67 @@ ggsave("outputs/05_family_proportion/01_based_on_species_occurences/family_frequ
 
 ## frequency of families in Eparses
 
+  ## eparse total
 
-## Bellwood figures : proportion of families per site
+eparse <- df_all_filters %>%
+  filter(region=="" & !is.na(new_family_name))
 
-df_all_site <- rbind(count_families_site_caribbean[,c(-6)], count_families_site_lengguru[,c(-6)])
+count_families_eparse <- data.frame(table(eparse$new_family_name))
+colnames(count_families_eparse) <- c("family", "n_motus")
+count_families_eparse$n_motus_total <- nrow(eparse)
+count_families_eparse$prop <- count_families_eparse$n_motus / count_families_eparse$n_motus_total
 
 
-family <- c("Serranidae", "Lutjanidae", "Acanthuridae", "Pomacentridae", "Balistidae", "Lethrinidae", "Scombridae", "Exocoetidae", "Myctophidae", "Apogonidae", "Carangidae", "Dasyatidae", "Haemulidae", "Clupeidae", "Gobiidae" )
-prop <- vector("list")
-for (i in 1:length(family)) {
-  fam <- df_all_site[df_all_site$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=1))+
-    geom_point()+
-    labs(title=family[i], x="total number of amplicons per site", y="Proportion")
-  ggsave(filename=paste("outputs/05_family_proportion/01_based_on_species_occurences/prop_",family[i],".png", sep = ""))
+ggplot(count_families_eparse, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Frequency")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_eparse.png", width=6, height=16)
+write.csv(count_families_eparse, "outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_eparse.csv")
+
+  ## eparse sites
+
+site <- c(unique(eparse$site))
+
+count_families_site_eparse=NULL 
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  eparse_site <- eparse[eparse$site == site[i],]
+  count_families <- data.frame(table(eparse_site$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(eparse_site)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$site <- s
+  count_families_site_eparse <- rbind(count_families_site_eparse, count_families)
 }
+
+write.csv(count_families_site_eparse, "outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_site_eparse.csv")
+
+count_families_site_eparse <- count_families_site_eparse %>%
+  ungroup() %>%
+  arrange(site, prop) %>%
+  mutate(order = row_number())
+
+## plot by 3 sites, because plot too small otherwise
+site_sub <- c("", "")
+subset1 <- count_families_site_eparse %>%
+  filter(site%in%site_sub)
+ggplot(subset1, aes(order, prop, fill = prop)) + 
+  geom_bar(stat="identity") +
+  facet_wrap(~site, scales ="free_y")+
+  theme_bw() +
+  labs(x="Family", y="Frequency")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()+
+  scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
+
+
+ggsave("outputs/05_family_proportion/01_based_on_species_occurences/family_frequency_eparse_site...png", width=20, height=16)
+

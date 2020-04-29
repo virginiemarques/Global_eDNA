@@ -28,7 +28,7 @@ station <- unique(df_all_filters$station)
 
 # calculate alpha diversity per region
 
-alpha_region=data.frame(region=character(3), family=numeric(3), stringsAsFactors = FALSE)
+alpha_region=data.frame(region=character(4), family=numeric(4), stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -46,7 +46,7 @@ beta_region$beta <- beta_region$gamma - beta_region$alpha
 
 # calculate alpha diversity per site
 
-alpha_site=data.frame(region=character(15), site=character(15), family=numeric(15), stringsAsFactors = FALSE)
+alpha_site=data.frame(region=character(), site=character(), family=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -61,7 +61,7 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(3), alpha=numeric(3), gamma=numeric(3), beta=numeric(3), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4), beta=numeric(4), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -80,7 +80,7 @@ sd_beta_site <- sd(beta_site$beta)
 
 
 # calculate alpha diversity per station
-alpha_station=data.frame(region=character(81), site=character(81), station=character(81), family=numeric(81), stringsAsFactors = FALSE)
+alpha_station=data.frame(region=character(), site=character(), station=character(), family=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -106,14 +106,18 @@ alpha_station_faka <- alpha_station %>%
   subset(region == "French_Polynesia")
 mean_alpha_station_faka <- mean(alpha_station_faka$family)
 
-a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng)
+alpha_station_eparse <- alpha_station %>%
+  subset(region == "")
+mean_alpha_station_eparse <- mean(alpha_station_eparse$family)
+
+a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng, mean_alpha_station_eparse)
 mean_alpha_station <- mean(a_station)
 sd_alpha_station <- sd(a_station)
 
 
 # calculate beta inter-station
 
-beta_station <- data.frame(region=character(15), site=character(15), alpha=numeric(15), gamma=numeric(15), beta=numeric(15), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(region=character(), site=character(), alpha=numeric(), gamma=numeric(), beta=numeric(), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -135,9 +139,13 @@ beta_station_leng <- beta_station %>%
   subset(region == "West_Papua")
 mean_beta_station_leng <- mean(beta_station_leng$beta)
 
+beta_station_eparse <- beta_station %>%
+  subset(region == "")
+mean_beta_station_eparse <- mean(beta_station_eparse$beta)
+
 beta_station_faka <- beta_station[beta_station$region=="French_Polynesia",]$beta
 
-b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng)
+b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng, mean_beta_station_eparse)
 mean_beta_station <- mean(b_station)
 sd_beta_station <- sd(b_station)
 
@@ -194,8 +202,8 @@ betaregion <- data.frame(scale="region", total=beta$beta.JAC, turnover=beta$beta
 
   ## beta inter-site
 
-df_site=vector("list", 3)
-betasite <- data.frame(scale="site", total=numeric(3), turnover=numeric(3), nestedness=numeric(3))
+df_site=vector("list", 4)
+betasite <- data.frame(scale="site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
 
 
 for (i in 1:length(region)) {
@@ -224,8 +232,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(df_all_filters$site)
-df_station=vector("list", 15)
-betastation <- data.frame(scale="station", total=numeric(15), turnover=numeric(15), nestedness=numeric(15))
+df_station=vector("list", ?)
+betastation <- data.frame(scale="station", total=numeric(), turnover=numeric(), nestedness=numeric())
 
 
 for (i in 1:length(site)) {

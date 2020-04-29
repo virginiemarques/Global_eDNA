@@ -108,7 +108,7 @@ write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_bas
   ## Lengguru total
 
 lengguru <- df_all_filters %>%
-  filter(region=="West_Papua") # & !is.na(new_family_name)
+  filter(region=="West_Papua") 
 
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
@@ -252,6 +252,100 @@ write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_base
 
 
 ## frequency of families in Eparses
+  ## eparse total
+
+eparse <- df_all_filters %>%
+  filter(region=="") 
+
+eparse_motu <- eparse %>%
+  distinct(sequence, .keep_all = TRUE)
+
+count_families_eparse <- data.frame(table(eparse_motu$new_family_name))
+colnames(count_families_eparse) <- c("family", "n_motus")
+count_families_eparse$n_motus_total <- nrow(eparse_motu)
+count_families_eparse$prop <- count_families_eparse$n_motus / count_families_eparse$n_motus_total
+
+
+ggplot(count_families_eparse, aes(x=reorder(family, prop), y = prop, fill = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_eparse.png", width=6, height=16)
+write.csv(count_families_eparse, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_eparse.csv")
+
+  ## eparse sites
+
+site <- c(unique(eparse$site))
+
+count_families_site_eparse=NULL 
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  eparse_site <- eparse[eparse$site == site[i],]
+  eparse_motu_site <- eparse_site%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(eparse_motu_site$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(eparse_motu_site)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$site <- s
+  count_families$region <- ""
+  count_families_site_eparse <- rbind(count_families_site_eparse, count_families)
+}
+
+write.csv(count_families_site_eparse, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_eparse.csv")
+
+count_families_site_eparse <- count_families_site_eparse %>%
+  ungroup() %>%
+  arrange(site, prop) %>%
+  mutate(order = row_number())
+
+## plot by 3 sites, because plot too small otherwise
+site_sub <- c("", "")
+subset1 <- count_families_site_eparse %>%
+  filter(site%in%site_sub)
+ggplot(subset1, aes(order, prop, fill = prop)) + 
+  geom_bar(stat="identity") +
+  facet_wrap(~site, scales ="free_y")+
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()+
+  scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
+
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_eparse_site...png", width=20, height=16)
+
+  ## eparse station
+
+station <- c(unique(eparse$station))
+
+count_families_station_eparse=NULL 
+
+for (i in 1:length(station)) {
+  eparse_station <- eparse[eparse$station == station[i],]
+  st <- station[i]
+  s <- unique(eparse_station$site)
+  eparse_motu_station <- eparse_station%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(eparse_motu_station$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(eparse_motu_station)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$station <- st
+  count_families$site <- s
+  count_families_station_eparse <- rbind(count_families_station_eparse, count_families)
+}
+
+write.csv(count_families_station_eparse, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_eparse.csv")
+
 
 ## Proportion of families global
 
@@ -279,26 +373,29 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 
 
-  ## plot proportion of each family in each region on global scale
+## plot proportion of each family in each region on global scale
 families_prop_global <- left_join(count_families_global, count_families_caribbean[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_lengguru[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_site_fakarava[,1:2], by="family" )
+families_prop_global <- left_join(families_prop_global, count_families_eparse[,1:2], by="family" )
 families_prop_global <- families_prop_global[, c(-3)]
-colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_caribbean", "n_lengguru", "n_fakarava")
+colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_caribbean", "n_lengguru", "n_fakarava", "n_eparse")
 families_prop_global[is.na(families_prop_global)] <- 0
 
 for (i in 1:dim(families_prop_global)[1]) {
   families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
   families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
   families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
+  families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
   
 }
 
 families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
-families_prop_global$Ffakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Fakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_global$prop_global)/families_prop_global$n_global
 
-families_prop_global <- families_prop_global[,c(1,10:12)]
+families_prop_global <- families_prop_global[,c(1,10:13)]
 families_prop_global2 <- melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
 
@@ -313,7 +410,7 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_caribbean[,c(-7)], count_families_site_lengguru[,c(-7)], count_families_site_fakarava)
+df_all_site <- rbind(count_families_site_caribbean[,c(-7)], count_families_site_lengguru[,c(-7)], count_families_site_eparse[,c(-7)], count_families_site_fakarava)
 
 
 family <- unique(df_all_site$family)

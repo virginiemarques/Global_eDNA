@@ -215,10 +215,75 @@ rich_site_fakarava_melt[2,"sd"] <- rich_site_fakarava$sd_family
 
 ## Eparses data
 
+eparse <- df_all_filters %>%
+  filter(region=="")
+
+# total MOTUs and family richness in eparse region
+rich_tot_eparse <- data.frame(motu=numeric(1), family=numeric(1), region="")
+rich_tot_eparse$motu <- eparse %>% 
+  summarise(n = n_distinct(sequence))
+rich_tot_eparse$family <- eparse %>% 
+  summarise(n = n_distinct(new_family_name))
+
+
+# calculate unique motus and families at each station   
+station <- c(unique(eparse$station))
+
+rich_station_eparse <- data.frame(region="", site=character(), station=character(), motu=numeric(), family=numeric(), stringsAsFactors = FALSE)
+
+for (i in 1:length(station)) {
+  s <- unique(eparse[eparse$station == station[i],]$site)
+  st <- station[i]
+  motu <- eparse[eparse$station == station[i],] %>%
+    summarise(n = n_distinct(sequence))
+  fam <- eparse[eparse$station == station[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_station_eparse[i,2] <- s
+  rich_station_eparse[i,3] <- st
+  rich_station_eparse[i,4] <- motu
+  rich_station_eparse[i,5] <- fam
+}
+
+
+# calculate unique motus and families at each site
+site <- c(unique(eparse$site))
+
+rich_site_eparse <- data.frame(region="", site=character(), motu=numeric(), family=numeric(), mean_motu=numeric(), sd_motu=numeric(), mean_family=numeric(), sd_family=numeric(), stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  motu <- eparse[eparse$site == site[i],] %>%
+    summarise(n = n_distinct(sequence))
+  mm <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
+  sdm <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
+  fam <- eparse[eparse$site == site[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  mf <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
+  sdf <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
+  rich_site_eparse[i,2] <- s
+  rich_site_eparse[i,3] <- motu
+  rich_site_eparse[i,4] <- fam
+  rich_site_eparse[i,5] <- mm
+  rich_site_eparse[i,6] <- sdm
+  rich_site_eparse[i,7] <- mf
+  rich_site_eparse[i,8] <- sdf
+}
+
+write.csv(rich_site_eparse, "outputs/04_exploration_richness/richness_eparse.csv", row.names = FALSE)
+
+
+rich_site_eparse_melt <- melt(rich_site_eparse[,1:4])
+rich_site_eparse_melt[1:,"mean"] <- rich_site_eparse$mean_motu
+rich_site_eparse_melt[:,"mean"] <- rich_site_eparse$mean_family
+
+rich_site_eparse_melt[:,"sd"] <- rich_site_eparse$sd_motu
+rich_site_eparse_melt[:,"sd"] <- rich_site_eparse$sd_family
+
+
 
 # plot motu and family richness per region
 
-rich_total <- rbind(rich_site_lengguru_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
+rich_total <- rbind(rich_site_lengguru_melt, rich_site_eparse_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
 
 gg <- ggplot(rich_total, aes(fill=variable)) +
   geom_col(aes(site, value), position = position_dodge(), show.legend = TRUE)+
@@ -240,11 +305,11 @@ ggsave("outputs/04_exploration_richness/richness_region.png", width = 15, height
 ## plot station richness ~ latitude
 colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "family")
 
-rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
 metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
-  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean"))
+  filter(region%in%c("West_Papua", "French_Polynesia", "Caribbean", ""))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
@@ -272,7 +337,7 @@ ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 ## plot station richness ~ longitude
 
-rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
 rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
 
@@ -295,7 +360,7 @@ ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
 
 ## plot station richness ~ distance_to_coast
 
-rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
 rich_station <- left_join(rich_station, metadata[,c("station", "dist_to_coast..m.")], by="station")
 
