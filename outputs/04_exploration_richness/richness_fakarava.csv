@@ -1,2 +1,2 @@
-"region","site","motu","family","mean_motu","sd_motu","mean_family","sd_family"
-"French_Polynesia","fakarava",147,34,73.75,45.6024487646588,25,6.92820323027551
+"region","site","motu","genus","family","mean_motu","sd_motu","mean_genus","sd_genus","mean_family","sd_family"
+"Central_Pacific","fakarava",147,64,34,73.75,45.6024487646588,37.25,17.0953209972788,25,6.92820323027551
