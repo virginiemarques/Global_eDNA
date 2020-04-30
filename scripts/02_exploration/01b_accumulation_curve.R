@@ -2,6 +2,7 @@
 # Lib 
 library(tidyverse)
 library(ggplot2)
+library(ggpubr)
 
 # data
 load("Rdata/02_clean_all.Rdata")
@@ -426,12 +427,53 @@ motus
 # Final figure - combine all levels 
 # --------------------------------------------------------------------- # 
 
-# Trial 1: combine all in a panel 
-ggarrange(order, family, genus, motus)
+# MOTUs 
+plot_motus <- ggplot(df_motus, aes(x=sites, y = richness, group = level, fill = level)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5, fill = "#E7B800") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, col = "#E7B800") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  # annotation family
+  annotate(geom="text", x=190+10, y=2033+35, label="MOTUs",hjust=1,
+           color="#E7B800")
+plot_motus
 
 # Trial 2: all in a single plot 
 df_all_levels <- rbind(df_order, df_fam, df_genus, df_motus)
 
+# Famillies & Genus
+plot_taxo <- ggplot(df_all_levels %>% 
+                      filter(level != "MOTUs" & level != "order"), aes(x=sites, y = richness, group = level, fill = level)) + 
+  geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  # annotation family
+  annotate(geom="text", x=190+10, y=150+14, label="Family",hjust=1,
+           color="red") +
+  # annotation genus
+  annotate(geom="text", x=190+10, y=375+10, label="Genus",hjust=1,
+           color="deepskyblue2")
+plot_taxo
+
+# Combine 
+ggarrange(plot_motus, 
+          plot_taxo + rremove("ylab"))
+
+ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels_no_order.png", width = 10, height=5)  
+
+
+
+
+
+
+# --------------------------------------------------------- # 
+# OLD 
+
+# Trial 1: combine all in a panel 
+ggarrange(order, family, genus, motus)
 unique(df_all_levels$asymptote)
 
 # Plot
@@ -456,5 +498,5 @@ ggplot(df_all_levels2, aes(x=sites, y = richness, group = level, fill = level)) 
   facet_wrap(~level, scales= "free") + 
   theme(legend.position = "none")
 
-ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels.png", width = 10, height=10)  
+#ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels.png", width = 10, height=10)  
 
