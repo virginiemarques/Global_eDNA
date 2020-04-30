@@ -127,11 +127,11 @@ motu_station <- df_all_filters %>%
   mutate(rank = "station")
 
 # plot
-p_motu_station <- fct_barplot(motu_station, rank_x="station", rank_y = "MOTUs")
+p_motu_station <- fct_barplot(motu_station, rank_x="station", rank_y = "MOTUs", color = "grey")
 p_motu_station
 
 # --------------------- # 
-# station scale 
+# sample scale 
 
 length(unique(df_all_filters$sample_name_all_pcr))
 
@@ -145,7 +145,7 @@ motu_sample <- df_all_filters %>%
   mutate(rank = "sample")
 
 # plot
-p_motu_sample <- fct_barplot(motu_sample, rank_x="sample", rank_y = "MOTUs")
+p_motu_sample <- fct_barplot(motu_sample, rank_x="sample", rank_y = "MOTUs", color = "grey")
 p_motu_sample
 
 # --------------------- # 
@@ -157,9 +157,9 @@ ggarrange(p_motu_region,
           p_motu_site + rremove("ylab"), 
           p_motu_station, 
           p_motu_sample+ rremove("ylab"),
-          nrow=2, ncol=2)
+          nrow=1, ncol=2)
 
-ggsave("outputs/09_dominance_motus_ranks/repartition_MOTUs_regions_site_station.png", height = 12, width = 12)
+ggsave("outputs/09_dominance_motus_ranks/repartition_MOTUs_regions_site_station.png", height = 10, width = 15)
 
 # Trial 2
 # Combine data 
@@ -232,7 +232,7 @@ dataset <- df_all_filters %>%
   mutate(rank = "station")
 
 # plot
-p_motu_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily)
+p_motu_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
 p_motu_station
 
 # --------------------- # 
@@ -251,7 +251,7 @@ dataset <- df_all_filters %>%
   mutate(rank = "sample")
 
 # plot
-p_motu_sample<- fct_barplot(dataset, rank_x="sample", rank_y = "families", n_tot = Nfamily)
+p_motu_sample<- fct_barplot(dataset, rank_x="sample", rank_y = "families", n_tot = Nfamily, color = "grey")
 p_motu_sample
 
 # --------------------- # 
@@ -259,13 +259,13 @@ p_motu_sample
 
 # Trial 1
 
-ggarrange(p_motu_region, 
-          p_motu_site + rremove("ylab"), 
+ggarrange(#p_motu_region, 
+          #p_motu_site + rremove("ylab"), 
           p_motu_station, 
           p_motu_sample+ rremove("ylab"),
-          nrow=2, ncol=2)
+          nrow=1, ncol=2)
 
-ggsave("outputs/09_dominance_motus_ranks/repartition_family_regions_site_station.png", height = 12, width = 12)
+ggsave("outputs/09_dominance_motus_ranks/repartition_family_regions_site_station.png", height = 10, width = 15)
 
 # --------------------------------------------------------------------- # 
 #### Genus unit  ----
