@@ -1,4 +1,5 @@
 library(tidyverse)
+library(dplyr)
 library(reshape2)
 library(vegan)
 library(ggplot2)
@@ -41,7 +42,7 @@ family_coverage$Family <- factor(family_coverage$Family, levels = as.character(f
 prop <- ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#d7191c", "#2c7bb6", "#fdae61"))+#, "#abd9e9"
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+#, "#C67052"
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+

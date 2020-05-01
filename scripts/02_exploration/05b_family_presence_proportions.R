@@ -3,6 +3,8 @@ library(reshape2)
 library(gridExtra)
 library(grid)
 library(cowplot)
+library(ggplot2)
+library(ggpubr)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
@@ -409,7 +411,7 @@ save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#d7191c", "#2c7bb6", "#fdae61"))+#, "#abd9e9"
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+#, "#C67052"
   labs(x="Family", y="Proportion")+
   coord_flip()
 
@@ -436,7 +438,7 @@ for (i in 1:length(family)) {
     geom_point()+
     xlim(0, 800)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#2c7bb6", "#fdae61", "#d7191c"))+
+    scale_color_manual(values =c("#2c7bb6", "#fdae61", "#d7191c"))+ #, "#C67052"
     labs(title=family[i], x="", y="")
   ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per site/prop_",family[i],".png", sep = ""))
 }
@@ -452,7 +454,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#2c7bb6", "#fdae61", "#d7191c"))+
+    scale_color_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
