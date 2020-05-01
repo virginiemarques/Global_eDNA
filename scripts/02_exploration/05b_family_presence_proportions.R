@@ -442,13 +442,13 @@ for (i in 1:length(family)) {
 }
 
 
-family <- c("Acanthuridae", "Chaetodontidae", "Pomacentridae", "Labridae", "Lutjanidae", "Serranidae", "Apogonidae", "Gobiidae", "Carangidae", "Engraulidae", "Myctophidae", "Scombridae")
+family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.2, colour=region))+
-    geom_point()+
+    geom_point(size=2)+
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+
     theme(legend.position = "none")+
@@ -458,7 +458,7 @@ for (i in 1:length(family)) {
 }
 
 
-plot <- ggarrange(plotlist = prop, ncol=3, nrow = 4, common.legend = TRUE, legend = "bottom")
+plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "bottom")
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=12))
 y.grob <- textGrob("Proportion of MOTUs assigned to the family", 
