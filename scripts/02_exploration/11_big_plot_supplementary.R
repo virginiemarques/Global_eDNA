@@ -5,6 +5,7 @@ library(ggplot2)
 library(cowplot)
 library(grid)
 library(gridExtra)
+library(ggpubr)
 
 
 # code for the figure like de Vargas 2015
@@ -25,11 +26,15 @@ family_coverage <- subset(family_coverage, Family%in%family)
 
 
 # mise en forme data
-colnames(family_coverage) <- c("family", "coef_sequencing", "coef_resolution")
 
-all <- left_join(count_families_global, family_coverage, by="family")
+count_families_global <- arrange(count_families_global, n_motus)
 
 prop_similarity <- melt(prop_similarity)
+prop_similarity$family <- factor(prop_similarity$family, levels = as.character(factor(count_families_global$family)))
+colnames(prop_similarity) <- c("family", "class", "percentage")
+
+
+family_coverage$Family <- factor(family_coverage$Family, levels = as.character(factor(count_families_global$family)))
 
 
 # plot chaque plot
@@ -39,36 +44,41 @@ prop <- ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fil
   scale_fill_manual(values =c("#d7191c", "#2c7bb6", "#fdae61"))+#, "#abd9e9"
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.1,0.1,0.1), "cm"))+
+  theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
 
-coverage <- ggplot(all, aes(x=reorder(family, n_motus), y = coef_sequencing)) + 
+coverage <- ggplot(family_coverage, aes(x=Family, y = coef_sequencing)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.1,0.1), "cm"))+
+  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-resolution <- ggplot(all, aes(x=reorder(family, n_motus), y = coef_resolution)) + 
+resolution <- ggplot(family_coverage, aes(x=Family, y = coef_resolution)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.1,0.1), "cm"))+
+  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
+  scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-
-ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(2,1,1))
-
-
-## add proportion similarité mais complexe
-similarity <- ggplot(prop_similarity, aes(x=family, y = value, fill=variable)) + 
-  geom_tile() + 
+similarity <- ggplot(prop_similarity, aes(x=class, y = family)) + 
+  geom_tile(aes(fill=percentage))+
+  #scale_fill_brewer(palette="Dark2")+
   theme_bw() +
-  
-  labs(title="Percentage of resolutive sequences in databases", x="", y="")+ 
-  theme(legend.position = "none")+
-  coord_flip()
+  labs(title="Percentage of reads \nby similarity class", x="", y="")+ 
+  theme(legend.position = c(0.8,1.015), legend.direction = "horizontal", legend.text = element_text(size=4), legend.key.height =unit(0.25,"cm"), legend.key.width=unit(0.2,"cm"), legend.title = element_blank())+
+  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,-0.1,0), "cm"))+
+  theme(axis.text.y = element_blank())+
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
+
+
+plot_all <- ggarrange(prop, coverage, resolution, similarity, ncol=4, nrow=1, widths = c(2,1,1,1))
+
+# save wavec heigth=1300 et width=800
+
