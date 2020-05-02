@@ -7,6 +7,7 @@ library(cowplot)
 library(grid)
 library(gridExtra)
 library(ggpubr)
+library(RColorBrewer)
 
 
 # code for the figure like de Vargas 2015
@@ -68,9 +69,11 @@ resolution <- ggplot(family_coverage, aes(x=Family, y = coef_resolution)) +
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
+
+pal <- brewer.pal(9, "Greys")
 similarity <- ggplot(prop_similarity, aes(x=class, y = family)) + 
   geom_tile(aes(fill=percentage))+
-  #scale_fill_brewer(palette="Dark2")+
+  scale_fill_gradientn(colours = pal)+
   theme_bw() +
   labs(title="Percentage of reads \nby similarity class", x="", y="")+ 
   theme(legend.position = c(0.8,1.015), legend.direction = "horizontal", legend.text = element_text(size=4), legend.key.height =unit(0.25,"cm"), legend.key.width=unit(0.2,"cm"), legend.title = element_blank())+
