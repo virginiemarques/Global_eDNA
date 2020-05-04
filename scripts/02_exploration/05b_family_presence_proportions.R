@@ -465,7 +465,9 @@ x.grob <- textGrob("Total number of MOTUs per site",
                    gp=gpar(fontface="bold", col="black", fontsize=12))
 y.grob <- textGrob("Proportion of MOTUs assigned to the family", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
-grid.arrange(plot, bottom=x.grob, left=y.grob)
+plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
+
+save(plot_grid, file = "Rdata/plot_grid_proportions.rdata")
 
 
 ## test chi²

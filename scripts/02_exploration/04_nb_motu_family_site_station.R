@@ -3,6 +3,11 @@
 library(tidyverse)
 library(reshape2)
 library(lisa)
+library(gridExtra)
+library(grid)
+library(cowplot)
+library(ggplot2)
+library(ggpubr)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
@@ -256,7 +261,7 @@ rich_site_fakarava_melt[3,"sd"] <- rich_site_fakarava$sd_family
 eparse <- df_all_filters %>%
   filter(region=="West_Indian")
 
-# total MOTUs and family richness in eparse region
+  # total MOTUs and family richness in eparse region
 rich_tot_eparse <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), region="West_Indian")
 rich_tot_eparse$motu <- eparse %>% 
   summarise(n = n_distinct(sequence))
@@ -266,7 +271,7 @@ rich_tot_eparse$family <- eparse %>%
   summarise(n = n_distinct(new_family_name))
 
 
-# calculate unique motus and families at each station   
+  # calculate unique motus and families at each station   
 station <- c(unique(eparse$station))
 
 rich_station_eparse <- data.frame(region="West_Indian", site=character(), station=character(), motu=numeric(), genus=numeric(), family=numeric(), stringsAsFactors = FALSE)
@@ -288,7 +293,7 @@ for (i in 1:length(station)) {
 }
 
 
-# calculate unique motus and families at each site
+  # calculate unique motus and families at each site
 site <- c(unique(eparse$site))
 
 rich_site_eparse <- data.frame(region="West_Indian", site=character(4), motu=numeric(4), genus=numeric(4), family=numeric(4), mean_motu=numeric(4), sd_motu=numeric(4), mean_genus=numeric(4), sd_genus=numeric(4), mean_family=numeric(4), sd_family=numeric(4), stringsAsFactors = FALSE)
@@ -396,36 +401,51 @@ rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_statio
 
 rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
 
-ggplot(rich_station, aes(longitude_start_clean, motu, col=region))+
-  geom_point()+
+rich_motu <- ggplot(rich_station, aes(longitude_start_clean, motu, col=region))+
+  geom_point(colour="#D2981A")+
   xlim(-180,180)+
-  scale_color_manual(values=c("#2c7bb6", "#fdae61", "#d7191c"))+
+  ylim(0,250)+
+  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
   theme(legend.position = "none")+
-  labs(x="Longitude",
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
        y="MOTU richness")
 
-ggsave("outputs/04_exploration_richness/richness_motu_longitude2.png")
+ggsave("outputs/04_exploration_richness/richness_motu_longitude.png")
 
-ggplot(rich_station, aes(longitude_start_clean, genus, col=region))+
-  geom_point()+
+rich_genus <- ggplot(rich_station, aes(longitude_start_clean, genus, col=region))+
+  geom_point(colour="#A53E1F")+
   xlim(-180,180)+
-  scale_color_manual(values=c("#2c7bb6", "#fdae61", "#d7191c"))+
+  ylim(0,250)+
+  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
   theme(legend.position = "none")+
-  labs(x="Longitude",
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
        y="Genus richness")
 
 ggsave("outputs/04_exploration_richness/richness_genus_longitude2.png")
 
 
-ggplot(rich_station, aes(longitude_start_clean, family, col=region))+
-  geom_point()+
+rich_family <- ggplot(rich_station, aes(longitude_start_clean, family, col=region))+
+  geom_point(colour="#457277")+
   xlim(-180,180)+
-  scale_color_manual(values=c("#2c7bb6", "#fdae61", "#d7191c"))+
+  ylim(0,250)+
+  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
   theme(legend.position = "none")+
-  labs(x="Longitude",
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
        y="Family richness")
 
 ggsave("outputs/04_exploration_richness/richness_family_longitude2.png")
+
+plot <- ggarrange(rich_motu, rich_genus, rich_family, ncol = 3, nrow=1)
+x.grob <- textGrob("Longitude", 
+                   gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
+
+plot_all <- grid.arrange(plot, bottom=x.grob)
+load("Rdata/plot_grid_proportions.rdata")
+
+ggarrange(plot_all, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
 
 
 ## plot station richness ~ distance_to_coast
