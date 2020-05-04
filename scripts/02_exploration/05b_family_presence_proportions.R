@@ -438,7 +438,7 @@ for (i in 1:length(family)) {
     geom_point()+
     xlim(0, 800)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#2c7bb6", "#fdae61", "#d7191c"))+ #, "#C67052"
+    scale_color_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+ #, "#C67052"
     labs(title=family[i], x="", y="")
   ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per site/prop_",family[i],".png", sep = ""))
 }
@@ -466,3 +466,20 @@ x.grob <- textGrob("Total number of MOTUs per site",
 y.grob <- textGrob("Proportion of MOTUs assigned to the family", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
 grid.arrange(plot, bottom=x.grob, left=y.grob)
+
+
+## test chi²
+
+  ## on all families, all sites
+test1 <- chisq.test(df_all_site$prop)
+
+  ## selected families, all sites
+subset_fam <- df_all_site[df_all_site$family%in%family,]
+test2 <- chisq.test(subset_fam$prop)
+
+## selected families, by sites
+subset_fam <- subset_fam[, -c(2,3,6)]
+subset_fam_spread <- spread(subset_fam, family, prop)
+subset_fam_spread[is.na(subset_fam_spread)] <- 0
+
+test3 <- chisq.test(subset_fam_spread[,c(-1)])
