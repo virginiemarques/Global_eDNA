@@ -5,6 +5,15 @@
 # Bugs to fix:
 # 
 
+# Ameliorations to make: 
+# Cut add_class script to not run all taxa at the same time -- sometimes it stops as too heavy 
+# Use pieces of code where it cuts the query from the 05_ script
+
+# Errors on classification:ressources to check 
+# https://github.com/ropensci/taxize/issues/783
+# UPdate taxize -- done 
+
+
 # ----------------------------------------------------------------------------------------------------------------- # 
 # Before running this script, if you add new metabarcoding data, make sure you have all the corresponding metadata 
 # Otherwise, the script will fail
@@ -45,12 +54,13 @@ metadata_sampling$latitude_start <- str_trim(metadata_sampling$latitude_start)
 # Metadata - sequencing
 # For later: the generation of those files should be automated to always have the same columns?
 # For later: add a column project to ease the check?
+# Note: on the Eparses file, there is still the data from the Other & blank projects - it is not a problem here 
 liste_run_metadata <- list.files(path = "data/metadata_sequencing/", pattern = ".table")
 
 # Check metadata completness
 if(length(projects) != length(liste_run_metadata)){
   message("Wrong number of metadata files, check in folder if all files are present.")
-} 
+}
 
 # Open and clean
 all.the.data <- lapply(paste("data/metadata_sequencing/", liste_run_metadata, sep=""),  read.table, header=TRUE, stringsAsFactors = F, sep=" ")

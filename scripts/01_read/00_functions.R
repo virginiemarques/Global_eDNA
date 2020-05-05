@@ -137,7 +137,7 @@ add_class_name <- function(edna_file){
   specieslist <- unique(edna_file$new_scientific_name_ncbi)
   
   # the classification
-  liste_classification <- classification(specieslist, db = "ncbi", rows=1)
+  liste_classification <- classification(specieslist, db = "ncbi", rows=1, callopts=list(http_version = 0L))
   
   # Transform into data frame
   liste_classification <- map_df(liste_classification, ~as.data.frame(.x), .id="initial_name")

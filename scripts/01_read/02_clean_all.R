@@ -27,6 +27,11 @@ lapply(liste_all_filters, function(x){
   length(unique(x$amplicon))
 })
 
+# After LULU 
+lapply(liste_read_edna_LULU, function(x){
+  length(unique(x$amplicon))
+})
+
 # ------------------------------------------------------------------------------------- # 
 # Apply LULU to clean post-clustering
 
@@ -68,4 +73,14 @@ df_all_filters_sample <- simplify_sample_level(df_all_filters)
 # List + df 
 
 save(liste_all_filters, liste_read_edna_LULU, df_all_filters, file = 'Rdata/02_clean_all.Rdata')
+
+motu_uniq <- df_all_filters %>%
+  filter(project_name == "Eparses") %>%
+  distinct(sequence, best_identity_database, new_rank_ncbi, new_scientific_name_ncbi)
+
+
+
+
+
+
 
