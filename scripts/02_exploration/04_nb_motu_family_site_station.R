@@ -15,6 +15,8 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
 
 
 # calculate nb of reads per family at global scale
@@ -259,7 +261,7 @@ rich_site_fakarava_melt[3,"sd"] <- rich_site_fakarava$sd_family
 ## Eparses data
 
 eparse <- df_all_filters %>%
-  filter(region=="West_Indian")
+  filter(region=="Iles_Eparses")
 
   # total MOTUs and family richness in eparse region
 rich_tot_eparse <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), region="West_Indian")
@@ -274,7 +276,7 @@ rich_tot_eparse$family <- eparse %>%
   # calculate unique motus and families at each station   
 station <- c(unique(eparse$station))
 
-rich_station_eparse <- data.frame(region="West_Indian", site=character(), station=character(), motu=numeric(), genus=numeric(), family=numeric(), stringsAsFactors = FALSE)
+rich_station_eparse <- data.frame(region="West_Indian", site=character(16), station=character(16), motu=numeric(16), genus=numeric(16), family=numeric(16), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(eparse[eparse$station == station[i],]$site)
@@ -340,7 +342,7 @@ rich_site_eparse_melt[9:12,"sd"] <- rich_site_eparse$sd_family
 
 # plot motu and family richness per region
 
-rich_total <- rbind(rich_site_lengguru_melt, rich_site_eparse_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
+rich_total <- rbind(rich_site_eparse_melt, rich_site_lengguru_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
 
 gg <- ggplot(rich_total, aes(fill=variable)) +
   geom_col(aes(site, value), position = position_dodge(), show.legend = TRUE)+
@@ -351,15 +353,17 @@ gg <- ggplot(rich_total, aes(fill=variable)) +
   geom_point(data=rich_total[rich_total$variable=="family",], aes(site, mean), position = position_nudge(0.3, 0))+
   geom_errorbar(data=rich_total[rich_total$variable=="family",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(0.3, 0), width=0.32)+
   facet_grid(~region, scales = "free_x", space = "free_x")+
-  theme(axis.text.x = element_text(size = 9, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(axis.text.x = element_text(size = 11, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(axis.text.y = element_text(size = 11))+
   theme(axis.title.y = element_text(size = 15))+
+  theme(axis.title.x = element_text(size = 15))+
   scale_fill_manual(values=c("#d2981a", "#a53e1f", "#457277"))+
-  labs(x=NULL,
-       y = "richness",
+  labs(x="Sites",
+       y = "Richness",
        fill=NULL)
 
 
-ggsave("outputs/04_exploration_richness/richness_region.png", width = 15, height = 8)
+ggsave("outputs/04_exploration_richness/richness_region.png", width = 18, height = 8)
 
 
 ## plot station richness ~ latitude
@@ -397,15 +401,15 @@ ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 ## plot station richness ~ longitude
 
-rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru)
+rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru, rich_station_eparse)
 
 rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
 
 rich_motu <- ggplot(rich_station, aes(longitude_start_clean, motu, col=region))+
-  geom_point(colour="#D2981A")+
+  geom_point()+ # colour="#D2981A"
   xlim(-180,180)+
   ylim(0,250)+
-  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
@@ -414,39 +418,36 @@ rich_motu <- ggplot(rich_station, aes(longitude_start_clean, motu, col=region))+
 ggsave("outputs/04_exploration_richness/richness_motu_longitude.png")
 
 rich_genus <- ggplot(rich_station, aes(longitude_start_clean, genus, col=region))+
-  geom_point(colour="#A53E1F")+
+  geom_point()+ # colour="#A53E1F"
   xlim(-180,180)+
   ylim(0,250)+
-  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Genus richness")
 
-ggsave("outputs/04_exploration_richness/richness_genus_longitude2.png")
+ggsave("outputs/04_exploration_richness/richness_genus_longitude.png")
 
 
 rich_family <- ggplot(rich_station, aes(longitude_start_clean, family, col=region))+
-  geom_point(colour="#457277")+
+  geom_point()+ # colour="#457277"
   xlim(-180,180)+
   ylim(0,250)+
-  #scale_color_manual(values=c("#E5A729", "#4F4D1D", "#8AAE8A"))+ #C67052
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Family richness")
 
-ggsave("outputs/04_exploration_richness/richness_family_longitude2.png")
+ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
 
 plot <- ggarrange(rich_motu, rich_genus, rich_family, ncol = 3, nrow=1)
 x.grob <- textGrob("Longitude", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
 
 plot_all <- grid.arrange(plot, bottom=x.grob)
-load("Rdata/plot_grid_proportions.rdata")
-
-ggarrange(plot_all, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
-
+save(plot_all, file = "Rdata/plot_richness~longitude.rdata")
 
 ## plot station richness ~ distance_to_coast
 
