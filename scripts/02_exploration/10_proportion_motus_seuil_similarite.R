@@ -19,10 +19,11 @@ for (i in 1:length(family)) {
   df <- subset(df_all_filters, new_family_name==family[i])
   ntot <- nrow(df)
   prop_similarity[i,"family"] <- family[i]
-  prop_similarity[i,"p80_85"] <- (nrow(subset(df, best_identity_database > 0.80 & best_identity_database <= 0.85))*100)/ntot
-  prop_similarity[i,"p85_90"] <- (nrow(subset(df, best_identity_database > 0.85 & best_identity_database <= 0.90))*100)/ntot
-  prop_similarity[i,"p90_95"] <- (nrow(subset(df, best_identity_database > 0.90 & best_identity_database <= 0.95))*100)/ntot
-  prop_similarity[i,"p95_100"] <- (nrow(subset(df, best_identity_database > 0.95 & best_identity_database <= 1))*100)/ntot
+  prop_similarity[i,"85-90%"] <- (nrow(subset(df, best_identity_database > 0.85 & best_identity_database <= 0.90))*100)/ntot
+  prop_similarity[i,"90-95%"] <- (nrow(subset(df, best_identity_database > 0.90 & best_identity_database <= 0.95))*100)/ntot
+  prop_similarity[i,"95-<100%"] <- (nrow(subset(df, best_identity_database > 0.95 & best_identity_database < 1))*100)/ntot
+  prop_similarity[i,"100%"] <- (nrow(subset(df, best_identity_database == 1))*100)/ntot
+  
 }
 
 save(prop_similarity, file = "Rdata/proportion_motus_similarity_threshold.Rdata")

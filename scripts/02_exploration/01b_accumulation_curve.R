@@ -429,14 +429,14 @@ motus
 
 # MOTUs 
 plot_motus <- ggplot(df_motus, aes(x=sites, y = richness, group = level, fill = level)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5, fill = "#E7B800") +
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5, fill = "#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, col = "#E7B800") +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, col = "#d2981a") +
   theme_classic() +
   theme(legend.position = "none") +
   # annotation family
   annotate(geom="text", x=190+10, y=2033+35, label="MOTUs",hjust=1,
-           color="#E7B800")
+           color="#d2981a")
 plot_motus
 
 # Trial 2: all in a single plot 
@@ -448,14 +448,16 @@ plot_taxo <- ggplot(df_all_levels %>%
   geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
+  scale_fill_manual(values = c("#457277", "#a53e1f"))+
+  scale_color_manual(values = c("#457277", "#a53e1f"))+
   theme_classic() +
   theme(legend.position = "none") +
   # annotation family
   annotate(geom="text", x=190+10, y=150+14, label="Family",hjust=1,
-           color="red") +
+           color="#457277") +
   # annotation genus
   annotate(geom="text", x=190+10, y=375+10, label="Genus",hjust=1,
-           color="deepskyblue2")
+           color="#a53e1f")
 plot_taxo
 
 # Combine 
