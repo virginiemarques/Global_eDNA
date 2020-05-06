@@ -33,6 +33,8 @@ for (i in 1:length(family)) {
   nb_reads_family[i,2] <- sum(df$count_reads_all_pcr)
 }
 
+
+nb_reads_family <- arrange(nb_reads_family, desc(reads))
 save(nb_reads_family, file = "Rdata/nb_reads_per_family_global.Rdata")
 
 
