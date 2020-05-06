@@ -41,10 +41,10 @@ save(nb_reads_family, file = "Rdata/nb_reads_per_family_global.Rdata")
 ## Lengguru data
 
 lengguru <- df_all_filters %>%
-  filter(region=="West_Papua")
+  filter(region=="Central_IndoPacific")
 
   # total MOTUs and family richness in Lengguru region
-rich_tot_lengguru <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), region="Central_Indo_Pacific")
+rich_tot_lengguru <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), region="Central_IndoPacific")
 rich_tot_lengguru$motu <- lengguru %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_lengguru$genus <- lengguru %>% 
@@ -56,7 +56,7 @@ rich_tot_lengguru$family <- lengguru %>%
   # calculate unique motus and families at each station   
 station <- c(unique(lengguru$station))
 
-rich_station_lengguru <- data.frame(region="Central_Indo_Pacific", site=character(46), station=character(46), motu=numeric(46), genus=numeric(46), family=numeric(46), stringsAsFactors = FALSE)
+rich_station_lengguru <- data.frame(region="Central_IndoPacific", site=character(46), station=character(46), motu=numeric(46), genus=numeric(46), family=numeric(46), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(lengguru[lengguru$station == station[i],]$site)
@@ -207,7 +207,7 @@ rich_site_caribbean_melt[7:9,"sd"] <- rich_site_caribbean$sd_family
 ## Fakarava data
 
 fakarava <- df_all_filters %>%
-  filter(region=="French_Polynesia")
+  filter(region=="Central_Pacific")
 
   # calculate unique motus and families at each station   
 station <- c(unique(fakarava$station))
@@ -263,7 +263,7 @@ rich_site_fakarava_melt[3,"sd"] <- rich_site_fakarava$sd_family
 ## Eparses data
 
 eparse <- df_all_filters %>%
-  filter(region=="Iles_Eparses")
+  filter(region=="West_Indian")
 
   # total MOTUs and family richness in eparse region
 rich_tot_eparse <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), region="West_Indian")
@@ -355,7 +355,8 @@ gg <- ggplot(rich_total, aes(fill=variable)) +
   geom_point(data=rich_total[rich_total$variable=="family",], aes(site, mean), position = position_nudge(0.3, 0))+
   geom_errorbar(data=rich_total[rich_total$variable=="family",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(0.3, 0), width=0.32)+
   facet_grid(~region, scales = "free_x", space = "free_x")+
-  theme(axis.text.x = element_text(size = 11, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
+  theme(strip.text.x = element_text(size = 10))+
   theme(axis.text.y = element_text(size = 11))+
   theme(axis.title.y = element_text(size = 15))+
   theme(axis.title.x = element_text(size = 15))+
@@ -363,7 +364,7 @@ gg <- ggplot(rich_total, aes(fill=variable)) +
   labs(x="Sites",
        y = "Richness",
        fill=NULL)
-
+gg
 
 ggsave("outputs/04_exploration_richness/richness_region.png", width = 18, height = 8)
 
@@ -375,7 +376,7 @@ rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_
 
 metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
-  filter(region%in%c("Central_Indo_Pacific", "Central_Pacific", "Caribbean", "West_Indian"))
+  filter(region%in%c("Central_IndoPacific", "Central_Pacific", "Caribbean", "West_Indian"))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
@@ -401,51 +402,51 @@ ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 
 
-## plot station richness ~ longitude
+## plot station richness ~ distance au CT
 
 rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru, rich_station_eparse)
 
-rich_station <- left_join(rich_station, metadata[,c("station", "longitude_start_clean")], by="station")
+rich_station <- left_join(rich_station, metadata[,c("station", "dist_to_CT")], by="station")
 
-rich_motu <- ggplot(rich_station, aes(longitude_start_clean, motu, col=region))+
-  geom_point()+ # colour="#D2981A"
-  xlim(-180,180)+
+rich_motu <- ggplot(rich_station, aes(dist_to_CT, motu, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
   ylim(0,250)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="MOTU richness")
+rich_motu
+ggsave("outputs/04_exploration_richness/richness_motu_distCT.png")
 
-ggsave("outputs/04_exploration_richness/richness_motu_longitude.png")
-
-rich_genus <- ggplot(rich_station, aes(longitude_start_clean, genus, col=region))+
-  geom_point()+ # colour="#A53E1F"
-  xlim(-180,180)+
-  ylim(0,250)+
+rich_genus <- ggplot(rich_station, aes(dist_to_CT, genus, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
+  ylim(0,110)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Genus richness")
+rich_genus
+ggsave("outputs/04_exploration_richness/richness_genus_distCT.png")
 
-ggsave("outputs/04_exploration_richness/richness_genus_longitude.png")
 
-
-rich_family <- ggplot(rich_station, aes(longitude_start_clean, family, col=region))+
-  geom_point()+ # colour="#457277"
-  xlim(-180,180)+
-  ylim(0,250)+
+rich_family <- ggplot(rich_station, aes(dist_to_CT, family, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
+  ylim(0,60)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Family richness")
-
-ggsave("outputs/04_exploration_richness/richness_family_longitude.png")
+rich_family
+ggsave("outputs/04_exploration_richness/richness_family_distCT.png")
 
 plot <- ggarrange(rich_motu, rich_genus, rich_family, ncol = 3, nrow=1)
-x.grob <- textGrob("Longitude", 
+x.grob <- textGrob("Distance to Coral Tringle (km, W-E)", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
 
 plot_all <- grid.arrange(plot, bottom=x.grob)

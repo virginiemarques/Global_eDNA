@@ -8,7 +8,7 @@ library(raster)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ",", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
 
 ## select samples with GPS data
 metadata_dist  <- metadata_sampling %>%
@@ -27,7 +27,7 @@ pts$longitude_start_clean <- as.numeric(pts$longitude_start_clean)
 dist_to_CT <- pointDistance(pts, center_CT, lonlat=TRUE)
 dist_to_CT <- as.data.frame(dist_to_CT)
 
-# transform in KM with 12 decimals
+# transform in KM with 2 decimals
 dist_to_CT <- dist_to_CT/1000
 
 dist_to_CT <- dist_to_CT %>% 
@@ -40,5 +40,18 @@ colnames(dist_to_CT) <- c("dist_to_CT", "code_spygen")
 
 # assemble with metadata
 metadata <- left_join(metadata_sampling, dist_to_CT, by="code_spygen")
+metadata  <- metadata %>%
+  filter(!is.na(longitude_start_clean))
 
-write.csv(metadata, "metadata/Metadata_eDNA_global_V6.csv")
+## put Coral triangle in the middle
+metadata1 <- metadata %>%
+  mutate(dist_to_CT = case_when(
+    region == "Central_Pacific" ~ paste0(dist_to_CT),
+    region == "Caribbean" ~ paste0(dist_to_CT),
+    region == "East_Pacific" ~ paste0(dist_to_CT),
+    region == "West_Indian" ~ paste0("-", dist_to_CT),
+    region == "Central_IndoPacific" ~ paste0("-", dist_to_CT),
+    region == "West_Atlantic" ~ paste0("-", dist_to_CT),
+    region == "Mediterranean" ~ paste0("-", dist_to_CT)))
+
+write.csv(metadata1, "metadata/Metadata_eDNA_global_V6.csv")
