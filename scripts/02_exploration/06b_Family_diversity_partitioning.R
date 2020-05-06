@@ -10,6 +10,9 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
@@ -107,7 +110,7 @@ alpha_station_faka <- alpha_station %>%
 mean_alpha_station_faka <- mean(alpha_station_faka$family)
 
 alpha_station_eparse <- alpha_station %>%
-  subset(region == "")
+  subset(region == "Iles_Eparses")
 mean_alpha_station_eparse <- mean(alpha_station_eparse$family)
 
 a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng, mean_alpha_station_eparse)
@@ -117,7 +120,7 @@ sd_alpha_station <- sd(a_station)
 
 # calculate beta inter-station
 
-beta_station <- data.frame(region=character(), site=character(), alpha=numeric(), gamma=numeric(), beta=numeric(), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(region=character(19), site=character(19), alpha=numeric(19), gamma=numeric(19), beta=numeric(19), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -140,7 +143,7 @@ beta_station_leng <- beta_station %>%
 mean_beta_station_leng <- mean(beta_station_leng$beta)
 
 beta_station_eparse <- beta_station %>%
-  subset(region == "")
+  subset(region == "Iles_Eparses")
 mean_beta_station_eparse <- mean(beta_station_eparse$beta)
 
 beta_station_faka <- beta_station[beta_station$region=="French_Polynesia",]$beta
@@ -192,18 +195,18 @@ for (i in 1:length(region)) {
   df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:4], "pa",na.rm = TRUE)
+df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
 df_region[is.na(df_region)] <- 0
 df_region <- as.data.frame(t(df_region))
 
 b <- betapart.core(df_region)
 beta <- beta.multi(b, "jaccard")
-betaregion <- data.frame(scale="region", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
+betaregion <- data.frame(scale="inter-region", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
 
   ## beta inter-site
 
 df_site=vector("list", 4)
-betasite <- data.frame(scale="site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
+betasite <- data.frame(scale="inter-site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
 
 
 for (i in 1:length(region)) {
@@ -232,8 +235,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(df_all_filters$site)
-df_station=vector("list", ?)
-betastation <- data.frame(scale="station", total=numeric(), turnover=numeric(), nestedness=numeric())
+df_station=vector("list", 19)
+betastation <- data.frame(scale="inter-station", total=numeric(19), turnover=numeric(19), nestedness=numeric(19))
 
 
 for (i in 1:length(site)) {
@@ -265,6 +268,7 @@ beta_melt <- melt(betatotal)
 
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
+  ylim(0,1)+
   labs(x=" Beta component", y="Jaccard dissimilarity (family)")
 
 ggsave("outputs/06_diversity_partitioning/family_diversity_partitioning.png")  
