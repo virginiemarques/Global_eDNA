@@ -13,6 +13,8 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
 
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
@@ -152,7 +154,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
-  count_families$region <- "West_Papua"
+  count_families$region <- "Central_IndoPacific"
   count_families_site_lengguru <- rbind(count_families_site_lengguru, count_families)
 }
 
@@ -218,7 +220,7 @@ count_families_site_fakarava <- data.frame(table(faka_motu$new_family_name))
 colnames(count_families_site_fakarava) <- c("family", "n_motus")
 count_families_site_fakarava$n_motus_total <- nrow(faka_motu)
 count_families_site_fakarava$site <- "fakarava"
-count_families_site_fakarava$region <- "French_Polynesia"
+count_families_site_fakarava$region <- "Central_Pacific"
 count_families_site_fakarava$prop <- count_families_site_fakarava$n_motus / count_families_site_fakarava$n_motus_total
 
 
@@ -260,7 +262,7 @@ write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_base
   ## eparse total
 
 eparse <- df_all_filters %>%
-  filter(region=="West_Indian") 
+  filter(region=="Iles_Eparses") 
 
 eparse_motu <- eparse %>%
   distinct(sequence, .keep_all = TRUE)
@@ -310,22 +312,19 @@ count_families_site_eparse <- count_families_site_eparse %>%
   arrange(site, prop) %>%
   mutate(order = row_number())
 
-## plot by 3 sites, because plot too small otherwise
-site_sub <- c("", "")
-subset1 <- count_families_site_eparse %>%
-  filter(site%in%site_sub)
-ggplot(subset1, aes(order, prop, fill = prop)) + 
+
+ggplot(count_families_site_eparse, aes(order, prop)) + 
   geom_bar(stat="identity") +
-  facet_wrap(~site, scales ="free_y")+
+  facet_wrap(~site, scales ="free_y", nrow = 1)+
   theme_bw() +
   labs(x="Family", y="Proportion")+
   theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
   theme(legend.position = "none")+
   coord_flip()+
-  scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
+  scale_x_continuous(breaks=count_families_site_eparse$order, labels=count_families_site_eparse$family, expand = c(0,0))
 
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_eparse_site...png", width=20, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_eparse.png", width=20, height=16)
 
   ## eparse station
 
@@ -390,11 +389,10 @@ colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_leng
 families_prop_global[is.na(families_prop_global)] <- 0
 
 for (i in 1:dim(families_prop_global)[1]) {
-  families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
-  families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
-  families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
-  families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:6])
-  
+    families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
+    families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
+    families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
+    families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
 }
 
 families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
@@ -402,7 +400,7 @@ families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_
 families_prop_global$Fakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_global$prop_global)/families_prop_global$n_global
 
-families_prop_global <- families_prop_global[,c(1,10:13)]
+families_prop_global <- families_prop_global[,c(1,12:15)]
 families_prop_global2 <- melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
 
@@ -411,7 +409,7 @@ save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+#, "#C67052"
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+
   labs(x="Family", y="Proportion")+
   coord_flip()
 
@@ -420,28 +418,15 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 ## Bellwood figures : proportion of families per site
 
-family_leng <- unique(lengguru$new_family_name)
-family_car <- unique(caribbean$new_family_name)
-family_faka <- unique(fakarava$new_family_name)
+#family_leng <- unique(lengguru$new_family_name)
+#family_car <- unique(caribbean$new_family_name)
+#family_faka <- unique(fakarava$new_family_name)
 
-fam <- intersect(family_car, family_faka)
-family <- intersect(fam, family_leng)
+#fam <- intersect(family_car, family_faka)
+#family <- intersect(fam, family_leng)
 
 df_all_site <- rbind(count_families_site_lengguru[,c(-7)], count_families_site_caribbean[,c(-7)], count_families_site_eparse[,c(-7)], count_families_site_fakarava)
 
-
-
-prop <- vector("list")
-for (i in 1:length(family)) {
-  fam <- df_all_site[df_all_site$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.25, colour=region))+
-    geom_point()+
-    xlim(0, 800)+
-    theme(legend.position = "none")+
-    scale_color_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+ #, "#C67052"
-    labs(title=family[i], x="", y="")
-  ggsave(filename=paste("outputs/05_family_proportion/02_based_on_species_presence/per site/prop_",family[i],".png", sep = ""))
-}
 
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
@@ -454,7 +439,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
@@ -467,8 +452,11 @@ y.grob <- textGrob("Proportion of MOTUs assigned to the family",
                    gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
 plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
-save(plot_grid, file = "Rdata/plot_grid_proportions.rdata")
 
+
+load("Rdata/plot_richness~longitude.rdata")
+
+ggarrange(plot_all, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
 
 ## test chi²
 
