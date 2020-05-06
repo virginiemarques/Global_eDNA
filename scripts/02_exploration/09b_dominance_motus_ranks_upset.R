@@ -27,21 +27,12 @@ df_all_filters <- subset(df_all_filters, region!="East_Pacific")
 df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
 df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
 
-
 # on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? 
 # -> faire les deux et mettre les familles seulement en SI. 
 #df_all_filters <- df_all_filters %>%
 #  filter(!is.na(new_family_name))
 
 # Des que le style des figures est bien posé, faire une fonction pour simplifier le code 
-
-# Changer nom de code de region: a la main pour le moment (avant de tout faire re-tourner)
-df_all_filters <- df_all_filters %>%
-  mutate(region = case_when(
-    region == "West_Papua" ~ "Central_IndoPacific", 
-    region == "French_Polynesia" ~ "Central_Pacific", 
-    region == "Caribbean" ~ "Caribbean",
-    region == "Iles_Eparses" ~ "West_Indian"))
 
 unique(df_all_filters$region)
 
@@ -94,23 +85,6 @@ matrix_motus <- df_all_filters %>%
          West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0)) %>%
   as.data.frame()
 
-# contruct matrix
-mm = make_comb_mat(matrix_motus)
-# Remove the intersections with no match
-mm = mm[comb_degree(mm) > 0]
-
-# the upset plot
-p1 <- UpSet(mm, 
-      comb_order = order(-comb_size(mm)), 
-      comb_col = pal[comb_degree(mm)],
-      column_title = "Region - MOTUs")
-p1
-
-# Save
-  #    png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=150)
-  #    p1
-  #    dev.off()
-
 # Supp Settings
 # Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut être ? 
 
@@ -138,7 +112,7 @@ p1 <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
           alpha = 0.3
         ))
       ))
@@ -169,24 +143,7 @@ matrix_family <- df_all_filters %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
 
-# contruct matrix
-mm = make_comb_mat(matrix_family)
-# Remove the intersections with no match
-mm = mm[comb_degree(mm) > 0]
-
-# the upset plot
-p2 <- UpSet(mm, 
-           comb_order = order(-comb_size(mm)), 
-           comb_col = pal[comb_degree(mm)],
-           column_title = "Region - Family")
-p2
-
-# Save
-#   png('outputs/09_dominance_motus_ranks/upset_plot_region_family.png', width = 6, height=3, units = "in", res=150)
-#   p2
-#   dev.off()
-
-# Alternative plot
+# Simple plot
 upset(matrix_family, 
       order.by = c("freq"),
       mainbar.y.label = "Number of families", 
@@ -207,7 +164,7 @@ p2 <- upset(matrix_family,
               plots = list(list(
                 type = "matrix_rows",
                 column = "region", 
-                colors = c(`Central_Indo-Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+                colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
                 alpha = 0.3
               ))
             ))
@@ -259,16 +216,6 @@ for (i in all_sites){
   matrix_motus[,i] <- ifelse(matrix_motus[,rank] %in% dataset[[i]][[rank]], 1, 0)
   print(i)
 }
-
-# contruct matrix
-mm = make_comb_mat(matrix_motus)
-
-# Remove the intersections with no match
-mm = mm[comb_degree(mm) > 0]
-
-# the upset plot - c'est illisible avec cette methode. Utiliser upset function plutôt + personnaliser les couleurs 
-UpSet(mm,comb_order = order(-comb_size(mm)),
-            column_title = "Site - MOTUs")
 
 # Plotter les 40 premieres intersections pour la lisibilité
 p3 <- upset(matrix_motus, 
@@ -360,26 +307,6 @@ for (i in all_sites){
   matrix_family[,i] <- ifelse(matrix_family[,rank] %in% dataset[[i]][[rank]], 1, 0)
   print(i)
 }
-
-# contruct matrix
-mm = make_comb_mat(matrix_family)
-# Remove the intersections with no match
-mm = mm[comb_degree(mm) > 0]
-
-# Save
-p4 <- upset(matrix_family, 
-      nsets = 20,
-      order.by = c("freq"),
-      mainbar.y.label = "Number of families", 
-      sets.x.label = "Number of families", 
-      nintersects = 13) # Above 13 intersects, there is only 1 count. I dont see any settings to choose this way (would be cleaner)
-p4
-
-# Save
-#  png('outputs/09_dominance_motus_ranks/upset_plot_sites_family.png', width = 10, height=7, units = "in", res=300)
-#  p4
-#  grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
-#  dev.off()
 
 # Plot color
 p4_color <- upset(matrix_family, 
