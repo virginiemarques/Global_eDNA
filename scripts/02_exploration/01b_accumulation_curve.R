@@ -444,7 +444,7 @@ plot_motus <- ggplot(df_motus, aes(x=sites, y = richness, group = level, fill = 
   theme_classic() +
   theme(legend.position = "none") +
   # annotation family
-  annotate(geom="text", x=190+10, y=2033+35, label="MOTUs",hjust=1,
+  annotate(geom="text", x=190+10, y=2209+45, label="MOTUs",hjust=1,
            color="#d2981a")
 plot_motus
 
@@ -462,10 +462,10 @@ plot_taxo <- ggplot(df_all_levels %>%
   theme_classic() +
   theme(legend.position = "none") +
   # annotation family
-  annotate(geom="text", x=190+10, y=150+14, label="Family",hjust=1,
+  annotate(geom="text", x=190+10, y=170+14, label="Family",hjust=1,
            color="#457277") +
   # annotation genus
-  annotate(geom="text", x=190+10, y=375+10, label="Genus",hjust=1,
+  annotate(geom="text", x=190+10, y=384+10, label="Genus",hjust=1,
            color="#a53e1f")
 plot_taxo
 
