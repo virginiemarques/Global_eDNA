@@ -6,6 +6,9 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))

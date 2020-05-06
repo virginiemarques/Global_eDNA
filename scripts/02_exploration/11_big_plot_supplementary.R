@@ -15,6 +15,9 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+
 
 
 # load data to plot together
@@ -43,7 +46,7 @@ family_coverage$Family <- factor(family_coverage$Family, levels = as.character(f
 prop <- ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D"))+#, "#C67052"
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
