@@ -45,7 +45,8 @@ projects <- unique(word(liste_table, 1, sep="_"))
 # Metadata - field. Import the csv; the excel files messes with dates and dates
 # There is an issue with numerous empty columns being imported in the csv 
 # metadata_sampling <- read_excel("metadata/Metadata_eDNA_Megafauna_EB_leng.xlsx", 1)
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", sep=";", stringsAsFactors = F)
+# metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", sep=";", stringsAsFactors = F)
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V4.csv", sep=";", stringsAsFactors = F)
 
 # Clean the spaces before coordinates
 metadata_sampling$longitude_start <- str_trim(metadata_sampling$longitude_start)
@@ -112,8 +113,13 @@ names(liste_read_edna) <- projects
 # Save 
 save(liste_read_edna, file="Rdata/01_liste_all_read_edna.Rdata")
 
+eparses <- liste_read_edna[["Eparses"]]
 
-
+k <- eparses %>%
+  #filter(sample_name_all_pcr == "SPY190629") %>%
+  filter(new_genus_name == "Urogymnus") %>%
+  distinct(new_scientific_name_ncbi,sample_name_all_pcr, best_identity_database) %>%
+  arrange(.)
 
 
 

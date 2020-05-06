@@ -14,18 +14,49 @@ load("Rdata/02_clean_all.Rdata")
 
 # Load functions
 source("scripts/01_read/00_functions.R")
+"%ni%" <- Negate("%in%")
+
+# Function
+fct_filter_station <- function(x){
+  x <- x %>%
+    filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+    filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
+  
+  return(x)
+}
+
+# ------------------------------- # 
+# Reformate the lists by region 
+# ------------------------------- # 
+
+# ----- # Before LULU 
+df_all_filters_temp <- do.call("rbind", liste_read_edna_LULU) %>%
+  filter(region != "East_Pacific")
+
+# Split by region
+liste_read_edna_LULU <- split(df_all_filters_temp, df_all_filters_temp$region)
+
+# -----# After LULU 
+df_all_filters_temp <- do.call("rbind", liste_read_edna) %>%
+  filter(region != "East_Pacific")
+
+# Split by region
+liste_read_edna <- split(df_all_filters_temp, df_all_filters_temp$region)
 
 # --------------------------------------------------------- # 
-####             Count by project                     ----
-# --------------------------------------------------------- # 
+####             Count by Region                     ----
+# --------------------------------------------------------- #
 
 # ---- # Before & unlist
 
 before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "before") %>% 
   select(step, colnames(.))
 
@@ -34,8 +65,11 @@ before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0
 tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "tenreads") %>% 
   select(step, colnames(.))
 
@@ -44,8 +78,11 @@ tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads
 blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "blanks") %>% 
   select(step, colnames(.))
 
@@ -54,8 +91,11 @@ blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10
 fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "fishonly") %>% 
   select(step, colnames(.))
 
@@ -64,8 +104,11 @@ fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=
 readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "readlength") %>% 
   select(step, colnames(.))
 
@@ -74,8 +117,11 @@ readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
                      min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "PCR_all") %>% 
   select(step, colnames(.))
 
@@ -84,8 +130,11 @@ PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=1
 PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                          min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                          min_PCR_sample = 1, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "PCR_sample") %>% 
   select(step, colnames(.))
 
@@ -93,7 +142,7 @@ PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 
 LULU <- liste_read_edna_LULU %>%
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "LULU") %>% 
   select(step, colnames(.))
 
@@ -103,10 +152,9 @@ LULU_family <- lapply(liste_read_edna_LULU, function(x){
   x %>% 
     filter(new_rank_ncbi != "higher")}) %>%
   lapply(., infos_statistiques) %>%
-  bind_rows(., .id = "project_name") %>%
+  bind_rows(., .id = "region") %>%
   mutate(step = "LULU_family") %>% 
   select(step, colnames(.))
-
 
 # ---------------------- # 
 #  REGROUP
@@ -114,8 +162,8 @@ LULU_family <- lapply(liste_read_edna_LULU, function(x){
 
 # Combine
 stat_by_project <- rbind(before, tenreads, blanks, fishonly, readlength, PCR_all, LULU, LULU_family) %>%
-  arrange(project_name) %>%
-  select(project_name, step, colnames(.))
+  arrange(region) %>%
+  select(region, step, colnames(.))
 
 # Write
 write.csv(stat_by_project, "outputs/01_read_data_stats/stats_by_project.csv", row.names = FALSE)
@@ -129,6 +177,9 @@ write.csv(stat_by_project, "outputs/01_read_data_stats/stats_by_project.csv", ro
 before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                  min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                  min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "before") %>% 
@@ -139,6 +190,9 @@ before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0
 tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "tenreads") %>% 
@@ -149,6 +203,9 @@ tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads
 blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                  min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                  min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "blanks") %>% 
@@ -159,6 +216,9 @@ blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10
 fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "fishonly") %>% 
@@ -169,6 +229,9 @@ fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=
 readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                      min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "readlength") %>% 
@@ -179,6 +242,9 @@ readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                   min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
                   min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "PCR_all") %>% 
@@ -189,6 +255,9 @@ PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=1
 PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                      min_PCR_sample = 1, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "PCR_sample") %>% 
@@ -197,6 +266,9 @@ PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 # ---- # LULU  
 
 LULU <- liste_read_edna_LULU %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "LULU") %>% 
@@ -207,6 +279,9 @@ LULU <- liste_read_edna_LULU %>%
 LULU_family <- lapply(liste_read_edna_LULU, function(x){
   x %>% 
     filter(new_rank_ncbi != "higher")}) %>%
+  # filter stations
+  lapply(., fct_filter_station) %>%
+  # Stat
   bind_rows(.) %>%
   infos_statistiques() %>%
   mutate(step = "LULU_family") %>% 
