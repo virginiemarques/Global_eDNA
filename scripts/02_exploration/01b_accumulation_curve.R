@@ -20,15 +20,24 @@ liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
   x %>%
     #filter(new_rank_ncbi != "higher") %>%
     filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-    filter(sample_method!="niskin")
+    filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
 })
 
 # On the df as well
 df_all_filters <- df_all_filters %>%
   #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method!="niskin")
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
 
+# Re-format at region scale
+# -----# After LULU 
+df_all_filters_temp <- do.call("rbind", liste_read_edna_LULU) %>%
+  filter(region != "East_Pacific")
+
+# Split by region
+liste_read_edna_LULU <- split(df_all_filters_temp, df_all_filters_temp$region)
+
+# Counts
 lapply(liste_read_edna_LULU, function(x){
   length(unique(x$amplicon))
 })
@@ -100,7 +109,7 @@ plot_acc_order <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
 
 plot_acc_order
 
-ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_order.png", width = 12, height = 8)
+# ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_order.png", width = 12, height = 8)
 
 # Table
 stats<- df_join_all %>%
@@ -394,7 +403,7 @@ plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
 
 plot_acc_genus
 
-ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_genus.png", width = 12, height = 8)
+# ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_genus.png", width = 12, height = 8)
 
 # Table
 stats<- df_join_all %>%
@@ -424,7 +433,7 @@ motus <- ggplot(df_motus, aes(fill = project_name, col = project_name)) +
 motus
 
 # --------------------------------------------------------------------- # 
-# Final figure - combine all levels 
+#### Final figure - combine all levels  ----
 # --------------------------------------------------------------------- # 
 
 # MOTUs 
@@ -465,6 +474,12 @@ ggarrange(plot_motus,
           plot_taxo + rremove("ylab"))
 
 ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels_no_order.png", width = 10, height=5)  
+
+
+
+
+
+
 
 
 
