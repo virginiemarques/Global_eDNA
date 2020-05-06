@@ -215,9 +215,10 @@ plot_acc_all
 
 # Plot with facet
 plot_acc_family <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(aes(x = sites, y = richness)) +
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
+  geom_line(aes(x = sites, y = richness, colour= project_name)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
   facet_wrap(~project_name, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
@@ -390,20 +391,21 @@ df_join_all <- df_all_accumulation %>%
          position_asymptote_x = max(sites))
 
 # Plot with facet
-plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~project_name, scales = "free") +
+  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
   ylab("Number of genus") +
   xlab("Samples (filter)") +
   theme_bw() + 
-  ggtitle("Genus") + 
+  ggtitle("MOTUs") + 
   geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "Genus")), col = "black") 
 
-plot_acc_genus
+plot_acc_motus
 
-# ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_genus.png", width = 12, height = 8)
+ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_motus.png", width = 12, height = 8)
 
 # Table
 stats<- df_join_all %>%
