@@ -105,6 +105,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
+  count_families$region <- "Caribbean"
   count_families_station_caribbean <- rbind(count_families_station_caribbean, count_families)
 }
 
@@ -115,7 +116,7 @@ write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_bas
   ## Lengguru total
 
 lengguru <- df_all_filters %>%
-  filter(region=="West_Papua") 
+  filter(region=="Central_IndoPacific") 
 
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
@@ -201,6 +202,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
+  count_families$region <- "Central_IndoPacific"
   count_families_station_lengguru <- rbind(count_families_station_lengguru, count_families)
 }
 
@@ -211,7 +213,7 @@ write.csv(count_families_station_lengguru, "outputs/05_family_proportion/02_base
   ## par site = region
 
 fakarava <- df_all_filters %>%
-  filter(region=="French_Polynesia")
+  filter(region=="Central_Pacific")
 
 faka_motu <- fakarava %>%
   distinct(sequence, .keep_all = TRUE)
@@ -252,6 +254,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- "fakarava"
+  count_families$region <- "Central_Pacific"
   count_families_station_fakarava <- rbind(count_families_station_fakarava, count_families)
 }
 
@@ -262,7 +265,7 @@ write.csv(count_families_station_fakarava, "outputs/05_family_proportion/02_base
   ## eparse total
 
 eparse <- df_all_filters %>%
-  filter(region=="Iles_Eparses") 
+  filter(region=="West_Indian") 
 
 eparse_motu <- eparse %>%
   distinct(sequence, .keep_all = TRUE)
@@ -345,6 +348,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
+  count_families$region <- "West_Indian"
   count_families_station_eparse <- rbind(count_families_station_eparse, count_families)
 }
 
@@ -425,8 +429,7 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 #fam <- intersect(family_car, family_faka)
 #family <- intersect(fam, family_leng)
 
-df_all_site <- rbind(count_families_site_lengguru[,c(-7)], count_families_site_caribbean[,c(-7)], count_families_site_eparse[,c(-7)], count_families_site_fakarava)
-
+df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean, count_families_site_eparse, count_families_site_fakarava)
 
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
@@ -445,18 +448,53 @@ for (i in 1:length(family)) {
 }
 
 
-plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "bottom")
+plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=12))
-y.grob <- textGrob("Proportion of MOTUs assigned to the family", 
+y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
 plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 
 
-load("Rdata/plot_richness~longitude.rdata")
+load("Rdata/plot_richness_site~dist_CT.rdata")
 
-ggarrange(plot_all, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
+ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
+
+
+
+## same for stations
+df_all_station <- rbind(count_families_station_lengguru, count_families_station_caribbean, count_families_station_eparse, count_families_station_fakarava)
+
+
+family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
+
+prop <- vector("list")
+for (i in 1:length(family)) {
+  fam <- df_all_station[df_all_station$family == family[i],]
+  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.5, colour=region))+
+    geom_point(size=2)+
+    scale_y_continuous(breaks = c(0, 0.2, 0.4))+
+    xlim(0, 310)+
+    theme(legend.position = "none")+
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+    labs(title=family[i], x="", y="")+
+    theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
+}
+
+
+plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
+x.grob <- textGrob("Total number of MOTUs per station", 
+                   gp=gpar(fontface="bold", col="black", fontsize=12))
+y.grob <- textGrob("Proportion of MOTUs assigned to the family in each station", 
+                   gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
+plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
+
+
+
+load("Rdata/plot_richness~dist_CT.rdata")
+
+ggarrange(plot_all_rich_station, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
 
 ## test chi²
 

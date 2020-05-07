@@ -227,6 +227,7 @@ for (i in 1:length(station)) {
   rich_station_fakarava[i,5] <- gen
   rich_station_fakarava[i,6] <- fam
 }
+colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "genus", "family")
 
   # total MOTUs and family richness in fakarava region (=site)
 rich_site_fakarava <- data.frame(region="Central_Pacific",
@@ -369,40 +370,26 @@ gg
 ggsave("outputs/04_exploration_richness/richness_region.png", width = 18, height = 8)
 
 
-## plot station richness ~ latitude
-colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "genus", "family")
 
-rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
+
+
+## load useful metadata 
 metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", stringsAsFactors = TRUE)
 metadata <- metadata %>%
   filter(region%in%c("Central_IndoPacific", "Central_Pacific", "Caribbean", "West_Indian"))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
-metadata <- metadata[,c("station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.", "dist_to_CT")]
-metadata <- metadata %>%
-  distinct(station, .keep_all = TRUE)
+metadata <- metadata[,c("site", "station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.", "dist_to_CT")]
 
-rich_station <- left_join(rich_station, metadata[,c("station", "latitude_start_clean")], by="station")
-
-ggplot(rich_station, aes(latitude_start_clean, motu))+
-  geom_point(color="blue")+
-  labs(x="latitude",
-       y="MOTU richness")
-
-ggsave("outputs/04_exploration_richness/richness_motu_latitude.png")
-
-ggplot(rich_station, aes(latitude_start_clean, family))+
-  geom_point(color="red")+
-  labs(x="latitude",
-       y="Family richness")
-
-ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
 
 
 
 ## plot station richness ~ distance au CT
+metadata <- metadata %>%
+  distinct(station, .keep_all = TRUE)
+
 
 rich_station <- rbind(rich_station_caribbean, rich_station_fakarava, rich_station_lengguru, rich_station_eparse)
 
@@ -411,7 +398,7 @@ rich_station <- left_join(rich_station, metadata[,c("station", "dist_to_CT")], b
 rich_motu <- ggplot(rich_station, aes(dist_to_CT, motu, col=region))+
   geom_point(size=2)+ 
   xlim(-11000,18000)+
-  ylim(0,250)+
+  ylim(0,310)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
@@ -423,8 +410,8 @@ ggsave("outputs/04_exploration_richness/richness_motu_distCT.png")
 rich_genus <- ggplot(rich_station, aes(dist_to_CT, genus, col=region))+
   geom_point(size=2)+ 
   xlim(-11000,18000)+
-  ylim(0,110)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
+  scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100))+
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
@@ -446,11 +433,90 @@ rich_family
 ggsave("outputs/04_exploration_richness/richness_family_distCT.png")
 
 plot <- ggarrange(rich_motu, rich_genus, rich_family, ncol = 3, nrow=1)
-x.grob <- textGrob("Distance to Coral Tringle (km, W-E)", 
+x.grob <- textGrob("Distance to Coral Triangle (km, W-E)", 
                    gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
 
-plot_all <- grid.arrange(plot, bottom=x.grob)
-save(plot_all, file = "Rdata/plot_richness~longitude.rdata")
+plot_all_rich_station <- grid.arrange(plot, bottom=x.grob)
+save(plot_all_rich_station, file = "Rdata/plot_richness~dist_CT.rdata")
+
+
+## plot site richness ~ distance au CT
+metadata <- metadata %>%
+  distinct(site, .keep_all = TRUE)
+
+
+rich_site <- rbind(rich_site_caribbean, rich_site_fakarava, rich_site_lengguru, rich_site_eparse)
+
+rich_site <- left_join(rich_site, metadata[,c("site", "dist_to_CT")], by="site")
+
+rich_motu_site <- ggplot(rich_site, aes(dist_to_CT, motu, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
+  ylim(0,730)+
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
+  theme(legend.position = "none")+
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
+       y="MOTU richness")
+rich_motu_site
+ggsave("outputs/04_exploration_richness/richness_motu_site_distCT.png")
+
+rich_genus_site <- ggplot(rich_site, aes(dist_to_CT, genus, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
+  #scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100))+
+  theme(legend.position = "none")+
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
+       y="Genus richness")
+rich_genus_site
+ggsave("outputs/04_exploration_richness/richness_genus_site_distCT.png")
+
+
+rich_family_site <- ggplot(rich_site, aes(dist_to_CT, family, col=region))+
+  geom_point(size=2)+ 
+  xlim(-11000,18000)+
+  ylim(0,90)+
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
+  theme(legend.position = "none")+
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
+  labs(x="",
+       y="Family richness")
+rich_family_site
+ggsave("outputs/04_exploration_richness/richness_family_site_distCT.png")
+
+plot <- ggarrange(rich_motu_site, rich_genus_site, rich_family_site, ncol = 3, nrow=1)
+x.grob <- textGrob("Distance to Coral Triangle (km, W-E)", 
+                   gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
+
+plot_all_rich_site <- grid.arrange(plot, bottom=x.grob)
+save(plot_all_rich_site, file = "Rdata/plot_richness_site~dist_CT.rdata")
+
+
+
+
+
+
+## plot station richness ~ latitude
+rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
+
+rich_station <- left_join(rich_station, metadata[,c("station", "latitude_start_clean")], by="station")
+
+ggplot(rich_station, aes(latitude_start_clean, motu))+
+  geom_point(color="blue")+
+  labs(x="latitude",
+       y="MOTU richness")
+
+ggsave("outputs/04_exploration_richness/richness_motu_latitude.png")
+
+ggplot(rich_station, aes(latitude_start_clean, family))+
+  geom_point(color="red")+
+  labs(x="latitude",
+       y="Family richness")
+
+ggsave("outputs/04_exploration_richness/richness_family_latitude.png")
+
 
 ## plot station richness ~ distance_to_coast
 
