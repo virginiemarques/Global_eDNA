@@ -496,6 +496,8 @@ load("Rdata/plot_richness~dist_CT.rdata")
 
 ggarrange(plot_all_rich_station, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
 
+
+
 ## test chi²
 
   ## on all families, all sites
@@ -505,9 +507,24 @@ test1 <- chisq.test(df_all_site$prop)
 subset_fam <- df_all_site[df_all_site$family%in%family,]
 test2 <- chisq.test(subset_fam$prop)
 
-## selected families, by sites
+  ## selected families, by sites
 subset_fam <- subset_fam[, -c(2,3,6)]
 subset_fam_spread <- spread(subset_fam, family, prop)
 subset_fam_spread[is.na(subset_fam_spread)] <- 0
 
 test3 <- chisq.test(subset_fam_spread[,c(-1)])
+
+
+  ## on all families, all stations
+test1 <- chisq.test(df_all_station$prop)
+
+  ## selected families, all sites
+subset_fam <- df_all_station[df_all_station$family%in%family,]
+test2 <- chisq.test(subset_fam$prop)
+
+  ## selected families, by sites
+subset_fam <- subset_fam[, -c(2,3,6)]
+subset_fam_spread <- spread(subset_fam, family, prop)
+subset_fam_spread[is.na(subset_fam_spread)] <- 0
+
+test3 <- chisq.test(subset_fam_spread[,-c(1,2)])
