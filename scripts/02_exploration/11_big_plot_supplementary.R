@@ -85,7 +85,7 @@ similarity <- ggplot(prop_similarity, aes(x=class, y = family)) +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all <- ggarrange(prop, coverage, resolution, similarity, ncol=4, nrow=1, widths = c(2,1,1,1))
-
+plot_all <- ggarrange(prop, coverage, resolution, similarity, ncol=4, nrow=1, widths = c(2,1,1,1), labels = c("A", "B", "C", "D"))
+plot_all
 # save wavec heigth=1300 et width=800
 
