@@ -444,6 +444,7 @@ plot_motus <- ggplot(df_motus, aes(x=sites, y = richness, group = level, fill = 
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, col = "#d2981a") +
   theme_classic() +
+  labs(x="Samples (filters)")+
   theme(legend.position = "none") +
   # annotation family
   annotate(geom="text", x=190+10, y=2209+45, label="MOTUs",hjust=1,
@@ -462,6 +463,7 @@ plot_taxo <- ggplot(df_all_levels %>%
   scale_fill_manual(values = c("#457277", "#a53e1f"))+
   scale_color_manual(values = c("#457277", "#a53e1f"))+
   theme_classic() +
+  labs(x="Samples (filters)")+
   theme(legend.position = "none") +
   # annotation family
   annotate(geom="text", x=190+10, y=170+14, label="Family",hjust=1,
@@ -477,45 +479,4 @@ ggarrange(plot_motus,
 
 ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels_no_order.png", width = 10, height=5)  
 
-
-
-
-
-
-
-
-
-
-
-
-# --------------------------------------------------------- # 
-# OLD 
-
-# Trial 1: combine all in a panel 
-ggarrange(order, family, genus, motus)
-unique(df_all_levels$asymptote)
-
-# Plot
-ggplot(df_all_levels, aes(x=sites, y = richness, group = level, fill = level)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
-  theme_classic() + 
-  scale_y_continuous(breaks = c(0,60,155,375,500,1000,1500,2000,2033))
-
-# on a facet
-neworder <- c("order","family","genus", "MOTUs")
-df_all_levels2 <- df_all_levels %>%
-  mutate(level = fct_relevel(.$level, "order", "family", "genus", "MOTUs"))
-
-# 
-ggplot(df_all_levels2, aes(x=sites, y = richness, group = level, fill = level)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
-  theme_classic() + 
-  facet_wrap(~level, scales= "free") + 
-  theme(legend.position = "none")
-
-#ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels.png", width = 10, height=10)  
 
