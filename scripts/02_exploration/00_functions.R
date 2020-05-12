@@ -14,9 +14,11 @@
 # accumulation is the output of specaccum
 # accumulation_plot is a dataframe from accumulation for easy plotting 
 # asymptote is the asymptote calculated from the multimodel inference 
+# complete_samples: list of all the samples necessary for the accumulation curve. If some samples are discarded, use it to provide the entire list of samples to have a proper accumulation. 
 
-accumulation_curve_all <- function(x, column_station = "sample_name_all_pcr", 
-                               species_unit = "sequence", method_accumulation = "exact"){
+accumulation_curve_all_samples <- function(x, column_station = "sample_name_all_pcr", 
+                               species_unit = "sequence", method_accumulation = "exact", 
+                               complete_samples){
   
   # lib 
   library(vegan)
@@ -29,6 +31,20 @@ accumulation_curve_all <- function(x, column_station = "sample_name_all_pcr",
     tidyr::spread(species_unit, n_reads) %>% 
     as.data.frame() %>% 
     replace(is.na(.), 0)
+  
+  # Add the missing samples 
+  add_samples <- complete_samples[complete_samples %ni% df_acc$sample_name_all_pcr]
+  
+  # Create the add matrix & convert it to numeric 
+  add_matrix <- matrix(ncol= ncol(df_acc), nrow=length(add_samples))
+  colnames(add_matrix) <- colnames(df_acc)
+  add_matrix[,1] <- add_samples
+  add_matrix[is.na(add_matrix)] <- 0
+  add_matrix <- data.frame(add_matrix, stringsAsFactors = F)
+  add_matrix <- add_matrix %>% mutate_at(vars(colnames(add_matrix)[-1]), ~as.numeric(as.character(.)))  
+  
+  # bind both 
+  df_acc <- rbind(df_acc, add_matrix)
   
   # accumulation curve result
   acc_edna <- specaccum(df_acc[,2:ncol(df_acc)], 
@@ -113,6 +129,9 @@ accumulation_curve_df <- function(x, column_station = "sample_name_all_pcr",
 # asymptote multi model
 asymptote_mm <- function(x, column_station = "sample_name_all_pcr", 
                                   species_unit = "sequence", method_accumulation = "exact"){
+  
+  # lib
+  require(vegan)
   
   # Matrix species / station
   df_acc <- x %>%
