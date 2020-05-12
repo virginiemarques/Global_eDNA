@@ -74,8 +74,28 @@ for (i in 1:length(station)) {
   rich_station_lengguru[i,6] <- fam
 }
 
+  # calculate unique motus and families in each sample  
+sample <- c(unique(lengguru$sample_name_all_pcr))
 
-  # calculate unique motus and families at each site
+rich_sample_lengguru <- data.frame(region="Central_IndoPacific", site=character(93), sample=character(93), motu=numeric(93), genus=numeric(93), family=numeric(93), stringsAsFactors = FALSE)
+
+for (i in 1:length(sample)) {
+  s <- unique(lengguru[lengguru$sample_name_all_pcr == sample[i],]$site)
+  sa <- sample[i]
+  motu <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(sequence))
+  gen <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_genus_name))
+  fam <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_sample_lengguru[i,2] <- s
+  rich_sample_lengguru[i,3] <- sa
+  rich_sample_lengguru[i,4] <- motu
+  rich_sample_lengguru[i,5] <- gen
+  rich_sample_lengguru[i,6] <- fam
+}
+
+  # calculate unique motus and families at each site (calculate mean and sd per station or sample)
 site <- c(unique(lengguru$site))
 
 rich_site_lengguru <- data.frame(region="Central_Indo_Pacific", site=character(11), motu=numeric(11), genus=numeric(11), family=numeric(11), mean_motu=numeric(11), sd_motu=numeric(11), mean_genus=numeric(11), sd_genus=numeric(11), mean_family=numeric(11), sd_family=numeric(11), stringsAsFactors = FALSE)
@@ -84,16 +104,16 @@ for (i in 1:length(site)) {
   s <- site[i]
   motu <- lengguru[lengguru$site == site[i],] %>%
     summarise(n = n_distinct(sequence))
-  mm <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$motu)
-  sdm <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$motu)
+  mm <- mean(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$motu)
+  sdm <- sd(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$motu)
   gen <- lengguru[lengguru$site == site[i],] %>%
     summarise(n = n_distinct(new_genus_name))
-  mg <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
-  sdg <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
+  mg <- mean(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$genus)
+  sdg <- sd(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$genus)
   fam <- lengguru[lengguru$site == site[i],] %>%
     summarise(n = n_distinct(new_family_name))
-  mf <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$family)
-  sdf <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$family)
+  mf <- mean(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$family)
+  sdf <- sd(rich_sample_lengguru[rich_sample_lengguru$site == site[i],]$family)
   rich_site_lengguru[i,2] <- s
   rich_site_lengguru[i,3] <- motu
   rich_site_lengguru[i,4] <- gen
@@ -107,19 +127,6 @@ for (i in 1:length(site)) {
 }
 
 write.csv(rich_site_lengguru, "outputs/04_exploration_richness/richness_lengguru.csv", row.names = FALSE)
-
-
-rich_site_lengguru_melt <- melt(rich_site_lengguru[,1:5])
-rich_site_lengguru_melt[1:11,"mean"] <- rich_site_lengguru$mean_motu
-rich_site_lengguru_melt[12:22,"mean"] <- rich_site_lengguru$mean_genus
-rich_site_lengguru_melt[23:33,"mean"] <- rich_site_lengguru$mean_family
-
-rich_site_lengguru_melt[1:11,"sd"] <- rich_site_lengguru$sd_motu
-rich_site_lengguru_melt[12:22,"sd"] <- rich_site_lengguru$sd_family
-rich_site_lengguru_melt[23:33,"sd"] <- rich_site_lengguru$sd_family
-
-
-
 
 
 
@@ -159,7 +166,28 @@ for (i in 1:length(station)) {
   rich_station_caribbean[i,6] <- fam
 }
 
-  # calculate unique motus and families at each site
+  # calculate unique motus and families at each sample   
+sample <- c(unique(caribbean$sample_name_all_pcr))
+
+rich_sample_caribbean <- data.frame(region="Caribbean", site=character(68), sample=character(68), motu=numeric(68), genus=numeric(68), family=numeric(68), stringsAsFactors = FALSE)
+
+for (i in 1:length(sample)) {
+  s <- unique(caribbean[caribbean$sample_name_all_pcr == sample[i],]$site)
+  sa <- sample[i]
+  motu <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(sequence))
+  gen <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_genus_name))
+  fam <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_sample_caribbean[i,2] <- s
+  rich_sample_caribbean[i,3] <- sa
+  rich_sample_caribbean[i,4] <- motu
+  rich_sample_caribbean[i,5] <- gen
+  rich_sample_caribbean[i,6] <- fam
+}
+  
+  # calculate unique motus and families at each site (calculate mean and sd per station or sample) 
 site <- c(unique(caribbean$site))
 
 rich_site_caribbean <- data.frame(region="Caribbean", site=character(3), motu=numeric(3), genus=numeric(3), family=numeric(3), mean_motu=numeric(3), sd_motu=numeric(3), mean_genus=numeric(3), sd_genus=numeric(3), mean_family=numeric(3), sd_family=numeric(3), stringsAsFactors = FALSE)
@@ -168,16 +196,16 @@ for (i in 1:length(site)) {
   s <- site[i]
   motu <- caribbean[caribbean$site == site[i],] %>%
     summarise(n = n_distinct(sequence))
-  mm <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$motu)
-  sdm <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$motu)
+  mm <- mean(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$motu)
+  sdm <- sd(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$motu)
   gen <- caribbean[caribbean$site == site[i],] %>%
     summarise(n = n_distinct(new_genus_name))
-  mg <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
-  sdg <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
+  mg <- mean(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$genus)
+  sdg <- sd(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$genus)
   fam <- caribbean[caribbean$site == site[i],] %>%
     summarise(n = n_distinct(new_family_name))
-  mf <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$family)
-  sdf <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$family)
+  mf <- mean(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$family)
+  sdf <- sd(rich_sample_caribbean[rich_sample_caribbean$site == site[i],]$family)
   rich_site_caribbean[i,2] <- s
   rich_site_caribbean[i,3] <- motu
   rich_site_caribbean[i,4] <- gen
@@ -191,16 +219,6 @@ for (i in 1:length(site)) {
 }
 
 write.csv(rich_site_caribbean, "outputs/04_exploration_richness/richness_caribbean.csv", row.names = FALSE)
-
-
-rich_site_caribbean_melt <- melt(rich_site_caribbean[,1:5])
-rich_site_caribbean_melt[1:3,"mean"] <- rich_site_caribbean$mean_motu
-rich_site_caribbean_melt[4:6,"mean"] <- rich_site_caribbean$mean_genus
-rich_site_caribbean_melt[7:9,"mean"] <- rich_site_caribbean$mean_family
-
-rich_site_caribbean_melt[1:3,"sd"] <- rich_site_caribbean$sd_motu
-rich_site_caribbean_melt[4:6,"sd"] <- rich_site_caribbean$sd_genus
-rich_site_caribbean_melt[7:9,"sd"] <- rich_site_caribbean$sd_family
 
 
 
@@ -229,7 +247,31 @@ for (i in 1:length(station)) {
 }
 colnames(rich_station_fakarava) <- c("region", "site", "station", "motu", "genus", "family")
 
-  # total MOTUs and family richness in fakarava region (=site)
+
+
+# calculate unique motus and families in each sample  
+sample <- c(unique(fakarava$sample_name_all_pcr))
+
+rich_sample_fakarava <- data.frame(region="Central_Pacific", site="fakarava", sample=character(11), motu=numeric(11), genus=numeric(11), family=numeric(11), stringsAsFactors = FALSE)
+
+for (i in 1:length(sample)) {
+  sa <- sample[i]
+  motu <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(sequence))
+  gen <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_genus_name))
+  fam <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_sample_fakarava[i,3] <- sa
+  rich_sample_fakarava[i,4] <- motu
+  rich_sample_fakarava[i,5] <- gen
+  rich_sample_fakarava[i,6] <- fam
+}
+colnames(rich_sample_fakarava) <- c("region", "site", "sample", "motu", "genus", "family")
+
+
+
+  # total MOTUs and family richness in fakarava region (=site) (calculate mean and sd per station or sample) 
 rich_site_fakarava <- data.frame(region="Central_Pacific",
                                  site="fakarava",
                                  motu=fakarava %>% 
@@ -238,27 +280,17 @@ rich_site_fakarava <- data.frame(region="Central_Pacific",
                                    summarise(n = n_distinct(new_genus_name)),
                                  family=fakarava %>% 
                                    summarise(n = n_distinct(new_family_name)),
-                                 mean_motu=mean(rich_station_fakarava$motu),
-                                 sd_motu=sd(rich_station_fakarava$motu),
-                                 mean_genus=mean(rich_station_fakarava$genus),
-                                 sd_genus=sd(rich_station_fakarava$genus),
-                                 mean_family=mean(rich_station_fakarava$family),
-                                 sd_family=sd(rich_station_fakarava$family),
+                                 mean_motu=mean(rich_sample_fakarava$motu),
+                                 sd_motu=sd(rich_sample_fakarava$motu),
+                                 mean_genus=mean(rich_sample_fakarava$genus),
+                                 sd_genus=sd(rich_sample_fakarava$genus),
+                                 mean_family=mean(rich_sample_fakarava$family),
+                                 sd_family=sd(rich_sample_fakarava$family),
                                  stringsAsFactors = FALSE)
 
 colnames(rich_site_fakarava) <- c("region", "site", "motu", "genus", "family", "mean_motu", "sd_motu", "mean_genus", "sd_genus", "mean_family", "sd_family")
 
 write.csv(rich_site_fakarava, "outputs/04_exploration_richness/richness_fakarava.csv", row.names = FALSE)
-
-rich_site_fakarava_melt <- melt(rich_site_fakarava[,1:5])
-rich_site_fakarava_melt[1,"mean"] <- rich_site_fakarava$mean_motu
-rich_site_fakarava_melt[2,"mean"] <- rich_site_fakarava$mean_genus
-rich_site_fakarava_melt[3,"mean"] <- rich_site_fakarava$mean_family
-
-rich_site_fakarava_melt[1,"sd"] <- rich_site_fakarava$sd_motu
-rich_site_fakarava_melt[2,"sd"] <- rich_site_fakarava$sd_genus
-rich_site_fakarava_melt[3,"sd"] <- rich_site_fakarava$sd_family
-
 
 
 ## Eparses data
@@ -298,6 +330,28 @@ for (i in 1:length(station)) {
 }
 
 
+  # calculate unique motus and families in each sample   
+sample <- c(unique(eparse$sample_name_all_pcr))
+
+rich_sample_eparse <- data.frame(region="West_Indian", site=character(31), sample=character(31), motu=numeric(31), genus=numeric(31), family=numeric(31), stringsAsFactors = FALSE)
+
+for (i in 1:length(sample)) {
+  s <- unique(eparse[eparse$sample_name_all_pcr == sample[i],]$site)
+  sa <- sample[i]
+  motu <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(sequence))
+  gen <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_genus_name))
+  fam <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
+    summarise(n = n_distinct(new_family_name))
+  rich_sample_eparse[i,2] <- s
+  rich_sample_eparse[i,3] <- sa
+  rich_sample_eparse[i,4] <- motu
+  rich_sample_eparse[i,5] <- gen
+  rich_sample_eparse[i,6] <- fam
+}
+
+
   # calculate unique motus and families at each site
 site <- c(unique(eparse$site))
 
@@ -307,16 +361,16 @@ for (i in 1:length(site)) {
   s <- site[i]
   motu <- eparse[eparse$site == site[i],] %>%
     summarise(n = n_distinct(sequence))
-  mm <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
-  sdm <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
+  mm <- mean(rich_sample_eparse[rich_sample_eparse$site == site[i],]$motu)
+  sdm <- sd(rich_sample_eparse[rich_sample_eparse$site == site[i],]$motu)
   gen <- eparse[eparse$site == site[i],] %>%
     summarise(n = n_distinct(new_genus_name))
-  mg <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
-  sdg <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
+  mg <- mean(rich_sample_eparse[rich_sample_eparse$site == site[i],]$genus)
+  sdg <- sd(rich_sample_eparse[rich_sample_eparse$site == site[i],]$genus)
   fam <- eparse[eparse$site == site[i],] %>%
     summarise(n = n_distinct(new_family_name))
-  mf <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
-  sdf <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
+  mf <- mean(rich_sample_eparse[rich_sample_eparse$site == site[i],]$family)
+  sdf <- sd(rich_sample_eparse[rich_sample_eparse$site == site[i],]$family)
   rich_site_eparse[i,2] <- s
   rich_site_eparse[i,3] <- motu
   rich_site_eparse[i,4] <- gen
@@ -332,42 +386,53 @@ for (i in 1:length(site)) {
 write.csv(rich_site_eparse, "outputs/04_exploration_richness/richness_eparse.csv", row.names = FALSE)
 
 
-rich_site_eparse_melt <- melt(rich_site_eparse[,1:5])
-rich_site_eparse_melt[1:4,"mean"] <- rich_site_eparse$mean_motu
-rich_site_eparse_melt[5:8,"mean"] <- rich_site_eparse$mean_genus
-rich_site_eparse_melt[9:12,"mean"] <- rich_site_eparse$mean_family
 
-rich_site_eparse_melt[1:4,"sd"] <- rich_site_eparse$sd_motu
-rich_site_eparse_melt[5:8,"sd"] <- rich_site_eparse$sd_genus
-rich_site_eparse_melt[9:12,"sd"] <- rich_site_eparse$sd_family
+# plot motu, genus and family richness per region
 
 
+rich_station_total <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru)
 
-# plot motu and family richness per region
-
-rich_total <- rbind(rich_site_eparse_melt, rich_site_lengguru_melt, rich_site_caribbean_melt, rich_site_fakarava_melt)
-
-gg <- ggplot(rich_total, aes(fill=variable)) +
-  geom_col(aes(site, value), position = position_dodge(), show.legend = TRUE)+
-  geom_point(data=rich_total[rich_total$variable=="motu",], aes(site, mean), position = position_nudge(-0.3, 0))+
-  geom_errorbar(data=rich_total[rich_total$variable=="motu",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(-0.3, 0), width=0.32)+
-  geom_point(data=rich_total[rich_total$variable=="genus",], aes(site, mean))+
-  geom_errorbar(data=rich_total[rich_total$variable=="genus",], aes(site, ymin=mean-sd, ymax=mean+sd), width=0.32)+
-  geom_point(data=rich_total[rich_total$variable=="family",], aes(site, mean), position = position_nudge(0.3, 0))+
-  geom_errorbar(data=rich_total[rich_total$variable=="family",], aes(site, ymin=mean-sd, ymax=mean+sd), position = position_nudge(0.3, 0), width=0.32)+
+ggplot(rich_station_total)+
+  geom_violin(aes(site, motu), color="#D2981A", fill="#D2981A", position = position_nudge(-0.3, 0))+
+  geom_boxplot(aes(site, motu), width=0.1, position = position_nudge(-0.3, 0))+
+  geom_violin(aes(site, genus), color="#A53E1F", fill="#A53E1F")+
+  geom_boxplot(aes(site, genus), width=0.1)+
+  geom_violin(aes(site, family), color="#457277", fill="#457277", position = position_nudge(0.3, 0))+
+  geom_boxplot(aes(site, family), width=0.1, position = position_nudge(0.3, 0))+
   facet_grid(~region, scales = "free_x", space = "free_x")+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
-  theme(strip.text.x = element_text(size = 10))+
-  theme(axis.text.y = element_text(size = 11))+
-  theme(axis.title.y = element_text(size = 15))+
-  theme(axis.title.x = element_text(size = 15))+
-  scale_fill_manual(values=c("#d2981a", "#a53e1f", "#457277"))+
-  labs(x="Sites",
-       y = "Richness",
-       fill=NULL)
-gg
+  labs(x="Sites", y = "Richness")
 
-ggsave("outputs/04_exploration_richness/richness_region.png", width = 18, height = 8)
+ggsave("outputs/04_exploration_richness/violin_plot_all.png", width = 18, height = 8)
+
+
+motu <- ggplot(rich_station_total)+
+  geom_violin(aes(site, motu), color="#D2981A", fill="#D2981A")+
+  geom_boxplot(aes(site, motu), width=0.1)+
+  facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
+  labs(x="", y = "MOTUs richness")+
+  theme(axis.text.x = element_blank())
+
+
+genus <- ggplot(rich_station_total)+
+  geom_violin(aes(site, genus), color="#A53E1F", fill="#A53E1F")+
+  geom_boxplot(aes(site, genus), width=0.1)+
+  facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
+  labs(x="", y = "Genus richness")+
+  theme(axis.text.x = element_blank())
+
+family <- ggplot(rich_station_total)+
+  geom_violin(aes(site, family), color="#457277", fill="#457277")+
+  geom_boxplot(aes(site, family), width=0.1)+
+  facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
+  labs(x="", y = "Family richness")
+
+ggarrange(motu, genus, family, ncol=1, nrow=3, heights = c(1,1,1.2))
+
+ggsave("outputs/04_exploration_richness/violin_plot_per_rank.png", width = 18, height = 15)
 
 
 
@@ -449,10 +514,11 @@ rich_site <- rbind(rich_site_caribbean, rich_site_fakarava, rich_site_lengguru, 
 
 rich_site <- left_join(rich_site, metadata[,c("site", "dist_to_CT")], by="site")
 
-rich_motu_site <- ggplot(rich_site, aes(dist_to_CT, motu, col=region))+
-  geom_point(size=2)+ 
+rich_motu_site <- ggplot(rich_site, aes(col=region))+
+  geom_point(aes(x=dist_to_CT, y=mean_motu), size=2)+
+  geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu))+
   xlim(-11000,18000)+
-  ylim(0,730)+
+  ylim(0,200)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
@@ -461,8 +527,9 @@ rich_motu_site <- ggplot(rich_site, aes(dist_to_CT, motu, col=region))+
 rich_motu_site
 ggsave("outputs/04_exploration_richness/richness_motu_site_distCT.png")
 
-rich_genus_site <- ggplot(rich_site, aes(dist_to_CT, genus, col=region))+
-  geom_point(size=2)+ 
+rich_genus_site <- ggplot(rich_site, aes(col=region))+
+  geom_point(aes(x=dist_to_CT, y=mean_genus), size=2)+
+  geom_errorbar(aes(x=dist_to_CT, ymin=mean_genus-sd_genus, ymax=mean_genus+sd_genus))+
   xlim(-11000,18000)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   #scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100))+
@@ -474,10 +541,11 @@ rich_genus_site
 ggsave("outputs/04_exploration_richness/richness_genus_site_distCT.png")
 
 
-rich_family_site <- ggplot(rich_site, aes(dist_to_CT, family, col=region))+
-  geom_point(size=2)+ 
+rich_family_site <- ggplot(rich_site, aes(col=region))+
+  geom_point(aes(x=dist_to_CT, y=mean_family), size=2)+
+  geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family))+ 
   xlim(-11000,18000)+
-  ylim(0,90)+
+  ylim(0,40)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
