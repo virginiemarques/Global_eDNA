@@ -218,7 +218,7 @@ plot_acc_family <- ggplot(df_join_all, aes(fill = project_name, col = project_na
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness, colour= project_name)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   facet_wrap(~project_name, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
@@ -396,7 +396,7 @@ plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~project_name, scales = "free") +
-  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   ylab("Number of genus") +
   xlab("Samples (filter)") +
   theme_bw() + 

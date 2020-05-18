@@ -76,7 +76,7 @@ for (i in 1:length(family)) {
     xlim(0, 800)+
     ylim(0,0.3)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }

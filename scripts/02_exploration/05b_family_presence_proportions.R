@@ -355,6 +355,104 @@ for (i in 1:length(station)) {
 write.csv(count_families_station_eparse, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_eparse.csv")
 
 
+## Frequency of families in caledonia
+## caledonia total
+
+caledonia <- df_all_filters %>%
+  filter(region=="South_West_Pacific") 
+
+cal_motu <- caledonia %>%
+  distinct(sequence, .keep_all = TRUE)
+
+count_families_caledonia <- data.frame(table(cal_motu$new_family_name))
+colnames(count_families_caledonia) <- c("family", "n_motus")
+count_families_caledonia$n_motus_total <- nrow(cal_motu)
+count_families_caledonia$prop <- count_families_caledonia$n_motus / count_families_caledonia$n_motus_total
+
+
+ggplot(count_families_caledonia, aes(x=reorder(family, prop), y = prop)) + 
+  geom_bar(stat="identity") + 
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_caledonia.png", width=6, height=16)
+write.csv(count_families_caledonia, "outputs/05_family_proportion/02_based_on_species_presence/per region/family_proportion_caledonia.csv")
+
+## caledonia sites
+
+site <- c(unique(caledonia$site))
+
+count_families_site_caledonia=NULL 
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  cal_site <- caledonia[caledonia$site == site[i],]
+  cal_motu_site <- cal_site%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(cal_motu_site$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(cal_motu_site)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$site <- s
+  count_families$region <- "South_West_Pacific"
+  count_families_site_caledonia <- rbind(count_families_site_caledonia, count_families)
+}
+
+write.csv(count_families_site_caledonia, "outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_site_caledonia.csv")
+
+count_families_site_caledonia <- count_families_site_caledonia %>%
+  ungroup() %>%
+  arrange(site, prop) %>%
+  mutate(order = row_number())
+
+## plot by 3 sites, because plot too small otherwise
+site_sub <- c("", "", "")
+subset1 <- count_families_site_caledonia %>%
+  filter(site%in%site_sub)
+ggplot(subset1, aes(order, prop)) + 
+  geom_bar(stat="identity") +
+  facet_wrap(~site, scales ="free_y")+
+  theme_bw() +
+  labs(x="Family", y="Proportion")+
+  theme(axis.text.x=element_text(angle = 0, hjust = 0)) +
+  theme(legend.position = "none")+
+  coord_flip()+
+  scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
+
+
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_caledonia_site7-9.png", width=20, height=16)
+
+## caledonia station
+
+station <- c(unique(caledonia$station))
+
+count_families_station_caledonia=NULL 
+
+for (i in 1:length(station)) {
+  cal_station <- caledonia[caledonia$station == station[i],]
+  st <- station[i]
+  s <- unique(cal_station$site)
+  cal_motu_station <- cal_station%>%
+    distinct(sequence, .keep_all = TRUE)
+  count_families <- data.frame(table(cal_motu_station$new_family_name))
+  colnames(count_families) <- c("family", "n_motus")
+  count_families$n_motus_total <- nrow(cal_motu_station)
+  count_families$prop <- count_families$n_motus / count_families$n_motus_total
+  count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
+  count_families$station <- st
+  count_families$site <- s
+  count_families$region <- "South_West_Pacific"
+  count_families_station_caledonia <- rbind(count_families_station_caledonia, count_families)
+}
+
+write.csv(count_families_station_caledonia, "outputs/05_family_proportion/02_based_on_species_presence/per station/family_proportion_station_caledonia.csv")
+
+
+
 ## Proportion of families global
 
 
@@ -388,23 +486,27 @@ families_prop_global <- left_join(count_families_global, count_families_lengguru
 families_prop_global <- left_join(families_prop_global, count_families_caribbean[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_site_fakarava[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_eparse[,1:2], by="family" )
+families_prop_global <- left_join(families_prop_global, count_families_caledonia[,1:2], by="family" )
 families_prop_global <- families_prop_global[, c(-3)]
-colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_lengguru", "n_caribbean", "n_fakarava", "n_eparse")
+colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_lengguru", "n_caribbean", "n_fakarava", "n_eparse", "n_caledonia")
 families_prop_global[is.na(families_prop_global)] <- 0
 
 for (i in 1:dim(families_prop_global)[1]) {
-    families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
-    families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
-    families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
-    families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:7])
+    families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+    families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+    families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+    families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+    families_prop_global[i,"new_n_caledonia"] <- (families_prop_global[i,"n_caledonia"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+    
 }
 
 families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Fakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Caledonia <- (families_prop_global$new_n_caledonia*families_prop_global$prop_global)/families_prop_global$n_global
 
-families_prop_global <- families_prop_global[,c(1,12:15)]
+families_prop_global <- families_prop_global[,c(1,14:18)]
 families_prop_global2 <- melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
 
@@ -413,7 +515,7 @@ save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+ #863b34
   labs(x="Family", y="Proportion")+
   coord_flip()
 
@@ -435,7 +537,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
@@ -470,7 +572,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.2, 0.4))+
     xlim(0, 310)+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
