@@ -8,7 +8,7 @@ library(raster)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ",", stringsAsFactors = F, na.strings=c("","NA"))
 
 ## select samples with GPS data
 metadata_dist  <- metadata_sampling %>%
@@ -48,6 +48,7 @@ metadata1 <- metadata %>%
   mutate(dist_to_CT = case_when(
     region == "Central_Pacific" ~ paste0(dist_to_CT),
     region == "Caribbean" ~ paste0(dist_to_CT),
+    region == "South_West_Pacific" ~ paste0(dist_to_CT),
     region == "East_Pacific" ~ paste0(dist_to_CT),
     region == "West_Indian" ~ paste0("-", dist_to_CT),
     region == "Central_IndoPacific" ~ paste0("-", dist_to_CT),
