@@ -41,7 +41,7 @@ station <- unique(df_all_filters$station)
 
 # calculate alpha region
 
-alpha_region=data.frame(region=character(4), motu=numeric(4), stringsAsFactors = FALSE)
+alpha_region=data.frame(region=character(5), motu=numeric(5), stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -73,7 +73,7 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(4), alpha=numeric(4), gamma=numeric(4), beta=numeric(4), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(region=character(5), alpha=numeric(5), gamma=numeric(5), beta=numeric(5), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(region)) {
   r <- region[i]
@@ -111,24 +111,29 @@ alpha_station_car <- alpha_station %>%
 mean_alpha_station_car <- mean(alpha_station_car$motu)
 
 alpha_station_leng <- alpha_station %>%
-  subset(region == "West_Papua")
+  subset(region == "Central_IndoPacific")
 mean_alpha_station_leng <- mean(alpha_station_leng$motu)
 
 alpha_station_faka <- alpha_station %>%
-  subset(region == "French_Polynesia")
+  subset(region == "Central_Pacific")
 mean_alpha_station_faka <- mean(alpha_station_faka$motu)
 
 alpha_station_eparse <- alpha_station %>%
-  subset(region == "Iles_Eparses")
+  subset(region == "West_Indian")
 mean_alpha_station_eparse <- mean(alpha_station_eparse$motu)
 
-a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng, mean_alpha_station_eparse)
+alpha_station_cal <- alpha_station %>%
+  subset(region == "South_West_Pacific")
+mean_alpha_station_cal <- mean(alpha_station_cal$motu)
+
+
+a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng, mean_alpha_station_eparse, mean_alpha_station_cal)
 mean_alpha_station <- mean(a_station)
 sd_alpha_station <- sd(a_station)
 
 # calculate beta inter-station
 
-beta_station <- data.frame(region=character(19), site=character(19), alpha=numeric(19), gamma=numeric(19), beta=numeric(19), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(region=character(25), site=character(25), alpha=numeric(25), gamma=numeric(25), beta=numeric(25), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -147,16 +152,20 @@ beta_station_car <- beta_station %>%
 mean_beta_station_car <- mean(beta_station_car$beta)
 
 beta_station_leng <- beta_station %>%
-  subset(region == "West_Papua")
+  subset(region == "Central_IndoPacific")
 mean_beta_station_leng <- mean(beta_station_leng$beta)
 
 beta_station_eparse <- beta_station %>%
-  subset(region == "Iles_Eparses")
+  subset(region == "West_Indian")
 mean_beta_station_eparse <- mean(beta_station_eparse$beta)
 
-beta_station_faka <- beta_station[beta_station$region=="French_Polynesia",]$beta
+beta_station_cal <- beta_station %>%
+  subset(region == "South_West_Pacific")
+mean_beta_station_cal <- mean(beta_station_cal$beta)
 
-b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng, mean_beta_station_eparse)
+beta_station_faka <- beta_station[beta_station$region=="Central_Pacific",]$beta
+
+b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng, mean_beta_station_eparse, mean_beta_station_cal)
 mean_beta_station <- mean(b_station)
 sd_beta_station <- sd(b_station)
 
@@ -167,7 +176,7 @@ beta_region$beta+mean_beta_site+mean_beta_station+mean_alpha_station
 div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_region"), 
                             value=c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region$beta),
                             sd=c(sd_alpha_station, sd_beta_station, sd_beta_site, 0),
-                            percent=numeric(4))
+                            percent=numeric(5))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
 write.csv(div_partition, "outputs/06_diversity_partitioning/diversity_partitioning_only_pelagic.csv")
@@ -191,6 +200,7 @@ ggplot(alpha_beta, aes(colour=scale))+
 
 ggsave("outputs/06_diversity_partitioning/motus_alpha_beta~gamma.png")
 
+
 # calculate beta, turnover and nestedness with betapart
   ## beta inter-regions
 
@@ -213,8 +223,8 @@ betaregion <- data.frame(scale="inter-region", total=beta$beta.JAC, turnover=bet
 
   ## beta inter-site
 
-df_site=vector("list", 4)
-betasite <- data.frame(scale="inter-site", total=numeric(4), turnover=numeric(4), nestedness=numeric(4))
+df_site=vector("list", 5)
+betasite <- data.frame(scale="inter-site", total=numeric(5), turnover=numeric(5), nestedness=numeric(5))
 
 
 for (i in 1:length(region)) {
@@ -243,8 +253,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(df_all_filters$site)
-df_station=vector("list", 19)
-betastation <- data.frame(scale="inter-station", total=numeric(19), turnover=numeric(19), nestedness=numeric(19))
+df_station=vector("list", 25)
+betastation <- data.frame(scale="inter-station", total=numeric(25), turnover=numeric(25), nestedness=numeric(25))
 
 
 for (i in 1:length(site)) {

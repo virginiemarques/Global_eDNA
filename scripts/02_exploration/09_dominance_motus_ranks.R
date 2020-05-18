@@ -23,6 +23,8 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
 df_all_filters <- subset(df_all_filters, sample_method!="niskin")
 df_all_filters <- subset(df_all_filters, region!="East_Pacific")
+df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
 
 # on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? Faire les deux
 #df_all_filters <- df_all_filters %>%

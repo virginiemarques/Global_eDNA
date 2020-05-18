@@ -51,7 +51,7 @@ df_site <- split(df_all_filters, df_all_filters$site)
 # 3) West Indian 
 # 4) Central pacific
 
-pal <- c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D")
+pal <- c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34") 
 pal
 
 # Construct the inital matrix - add some important infos as a side
@@ -68,6 +68,7 @@ metadata1 <- df_all_filters %>%
   mutate(sets = region) %>%
   select(sets, region) %>%
   mutate(color = case_when(
+    region == "South_West_Pacific" ~ pal[5],
     region == "Central_Pacific" ~ pal[4],
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
@@ -82,7 +83,8 @@ matrix_motus <- df_all_filters %>%
   mutate(`Central_IndoPacific` = ifelse(sequence %in% df_regions$`Central_IndoPacific`$sequence, 1, 0), 
          Central_Pacific = ifelse(sequence %in% df_regions$Central_Pacific$sequence, 1, 0),
          Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0),
-         West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0)) %>%
+         West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0),
+         South_West_Pacific = ifelse(sequence %in% df_regions$South_West_Pacific$sequence, 1, 0)) %>%
   as.data.frame()
 
 # Supp Settings
@@ -105,14 +107,14 @@ p1 <- upset(matrix_motus,
       sets.x.label = "Number of MOTUs", 
       text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
       # Color bar 
-      sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D"), 
+      sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34"), 
       # Color matrix
       set.metadata = list(
         data = metadata1,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -139,7 +141,8 @@ matrix_family <- df_all_filters %>%
   mutate(`Central_IndoPacific` = ifelse(new_family_name %in% df_regions$`Central_IndoPacific`$new_family_name, 1, 0), 
          Central_Pacific = ifelse(new_family_name %in% df_regions$Central_Pacific$new_family_name, 1, 0),
          Caribbean = ifelse(new_family_name %in% df_regions$Caribbean$new_family_name, 1, 0),
-         West_Indian = ifelse(new_family_name %in% df_regions$West_Indian$new_family_name, 1, 0)) %>%
+         West_Indian = ifelse(new_family_name %in% df_regions$West_Indian$new_family_name, 1, 0),
+         South_West_Pacific = ifelse(new_family_name %in% df_regions$South_West_Pacific$new_family_name, 1, 0)) %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
 
@@ -157,14 +160,14 @@ p2 <- upset(matrix_family,
             sets.x.label = "Number of families", 
             text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
             # Color bar 
-            sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D"), 
+            sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34"), 
             # Color matrix
             set.metadata = list(
               data = metadata1,
               plots = list(list(
                 type = "matrix_rows",
                 column = "region", 
-                colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+                colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
                 alpha = 0.3
               ))
             ))
@@ -192,6 +195,7 @@ metadata1 <- df_all_filters %>%
   mutate(sets = site) %>%
   select(sets, region) %>%
   mutate(color = case_when(
+    region == "South_West_Pacific" ~ pal[5],
     region == "Central_Pacific" ~ pal[4], 
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
@@ -251,7 +255,7 @@ p3_color <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -282,6 +286,7 @@ metadata1 <- df_all_filters %>%
   mutate(sets = site) %>%
   select(sets, region) %>%
   mutate(color = case_when(
+    region == "South_West_Pacific" ~ pal[5],
     region == "Central_Pacific" ~ pal[4],
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
@@ -324,7 +329,7 @@ p4_color <- upset(matrix_family,
                     plots = list(list(
                       type = "matrix_rows",
                       column = "region", 
-                      colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4]),
+                      colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
                       alpha = 0.3
                     ))
                   ))
