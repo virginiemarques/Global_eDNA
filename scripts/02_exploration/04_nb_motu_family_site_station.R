@@ -444,6 +444,9 @@ metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", stringsAsFactors = 
 metadata <- metadata %>%
   filter(region%in%c("Central_IndoPacific", "Central_Pacific", "Caribbean", "West_Indian"))
 metadata <- subset(metadata, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+metadata <- subset(metadata, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
+metadata <- subset(metadata, station!="glorieuse_distance_300m")
+
 metadata <- subset(metadata, sample_method!="niskin")
 metadata <- subset(metadata, habitat=="marine")
 metadata <- metadata[,c("site", "station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.", "dist_to_CT")]
