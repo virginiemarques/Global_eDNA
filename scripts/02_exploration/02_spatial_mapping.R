@@ -14,16 +14,17 @@ library(htmlwidgets)
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 # data 
 # WARNING: there is some empty lines in the .csv
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V3.csv", sep=";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V4.csv", sep=";", stringsAsFactors = F, na.strings=c("","NA"))
 
 # Clean the spaces before coordinates
 metadata_sampling$longitude_start_clean <- gsub('\\?', '', metadata_sampling$longitude_start)
 metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$latitude_start)
 
 
-metadata_sampling <- subset(metadata_sampling, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
+metadata_sampling <- subset(metadata_sampling, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")))
 metadata_sampling <- subset(metadata_sampling, sample_method!="niskin")
 metadata_sampling <- subset(metadata_sampling, !region %in% c("East_Pacific", "Mediterranean"))
+metadata_sampling <- subset(metadata_sampling, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
 metadata_sampling <- subset(metadata_sampling, habitat=="marine")
 
 # ---------------------------------------------------------------------------------------------- #
