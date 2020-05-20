@@ -286,6 +286,7 @@ beta_melt <- melt(betatotal)
 
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
+  theme_bw()+
   labs(x=" Beta component", y="Jaccard dissimilarity (motus)")
 
 ggsave("outputs/06_diversity_partitioning/all_motus_diversity_partitioning.png")  

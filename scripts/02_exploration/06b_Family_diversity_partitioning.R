@@ -277,6 +277,7 @@ beta_melt <- melt(betatotal)
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   ylim(0,1)+
+  theme_bw()+
   labs(x=" Beta component", y="Jaccard dissimilarity (family)")
 
 ggsave("outputs/06_diversity_partitioning/family_diversity_partitioning.png")  

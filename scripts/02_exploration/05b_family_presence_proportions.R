@@ -537,6 +537,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+
     theme(legend.position = "none")+
+    theme_bw()+
     scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
@@ -572,6 +573,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.2, 0.4))+
     xlim(0, 310)+
     theme(legend.position = "none")+
+    theme_bw()+
     scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))

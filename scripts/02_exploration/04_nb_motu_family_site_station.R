@@ -489,6 +489,7 @@ ggplot(rich_station_total)+
   geom_violin(aes(site, family), color="#457277", fill="#457277", position = position_nudge(0.3, 0))+
   geom_boxplot(aes(site, family), width=0.1, position = position_nudge(0.3, 0))+
   facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme_bw()+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="Sites", y = "Richness")
 
@@ -501,6 +502,7 @@ motu <- ggplot(rich_station_total)+
   facet_grid(~region, scales = "free_x", space = "free_x")+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "MOTUs richness")+
+  theme_bw()+
   theme(axis.text.x = element_blank())
 
 
@@ -510,12 +512,14 @@ genus <- ggplot(rich_station_total)+
   facet_grid(~region, scales = "free_x", space = "free_x")+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "Genus richness")+
+  theme_bw()+
   theme(axis.text.x = element_blank())
 
 family <- ggplot(rich_station_total)+
   geom_violin(aes(site, family), color="#457277", fill="#457277")+
   geom_boxplot(aes(site, family), width=0.1)+
   facet_grid(~region, scales = "free_x", space = "free_x")+
+  theme_bw()+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "Family richness")
 
@@ -558,6 +562,7 @@ rich_motu <- ggplot(rich_station, aes(dist_to_CT, motu, col=region))+
   ylim(0,310)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="MOTU richness")
@@ -570,6 +575,7 @@ rich_genus <- ggplot(rich_station, aes(dist_to_CT, genus, col=region))+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100))+
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Genus richness")
@@ -583,6 +589,7 @@ rich_family <- ggplot(rich_station, aes(dist_to_CT, family, col=region))+
   ylim(0,60)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Family richness")
@@ -613,6 +620,7 @@ rich_motu_site <- ggplot(rich_site, aes(col=region))+
   ylim(0,200)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="MOTU richness")
@@ -626,6 +634,7 @@ rich_genus_site <- ggplot(rich_site, aes(col=region))+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   #scale_y_continuous(breaks = c(0, 20, 40, 60, 80, 100))+
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Genus richness")
@@ -640,6 +649,7 @@ rich_family_site <- ggplot(rich_site, aes(col=region))+
   ylim(0,40)+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   theme(legend.position = "none")+
+  theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"))+
   labs(x="",
        y="Family richness")

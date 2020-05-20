@@ -75,6 +75,7 @@ for (i in 1:length(family)) {
     scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
     xlim(0, 800)+
     ylim(0,0.3)+
+    theme_bw()+
     theme(legend.position = "none")+
     scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
     labs(title=family[i], x="", y="")+
