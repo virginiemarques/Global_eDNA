@@ -10,7 +10,7 @@ library(grid)
 
 # Functions
 source('scripts/02_exploration/00_functions.R')
-
+load("Rdata/02_clean_all.Rdata")
 
 # family asymptote  + n_motus data
 asymptote_fam <- read.csv("outputs/10_acculation_curve_family/table_asymptote_family10.csv")
@@ -75,61 +75,64 @@ asymptote_fam <- asymptote_fam %>%
 asymptote_fam$fam <- c("Acnt", "Apgn", "Blst", "Crng", "Crch", "Chtd", "Clpd","Dstd", "Gobd", "Hlcn", "Lbrd", "Lthr", "Ltjn", "Mgld", "Mlld", "Mrnd", "Pmcnth", "Pmcntr", "Scbrd", "Srrn", "Sndt", "Ttrdt")
 
 
+log(asymptote_fam$n_species)
+
+
 
 # linear regression and plot for taxa
-lm_taxa <- lm(n_species_checklist~n_species, data=asymptote_fam)
+lm_taxa <- lm(log(n_species_checklist)~log(n_species), data=asymptote_fam)
 summary(lm_taxa)
 
-plot_taxa <- ggplot(asymptote_fam, aes(n_species, n_species_checklist))+
+plot_taxa <- ggplot(asymptote_fam, aes(log(n_species), log(n_species_checklist)))+
   geom_point(size=2)+
-  geom_text(aes(label=fam), size=3, position = position_jitter(width=20, height = 30))+
+  geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 3.8, intercept = -3.6, size=0.8)+
-  xlim(0,270)+
-  ylim(0,270)+
+  geom_abline(slope = 0.9, intercept = 1.16, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="Number of taxa",
-       y="Number of species in the checklist")
+  labs(x="log(Number of taxa)",
+       y="log(Number of species in the checklist)")
 
-grob <- grobTree(textGrob("y = 3.82x-3.6\nR² = 0.72\np < 0.001", x=0.8, y=0.2))
+grob <- grobTree(textGrob("y = 0.9x+1.16\nR² = 0.32\np < 0.005", x=0.8, y=0.2))
 plot_taxa2 <- plot_taxa+annotation_custom(grob)
 plot_taxa2
 
 
 # linear regression and plot for motus
-lm_motu <- lm(n_species_checklist~n_motus, data=asymptote_fam)
+lm_motu <- lm(log(n_species_checklist)~log(n_motus), data=asymptote_fam)
 summary(lm_motu)
 
-plot_motu <- ggplot(asymptote_fam, aes(n_motus, n_species_checklist))+
+plot_motu <- ggplot(asymptote_fam, aes(log(n_motus), log(n_species_checklist)))+
   geom_point(size=2)+
-  geom_text(aes(label=fam), size=3, position = position_jitter(width=20, height = 30))+
+  geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 2.17, intercept = -16.4, size=0.8)+
-  xlim(0,270)+
-  ylim(0,270)+
+  geom_abline(slope = 1.27, intercept = -0.68, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="Number of MOTUs",
-       y="Number of species in the checklist")
-grob <- grobTree(textGrob("y = 2.17x-16.4\nR² = 0.75\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(Number of MOTUs)",
+       y="log(Number of species in the checklist)")
+grob <- grobTree(textGrob("y = 1.27x-0.68\nR² = 0.59\np < 0.001", x=0.8, y=0.2))
 plot_motu2 <- plot_motu+annotation_custom(grob)
 plot_motu2
 
 
 # linear regression and plot for asymptotes
-lm_asym <- lm(n_species_checklist~n_asymtote, data=asymptote_fam)
+lm_asym <- lm(log(n_species_checklist)~log(n_asymtote), data=asymptote_fam)
 summary(lm_asym)
 
-plot_asym <- ggplot(asymptote_fam, aes(n_asymtote, n_species_checklist))+
+plot_asym <- ggplot(asymptote_fam, aes(log(n_asymtote), log(n_species_checklist)))+
   geom_point(size=2)+
-  geom_text(aes(label=fam), size=3, position = position_jitter(width=20, height = 30))+
+  geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 1.54, intercept = -4.21, size=0.8)+
-  xlim(0,270)+
-  ylim(0,270)+
+  geom_abline(slope = 1.17, intercept = -0.5, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="MOTUs asymptote",
-       y="Number of species in the checklist")
-grob <- grobTree(textGrob("y = 1.54x-4.21\nR² = 0.63\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(MOTUs asymptote)",
+       y="log(Number of species in the checklist)")
+grob <- grobTree(textGrob("y = 1.17x-0.5\nR² = 0.56\np < 0.001", x=0.8, y=0.2))
 plot_asym2 <- plot_asym+annotation_custom(grob)
 plot_asym2
 
