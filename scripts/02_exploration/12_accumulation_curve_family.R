@@ -29,8 +29,8 @@ fam_summary <- df_all_filters %>%
 
 
 # Select the families
-families20 <- fam_summary %>%
-  filter(n_motus > 20 & n_station > 20) %>%
+families10 <- fam_summary %>%
+  filter(n_motus > 10 & n_station > 10) %>%
   distinct(new_family_name) %>% pull()
 
 # Set df to fill 
@@ -47,11 +47,11 @@ complete_samples <- unique(df_all_filters$sample_name_all_pcr)
 # ------------------------------------------------------------------------------- # 
 
 # loop over
-for (i in 1:length(families20)){
+for (i in 1:length(families10)){
   
   # Debug
   #i=1
-  fam <- families20[[i]]
+  fam <- families10[[i]]
   
   # n_motus
   df_temp <- df_all_filters %>% 
@@ -164,7 +164,7 @@ ggsave("outputs/10_acculation_curve_family/all_family_20_accumulation_curve_scal
 # ------------------------------------------------------------------------------- # 
 
 # Export 
-write.csv(asymptote_fam, "outputs/10_acculation_curve_family/table_asymptote_family20.csv", row.names = F)
+write.csv(asymptote_fam, "outputs/10_acculation_curve_family/table_asymptote_family10.csv", row.names = F)
 
 
 

@@ -214,9 +214,9 @@ plot_acc_all
 # ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet_family.png", plot_acc_all, width = 12, height = 8)
 
 # Plot with facet
-plot_acc_family <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+plot_acc_family <- ggplot(df_join_all, aes(fill = project_name)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
-  geom_line(aes(x = sites, y = richness, colour= project_name)) +
+  geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   facet_wrap(~project_name, scales = "free") +
@@ -303,10 +303,11 @@ df_join_all <- df_all_accumulation %>%
          position_asymptote_x = max(sites))
 
 # Plot with facet
-plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
+plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
   facet_wrap(~project_name, scales = "free") +
   ylab("Number of genus") +
   xlab("Samples (filter)") +
@@ -391,7 +392,7 @@ df_join_all <- df_all_accumulation %>%
          position_asymptote_x = max(sites))
 
 # Plot with facet
-plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
+plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
@@ -401,7 +402,7 @@ plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name, col = project_nam
   xlab("Samples (filter)") +
   theme_bw() + 
   ggtitle("MOTUs") + 
-  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "Genus")), col = "black") 
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "MOTUs")), col = "black") 
 
 plot_acc_motus
 
@@ -443,12 +444,15 @@ plot_motus <- ggplot(df_motus, aes(x=sites, y = richness, group = level, fill = 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5, fill = "#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, col = "#d2981a") +
+  geom_hline(aes(yintercept= 2259), linetype="solid", size=1, col="darkgrey")+
   theme_classic() +
   labs(x="Samples (filters)")+
   theme(legend.position = "none") +
   # annotation family
-  annotate(geom="text", x=190+10, y=2209+45, label="MOTUs",hjust=1,
-           color="#d2981a")
+  annotate(geom="text", x=190+10, y=2209-45, label="MOTUs",hjust=1,
+           color="#d2981a")+
+  annotate(geom="text", x=190+10, y=2259+45, label="RLS species",hjust=1,
+           color="darkgrey")
 plot_motus
 
 # Trial 2: all in a single plot 
@@ -458,6 +462,8 @@ df_all_levels <- rbind(df_order, df_fam, df_genus, df_motus)
 plot_taxo <- ggplot(df_all_levels %>% 
                       filter(level != "MOTUs" & level != "order"), aes(x=sites, y = richness, group = level, fill = level)) + 
   geom_hline(aes(yintercept = asymptote, col = level), linetype = "dashed", size = 1) +
+  geom_hline(aes(yintercept= 530), linetype="solid", size=1, col="darkgrey")+
+  geom_hline(aes(yintercept= 119), linetype="solid", size=1, col="darkgrey")+
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   scale_fill_manual(values = c("#457277", "#a53e1f"))+
@@ -468,9 +474,13 @@ plot_taxo <- ggplot(df_all_levels %>%
   # annotation family
   annotate(geom="text", x=190+10, y=170+14, label="Family",hjust=1,
            color="#457277") +
+  annotate(geom="text", x=190+10, y=119-10, label="RLS family",hjust=1,
+           color="darkgrey") +
   # annotation genus
-  annotate(geom="text", x=190+10, y=384+10, label="Genus",hjust=1,
-           color="#a53e1f")
+  annotate(geom="text", x=190+10, y=384+14, label="Genus",hjust=1,
+           color="#a53e1f")+
+  annotate(geom="text", x=190+10, y=530-10, label="RLS genus",hjust=1,
+           color="darkgrey")
 plot_taxo
 
 # Combine 

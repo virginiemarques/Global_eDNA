@@ -22,3 +22,14 @@ df_all_filters %>%
 df <- df_all_filters %>%
   subset(new_rank_ncbi == "higher")
 sum(df$count_reads)
+
+
+library(reshape2)
+# count RLS
+coral_fishes <- read.csv("data/coral_fishes2.csv", sep = ";")
+coral_fishes2 <- colsplit(coral_fishes$Species, " ", c("Genus", "Species"))
+coral_fishes$Genus <- coral_fishes2$Genus
+
+n_distinct(coral_fishes$Species)
+n_distinct(coral_fishes$Family)
+n_distinct(coral_fishes$Genus)
