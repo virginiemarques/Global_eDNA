@@ -27,11 +27,18 @@ fam_summary <- df_all_filters %>%
             n_samples = n_distinct(sample_name_all_pcr),
             n_station = n_distinct(station))
 
+# extract abundant families from RLS data
+coral_fishes <- read.csv("data/Coral_fishes2.csv", sep=";")
+fam_coral  <- coral_fishes %>%
+  group_by(Family) %>%
+  summarise(n_species = n_distinct(Species))
 
-# Select the families
-families10 <- fam_summary %>%
-  filter(n_motus > 10 & n_station > 10) %>%
-  distinct(new_family_name) %>% pull()
+#select the same families in our data
+families20 <- fam_summary%>%
+  filter(new_family_name%in%(fam_coral %>%filter(n_species > 20) %>%distinct(Family) %>% pull()))
+families20 <- families20 %>%
+  filter(n_motus > 5)
+families20 <- unique(families20$new_family_name)
 
 # Set df to fill 
 asymptote_fam <- data.frame(family=character(),
@@ -47,11 +54,11 @@ complete_samples <- unique(df_all_filters$sample_name_all_pcr)
 # ------------------------------------------------------------------------------- # 
 
 # loop over
-for (i in 1:length(families10)){
+for (i in 1:length(families20)){
   
   # Debug
   #i=1
-  fam <- families10[[i]]
+  fam <- families20[[i]]
   
   # n_motus
   df_temp <- df_all_filters %>% 
@@ -164,7 +171,7 @@ ggsave("outputs/10_acculation_curve_family/all_family_20_accumulation_curve_scal
 # ------------------------------------------------------------------------------- # 
 
 # Export 
-write.csv(asymptote_fam, "outputs/10_acculation_curve_family/table_asymptote_family10.csv", row.names = F)
+write.csv(asymptote_fam, "outputs/10_acculation_curve_family/table_asymptote_family20.csv", row.names = F)
 
 
 
