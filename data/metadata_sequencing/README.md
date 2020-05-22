@@ -3,6 +3,7 @@ To generate those files
 I go from the all_samples.tsv files needed for the rapidrun pipeline 
 
 I select only the sample_name & Run columns (in this order)
+You need the column names!
 
 Then, I export as .csv with ';' separator
 
