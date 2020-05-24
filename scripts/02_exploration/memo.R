@@ -26,10 +26,19 @@ sum(df$count_reads)
 
 library(reshape2)
 # count RLS
-coral_fishes <- read.csv("data/coral_fishes2.csv", sep = ";")
+coral_fishes <- read.csv("data/coral_fishes.csv", sep = ";", header = FALSE)
+colnames(coral_fishes) <- "Species"
 coral_fishes2 <- colsplit(coral_fishes$Species, " ", c("Genus", "Species"))
 coral_fishes$Genus <- coral_fishes2$Genus
+
+
+library(rfishbase)
+all_fishbase <- load_taxa()
+coral_fishes <- left_join(coral_fishes, all_fishbase[,c("Species", "Family")], by="Species")
+
 
 n_distinct(coral_fishes$Species)
 n_distinct(coral_fishes$Family)
 n_distinct(coral_fishes$Genus)
+
+write.csv(coral_fishes, file = "data/coral_fishes2.csv")
