@@ -113,14 +113,6 @@ names(liste_read_edna) <- projects
 # Save 
 save(liste_read_edna, file="Rdata/01_liste_all_read_edna.Rdata")
 
-eparses <- liste_read_edna[["Eparses"]]
-
-k <- eparses %>%
-  #filter(sample_name_all_pcr == "SPY190629") %>%
-  filter(new_genus_name == "Urogymnus") %>%
-  distinct(new_scientific_name_ncbi,sample_name_all_pcr, best_identity_database) %>%
-  arrange(.)
-
 
 
 

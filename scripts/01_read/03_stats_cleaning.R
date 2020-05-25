@@ -20,7 +20,10 @@ source("scripts/01_read/00_functions.R")
 fct_filter_station <- function(x){
   x <- x %>%
     filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-    filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
+    filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m") %>%
+    # Remove for NC
+    filter(project != "SEAMOUNTS") %>% 
+    filter(habitat_type %ni% c("BAIE", "Sommet"))
   
   return(x)
 }

@@ -16,9 +16,8 @@
 # asymptote is the asymptote calculated from the multimodel inference 
 # complete_samples: list of all the samples necessary for the accumulation curve. If some samples are discarded, use it to provide the entire list of samples to have a proper accumulation. 
 
-accumulation_curve_all_samples <- function(x, column_station = "sample_name_all_pcr", 
-                               species_unit = "sequence", method_accumulation = "exact", 
-                               complete_samples){
+accumulation_curve_all_samples <- function(x, column_station = "sample_name_all_pcr", complete_samples,
+                               species_unit = "sequence", method_accumulation = "exact"){
   
   # lib 
   library(vegan)
