@@ -183,11 +183,13 @@ all_accumulation <- accumulation_curve_df(df_all_filters, species_unit = rank_ch
   mutate(project_name = "All") %>%
   select(project_name, richness, sd, sites)
 
+save(all_accumulation, file = "Rdata/accumulation_families_all.rdata")
 # Asymptote of all plots 
 all_asymptote <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
   mutate(project_name = "All") %>%
   select(project_name, asymptote)
 
+save(all_asymptote, file = "Rdata/asymptote_families_all.rdata")
 # Bind together
 df_all_accumulation <- rbind(df_accumulation, all_accumulation)
 df_all_asymptote <- rbind(df_asymptote, all_asymptote)
@@ -371,15 +373,17 @@ df_accumulation_all <- left_join(df_accumulation, df_asymptote, by = "project_na
 
 # Add All samples
 # Add a global saturation curve, i.e. all samples together?
-all_accumulation <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
+all_accumulation_motu <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
   mutate(project_name = "All") %>%
   select(project_name, richness, sd, sites)
 
+save(all_accumulation_motu, file = "Rdata/accumulation_motus_all.rdata")
 # Asymptote of all plots 
-all_asymptote <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
+all_asymptote_motu <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
   mutate(project_name = "All") %>%
   select(project_name, asymptote)
 
+save(all_asymptote_motu, file = "Rdata/asymptote_motus_all.rdata")
 # Bind together
 df_all_accumulation <- rbind(df_accumulation, all_accumulation)
 df_all_asymptote <- rbind(df_asymptote, all_asymptote)

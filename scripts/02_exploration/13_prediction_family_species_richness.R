@@ -76,59 +76,59 @@ asymptote_fam$fam <- c("Acnt", "Apgn", "Blst", "Blnd", "Crng", "Chtd", "Dstd", "
 
 
 # linear regression and plot for taxa
-lm_taxa <- lm(n_species_checklist~n_species, data=asymptote_fam)
+lm_taxa <- lm(log_checklist~log_taxa, data=asymptote_fam)
 summary(lm_taxa)
 
-plot_taxa <- ggplot(asymptote_fam, aes(n_species, n_species_checklist))+
+plot_taxa <- ggplot(asymptote_fam, aes(log_taxa, log_checklist))+
   geom_point(size=2)+
   geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 3.2, intercept = 12.6, size=0.8)+
-  xlim(0,250)+
-  ylim(0,250)+
+  geom_abline(slope = 0.5, intercept = 2.5, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="Number of taxa",
-       y="Number of species in the checklist")
+  labs(x="log(Number of taxa)",
+       y="log(Number of species in the checklist)")
 
-grob <- grobTree(textGrob("y = 3.2x+12.5\nR² = 0.67\np < 0.005", x=0.8, y=0.2))
+grob <- grobTree(textGrob("y = 0.5x+2.5\nR² = 0.33\np < 0.005", x=0.8, y=0.2))
 plot_taxa2 <- plot_taxa+annotation_custom(grob)
 plot_taxa2
 
 
 # linear regression and plot for motus
-lm_motu <- lm(n_species_checklist~n_motus, data=asymptote_fam)
+lm_motu <- lm(log_checklist~log_motu, data=asymptote_fam)
 summary(lm_motu)
 
-plot_motu <- ggplot(asymptote_fam, aes(n_motus, n_species_checklist))+
+plot_motu <- ggplot(asymptote_fam, aes(log_motu, log_checklist))+
   geom_point(size=2)+
   geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 1.7, intercept = 3.7, size=0.8)+
-  xlim(0,250)+
-  ylim(0,250)+
+  geom_abline(slope = 0.7, intercept = 1.6, size=0.8)+
+  xlim(2,6)+
+  ylim(2,6)+
   theme_bw()+
-  labs(x="Number of MOTUs",
-       y="Number of species in the checklist")
-grob <- grobTree(textGrob("y = 1.7x+3.7\nR² = 0.64\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(Number of MOTUs)",
+       y="log(Number of species in the checklist)")
+grob <- grobTree(textGrob("y = 0.7x+1.6\nR² = 0.42\np < 0.001", x=0.8, y=0.2))
 plot_motu2 <- plot_motu+annotation_custom(grob)
 plot_motu2
 
 
 # linear regression and plot for asymptotes
-lm_asym <- lm(n_species_checklist~n_asymtote, data=asymptote_fam)
+lm_asym <- lm(log_checklist~log_asym, data=asymptote_fam)
 summary(lm_asym)
 
-plot_asym <- ggplot(asymptote_fam, aes(n_asymtote, n_species_checklist))+
+plot_asym <- ggplot(asymptote_fam, aes(log_asym, log_checklist))+
   geom_point(size=2)+
   geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 1.25, intercept = 12.3, size=0.8)+
-  xlim(0,250)+
-  ylim(0,250)+
+  geom_abline(slope = 0.65, intercept = 1.6, size=0.8)+
+  xlim(2,6)+
+  ylim(2,6)+
   theme_bw()+
-  labs(x="MOTUs asymptote",
-       y="Number of species in the checklist")
-grob <- grobTree(textGrob("y = 1.25x+12.3\nR² = 0.53\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(MOTUs asymptote)",
+       y="log(Number of species in the checklist)")
+grob <- grobTree(textGrob("y = 0.65x+1.6\nR² = 0.4\np < 0.001", x=0.8, y=0.2))
 plot_asym2 <- plot_asym+annotation_custom(grob)
 plot_asym2
 
