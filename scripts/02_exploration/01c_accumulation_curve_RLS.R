@@ -104,13 +104,13 @@ fam_combined <- ggplot() +
   annotate(geom="text", x=2990, y=178+5, label="Family : 178",hjust=1,
            color="#457277") +
   ylab("Number of families") +
-  xlab("Number of transects") +
+  xlab("Number of sample / transects") +
   theme_bw() + 
-  ggtitle("Families")
+  ggtitle("B")
 
 fam_combined
 
-
+ggsave("outputs/03_accumulation_curves/accumulation_families_RLS.png")
 # ------------------------------------------------------------------------------- # 
 #### On species ----
 # ------------------------------------------------------------------------------- # 
@@ -181,18 +181,19 @@ species_combined <- ggplot() +
   geom_ribbon(data=df_motus, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(data=df_motus, aes(x = sites, y = richness)) +
   geom_hline(data=df_motus, aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2818+55, label="MOTUs : 2818",hjust=1,
+  annotate(geom="text", x=2990, y=2818+55, label="MOTUs : 2818",hjust=1,
            color="#d2981a") +
   ylab("Number of MOTUs / species") +
-  xlab("Number of samples")+
-  theme(axis.title.x.top = element_text(color="blue"), axis.title.x.bottom = element_text(color="red"))+
+  xlab("Number of samples/transects")+
+  #theme(axis.title.x.top = element_text(color="blue"), axis.title.x.bottom = element_text(color="red"))+
   geom_ribbon(data=all_accumulation_species_RLS_df, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(data=all_accumulation_species_RLS_df, aes(x = sites, y = richness)) +
   geom_hline(data=all_accumulation_species_RLS_df, aes(yintercept = asymptote), linetype = "dashed", size = 1, color="darkgrey") +
   annotate(geom="text", x=2990, y=2733-55, label="RLS Species : 2733",hjust=1, color="darkgrey") +
-  scale_x_continuous("Number of transects", sec.axis= sec_axis(~ (.*10), name = "Number of samples"))+
+  #scale_x_continuous("Number of transects", sec.axis= sec_axis(~ (.*10), name = "Number of samples"))+
   theme_bw() + 
-  ggtitle("Species")
+  ggtitle("A")
 
 species_combined
 
+ggsave("outputs/03_accumulation_curves/accumulation_speciesRLS_motus.png")

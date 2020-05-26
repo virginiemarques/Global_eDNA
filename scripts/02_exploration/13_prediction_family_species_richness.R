@@ -12,10 +12,12 @@ load("Rdata/02_clean_all.Rdata")
 
 
 # coral fish species data
-coral_fishes <- read.csv("data/Coral_fishes2.csv", sep=";")
+coral_fishes <- read.csv("data/Coral_fishes2.csv", sep=";", stringsAsFactors = FALSE)
 fam_coral  <- coral_fishes %>%
   group_by(Family) %>%
   summarise(n_species = n_distinct(Species))
+
+fam_coral2 <- unique(fam_coral$Family)
 
 # our data
 df_all_filters <- df_all_filters %>%
@@ -28,7 +30,8 @@ fam_summary <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n_motus = n_distinct(sequence))%>%
-  filter(new_family_name%in%(fam_coral %>%filter(n_species > 3) %>%distinct(Family) %>% pull()))
+  #filter(new_family_name%in%(fam_coral %>%filter(n_species > 3) %>%distinct(Family) %>% pull()))
+  filter(new_family_name%in%fam_coral2)
             
 families3 <- unique(fam_summary$new_family_name)
 
@@ -66,9 +69,9 @@ for (i in 1:length(families3)) {
 
 # tranform log10 richness
 for (i in 1:length(families3)) {
-  fam_summary[i, "log_taxa"] <- log10(fam_summary[i, "n_taxa"])
-  fam_summary[i, "log_motu"] <- log10(fam_summary[i, "n_motus"])
-  fam_summary[i, "log_checklist"] <- log10(fam_summary[i, "n_species_checklist"])
+  fam_summary[i, "log_taxa"] <- log1p(fam_summary[i, "n_taxa"])
+  fam_summary[i, "log_motu"] <- log1p(fam_summary[i, "n_motus"])
+  fam_summary[i, "log_checklist"] <- log1p(fam_summary[i, "n_species_checklist"])
   
 }
 
@@ -89,14 +92,14 @@ plot_taxa <- ggplot(fam_summary, aes(log_taxa, log_checklist))+
   geom_point(size=2)+
   #geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.6, intercept = 0.9, size=0.8)+
-  xlim(0,2.5)+
-  ylim(0,2.5)+
+  geom_abline(slope = 0.95, intercept = 0.84, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="log(Number of taxa)",
-       y="log(Number of species in the checklist)")
+  labs(x="log(1+Number of taxa)",
+       y="log(1+Number of species in the checklist)")
 
-grob <- grobTree(textGrob("y = 0.6x+0.9\nR² = 0.42\np < 0.001", x=0.8, y=0.2))
+grob <- grobTree(textGrob("y = 0.95x+0.0.84\nR² = 0.48\np < 0.001", x=0.8, y=0.2))
 plot_taxa2 <- plot_taxa+annotation_custom(grob)
 plot_taxa2
 
@@ -109,13 +112,13 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   geom_point(size=2)+
   #geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.57, intercept = 0.78, size=0.8)+
-  xlim(0,2.5)+
-  ylim(0,2.5)+
+  geom_abline(slope = 0.83, intercept = 0.63, size=0.8)+
+  xlim(0,6)+
+  ylim(0,6)+
   theme_bw()+
-  labs(x="log(Number of MOTUs)",
-       y="log(Number of species in the checklist)")
-grob <- grobTree(textGrob("y = 0.55x+0.78\nR² = 0.49\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(1+Number of MOTUs)",
+       y="log(1+Number of species in the checklist)")
+grob <- grobTree(textGrob("y = 0.83x+0.63\nR² = 0.57\np < 0.001", x=0.8, y=0.2))
 plot_motu2 <- plot_motu+annotation_custom(grob)
 plot_motu2
 
@@ -136,7 +139,7 @@ perc_taxa <- ggplot(fam_summary, aes(n_species_checklist, perc_taxa))+
   theme_bw()+
   labs(x="Number of species in the checklist",
        y="%(taxa ~ checklist)")
-grob <- grobTree(textGrob("R² = 0.01\np = 0.24", x=0.8, y=0.9))
+grob <- grobTree(textGrob("R² = 0.05\np = 0.032", x=0.8, y=0.9))
 perc_taxa2 <- perc_taxa+annotation_custom(grob)
 perc_taxa2
 
@@ -151,7 +154,7 @@ perc_motu <- ggplot(fam_summary, aes(n_species_checklist, perc_motu))+
   theme_bw()+
   labs(x="Number of species in the checklist",
        y="%(MOTUs ~ checklist)")
-grob <- grobTree(textGrob("R² = 0.01\np = 0.39", x=0.8, y=0.9))
+grob <- grobTree(textGrob("R² = 0.03\np = 0.075", x=0.8, y=0.9))
 perc_motu2 <- perc_motu+annotation_custom(grob)
 perc_motu2
 
