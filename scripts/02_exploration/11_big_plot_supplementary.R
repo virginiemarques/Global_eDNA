@@ -12,11 +12,12 @@ library(RColorBrewer)
 
 # code for the figure like de Vargas 2015
 load("Rdata/02_clean_all.Rdata")
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+'%ni%' <- Negate("%in%")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 
 
@@ -34,7 +35,7 @@ family_coverage <- subset(family_coverage, Family%in%family)
 
 count_families_global <- arrange(count_families_global, n_motus)
 
-prop_similarity <- melt(prop_similarity)
+prop_similarity <- reshape2::melt(prop_similarity)
 prop_similarity$family <- factor(prop_similarity$family, levels = as.character(factor(count_families_global$family)))
 colnames(prop_similarity) <- c("family", "class", "percentage")
 
@@ -46,7 +47,7 @@ family_coverage$Family <- factor(family_coverage$Family, levels = as.character(f
 prop <- ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+ #863b34
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052", "#863b34"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+

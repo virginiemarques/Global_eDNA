@@ -18,7 +18,7 @@ metadata_dist  <- metadata_sampling %>%
 center_CT <- data.frame(longitude=133.679826, latitude=-1.307436)
 
 
-pts = metadata_dist[,43:44]
+pts = metadata_dist[,44:45]
 pts$latitude_start_clean <- as.numeric(pts$latitude_start_clean)
 pts$longitude_start_clean <- as.numeric(pts$longitude_start_clean)
 
@@ -51,7 +51,7 @@ metadata1 <- metadata %>%
     region == "South_West_Pacific" ~ paste0(dist_to_CT),
     region == "East_Pacific" ~ paste0(dist_to_CT),
     region == "West_Indian" ~ paste0("-", dist_to_CT),
-    region == "Central_IndoPacific" ~ paste0("-", dist_to_CT),
+    region == "Central_Indo_Pacific" ~ paste0("-", dist_to_CT),
     region == "West_Atlantic" ~ paste0("-", dist_to_CT),
     region == "Mediterranean" ~ paste0("-", dist_to_CT)))
 

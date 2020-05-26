@@ -20,7 +20,9 @@ fam_coral  <- coral_fishes %>%
 # our data
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 fam_summary <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%

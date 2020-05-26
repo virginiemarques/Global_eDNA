@@ -7,13 +7,14 @@ library(ggplot2)
 library(ggpubr)
 
 load("Rdata/02_clean_all.Rdata")
-
+'%ni%' <- Negate("%in%")
 #Remove estuary stations and deep niskin station
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
+
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
@@ -44,7 +45,7 @@ for (j in seq(1:1000)) {
 
 save(random_prop_tot, file = "Rdata/random_family_proportions.rdata")
 
-
+load("Rdata/random_family_proportions.rdata")
 # calculate 2.5 and 97.5 quantile for each sample size and each family
 family <- family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 

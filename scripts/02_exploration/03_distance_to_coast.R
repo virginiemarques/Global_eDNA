@@ -27,7 +27,7 @@ coastline <- readOGR("/Users/mathon/Downloads/GSHHS_shp/f/GSHHS_f_L1.shp", verbo
 coastline <- spTransform(coastline, crsmerc)
   
   # Formate GPS points and project
-pts = metadata_dist[,42:43]
+pts = metadata_dist[,43:44]
 pts$latitude_start_clean <- as.numeric(pts$latitude_start_clean)
 pts$longitude_start_clean <- as.numeric(pts$longitude_start_clean)
 pts_sp <- SpatialPoints(pts,proj4string = crswgs84)

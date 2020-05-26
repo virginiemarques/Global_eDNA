@@ -3,7 +3,7 @@ library(UpSetR)
 library(devtools)
 #BiocManager::install("ComplexHeatmap")
 library(ComplexHeatmap)
-library(nationalparkcolors)
+
 
 # ---------------------------------------------------------------- # 
 
@@ -21,11 +21,11 @@ library(ggpubr)
 load("Rdata/02_clean_all.Rdata")
 
 # Remove estuary stations and deep niskin station
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 # on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? 
 # -> faire les deux et mettre les familles seulement en SI. 
@@ -72,7 +72,7 @@ metadata1 <- df_all_filters %>%
     region == "Central_Pacific" ~ pal[4],
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
-    region == "Central_IndoPacific" ~ pal[1]
+    region == "Central_Indo_Pacific" ~ pal[1]
   )) %>%
   as.data.frame() %>%
   left_join(., motus_fam_region)
@@ -80,7 +80,7 @@ metadata1 <- df_all_filters %>%
 # MOTUs
 matrix_motus <- df_all_filters %>%
   distinct(sequence, new_scientific_name_ncbi) %>%
-  mutate(`Central_IndoPacific` = ifelse(sequence %in% df_regions$`Central_IndoPacific`$sequence, 1, 0), 
+  mutate(`Central_Indo_Pacific` = ifelse(sequence %in% df_regions$`Central_Indo_Pacific`$sequence, 1, 0), 
          Central_Pacific = ifelse(sequence %in% df_regions$Central_Pacific$sequence, 1, 0),
          Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0),
          West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0),
@@ -107,14 +107,14 @@ p1 <- upset(matrix_motus,
       sets.x.label = "Number of MOTUs", 
       text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
       # Color bar 
-      sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34"), 
+      sets.bar.color=c("#8AAE8A", "#863b34", "#E5A729", "#C67052", "#4F4D1D"), 
       # Color matrix
       set.metadata = list(
         data = metadata1,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+          colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -138,7 +138,7 @@ family_samples_rarity <- df_all_filters %>%
 matrix_family <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   distinct(new_family_name) %>%
-  mutate(`Central_IndoPacific` = ifelse(new_family_name %in% df_regions$`Central_IndoPacific`$new_family_name, 1, 0), 
+  mutate(`Central_Indo_Pacific` = ifelse(new_family_name %in% df_regions$`Central_Indo_Pacific`$new_family_name, 1, 0), 
          Central_Pacific = ifelse(new_family_name %in% df_regions$Central_Pacific$new_family_name, 1, 0),
          Caribbean = ifelse(new_family_name %in% df_regions$Caribbean$new_family_name, 1, 0),
          West_Indian = ifelse(new_family_name %in% df_regions$West_Indian$new_family_name, 1, 0),
@@ -160,7 +160,7 @@ p2 <- upset(matrix_family,
             sets.x.label = "Number of families", 
             text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
             # Color bar 
-            sets.bar.color=c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34"), 
+            sets.bar.color=c("#8AAE8A", "#863b34", "#E5A729", "#C67052", "#4F4D1D"), 
             # Color matrix
             set.metadata = list(
               data = metadata1,
@@ -199,7 +199,7 @@ metadata1 <- df_all_filters %>%
     region == "Central_Pacific" ~ pal[4], 
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
-    region == "Central_IndoPacific" ~ pal[1]
+    region == "Central_Indo_Pacific" ~ pal[1]
   )) %>%
   left_join(., motus_sites, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -223,7 +223,7 @@ for (i in all_sites){
 
 # Plotter les 40 premieres intersections pour la lisibilité
 p3 <- upset(matrix_motus, 
-            nsets = 20,
+            nsets = 25,
             order.by = c("freq"),
             mainbar.y.label = "Number of MOTUs", 
             sets.x.label = "Number of MOTUs", 
@@ -242,7 +242,7 @@ p3
 
 # Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
 p3_color <- upset(matrix_motus, 
-      nsets = 20,
+      nsets = 25,
       order.by = c("freq"),
       mainbar.y.label = "Number of MOTUs", 
       sets.x.label = "Number of MOTUs", 
@@ -255,7 +255,7 @@ p3_color <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "region", 
-          colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+          colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -263,7 +263,7 @@ p3_color <- upset(matrix_motus,
 p3_color
 
 # Save - w/ colors
-png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus_colors.png', width = 12, height=8, units = "in", res=300)
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus_colors.png', width = 12, height=12, units = "in", res=300)
 p3_color
 grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()
@@ -290,7 +290,7 @@ metadata1 <- df_all_filters %>%
     region == "Central_Pacific" ~ pal[4],
     region == "West_Indian" ~ pal[3],
     region == "Caribbean" ~ pal[2], 
-    region == "Central_IndoPacific" ~ pal[1]
+    region == "Central_Indo_Pacific" ~ pal[1]
   )) %>%
   left_join(., motus_family, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -315,7 +315,7 @@ for (i in all_sites){
 
 # Plot color
 p4_color <- upset(matrix_family, 
-                  nsets = 20,
+                  nsets = 25,
                   nintersects = 13,
                   order.by = c("freq"),
                   mainbar.y.label = "Number of families", 
@@ -337,142 +337,9 @@ p4_color <- upset(matrix_family,
 p4_color
 
 # Save
-png('outputs/09_dominance_motus_ranks/upset_plot_sites_family_color.png', width = 10, height=7, units = "in", res=300)
+png('outputs/09_dominance_motus_ranks/upset_plot_sites_family_color.png', width = 10, height=10, units = "in", res=300)
 p4_color
 grid.text("Sites - families",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ------- # 
-# Old 
-
-# remove the sole intersections
-UpSet(mm[comb_degree(mm) == 2])
-
-
-# -------------------------------------- # 
-#### Tuto ----
-
-movies = read.csv(system.file("extdata", "movies.csv", package = "UpSetR"), 
-                  header = TRUE, sep = ";")
-head(movies) # `make_comb_mat()` automatically ignores the first two columns
-
-# ADD METADATA 
-sets <- names(movies[3:19])
-avgRottenTomatoesScore <- round(runif(17, min = 0, max = 90))
-metadata <- as.data.frame(cbind(sets, avgRottenTomatoesScore))
-names(metadata) <- c("sets", "avgRottenTomatoesScore")
-metadata$avgRottenTomatoesScore <- as.numeric(as.character(metadata$avgRottenTomatoesScore))
-Cities <- sample(c("Boston", "NYC", "LA"), 17, replace = T)
-metadata <- cbind(metadata, Cities)
-metadata$Cities <- as.character(metadata$Cities)
-metadata[which(metadata$sets %in% c("Drama", "Comedy", "Action", "Thriller", 
-                                    "Romance")), ]
-accepted <- round(runif(17, min = 0, max = 1))
-metadata <- cbind(metadata, accepted)
-metadata[which(metadata$sets %in% c("Drama", "Comedy", "Action", "Thriller", 
-                                    "Romance")), ]
-
-
-# Plot
-upset(movies, set.metadata = list(data = metadata, 
-  plots = list(list(
-  type = "matrix_rows",
-  column = "Cities", colors = c(Boston = "green", NYC = "navy", LA = "purple"),
-  alpha = 0.5
-))))
-
-# Plot2
-upset(movies, 
-  set.metadata = list(
-  data = metadata,
-  plots = list(list(
-    type = "matrix_rows",
-    column = "Cities", colors = c(Boston = "green", NYC = "navy", LA = "purple"),
-    alpha = 0.5
-  ))
-))
-
-
-
-
-
-
-
-m = make_comb_mat(movies, top_n_sets = 6)
-m
-
-m = m[comb_degree(m) > 0]
-UpSet(m)
-
-
-
-# --------------------- # 
-# Add graphs on the side 
-
-m = make_comb_mat(movies[, genre])
-
-comb_elements = lapply(comb_name(m), function(nm) extract_comb(m, nm))
-years = lapply(comb_elements, function(ind) movies$ReleaseDate[ind])
-rating = lapply(comb_elements, function(ind) movies$AvgRating[ind])
-watches = lapply(comb_elements, function(ind) movies$Watches[ind])
-
-
-comb_elements = lapply(comb_name(mm), function(nm) extract_comb(mm, nm))
-
-
-
-
-
-upset(movies,
-  main.bar.color = "black", queries = list(list(
-    query = intersects,
-    params = list("Drama"), color = "red", active = F
-  ), list(
-    query = intersects,
-    params = list("Action", "Drama"), active = T
-  ), list(
-    query = intersects,
-    params = list("Drama", "Comedy", "Action"), color = "orange", active = T
-  )),
-  attribute.plots = list(gridrows = 45, plots = list(list(
-    plot = scatter_plot,
-    x = "ReleaseDate", y = "AvgRating", queries = T
-  ), list(
-    plot = scatter_plot,
-    x = "AvgRating", y = "Watches", queries = F
-  )), ncols = 2), query.legend = "bottom"
-)
-
-  
-
 
 

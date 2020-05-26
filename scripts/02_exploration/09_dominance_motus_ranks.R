@@ -20,11 +20,11 @@ conflict_prefer("summarise", "dplyr")
 load("Rdata/02_clean_all.Rdata")
 
 #Remove estuary stations and deep niskin station
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 # on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? Faire les deux
 #df_all_filters <- df_all_filters %>%
@@ -33,21 +33,21 @@ df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
 # N global 
 Nmotus <- length(unique(df_all_filters$sequence))
 Nmotus
-# 1047 MOTUs in total
+# 2175 MOTUs in total
 
 # N families
 Nfamily <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   distinct(new_family_name) %>% pull() %>% length()
 Nfamily
-# 125
+# 145
 
 # N genus
 Ngenus <- df_all_filters %>%
   filter(!is.na(new_genus_name)) %>%
   distinct(new_genus_name) %>% pull() %>% length()
 Ngenus
-#300
+#373
 
 # --------------------------------------------------------------------- # 
 #### Functions ----
@@ -91,10 +91,8 @@ motu_region <- df_all_filters %>%
 p_motu_region <- fct_barplot(motu_region, rank_x="region", rank_y = "MOTUs")
 p_motu_region
 
-# 3 MOTUs are present in all 3 regions:
-# * One non-ID Myctophidae 
-# * One Katsuwonus pelamis	
-# * Decapterus macarellus	
+# 2 MOTUs are present in all 5 regions:
+
 
 # --------------------- # 
 # site scale 
@@ -163,19 +161,6 @@ ggarrange(p_motu_region,
 
 ggsave("outputs/09_dominance_motus_ranks/repartition_MOTUs_regions_site_station.png", height = 10, width = 15)
 
-# Trial 2
-# Combine data 
-all_motus <- rbind(motu_region, motu_site, motu_station, motu_sample)
-
-# Plot
-p_motu_all <- ggplot(all_motus, aes(x = n, y=n_motus)) + 
-  geom_bar(stat="identity", color = "black", fill = "#56B4E9") + 
-  geom_text(aes(label=n_motus), vjust=-0.5, color="black", size=3.5) +
-  theme_classic() + 
-  labs(x= "Number of spatial units", y = "Number of MOTUs") + 
-  facet_wrap(~rank, scales = "free")
-
-p_motu_all
 
 # --------------------------------------------------------------------- # 
 #### Family unit  ----
@@ -186,7 +171,7 @@ p_motu_all
 length(unique(df_all_filters$region))
 
 # Count
-motu_region <- df_all_filters %>%
+family_region <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(region)) %>%
@@ -196,8 +181,8 @@ motu_region <- df_all_filters %>%
   mutate(rank = "region")
 
 # plot
-p_motu_region <- fct_barplot(motu_region, rank_x="region", rank_y = "families", n_tot = Nfamily)
-p_motu_region
+p_family_region <- fct_barplot(family_region, rank_x="region", rank_y = "families", n_tot = Nfamily)
+p_family_region
 
 # --------------------- # 
 # site scale 
@@ -215,8 +200,8 @@ dataset <- df_all_filters %>%
   mutate(rank = "site")
 
 # plot
-p_motu_site <- fct_barplot(dataset, rank_x="site", rank_y = "families", n_tot = Nfamily)
-p_motu_site
+p_family_site <- fct_barplot(dataset, rank_x="site", rank_y = "families", n_tot = Nfamily)
+p_family_site
 
 # --------------------- # 
 # station scale 
@@ -234,8 +219,8 @@ dataset <- df_all_filters %>%
   mutate(rank = "station")
 
 # plot
-p_motu_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
-p_motu_station
+p_family_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
+p_family_station
 
 # --------------------- # 
 # sample scale 
@@ -253,8 +238,8 @@ dataset <- df_all_filters %>%
   mutate(rank = "sample")
 
 # plot
-p_motu_sample<- fct_barplot(dataset, rank_x="sample", rank_y = "families", n_tot = Nfamily, color = "grey")
-p_motu_sample
+p_family_sample<- fct_barplot(dataset, rank_x="sample", rank_y = "families", n_tot = Nfamily, color = "grey")
+p_family_sample
 
 # --------------------- # 
 # all scales
@@ -263,12 +248,20 @@ p_motu_sample
 
 ggarrange(#p_motu_region, 
           #p_motu_site + rremove("ylab"), 
-          p_motu_station, 
-          p_motu_sample+ rremove("ylab"),
+          p_family_station, 
+          p_family_sample+ rremove("ylab"),
           nrow=1, ncol=2)
 
 ggsave("outputs/09_dominance_motus_ranks/repartition_family_regions_site_station.png", height = 10, width = 15)
 
+
+ggarrange(p_motu_station, 
+          p_motu_sample+ rremove("ylab"),
+          p_family_station, 
+          p_family_sample+ rremove("ylab"),
+          nrow=2, ncol=2)
+
+ggsave("outputs/09_dominance_motus_ranks/histogrammes_rarete.png", height = 15, width = 15)
 # --------------------------------------------------------------------- # 
 #### Genus unit  ----
 

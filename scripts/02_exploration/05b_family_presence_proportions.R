@@ -8,13 +8,14 @@ library(ggpubr)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
+'%ni%' <- Negate("%in%")
 
 #Remove estuary stations and deep niskin station
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
@@ -116,7 +117,7 @@ write.csv(count_families_station_caribbean, "outputs/05_family_proportion/02_bas
   ## Lengguru total
 
 lengguru <- df_all_filters %>%
-  filter(region=="Central_IndoPacific") 
+  filter(region=="Central_Indo_Pacific") 
 
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
@@ -410,7 +411,7 @@ count_families_site_caledonia <- count_families_site_caledonia %>%
   mutate(order = row_number())
 
 ## plot by 3 sites, because plot too small otherwise
-site_sub <- c("", "", "")
+site_sub <- c("STVINCENT", "BOURAIL", "NOUMEA")
 subset1 <- count_families_site_caledonia %>%
   filter(site%in%site_sub)
 ggplot(subset1, aes(order, prop)) + 
@@ -424,7 +425,7 @@ ggplot(subset1, aes(order, prop)) +
   scale_x_continuous(breaks=subset1$order, labels=subset1$family, expand = c(0,0))
 
 
-ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_caledonia_site7-9.png", width=20, height=16)
+ggsave("outputs/05_family_proportion/02_based_on_species_presence/per site/family_proportion_caledonia_site4-6.png", width=20, height=16)
 
 ## caledonia station
 
@@ -507,7 +508,7 @@ families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_
 families_prop_global$Caledonia <- (families_prop_global$new_n_caledonia*families_prop_global$prop_global)/families_prop_global$n_global
 
 families_prop_global <- families_prop_global[,c(1,14:18)]
-families_prop_global2 <- melt(families_prop_global)
+families_prop_global2 <- reshape2::melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
 
 save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
@@ -515,7 +516,7 @@ save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052"))+ #863b34
+  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052", "#863b34"))+ 
   labs(x="Family", y="Proportion")+
   coord_flip()
 
@@ -524,7 +525,7 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean, count_families_site_eparse, count_families_site_fakarava)
+df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean, count_families_site_eparse, count_families_site_fakarava, count_families_site_caledonia[,c(-7)])
 save(df_all_site, file = "Rdata/family_proportion_per_site.rdata")
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
@@ -538,7 +539,7 @@ for (i in 1:length(family)) {
     xlim(0, 800)+
     theme(legend.position = "none")+
     theme_bw()+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
@@ -560,7 +561,7 @@ ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"
 
 
 ## same for stations
-df_all_station <- rbind(count_families_station_lengguru, count_families_station_caribbean, count_families_station_eparse, count_families_station_fakarava)
+df_all_station <- rbind(count_families_station_lengguru, count_families_station_caribbean, count_families_station_eparse, count_families_station_fakarava, count_families_station_caledonia)
 
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
@@ -615,11 +616,11 @@ test3 <- chisq.test(subset_fam_spread[,c(-1)])
   ## on all families, all stations
 test1 <- chisq.test(df_all_station$prop)
 
-  ## selected families, all sites
+  ## selected families, all stations
 subset_fam <- df_all_station[df_all_station$family%in%family,]
 test2 <- chisq.test(subset_fam$prop)
 
-  ## selected families, by sites
+  ## selected families, by stations
 subset_fam <- subset_fam[, -c(2,3,6)]
 subset_fam_spread <- spread(subset_fam, family, prop)
 subset_fam_spread[is.na(subset_fam_spread)] <- 0
