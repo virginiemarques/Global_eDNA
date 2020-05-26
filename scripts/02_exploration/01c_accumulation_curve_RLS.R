@@ -81,11 +81,13 @@ all_accumulation_RLS_df$asymptote <- asymp_RLS
 family_RLS <- ggplot(all_accumulation_RLS_df) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=160+10, label="RLS Family : 160",hjust=1, alpha=0.7) +
+  ylim(0,190)+
   ylab("Number of families") +
   xlab("Number of transects") +
   theme_bw() + 
-  ggtitle("Families")
+  ggtitle("C")
   
 family_RLS
 
@@ -93,24 +95,22 @@ family_RLS
 # plot combined with our data
 load("Rdata/accumulation_asymptote_families_all.rdata")
 
-fam_combined <- ggplot() + 
-  geom_ribbon(data=all_accumulation_RLS_df, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(data=all_accumulation_RLS_df, aes(x = sites, y = richness)) +
-  geom_hline(data=all_accumulation_RLS_df, aes(yintercept = asymptote), linetype = "dashed", size = 1, color="darkgrey") +
-  annotate(geom="text", x=2990, y=160+5, label="RLS Family : 160",hjust=1, color="darkgrey") +
-  geom_ribbon(data=df_fam, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
-  geom_line(data=df_fam, aes(x = sites, y = richness)) +
-  geom_hline(data=df_fam, aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=2990, y=178+5, label="Family : 178",hjust=1,
-           color="#457277") +
-  ylab("Number of families") +
-  xlab("Number of sample / transects") +
+fam_edna <- ggplot(df_fam) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
+  annotate(geom="text", x=250, y=178+10, label="eDNA Family : 178",hjust=1,color="#457277") +
+  ylim(0,190)+
+  labs(y="", x="Number of samples")+
   theme_bw() + 
-  ggtitle("B")
+  ggtitle("D")
 
-fam_combined
+fam_edna
 
-ggsave("outputs/03_accumulation_curves/accumulation_families_RLS.png")
+#combined plots
+
+ggarrange(family_RLS, fam_edna +rremove("ylab"), nrow = 1, ncol=2)
+ggsave("outputs/03_accumulation_curves/accumulation_families_panels.png")
 # ------------------------------------------------------------------------------- # 
 #### On species ----
 # ------------------------------------------------------------------------------- # 
@@ -165,11 +165,13 @@ all_accumulation_species_RLS_df$asymptote <- asymp_species_RLS
 species_RLS <- ggplot(all_accumulation_species_RLS_df) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  ylab("Number of families") +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=2733+150, label="RLS Species : 2733",hjust=1, alpha=0.7) +
+  ylim(0,3000)+
+  ylab("Number of Species / MOTUs") +
   xlab("Number of transects") +
   theme_bw() + 
-  ggtitle("Species")
+  ggtitle("A")
 
 species_RLS
 
@@ -177,23 +179,19 @@ species_RLS
 # plot combined with our data
 load("Rdata/accumulation_asymptote_motus_all.rdata")
 
-species_combined <- ggplot() + 
-  geom_ribbon(data=df_motus, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
-  geom_line(data=df_motus, aes(x = sites, y = richness)) +
-  geom_hline(data=df_motus, aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=2990, y=2818+55, label="MOTUs : 2818",hjust=1,
+species_edna <- ggplot(df_motus) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
+  annotate(geom="text", x=250, y=2818+150, label="eDNA MOTUs : 2818",hjust=1,
            color="#d2981a") +
-  ylab("Number of MOTUs / species") +
-  xlab("Number of samples/transects")+
-  #theme(axis.title.x.top = element_text(color="blue"), axis.title.x.bottom = element_text(color="red"))+
-  geom_ribbon(data=all_accumulation_species_RLS_df, aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(data=all_accumulation_species_RLS_df, aes(x = sites, y = richness)) +
-  geom_hline(data=all_accumulation_species_RLS_df, aes(yintercept = asymptote), linetype = "dashed", size = 1, color="darkgrey") +
-  annotate(geom="text", x=2990, y=2733-55, label="RLS Species : 2733",hjust=1, color="darkgrey") +
-  #scale_x_continuous("Number of transects", sec.axis= sec_axis(~ (.*10), name = "Number of samples"))+
+  ylim(0,3000)+
+  ylab("") +
+  xlab("Number of samples")+
   theme_bw() + 
-  ggtitle("A")
+  ggtitle("B")
 
-species_combined
+species_edna
 
-ggsave("outputs/03_accumulation_curves/accumulation_speciesRLS_motus.png")
+ggarrange(species_RLS, species_edna, nrow = 1, ncol=2)
+ggsave("outputs/03_accumulation_curves/accumulation_species_motus_panels.png")
