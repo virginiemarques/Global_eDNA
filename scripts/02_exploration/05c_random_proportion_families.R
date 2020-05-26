@@ -43,7 +43,7 @@ for (j in seq(1:1000)) {
   random_prop_tot <- rbind(random_prop_tot, random_prop)
 }
 
-save(random_prop_tot, file = "Rdata/random_family_proportions.rdata")
+save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 
 load("Rdata/random_family_proportions.rdata")
 # calculate 2.5 and 97.5 quantile for each sample size and each family
@@ -71,14 +71,14 @@ for (i in 1:length(family)) {
   fam_CI <- CI_family[CI_family$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
     geom_point(size=2, aes(colour=region))+
-    geom_line(data=fam_CI, aes(n_total, upper))+
-    geom_line(data=fam_CI, aes(n_total, lower))+
-    scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
+    geom_line(data=fam_CI, aes(n_total, upper, alpha=0.5), show.legend = FALSE)+
+    geom_line(data=fam_CI, aes(n_total, lower, alpha=0.5), show.legend = FALSE)+
+    #scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
     xlim(0, 800)+
     ylim(0,0.3)+
     theme_bw()+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
+    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
