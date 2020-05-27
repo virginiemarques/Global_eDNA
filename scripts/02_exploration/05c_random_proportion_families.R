@@ -45,9 +45,9 @@ for (j in seq(1:1000)) {
 
 save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 
-load("Rdata/random_family_proportions.rdata")
+load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 # calculate 2.5 and 97.5 quantile for each sample size and each family
-family <- family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
+family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 CI_family <- data.frame()
 quant <- data.frame(upper=numeric(800), lower=numeric(800))
@@ -70,9 +70,9 @@ for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
   fam_CI <- CI_family[CI_family$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
+    geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
+    geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
     geom_point(size=2, aes(colour=region))+
-    geom_line(data=fam_CI, aes(n_total, upper, alpha=0.5), show.legend = FALSE)+
-    geom_line(data=fam_CI, aes(n_total, lower, alpha=0.5), show.legend = FALSE)+
     #scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
     xlim(0, 800)+
     ylim(0,0.3)+
