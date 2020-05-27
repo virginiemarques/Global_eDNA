@@ -5,20 +5,20 @@ library(betapart)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
 load("Rdata/02_clean_all.Rdata")
-
+'%ni%' <- Negate("%in%")
 #Remove estuary stations and deep niskin station
-df_all_filters <- subset(df_all_filters, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")))
-df_all_filters <- subset(df_all_filters, sample_method!="niskin")
-df_all_filters <- subset(df_all_filters, region!="East_Pacific")
-df_all_filters <- subset(df_all_filters, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
-df_all_filters <- subset(df_all_filters, station!="glorieuse_distance_300m")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
 
-# gamma global =130
+# gamma global =145
 
 gamma_global <- as.numeric(df_all_filters %>%
   summarise(n = n_distinct(new_family_name)))
@@ -102,7 +102,7 @@ alpha_station_car <- alpha_station %>%
 mean_alpha_station_car <- mean(alpha_station_car$family)
 
 alpha_station_leng <- alpha_station %>%
-  subset(region == "Central_IndoPacific")
+  subset(region == "Central_Indo_Pacific")
 mean_alpha_station_leng <- mean(alpha_station_leng$family)
 
 alpha_station_faka <- alpha_station %>%
@@ -143,7 +143,7 @@ beta_station_car <- beta_station %>%
 mean_beta_station_car <- mean(beta_station_car$beta)
 
 beta_station_leng <- beta_station %>%
-  subset(region == "Central_IndoPacific")
+  subset(region == "Central_Indo_Pacific")
 mean_beta_station_leng <- mean(beta_station_leng$beta)
 
 beta_station_eparse <- beta_station %>%
@@ -167,7 +167,7 @@ beta_region$beta+mean_beta_site+mean_beta_station+mean_alpha_station
 div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_region"), 
                             value= c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region$beta), 
                             sd=c(sd_alpha_station, sd_beta_station, sd_beta_site, 0),
-                            percent=numeric(5))
+                            percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
 
 write.csv(div_partition, "outputs/06_diversity_partitioning/Family_diversity_partitioning.csv")
@@ -203,7 +203,7 @@ for (i in 1:length(region)) {
   df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:5], "pa",na.rm = TRUE)
+df_region <- decostand(df_region[,2:6], "pa",na.rm = TRUE)
 df_region[is.na(df_region)] <- 0
 df_region <- as.data.frame(t(df_region))
 
@@ -272,7 +272,7 @@ for (i in 1:length(site)) {
 
 betatotal <- rbind(betaregion, betasite, betastation)
 
-beta_melt <- melt(betatotal)
+beta_melt <- reshape2::melt(betatotal)
 
 ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
