@@ -144,6 +144,7 @@ PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 # ---- # LULU  
 
 LULU <- liste_read_edna_LULU %>%
+  lapply(., fct_filter_station) %>%
   lapply(., infos_statistiques) %>%
   bind_rows(., .id = "region") %>%
   mutate(step = "LULU") %>% 
@@ -154,6 +155,7 @@ LULU <- liste_read_edna_LULU %>%
 LULU_family <- lapply(liste_read_edna_LULU, function(x){
   x %>% 
     filter(new_rank_ncbi != "higher")}) %>%
+  lapply(., fct_filter_station) %>%
   lapply(., infos_statistiques) %>%
   bind_rows(., .id = "region") %>%
   mutate(step = "LULU_family") %>% 
