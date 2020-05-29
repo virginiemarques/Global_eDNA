@@ -43,25 +43,25 @@ for (i in 1:length(families3)) {
     summarize(n_distinct(Species))
 }
 
-# calculate number of taxa per family in our data
+# calculate number of species per family in our data
 
 for (i in 1:length(families3)) {
-  fam_summary[i,"n_taxa"] <- df_all_filters %>%
+  fam_summary[i,"n_species"] <- df_all_filters %>%
     subset(new_family_name==families3[i]) %>%
-    filter(!is.na(new_scientific_name_ncbi)) %>%
-    summarize(n_distinct(new_scientific_name_ncbi))
+    filter(!is.na(new_species_name)) %>%
+    summarize(n_distinct(new_species_name))
 }
 
 # calculate delta checklist - us (%)
 for (i in 1:length(families3)) {
-  fam_summary[i, "delta_taxa"] <- ((fam_summary[i, "n_species_checklist"] - fam_summary[i, "n_taxa"])*100)/fam_summary[i, "n_species_checklist"]
+  fam_summary[i, "delta_species"] <- ((fam_summary[i, "n_species_checklist"] - fam_summary[i, "n_species"])*100)/fam_summary[i, "n_species_checklist"]
   fam_summary[i, "delta_motu"] <- ((fam_summary[i, "n_species_checklist"] - fam_summary[i, "n_motus"])*100)/fam_summary[i, "n_species_checklist"]
   
 }
 
 # calculate percentage us ~ checklist
 for (i in 1:length(families3)) {
-  fam_summary[i, "perc_taxa"] <- (fam_summary[i, "n_taxa"]*100)/fam_summary[i, "n_species_checklist"]
+  fam_summary[i, "perc_species"] <- (fam_summary[i, "n_species"]*100)/fam_summary[i, "n_species_checklist"]
   fam_summary[i, "perc_motu"] <- (fam_summary[i, "n_motus"]*100)/fam_summary[i, "n_species_checklist"]
   
 }
@@ -69,56 +69,70 @@ for (i in 1:length(families3)) {
 
 # tranform log10 richness
 for (i in 1:length(families3)) {
-  fam_summary[i, "log_taxa"] <- log1p(fam_summary[i, "n_taxa"])
+  fam_summary[i, "log_species"] <- log1p(fam_summary[i, "n_species"])
   fam_summary[i, "log_motu"] <- log1p(fam_summary[i, "n_motus"])
   fam_summary[i, "log_checklist"] <- log1p(fam_summary[i, "n_species_checklist"])
   
 }
 
 # add short family name
-#fam_summary$fam <- c("Acnt", "Apgn", "Blst", "Blnd", "Crng", "Chtd", "Dstd", "Gobd", "Hmld", "Hlcn", "Lbrd", "Lthr", "Ltjn", "Mnct", "Mlld", "Mrnd", "Pmcnth", "Pmcntr", "Scbr", "Srrn", "Sgnd", "Synd", "Ttrdt")
-
+fam_summary$fam <- gsub("(?<=\\S)[aeiouy]", "", fam_summary$new_family_name, perl = TRUE)
+fam_summary$fam <- substring(fam_summary$fam, 1, 4)
 
 
 ## plot log(number of species in checklist) ~ log(our data)
 #-----------------------------------------------------------------------------------------------------------
 
 
-# linear regression and plot for taxa
-lm_taxa <- lm(log_checklist~log_taxa, data=fam_summary)
-summary(lm_taxa)
+# linear regression and plot for species
+lm_species <- lm(log_checklist~log_species, data=fam_summary)
+summary(lm_species)
 
-plot_taxa <- ggplot(fam_summary, aes(log_taxa, log_checklist))+
+plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   geom_point(size=2)+
   #geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.95, intercept = 0.84, size=0.8)+
+  geom_abline(slope = 0.75, intercept = 1.63, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
-  labs(x="log(1+Number of taxa)",
-       y="log(1+Number of species in the checklist)")
+  labs(x="log(1+Number of species in eDNA)",
+       y="log(1+Number of species in RLS)")+
+  ggtitle("E")
 
-grob <- grobTree(textGrob("y = 0.95x+0.0.84\nR² = 0.48\np < 0.001", x=0.8, y=0.2))
-plot_taxa2 <- plot_taxa+annotation_custom(grob)
-plot_taxa2
+grob <- grobTree(textGrob("y = 0.75x+1.63\nR² = 0.38\np < 0.001", x=0.8, y=0.2))
+plot_species2 <- plot_species+annotation_custom(grob)
+plot_species2
 
 
 # linear regression and plot for motus
 lm_motu <- lm(log_checklist~log_motu, data=fam_summary)
 summary(lm_motu)
+gobiidae <- readPNG("c:/Users/mathon/Desktop/gobiidae.png")
+muraenidae <- readPNG("c:/Users/mathon/Desktop/muraenidae.png")
+pomacentridae <- readPNG("c:/Users/mathon/Desktop/pomacentridae.png")
+pomacentridae <- readPNG("c:/Users/mathon/Desktop/pomacentridae.png")
+labridae <- readPNG("c:/Users/mathon/Desktop/labridae.png")
+mugilidae <- readPNG("c:/Users/mathon/Desktop/mugilidae.png")
+kyphosidae <- readPNG("c:/Users/mathon/Desktop/kyphosidae.png")
+
 
 plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
+  annotation_custom(rasterGrob(gobiidae), xmin = 5.1, xmax = 5.8, ymin = 4.3, ymax = 5)+
+  annotation_custom(rasterGrob(muraenidae), xmin = 4.3, xmax = 5, ymin = 3, ymax = 3.5)+
+  annotation_custom(rasterGrob(pomacentridae), xmin = 4, xmax = 4.5, ymin = 5.5, ymax = 6)+
+  annotation_custom(rasterGrob(labridae), xmin = 4.9, xmax = 5.5, ymin = 5.5, ymax = 6)+
+  annotation_custom(rasterGrob(mugilidae), xmin = 3.1, xmax = 4, ymin = 0.9, ymax = 1.4)+
+  annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.5, ymax = 4)+
   geom_point(size=2)+
-  #geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
   geom_abline(slope = 0.83, intercept = 0.63, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
-  labs(x="log(1+Number of MOTUs)",
-       y="log(1+Number of species in the checklist)")
-grob <- grobTree(textGrob("y = 0.83x+0.63\nR² = 0.57\np < 0.001", x=0.8, y=0.2))
+  labs(x="log(1+Number of MOTUs in eDNA)", y="log(1+Number of species in RLS")+
+  ggtitle("F")
+grob <- grobTree(textGrob("y = 0.83x+0.63\nR² = 0.58\np < 0.001", x=0.8, y=0.2))
 plot_motu2 <- plot_motu+annotation_custom(grob)
 plot_motu2
 
@@ -128,20 +142,20 @@ plot_motu2
 #-----------------------------------------------------------------------------------------------------------
 
 
-# perc checklist - taxa
-lm_taxa <- lm(perc_taxa~n_species_checklist, data=fam_summary)
-summary(lm_taxa)
+# perc checklist - species
+lm_species <- lm(perc_species~n_species_checklist, data=fam_summary)
+summary(lm_species)
 
-perc_taxa <- ggplot(fam_summary, aes(n_species_checklist, perc_taxa))+
+perc_species <- ggplot(fam_summary, aes(n_species_checklist, perc_species))+
   geom_point(size=2)+
-  #geom_text(aes(label=fam), size=3, position = position_jitter(width=10, height = 10))+
+  geom_text(data=fam_summary[fam_summary$perc_species > 100,], aes(label=fam), size=3, position = position_jitter(width=20, height = 20))+
   geom_hline(yintercept=100, color="red")+
   theme_bw()+
-  labs(x="Number of species in the checklist",
-       y="%(taxa ~ checklist)")
-grob <- grobTree(textGrob("R² = 0.05\np = 0.032", x=0.8, y=0.9))
-perc_taxa2 <- perc_taxa+annotation_custom(grob)
-perc_taxa2
+  labs(x="Number of species in RLS",
+       y="%(species eDNA ~ species RLS)")
+grob <- grobTree(textGrob("R² = 0.006\np = 0.22", x=0.8, y=0.9))
+perc_species2 <- perc_species+annotation_custom(grob)
+perc_species2
 
 # perc checklist - motu
 lm_motu <- lm(perc_motu~n_species_checklist, data=fam_summary)
@@ -149,11 +163,11 @@ summary(lm_motu)
 
 perc_motu <- ggplot(fam_summary, aes(n_species_checklist, perc_motu))+
   geom_point(size=2)+
-  #geom_text(aes(label=fam), size=3, position = position_jitter(width=10, height = 10))+
+  geom_text(data=fam_summary[fam_summary$perc_motu > 100,], aes(label=fam), size=3, position = position_jitter(width=20, height = 20))+
   geom_hline(yintercept=100, color="red")+
   theme_bw()+
-  labs(x="Number of species in the checklist",
-       y="%(MOTUs ~ checklist)")
+  labs(x="Number of species in RLS",
+       y="%(MOTUs eDNA ~ species RLS)")
 grob <- grobTree(textGrob("R² = 0.03\np = 0.075", x=0.8, y=0.9))
 perc_motu2 <- perc_motu+annotation_custom(grob)
 perc_motu2
@@ -161,48 +175,23 @@ perc_motu2
 
 
 
-# plot all together (les labels c'est degueulasse)
-plot_rich_perc <- ggarrange(plot_taxa2, plot_motu2, perc_taxa2, perc_motu2, nrow = 2, ncol = 2, labels = c("A", "B","C", "D"), label.x = -0.007, label.y = 1)
+# plot all together 
+plot_rich_log <- ggarrange(plot_species2, plot_motu2, nrow = 1, ncol = 2)
+plot_rich_log
+
+plot_rich_perc <- ggarrange(perc_species2, perc_motu2, nrow = 1, ncol = 2, labels = c("A", "B"), label.x = -0.007, label.y = 1)
 plot_rich_perc
+ggsave("outputs/Figures papier/ED_Figure2.png", width = 7, height = 3.5)
 
 
 
 
+## plot avec le reste de figure 1
+
+load("Rdata/plot_acc_species.rdata")
+load("Rdata/plot_acc_family.rdata")
 
 
 
-## plots not used ##
-#-----------------------------------------------------------------------------------------------------------
-
-
-# delta checklist - taxa
-lm_taxa <- lm(delta_taxa~n_species_checklist, data=fam_summary)
-summary(lm_taxa)
-
-delta_taxa <- ggplot(fam_summary, aes(n_species_checklist, delta_taxa))+
-  geom_point(size=2)+
-  geom_text(aes(label=fam), size=3, position = position_jitter(width=10, height = 10))+
-  ylim(0,110)+
-  theme_bw()+
-  labs(x="Number of species in the checklist",
-       y="Δ checklist - taxa (%)")
-grob <- grobTree(textGrob("R² = -0.01\np = 0.39", x=0.8, y=0.1))
-delta_taxa2 <- delta_taxa+annotation_custom(grob)
-delta_taxa2
-
-# delta checklist - motu
-lm_motu <- lm(delta_motu~n_species_checklist, data=fam_summary)
-summary(lm_motu)
-
-delta_motu <- ggplot(fam_summary, aes(n_species_checklist, delta_motu))+
-  geom_point(size=2)+
-  geom_text(aes(label=fam), size=3, position = position_jitter(width=10, height = 10))+
-  ylim(-100,110)+
-  theme_bw()+
-  labs(x="Number of species in the checklist",
-       y="Δ checklist - MOTUs (%)")
-grob <- grobTree(textGrob("R² = 0.04\np = 0.18", x=0.8, y=0.1))
-delta_motu2 <- delta_motu+annotation_custom(grob)
-delta_motu2
-
-#-------------------------------------------------------------------------------------------------
+ggarrange(plot_acc_species, plot_acc_fam, plot_rich_log, nrow = 3, ncol = 1)
+ggsave("outputs/Figures papier/Figure1.png", width = 8, height = 8)

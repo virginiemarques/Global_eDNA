@@ -511,7 +511,7 @@ families_prop_global <- families_prop_global[,c(1,14:18)]
 families_prop_global2 <- reshape2::melt(families_prop_global)
 colnames(families_prop_global2) <- c("family", "Region", "prop")
 
-save(families_prop_global2, file = "Rdata/family_proportion_global.Rdata")
+save(families_prop_global, file = "Rdata/family_proportion_global.Rdata")
 
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 

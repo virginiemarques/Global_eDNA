@@ -83,6 +83,7 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
   annotate(geom="text", x=2990, y=160+10, label="RLS Family : 160",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.44",hjust=1, alpha=0.7)+
   ylim(0,190)+
   ylab("Number of families") +
   xlab("Number of transects") +
@@ -100,6 +101,7 @@ fam_edna <- ggplot(df_fam) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
   annotate(geom="text", x=250, y=178+10, label="eDNA Family : 178",hjust=1,color="#457277") +
+  annotate(geom="text", x=250, y=30, label="Lomolino slope = 1.85",hjust=1, alpha=0.7)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
   theme_bw() + 
@@ -109,8 +111,10 @@ fam_edna
 
 #combined plots
 
-ggarrange(family_RLS, fam_edna +rremove("ylab"), nrow = 1, ncol=2)
+plot_acc_fam <- ggarrange(family_RLS, fam_edna +rremove("ylab"), nrow = 1, ncol=2)
 ggsave("outputs/03_accumulation_curves/accumulation_families_panels.png")
+save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
+
 # ------------------------------------------------------------------------------- # 
 #### On species ----
 # ------------------------------------------------------------------------------- # 
@@ -167,6 +171,7 @@ species_RLS <- ggplot(all_accumulation_species_RLS_df) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
   annotate(geom="text", x=2990, y=2733+150, label="RLS Species : 2733",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=600, label="Lomolino slope = 1.68",hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("Number of Species / MOTUs") +
   xlab("Number of transects") +
@@ -183,8 +188,8 @@ species_edna <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2818+150, label="eDNA MOTUs : 2818",hjust=1,
-           color="#d2981a") +
+  annotate(geom="text", x=250, y=2818+150, label="eDNA MOTUs : 2818", hjust=1, color="#d2981a") +
+  annotate(geom="text", x=250, y=600, label="Lomolino slope = 2.3", hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("") +
   xlab("Number of samples")+
@@ -193,5 +198,7 @@ species_edna <- ggplot(df_motus) +
 
 species_edna
 
-ggarrange(species_RLS, species_edna, nrow = 1, ncol=2)
+plot_acc_species <- ggarrange(species_RLS, species_edna, nrow = 1, ncol=2)
 ggsave("outputs/03_accumulation_curves/accumulation_species_motus_panels.png")
+save(plot_acc_species, file = "Rdata/plot_acc_species.rdata")
+

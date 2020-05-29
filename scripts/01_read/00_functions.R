@@ -371,9 +371,9 @@ apply_lulu <- function(edna_file, path_lulu, match_lulu = 84, co_occurence_lulu 
 infos_statistiques <- function(file){
   Reads <- sum(file$count_reads)
   MOTUs <- file %>% summarise(n = n_distinct(amplicon)) %>% pull()
-  Scientific_names <-  file %>% summarise(n = n_distinct(new_scientific_name_ncbi)) %>% pull()
+  Species <-  file %>% filter(!is.na(new_species_name))%>%summarise(n = n_distinct(new_species_name)) %>% pull()
 
-  ab <- data.frame(Reads, MOTUs, Scientific_names)
+  ab <- data.frame(Reads, MOTUs, Species)
   return(ab)
 }
 

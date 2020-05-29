@@ -55,6 +55,15 @@ df_all_filters %>%
   summarise(n = n_distinct(amplicon)) %>% pull()
 
 
+## nb motus Labridae, gobiidae et pomacentridae
+df_all_filters %>%
+  filter(new_family_name == "Poridae")%>%
+  summarise(n = n_distinct(sequence))
+
+family_coverage %>%
+  filter(coef_resolution==1)%>%
+  summarise(n=n_distinct(Family))
+
 
 library(reshape2)
 # count RLS
