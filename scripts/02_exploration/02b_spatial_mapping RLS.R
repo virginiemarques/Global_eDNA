@@ -54,14 +54,14 @@ ggsave("outputs/02_spatial_mapping/02_RLS_transects.png", width=8, height=6)
 #                            Interactive map
 
 
-m <- leaflet(metadata_map_sf) %>%
+m <- leaflet(RLS_map_sf) %>%
   setView(lat=10, lng=0 , zoom=2) %>%
   addTiles() %>%
   addCircles(weight = 1,
              popup = 1, 
              radius = 900, 
              fillColor = "blue", 
-             label = ~paste(station), 
+             label = ~paste(SiteCode), 
              color = 'black', 
              opacity = 1) %>%
   # add ocean basemap
@@ -71,7 +71,7 @@ m <- leaflet(metadata_map_sf) %>%
 m
 
 # I cant save the file where I want, for some reason. So I save it in root, then move it to wanted destination. 
-saveWidget(m, file="02_interactive_map_coral_samples.html")
+saveWidget(m, file="02_interactive_RLS.html")
 system("mv 02_interactive_map.html outputs/02_spatial_mapping/.")
 
 # ---------------------------------------------------------------------------------------------- #
