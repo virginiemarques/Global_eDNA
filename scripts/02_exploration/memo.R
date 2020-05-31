@@ -37,7 +37,7 @@ df_all_filters %>%
 ## number of species
 df_all_filters %>%
   filter(!is.na(new_species_name))%>%
-  summarise(n = n_distinct(new_species_name))
+  summarise(n = n_distinct(sequence))
 
 ## unassigned reads
 df <- df_all_filters %>%

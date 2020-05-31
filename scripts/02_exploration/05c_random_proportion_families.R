@@ -18,6 +18,45 @@ df_all_filters <- df_all_filters %>%
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
+
+site <- unique(df_all_filters$site)
+df_site=data.frame(motu=character())
+
+for (i in 1:length(site)) {
+  df <- df_all_filters[df_all_filters$site == site[i],] %>%
+    distinct(sequence, site)
+  colnames(df) <- c("motu", site[i])
+  df_site <- full_join(df_site, df, by="motu")
+}
+rownames(df_site) <- df_site[,1]
+df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
+df_site[is.na(df_site)] <- 0
+df_site <- as.data.frame(t(df_site))
+
+test <- nullmodel(df_site, "curveball", 10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 global_motu <- df_all_filters %>%
   distinct(sequence, .keep_all = TRUE)
 global_family<- as.data.frame(unique(global_motu$new_family_name))
