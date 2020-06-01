@@ -25,7 +25,7 @@ df_site=data.frame(motu=character())
 for (i in 1:length(site)) {
   df <- df_all_filters[df_all_filters$site == site[i],] %>%
     distinct(sequence, site)
-  colnames(df) <- c("motu", site[i])
+  colnames(df) <- c("motu", site[i], family)
   df_site <- full_join(df_site, df, by="motu")
 }
 rownames(df_site) <- df_site[,1]
@@ -33,13 +33,19 @@ df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
 df_site[is.na(df_site)] <- 0
 df_site <- as.data.frame(t(df_site))
 
-test <- nullmodel(df_site, "curveball", 10)
 
 
 
 
 
+rep = 3
+null.algo <- nullmodel(df_site, "curveball")
+random_mat <- simulate(null.algo, nsim=rep)
 
+
+
+
+random_mat[,,1]
 
 
 
