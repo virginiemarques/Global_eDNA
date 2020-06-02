@@ -55,7 +55,7 @@ rep = 1000
 null.algo <- nullmodel(df_site, "curveball")
 random_mat <- simulate(null.algo, nsim=rep)
 
-
+# get the family proportion for each family, in each site, in each random simulation
 df_tot <- data.frame()
 for (k in 1:1000) {
   rd_mat <- as.data.frame(random_mat[,,k])
@@ -87,9 +87,11 @@ random_prop_tot <- df_tot
 
 save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 
-load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
+
 
 # calculate 2.5 and 97.5 quantile for each sample size and each family
+load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
+
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 CI_family <- data.frame()
@@ -106,6 +108,7 @@ for (j in 1:length(family)) {
 }
 
 
+# plot on top of family proportions in our data
 load("Rdata/family_proportion_per_site.rdata")
 
 prop <- vector("list")
@@ -126,8 +129,6 @@ for (i in 1:length(family)) {
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
-
-
 plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
 plot
 x.grob <- textGrob("Total number of MOTUs per site", 
@@ -137,7 +138,7 @@ y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site",
 plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 
-
+# assemble with part A of the figure 3
 load("Rdata/plot_richness_site~dist_CT.rdata")
 
 ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
