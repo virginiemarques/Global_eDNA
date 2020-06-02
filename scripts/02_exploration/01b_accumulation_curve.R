@@ -502,3 +502,5 @@ ggarrange(plot_motus,
 ggsave("outputs/03_accumulation_curves/accumulation_curve_all_levels_no_order.png", width = 10, height=5)  
 
 
+ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("A", "B"))
+ggsave("outputs/Figures papier/ED_figure4.png", width=10, height = 12)
