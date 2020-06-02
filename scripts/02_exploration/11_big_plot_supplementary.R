@@ -31,47 +31,48 @@ family <- unique(df_all_filters$new_family_name)
 family_coverage <- subset(family_coverage, Family%in%family)
 
 
-# mise en forme data
+# select families with > 5 motus for main and < 5 motus for ED
 
 count_families_global <- arrange(count_families_global, n_motus)
 count_families_global_main <- count_families_global%>%
   subset(n_motus >= 5)
 count_families_global_ED <- count_families_global %>%
   subset(n_motus < 5)
-
 families_main <- as.character(unique(count_families_global_main$family))
+families_ED <- as.character(unique(count_families_global_ED$family))
 
-
-prop_similarity_main <- prop_similarity %>%
-  subset(family%in%families_main)
-prop_similarity_main <- reshape2::melt(prop_similarity_main)
-prop_similarity_main$family <- factor(prop_similarity_main$family, levels = as.character(factor(count_families_global_main$family)))
-colnames(prop_similarity_main) <- c("family", "class", "percentage")
-
-prop_similarity_ED <- prop_similarity %>%
-  subset(family%ni%families_main)
-prop_similarity_ED <- reshape2::melt(prop_similarity_ED)
-prop_similarity_ED$family <- factor(prop_similarity_ED$family, levels = as.character(factor(count_families_global_ED$family)))
-colnames(prop_similarity_ED) <- c("family", "class", "percentage")
-
-
-family_coverage_main <- family_coverage %>%
-  subset(Family%in%families_main)
-family_coverage_main$Family <- factor(family_coverage_main$Family, levels = as.character(factor(count_families_global_main$family)))
-
-family_coverage_ED <- family_coverage %>%
-  subset(Family%ni%families_main)
-family_coverage_ED$Family <- factor(family_coverage_ED$Family, levels = as.character(factor(count_families_global_ED$family)))
-
+# mise en forme data pour ordonner correctement
 families_prop_global_main <- families_prop_global %>%
   subset(family%in%families_main)
 families_prop_global_main <- reshape2::melt(families_prop_global_main)
 colnames(families_prop_global_main) <- c("family", "Region", "prop")
 
 families_prop_global_ED <- families_prop_global %>%
-  subset(family%ni%families_main)
+  subset(family%in%family_coverage_ED$Family)
 families_prop_global_ED <- reshape2::melt(families_prop_global_ED)
 colnames(families_prop_global_ED) <- c("family", "Region", "prop")
+
+prop_similarity <- left_join(prop_similarity, families_prop_global, by="family")
+prop_similarity <- melt(prop_similarity, id=c("family", "85-90%", "90-95%", "95-<100%", "100%"))
+colnames(prop_similarity) <- c("family", "85-90%", "90-95%", "95-<100%", "100%", "region", "prop")
+prop_similarity_main <- prop_similarity %>%
+  subset(family%in%families_main)
+prop_similarity_main <- reshape2::melt(prop_similarity_main, id=c("family", "region", "prop"))
+colnames(prop_similarity_main) <- c("family", "region", "prop", "class", "percentage")
+
+prop_similarity_ED <- prop_similarity %>%
+  subset(family%in%family_coverage_ED$Family)
+prop_similarity_ED <- reshape2::melt(prop_similarity_ED, id=c("family", "region", "prop"))
+colnames(prop_similarity_ED) <- c("family", "region", "prop", "class", "percentage")
+
+family_coverage <- left_join(family_coverage, families_prop_global, by=c("Family"="family"))
+family_coverage <- melt(family_coverage, id=c("Family", "coef_sequencing", "coef_resolution"))
+colnames(family_coverage) <- c("Family", "coef_sequencing", "coef_resolution", "region", "prop")
+family_coverage_main <- family_coverage %>%
+  subset(Family%in%families_main)
+family_coverage_ED <- family_coverage %>%
+  subset(Family%in%families_ED)
+
 
 
 
@@ -85,7 +86,7 @@ prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop,
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
 
-coverage <- ggplot(family_coverage_main, aes(x=Family, y = coef_sequencing)) + 
+coverage <- ggplot(family_coverage_main, aes(x=reorder(Family, prop), y = coef_sequencing)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
@@ -95,7 +96,7 @@ coverage <- ggplot(family_coverage_main, aes(x=Family, y = coef_sequencing)) +
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-resolution <- ggplot(family_coverage_main, aes(x=Family, y = coef_resolution)) + 
+resolution <- ggplot(family_coverage_main, aes(x=reorder(Family, prop), y = coef_resolution)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
@@ -107,7 +108,7 @@ resolution <- ggplot(family_coverage_main, aes(x=Family, y = coef_resolution)) +
 
 
 pal <- brewer.pal(9, "Greys")
-similarity <- ggplot(prop_similarity_main, aes(x=class, y = family)) + 
+similarity <- ggplot(prop_similarity_main, aes(x=class, y = reorder(family, prop))) + 
   geom_tile(aes(fill=percentage))+
   scale_fill_gradientn(colours = pal)+
   theme_bw() +
@@ -133,7 +134,7 @@ prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, f
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
 
-coverage <- ggplot(family_coverage_ED, aes(x=Family, y = coef_sequencing)) + 
+coverage <- ggplot(family_coverage_ED, aes(x=reorder(Family, prop), y = coef_sequencing)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
@@ -143,7 +144,7 @@ coverage <- ggplot(family_coverage_ED, aes(x=Family, y = coef_sequencing)) +
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-resolution <- ggplot(family_coverage_ED, aes(x=Family, y = coef_resolution)) + 
+resolution <- ggplot(family_coverage_ED, aes(x=reorder(Family, prop), y = coef_resolution)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
@@ -155,7 +156,7 @@ resolution <- ggplot(family_coverage_ED, aes(x=Family, y = coef_resolution)) +
 
 
 pal <- brewer.pal(9, "Greys")
-similarity <- ggplot(prop_similarity_ED, aes(x=class, y = family)) + 
+similarity <- ggplot(prop_similarity_ED, aes(x=class, y = reorder(family, prop))) + 
   geom_tile(aes(fill=percentage))+
   scale_fill_gradientn(colours = pal)+
   theme_bw() +
