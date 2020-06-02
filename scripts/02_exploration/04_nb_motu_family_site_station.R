@@ -549,6 +549,42 @@ metadata <- metadata[,c("site", "station", "latitude_start_clean", "longitude_st
 
 
 
+# ---------------- # 
+# Proposition plot: Virginie Marques
+
+# Compile data - ici je calcule la distance moyenne au CT pour chaque region 
+to_merge <- rich_site %>%
+  select(region, dist_to_CT) %>%
+  group_by(region) %>%
+  summarise(dist_to_CT = mean(dist_to_CT))
+
+# DF for plot - ici je compte le nombre de motus par region et je joins le df précédent pour avoir la distance au CT
+all_region <- df_all_filters %>%
+  group_by(region) %>%
+  summarise(n_motus = n_distinct(sequence)) %>%
+  left_join(., to_merge)
+
+# Plot
+ggplot(rich_site, aes(col=region))+
+  geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=4, alpha=0.7, show.legend = FALSE) +
+  geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
+  geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
+  #geom_boxplot(aes(x=dist_to_CT, y=motu), fill = "white") +
+  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', alpha=0.05, show.legend = FALSE) + 
+  #xlim(-11000,18000)+
+  #ylim(0,250)+
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  theme(legend.position = "none")+
+  theme_bw()+
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"), 
+        text = element_text(size=20))+
+  labs(x="",y="MOTU richness")
+
+# End of Proposition plot: Virginie Marques
+# ---------------- # 
+
+
+
 
 ## plot site richness ~ distance au CT
 metadata <- metadata %>%

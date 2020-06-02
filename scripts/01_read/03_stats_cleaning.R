@@ -65,7 +65,7 @@ before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0
 
 # ---- # 10 reads
 
-tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
+tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -78,7 +78,7 @@ tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads
 
 # ---- # PCR blanks & tag-jump
 
-blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
+blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -91,7 +91,7 @@ blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10
 
 # ---- # Fishes only 
 
-fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -104,7 +104,7 @@ fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=
 
 # ---- # Length: A ne plus faire ? Inutile ? 
 
-readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -117,7 +117,7 @@ readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 
 # ---- # PCRfilter: sur tout le jeu de données 
 
-PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
                      min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -130,7 +130,7 @@ PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=1
 
 # ---- # PCRfilter: sur une paire de filtre (1/24 PR). This is the alternative of the previous filter, not to use at this scale (otherwise: deletion of too many true observations)
 
-PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                          min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                          min_PCR_sample = 1, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -192,7 +192,7 @@ before <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=0
 
 # ---- # 10 reads
 
-tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
+tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=FALSE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -205,7 +205,7 @@ tenreads <- lapply(liste_read_edna, clean_data, remove_blanks = FALSE, min_reads
 
 # ---- # PCR blanks & tag-jump
 
-blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
+blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = FALSE,
                  min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                  min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -218,7 +218,7 @@ blanks <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10
 
 # ---- # Fishes only 
 
-fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                    min_size_seq = 0, max_size_seq = 500, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                    min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -231,7 +231,7 @@ fishonly <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=
 
 # ---- # Length: A ne plus faire ? Inutile ? 
 
-readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                      min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -244,7 +244,7 @@ readlength <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_read
 
 # ---- # PCRfilter: sur tout le jeu de données 
 
-PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                   min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
                   min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
@@ -257,7 +257,7 @@ PCR_all <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=1
 
 # ---- # PCRfilter: sur une paire de filtre (1/24 PR). This is the alternative of the previous filter, not to use at this scale (otherwise: deletion of too many true observations)
 
-PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=FALSE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
+PCR_sample <- lapply(liste_read_edna, clean_data, remove_blanks = TRUE, min_reads=10, remove_chimera=TRUE, remove_not_fish_manual=FALSE, remove_not_fish_taxize = TRUE,
                      min_size_seq = 30, max_size_seq = 90, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 0,
                      min_PCR_sample = 1, habitat_select = c("marine"), min_percentage_id = 0, delete_gps_col=TRUE) %>%
   # filter stations
