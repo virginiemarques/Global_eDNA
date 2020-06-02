@@ -526,7 +526,7 @@ family <- ggplot(rich_station_total)+
 
 ggarrange(motu, family, ncol=1, nrow=2, labels=c("A", "B"), heights = c(1,1.3))
 
-ggsave("outputs/04_exploration_richness/violin_plot_per_rank.png", width = 18, height = 15)
+ggsave("outputs/04_exploration_richness/violin_plot_per_rank.png", width = 12, height = 8)
 
 
 
