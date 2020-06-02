@@ -524,7 +524,7 @@ family <- ggplot(rich_station_total)+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "Family richness")
 
-ggarrange(motu, genus, family, ncol=1, nrow=3, heights = c(1,1,1.2))
+ggarrange(motu, family, ncol=1, nrow=2, labels=c("A", "B"), heights = c(1,1.3))
 
 ggsave("outputs/04_exploration_richness/violin_plot_per_rank.png", width = 18, height = 15)
 
