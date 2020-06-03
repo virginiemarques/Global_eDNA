@@ -4,6 +4,7 @@ library(ggrepel)
 library(ggpubr)
 library(rfishbase)
 library(grid)
+library(png)
 
 ## build figure prediction of number of species (Fig 1C)
 '%ni%' <- Negate("%in%")
@@ -92,7 +93,7 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   geom_point(size=2)+
   #geom_text(aes(label=fam), size=3, position = position_jitter(width=0.5, height = 0.5))+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.75, intercept = 1.63, size=0.8)+
+  geom_abline(slope = 0.74, intercept = 1.54, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
@@ -100,7 +101,7 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
        y="log(1+Number of species in RLS)")+
   ggtitle("E")
 
-grob <- grobTree(textGrob("y = 0.75x+1.63\nR² = 0.38\np < 0.001", x=0.8, y=0.2))
+grob <- grobTree(textGrob("y = 0.74x+1.54\nR² = 0.38\np < 0.001", x=0.8, y=0.2))
 plot_species2 <- plot_species+annotation_custom(grob)
 plot_species2
 
@@ -108,31 +109,31 @@ plot_species2
 # linear regression and plot for motus
 lm_motu <- lm(log_checklist~log_motu, data=fam_summary)
 summary(lm_motu)
-gobiidae <- readPNG("c:/Users/mathon/Desktop/gobiidae.png")
-muraenidae <- readPNG("c:/Users/mathon/Desktop/muraenidae.png")
-pomacentridae <- readPNG("c:/Users/mathon/Desktop/pomacentridae.png")
-pomacentridae <- readPNG("c:/Users/mathon/Desktop/pomacentridae.png")
-labridae <- readPNG("c:/Users/mathon/Desktop/labridae.png")
-mugilidae <- readPNG("c:/Users/mathon/Desktop/mugilidae.png")
-kyphosidae <- readPNG("c:/Users/mathon/Desktop/kyphosidae.png")
+gobiidae <- readPNG("data/fish_vignette/gobiidae.png")
+muraenidae <- readPNG("data/fish_vignette/muraenidae.png")
+pomacentridae <- readPNG("data/fish_vignette/pomacentridae.png")
+pomacentridae <- readPNG("data/fish_vignette/pomacentridae.png")
+labridae <- readPNG("data/fish_vignette/labridae.png")
+mugilidae <- readPNG("data/fish_vignette/mugilidae.png")
+kyphosidae <- readPNG("data/fish_vignette/kyphosidae.png")
 
 
 plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
-  annotation_custom(rasterGrob(gobiidae), xmin = 5.1, xmax = 5.8, ymin = 4.3, ymax = 5)+
-  annotation_custom(rasterGrob(muraenidae), xmin = 4.3, xmax = 5, ymin = 3, ymax = 3.5)+
-  annotation_custom(rasterGrob(pomacentridae), xmin = 4, xmax = 4.5, ymin = 5.5, ymax = 6)+
-  annotation_custom(rasterGrob(labridae), xmin = 4.9, xmax = 5.5, ymin = 5.5, ymax = 6)+
-  annotation_custom(rasterGrob(mugilidae), xmin = 3.1, xmax = 4, ymin = 0.9, ymax = 1.4)+
-  annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.5, ymax = 4)+
+  annotation_custom(rasterGrob(gobiidae), xmin = 5.1, xmax = 6, ymin = 4.2, ymax = 5)+
+  annotation_custom(rasterGrob(muraenidae), xmin = 4.3, xmax = 5.2, ymin = 3, ymax = 3.5)+
+  annotation_custom(rasterGrob(pomacentridae), xmin = 3.8, xmax = 4.7, ymin = 5.4, ymax = 6)+
+  annotation_custom(rasterGrob(labridae), xmin = 4.9, xmax = 5.6, ymin = 5.5, ymax = 6.1)+
+  annotation_custom(rasterGrob(mugilidae), xmin = 3.1, xmax = 4.1, ymin = 0.8, ymax = 1.4)+
+  annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.83, intercept = 0.63, size=0.8)+
+  geom_abline(slope = 0.84, intercept = 0.49, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
   labs(x="log(1+Number of MOTUs in eDNA)", y="log(1+Number of species in RLS")+
   ggtitle("F")
-grob <- grobTree(textGrob("y = 0.83x+0.63\nR² = 0.58\np < 0.001", x=0.8, y=0.2))
+grob <- grobTree(textGrob("y = 0.84x+0.49\nR² = 0.59\np < 0.001", x=0.8, y=0.2))
 plot_motu2 <- plot_motu+annotation_custom(grob)
 plot_motu2
 
@@ -153,7 +154,7 @@ perc_species <- ggplot(fam_summary, aes(n_species_checklist, perc_species))+
   theme_bw()+
   labs(x="Number of species in RLS",
        y="%(species eDNA ~ species RLS)")
-grob <- grobTree(textGrob("R² = 0.006\np = 0.22", x=0.8, y=0.9))
+grob <- grobTree(textGrob("R² = 0.01\np = 0.18", x=0.8, y=0.9))
 perc_species2 <- perc_species+annotation_custom(grob)
 perc_species2
 
@@ -168,7 +169,7 @@ perc_motu <- ggplot(fam_summary, aes(n_species_checklist, perc_motu))+
   theme_bw()+
   labs(x="Number of species in RLS",
        y="%(MOTUs eDNA ~ species RLS)")
-grob <- grobTree(textGrob("R² = 0.03\np = 0.075", x=0.8, y=0.9))
+grob <- grobTree(textGrob("R² = 0.02\np = 0.11", x=0.8, y=0.9))
 perc_motu2 <- perc_motu+annotation_custom(grob)
 perc_motu2
 
@@ -194,4 +195,4 @@ load("Rdata/plot_acc_family.rdata")
 
 
 ggarrange(plot_acc_species, plot_acc_fam, plot_rich_log, nrow = 3, ncol = 1)
-ggsave("outputs/Figures papier/Figure1.png", width = 8, height = 8)
+ggsave("outputs/Figures papier/Figure1.png", width = 7, height = 8)

@@ -5,6 +5,7 @@ library(reshape)
 library(ggplot2)
 library(ggpubr)
 library(dplyr)
+library(vegan)
 
 # data
 load("Rdata/02_clean_all.Rdata")
@@ -31,9 +32,12 @@ akaike.weights <- function(x)
 #### On family ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_families <- read.csv("data/RLS_families.csv", sep = ";")
-RLS_families <- RLS_families[,c(2,12:128)]
-
+RLS_families <- read.csv("data/RLS/RLS_families.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_families <- RLS_families %>%
+  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_fam <- RLS_families[,c(12:128)]
+RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
+RLS_families <- cbind(RLS_families$SurveyID, RLS_fam)
 # method
 method_accumulation = "exact"
 
@@ -82,8 +86,8 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=160+10, label="RLS Family : 160",hjust=1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.44",hjust=1, alpha=0.7)+
+  annotate(geom="text", x=2990, y=116+10, label="RLS Family : 116",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.46",hjust=1, alpha=0.7)+
   ylim(0,190)+
   ylab("Number of families") +
   xlab("Number of transects") +
@@ -119,8 +123,12 @@ save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
 #### On species ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_species <- read.csv("data/RLS_species.csv", sep = ";")
-RLS_species <- RLS_species[,c(2,12:2051)]
+RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_species <- RLS_species %>%
+  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_sp <- RLS_species[,c(12:2051)]
+RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
+RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 
 # method
 method_accumulation = "exact"
@@ -152,12 +160,12 @@ gis_edna <- fitspecaccum(all_accumulation_species_RLS, "logis")
 aic_gis_edna <- AIC(gis_edna)
 
 # compute results
-res_edna <- matrix(NA,nrow = 4, ncol = 3)
-rownames(res_edna) <- c("lomolino", "michaelis-menten", "asymp", "logis")
+res_edna <- matrix(NA,nrow = 5, ncol = 3)
+rownames(res_edna) <- c("lomolino", "michaelis-menten", "gompertz", "asymp", "logis")
 colnames(res_edna) <- c("AIC", "Asymptote", "Weigth")
-res_edna[,"AIC"] <- c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna)
-res_edna[,"Weigth"] <- akaike.weights(c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna))$weights
-res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
+res_edna[,"AIC"] <- c(aic_lomo_edna, aic_mm_edna, aic_gom_edna, aic_asy_edna, aic_gis_edna)
+res_edna[,"Weigth"] <- akaike.weights(c(aic_lomo_edna, aic_mm_edna, aic_gom_edna, aic_asy_edna, aic_gis_edna))$weights
+res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(gom_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
 
 # Calculation asymptote value
 asymp_species_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
@@ -170,7 +178,7 @@ species_RLS <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2733+150, label="RLS Species : 2733",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=2322+150, label="RLS Species : 2322",hjust=1, alpha=0.7) +
   annotate(geom="text", x=2990, y=600, label="Lomolino slope = 1.68",hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("Number of Species / MOTUs") +
