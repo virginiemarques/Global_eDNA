@@ -557,38 +557,75 @@ rich_site <- left_join(rich_site, metadata[,c("site", "dist_to_CT")], by="site")
 
 # Compile data - ici je calcule la distance moyenne au CT pour chaque region 
 to_merge <- rich_site %>%
-  select(region, dist_to_CT) %>%
-  group_by(region) %>%
-  summarise(dist_to_CT = mean(dist_to_CT))
+  dplyr::select(region, dist_to_CT) %>%
+  dplyr::group_by(region) %>%
+  dplyr::summarise(dist_to_CT = mean(dist_to_CT))
 
+### MOTUs 
 # DF for plot - ici je compte le nombre de motus par region et je joins le df précédent pour avoir la distance au CT
 all_region <- df_all_filters %>%
   group_by(region) %>%
   summarise(n_motus = n_distinct(sequence)) %>%
   left_join(., to_merge)
 
+
 # Plot
-ggplot(rich_site, aes(col=region))+
-  geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=4, alpha=0.7, show.legend = FALSE) +
+all_motus <- ggplot(rich_site, aes(col=region))+
+  geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
-  #geom_boxplot(aes(x=dist_to_CT, y=motu), fill = "white") +
-  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', alpha=0.05, show.legend = FALSE) + 
-  #xlim(-11000,18000)+
-  #ylim(0,250)+
+  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
   theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"), 
-        text = element_text(size=20))+
+        text = element_text(size=12))+
   labs(x="",y="MOTU richness")
+
+
+
+### FAMILIES
+# DF for plot - ici je compte le nombre de motus par region et je joins le df précédent pour avoir la distance au CT
+all_region <- df_all_filters %>%
+  group_by(region) %>%
+  summarise(n_family = n_distinct(new_family_name)) %>%
+  left_join(., to_merge)
+
+
+# Plot
+all_family <- ggplot(rich_site, aes(col=region))+
+  geom_jitter(aes(x=dist_to_CT, y=family), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
+  geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
+  geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
+  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_family), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
+  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  theme(legend.position = "none")+
+  theme_bw()+
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"), 
+        text = element_text(size=12))+
+  labs(x="",y="Family richness")
 
 # End of Proposition plot: Virginie Marques
 # ---------------- # 
 
+plot <- ggarrange(all_motus, all_family, ncol = 2, nrow=1)
+x.grob <- textGrob("Distance to Coral Triangle (km, W-E)", 
+                   gp=gpar(fontface="bold", col="black", fontsize=12), vjust = -0.5)
+
+plot_all_rich_site <- grid.arrange(plot, bottom=x.grob)
+save(plot_all_rich_site, file = "Rdata/plot_richness_site~dist_CT.rdata")
 
 
 
+
+
+
+
+
+
+
+
+### other plots not used
 ## plot site richness ~ distance au CT
 metadata <- metadata %>%
   distinct(site, .keep_all = TRUE)
@@ -650,12 +687,6 @@ plot_all_rich_site <- grid.arrange(plot, bottom=x.grob)
 save(plot_all_rich_site, file = "Rdata/plot_richness_site~dist_CT.rdata")
 
 
-
-
-
-
-
-### other plots not used
 
 ## plot station richness ~ latitude
 rich_station <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru, rich_station_caledonia)

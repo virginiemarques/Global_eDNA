@@ -118,11 +118,11 @@ for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
   fam_CI <- CI_family[CI_family$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
-    geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
-    geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
+    #geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
+    #geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
     geom_point(size=2, aes(colour=region))+
     #scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
-    xlim(0, 800)+
+    xlim(0, 600)+
     ylim(0,0.3)+
     theme_bw()+
     theme(legend.position = "none")+
@@ -143,5 +143,6 @@ plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 # assemble with part A of the figure 3
 load("Rdata/plot_richness_site~dist_CT.rdata")
 
-ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
+ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,2.5))
 
+ggsave("outputs/Figures papier/Figure3.png", width = 7.5, height = 9)

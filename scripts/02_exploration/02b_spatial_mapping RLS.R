@@ -12,9 +12,13 @@ library(ggplot2)
 library(htmlwidgets)
 
 setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
+'%ni%' <- Negate("%in%")
+
 # data 
 # WARNING: there is some empty lines in the .csv
 RLS_sampling <- read.csv("data/RLS/Coral_reef_fish_composition.csv", sep=";", stringsAsFactors = F, na.strings=c("","NA"))
+RLS_sampling <- RLS_sampling %>%
+  filter(realm%ni%c("Temperate Australasia", "Temperate Southern Africa", "Temperate Northern Atlantic", "Temperate Northern Pacific"))
 
 # ---------------------------------------------------------------------------------------------- #
 #                            Some mapping 
@@ -30,7 +34,7 @@ RLS_map_sf = st_as_sf(RLS_sampling, coords = c("SiteLong", "SiteLat"),
 # Map 1
 ggplot() + 
   geom_sf(aes(), data = world, fill = "grey80") + 
-  geom_sf(aes(fill = RLS_sampling$realm), data= RLS_map_sf, shape=21, alpha=0.7) + 
+  geom_sf(data= RLS_map_sf, shape=20, alpha=0.7, size=2) + 
   coord_sf(crs = "+proj=robin") + 
   theme_minimal() +
   theme(panel.grid.minor = element_line(linetype = "blank"),
@@ -45,7 +49,7 @@ ggplot() +
         plot.title = element_text(lineheight=.8, face="bold")) 
 
 # Save
-ggsave("outputs/02_spatial_mapping/02_RLS_transects.png", width=8, height=6)
+ggsave("outputs/02_spatial_mapping/02_RLS_500km.png", width=8, height=6)
 
 
 
