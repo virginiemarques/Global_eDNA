@@ -20,7 +20,8 @@ df_all_filters <- df_all_filters %>%
 
 # Proportion is calculated as (nb of unique motus per family)/(total nb of unique motus per site/region), using only amplicons assigned to family level minimum
 
-
+df_all_filters <- df_all_filters %>%
+  filter(!is.na(new_family_name))
 
 ## Proportion of families in Caribbean
 
@@ -483,29 +484,30 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 
 ## plot proportion of each family in each region on global scale
-families_prop_global <- left_join(count_families_global, count_families_lengguru[,1:2], by="family" )
+families_prop_global <- left_join(count_families_global, count_families_site_fakarava[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_caribbean[,1:2], by="family" )
-families_prop_global <- left_join(families_prop_global, count_families_site_fakarava[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_eparse[,1:2], by="family" )
 families_prop_global <- left_join(families_prop_global, count_families_caledonia[,1:2], by="family" )
+families_prop_global <- left_join(families_prop_global, count_families_lengguru[,1:2], by="family" )
+
 families_prop_global <- families_prop_global[, c(-3)]
-colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_lengguru", "n_caribbean", "n_fakarava", "n_eparse", "n_caledonia")
+colnames(families_prop_global) <- c("family", "n_global", "prop_global", "n_fakarava", "n_caribbean", "n_eparse", "n_caledonia", "n_lengguru")
 families_prop_global[is.na(families_prop_global)] <- 0
 
 for (i in 1:dim(families_prop_global)[1]) {
-    families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
-    families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
-    families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
-    families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
-    families_prop_global[i,"new_n_caledonia"] <- (families_prop_global[i,"n_caledonia"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+  families_prop_global[i,"new_n_faka"] <- (families_prop_global[i,"n_fakarava"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+  families_prop_global[i,"new_n_car"] <- (families_prop_global[i,"n_caribbean"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+  families_prop_global[i,"new_n_eparse"] <- (families_prop_global[i,"n_eparse"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+  families_prop_global[i,"new_n_caledonia"] <- (families_prop_global[i,"n_caledonia"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
+  families_prop_global[i,"new_n_leng"] <- (families_prop_global[i,"n_lengguru"]*families_prop_global[i,"n_global"])/sum(families_prop_global[i,4:8])
     
 }
 
-families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
-families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Fakarava <- (families_prop_global$new_n_faka*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Caribbean <- (families_prop_global$new_n_car*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Eparse <- (families_prop_global$new_n_eparse*families_prop_global$prop_global)/families_prop_global$n_global
 families_prop_global$Caledonia <- (families_prop_global$new_n_caledonia*families_prop_global$prop_global)/families_prop_global$n_global
+families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_global$prop_global)/families_prop_global$n_global
 
 families_prop_global <- families_prop_global[,c(1,14:18)]
 families_prop_global2 <- reshape2::melt(families_prop_global)
@@ -516,7 +518,7 @@ save(families_prop_global, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052", "#863b34"))+ 
+  scale_fill_manual(values =c("#4F4D1D", "#E5A729", "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(x="Family", y="Proportion")+
   coord_flip()
 

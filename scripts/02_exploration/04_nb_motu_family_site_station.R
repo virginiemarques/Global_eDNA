@@ -552,6 +552,9 @@ metadata <- metadata[,c("site", "station", "latitude_start_clean", "longitude_st
 # ---------------- # 
 # Proposition plot: Virginie Marques
 
+rich_site <- rbind(rich_site_caribbean, rich_site_fakarava, rich_site_lengguru, rich_site_eparse, rich_site_caledonia)
+rich_site <- left_join(rich_site, metadata[,c("site", "dist_to_CT")], by="site")
+
 # Compile data - ici je calcule la distance moyenne au CT pour chaque region 
 to_merge <- rich_site %>%
   select(region, dist_to_CT) %>%

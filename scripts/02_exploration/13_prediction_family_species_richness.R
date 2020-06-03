@@ -12,7 +12,7 @@ load("Rdata/02_clean_all.Rdata")
 
 
 # coral fish species data
-coral_fishes <- read.csv("data/Coral_fishes2.csv", sep=";", stringsAsFactors = FALSE)
+coral_fishes <- read.csv("data/RLS/Coral_fishes2.csv", sep=";", stringsAsFactors = FALSE)
 fam_coral  <- coral_fishes %>%
   group_by(Family) %>%
   summarise(n_species = n_distinct(Species))
@@ -181,7 +181,7 @@ plot_rich_log
 
 plot_rich_perc <- ggarrange(perc_species2, perc_motu2, nrow = 1, ncol = 2, labels = c("A", "B"), label.x = -0.007, label.y = 1)
 plot_rich_perc
-ggsave("outputs/Figures papier/ED_Figure2.png", width = 7, height = 3.5)
+ggsave("outputs/Figures papier/ED_Figure3.png", width = 7, height = 3.5)
 
 
 

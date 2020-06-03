@@ -5,6 +5,7 @@ library(grid)
 library(cowplot)
 library(ggplot2)
 library(ggpubr)
+library(vegan)
 
 load("Rdata/02_clean_all.Rdata")
 '%ni%' <- Negate("%in%")
@@ -70,13 +71,14 @@ for (k in 1:1000) {
   for (i in 1:length(site)) {
     df <- rd_mat %>%
       subset(site==site[i])
+    total_motus <- sum(df$presence)
     for (j in 1:length(family)) {
       df2 <- df%>%
         subset(new_family_name==family[j])
       df_prop_site[j, "site"] <- site[i]
       df_prop_site[j, "family"] <- family[j]
-      df_prop_site[j, "total_motus"] <- unique(df2$total_motus)
-      df_prop_site[j, "prop"] <- sum(df2$presence)/unique(df2$total_motus)
+      df_prop_site[j, "total_motus"] <- total_motus
+      df_prop_site[j, "prop"] <- sum(df2$presence)/total_motus
     }
     df_prop <- rbind(df_prop, df_prop_site)
   }
