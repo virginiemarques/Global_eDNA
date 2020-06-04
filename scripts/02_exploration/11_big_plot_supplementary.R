@@ -87,7 +87,7 @@ prop_similarity_ED$order <- order(order_ED$fam)
 prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052", "#863b34"))+ 
+  scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
@@ -139,7 +139,7 @@ ggsave("outputs/Figures papier/Figure2.png", width = 7.8, height = 8)
 prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#8AAE8A", "#E5A729", "#4F4D1D", "#C67052", "#863b34"))+ 
+  scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   ylim(0, 0.02)+
