@@ -5,7 +5,6 @@ library(grid)
 library(cowplot)
 library(ggplot2)
 library(ggpubr)
-library(vegan)
 
 load("Rdata/02_clean_all.Rdata")
 '%ni%' <- Negate("%in%")
@@ -16,33 +15,25 @@ df_all_filters <- df_all_filters %>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
-# remove motus not assigned to family
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
+unique_motus <- unique(df_all_filters$sequence)
+unique_family <- as.data.frame(unique(df_all_filters$new_family_name))
+colnames(unique_family) <- "family"
 
-motu_fam <- df_all_filters[,c("sequence", "new_family_name")]%>%
-  distinct(sequence, .keep_all = TRUE)
+global_family <- df_all_filters %>%
+  distinct(sequence, new_family_name)
+colnames(global_family) <- c("motu", "family")
 
-
+#calculate frequency of motus
 site <- unique(df_all_filters$site)
-family <- unique(df_all_filters$new_family_name)
 
-# calculate motus total per site
-site_motu <- data.frame(site=character(25), total_motus=numeric(25), stringsAsFactors = FALSE)
+df_site <- data.frame(motu=character(), stringsAsFactors = FALSE)
 for (i in 1:length(site)) {
-  site_motu[i,"site"] <- site[[i]]
-  site_motu[i,"total_motus"] <- df_all_filters[df_all_filters$site==site[i],]%>%summarise(n=n_distinct(sequence))
-}
-
-
-# create matrice site-motus
-df_site=data.frame(motu=character())
-
-for (i in 1:length(site)) {
-  df <- df_all_filters[df_all_filters$site == site[i],] %>%
+  df <- df_all_filters[df_all_filters$site==site[i],] %>%
     distinct(sequence, site)
-  colnames(df) <- c("motu", site[i], family)
+  colnames(df) <- c("motu", site[i])
   df_site <- full_join(df_site, df, by="motu")
 }
 rownames(df_site) <- df_site[,1]
@@ -50,67 +41,53 @@ df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
 df_site[is.na(df_site)] <- 0
 df_site <- as.data.frame(t(df_site))
 
+prob_motu <- colSums(df_site)/25
 
-# random matrices for 1000 iterations
-rep = 1000
-null.algo <- nullmodel(df_site, "curveball")
-random_mat <- simulate(null.algo, nsim=rep)
+# sample random family assignations for site with 1-800 species, 1000 times (long! load Rdata)
+random_sp <- vector("list", 800)
+random_prop_tot <- data.frame()
+rep <- 800
 
-# get the family proportion for each family, in each site, in each random simulation
-df_tot <- data.frame()
-for (k in 1:1000) {
-  rd_mat <- as.data.frame(random_mat[,,k])
-  rd_mat$site <- rownames(rd_mat)
-  rd_mat<- melt(rd_mat, id="site")
-  colnames(rd_mat) <- c("site", "sequence", "presence")
-  rd_mat <- left_join(rd_mat, motu_fam, by="sequence")
-  rd_mat <- left_join(rd_mat, site_motu, by="site")
-  
-  df_prop_site <- data.frame(site=character(), family=character(), total_motus=numeric(), prop=numeric(), stringsAsFactors = FALSE)
-  df_prop <- data.frame()
-  for (i in 1:length(site)) {
-    df <- rd_mat %>%
-      subset(site==site[i])
-    total_motus <- sum(df$presence)
-    for (j in 1:length(family)) {
-      df2 <- df%>%
-        subset(new_family_name==family[j])
-      df_prop_site[j, "site"] <- site[i]
-      df_prop_site[j, "family"] <- family[j]
-      df_prop_site[j, "total_motus"] <- total_motus
-      df_prop_site[j, "prop"] <- sum(df2$presence)/total_motus
-    }
-    df_prop <- rbind(df_prop, df_prop_site)
+for (j in seq(1:1000)) {
+  random_prop <- vector("list" )
+  for (i in 1:rep) {
+    random_sp[[i]] <- as.data.frame(sample(unique_motus, i, replace = TRUE, prob = prob_motu))
+    colnames(random_sp[[i]]) <- "motu"
+    random_sp[[i]] <- left_join(random_sp[[i]], global_family, by="motu")
+    random_sp[[i]] <- data.frame(table(random_sp[[i]]$family))
+    colnames(random_sp[[i]]) <- c("family", "n_motus")
+    random_sp[[i]] <- full_join(random_sp[[i]], unique_family, by="family")
+    random_sp[[i]][is.na(random_sp[[i]])] <- 0
+    random_sp[[i]]$n_total <- sum(random_sp[[i]]$n_motus)
+    random_sp[[i]]$prop <- random_sp[[i]]$n_motus / random_sp[[i]]$n_total
+    random_prop <- rbind(random_prop, random_sp[[i]])
   }
-  df_tot <- rbind(df_tot, df_prop)
+  random_prop_tot <- rbind(random_prop_tot, random_prop)
 }
 
-random_prop_tot <- df_tot
+save(random_prop_tot, file = "Rdata/random_family_proportions.rdata")
 
-save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
+load("Rdata/random_family_proportions.rdata")
 
 
 
 # calculate 2.5 and 97.5 quantile for each sample size and each family
-load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
-
-family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
+family <- family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 CI_family <- data.frame()
-quant <- data.frame(upper=numeric(), lower=numeric())
+quant <- data.frame(upper=numeric(800), lower=numeric(800))
 for (j in 1:length(family)) {
   df <- random_prop_tot[random_prop_tot$family==family[j],]
-  for (i in 1:length(site)) {
-    df2 <- df[df$site==site[i],]
+  for (i in seq(1:800)) {
+    df2 <- df[df$n_total==i,]
     quant[i,] <- quantile(df2$prop, c(.975, .025))
-    quant[i, "n_total"] <- unique(df2$total_motus)
+    quant$n_total <- seq(1:800)
     quant$family <- family[j]
   }
   CI_family <- rbind(CI_family, quant)
 }
 
 
-# plot on top of family proportions in our data
 load("Rdata/family_proportion_per_site.rdata")
 
 prop <- vector("list")
@@ -118,8 +95,8 @@ for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
   fam_CI <- CI_family[CI_family$family == family[i],]
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
-    #geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
-    #geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
+    geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
+    geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
     geom_point(size=2, aes(colour=region))+
     #scale_y_continuous(breaks = c(0, 0.1, 0.2, 0.3))+
     xlim(0, 600)+
@@ -131,6 +108,8 @@ for (i in 1:length(family)) {
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
+
+
 plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
 plot
 x.grob <- textGrob("Total number of MOTUs per site", 
@@ -140,7 +119,7 @@ y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site",
 plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 
-# assemble with part A of the figure 3
+
 load("Rdata/plot_richness_site~dist_CT.rdata")
 
 ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,2.5))
