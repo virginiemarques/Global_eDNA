@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ## calculate number of unique motus and families in each site and station of Lengguru and Caribbean
 
 library(tidyverse)
@@ -579,7 +579,7 @@ all_motus <- ggplot(rich_site, aes(col=region))+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
   theme_bw()+
-  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"), 
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
         text = element_text(size=12))+
   labs(x="",y="MOTU richness")
 
@@ -602,7 +602,7 @@ all_family <- ggplot(rich_site, aes(col=region))+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
   theme_bw()+
-  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.1,0,0.1), "cm"), 
+  theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
         text = element_text(size=12))+
   labs(x="",y="Family richness")
 

@@ -284,9 +284,12 @@ betatotal <- rbind(betaregion, betasite, betastation)
 
 beta_melt <- reshape2::melt(betatotal)
 
-ggplot(beta_melt, aes(variable, value, colour=scale))+
+beta_motus_eDNA <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   theme_bw()+
+  ylim(0,1)+
+  theme(legend.position = "none")+
   labs(x=" Beta component", y="Jaccard dissimilarity (motus)")
 
 ggsave("outputs/06_diversity_partitioning/diversity_partitioning_assigned_species.png")  
+save(beta_motus_eDNA, file = "Rdata/beta_motus_eDNA.rdata")

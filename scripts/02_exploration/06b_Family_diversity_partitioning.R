@@ -274,10 +274,11 @@ betatotal <- rbind(betaregion, betasite, betastation)
 
 beta_melt <- reshape2::melt(betatotal)
 
-ggplot(beta_melt, aes(variable, value, colour=scale))+
+beta_family_eDNA <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   ylim(0,1)+
   theme_bw()+
   labs(x=" Beta component", y="Jaccard dissimilarity (family)")
 
 ggsave("outputs/06_diversity_partitioning/family_diversity_partitioning.png")  
+save(beta_family_eDNA, file = "Rdata/beta_family_eDNA.rdata")

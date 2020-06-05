@@ -99,10 +99,11 @@ betatotal <- rbind(betaregion, betasite, betatransect)
 
 beta_melt <- reshape2::melt(betatotal)
 
-ggplot(beta_melt, aes(variable, value, colour=scale))+
+beta_species_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   theme_bw()+
-  labs(x=" Beta component", y="Jaccard dissimilarity (Species)")
+  theme(legend.position = "none")+
+  labs(x=" Beta component", y="Jaccard dissimilarity (RLS Species)")
 
 ggsave("outputs/06_diversity_partitioning/beta_RLS_species_Ecoregion.png")  
 
@@ -203,9 +204,19 @@ betatotal <- rbind(betaregion, betasite, betatransect)
 
 beta_melt <- reshape2::melt(betatotal)
 
-ggplot(beta_melt, aes(variable, value, colour=scale))+
+beta_family_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   geom_boxplot()+
   theme_bw()+
-  labs(x=" Beta component", y="Jaccard dissimilarity (families)")
+  labs(x=" Beta component", y="Jaccard dissimilarity (RLS families)")
 
 ggsave("outputs/06_diversity_partitioning/beta_RLS_families_Ecoregion.png")  
+
+
+
+load("Rdata/beta_motus_eDNA.rdata")
+load("Rdata/beta_family_eDNA.rdata")
+
+
+ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("A", "B", "C", "D"), widths = c(1,1.4))
+
+ggsave("outputs/Figures papier/ED_Figure7.png")

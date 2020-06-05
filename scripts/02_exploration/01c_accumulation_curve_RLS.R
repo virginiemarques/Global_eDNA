@@ -49,9 +49,6 @@ all_accumulation_RLS <- specaccum(RLS_families[,2:ncol(RLS_families)],
 # Accumulation for plot 
 all_accumulation_RLS_df <- data.frame(richness = all_accumulation_RLS$richness, sd = all_accumulation_RLS$sd, sites = all_accumulation_RLS$sites)
 
-# Save
-save(all_accumulation_RLS_df, file = "Rdata/accumulation_families_RLS.rdata")
-
 # Asymptote of RLS  
 
 
@@ -80,6 +77,7 @@ asymp_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
 
 # Add to DF
 all_accumulation_RLS_df$asymptote <- asymp_RLS
+save(all_accumulation_RLS_df, file = "Rdata/accumulation_families_RLS.rdata")
 
 # plot RLS
 family_RLS <- ggplot(all_accumulation_RLS_df) + 
@@ -89,10 +87,9 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   annotate(geom="text", x=2990, y=116+10, label="RLS Family : 116",hjust=1, alpha=0.7) +
   annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.46",hjust=1, alpha=0.7)+
   ylim(0,190)+
-  ylab("Number of families") +
   xlab("Number of transects") +
   theme_bw() + 
-  ggtitle("C")
+  ggtitle("D")
   
 family_RLS
 
@@ -108,14 +105,15 @@ fam_edna <- ggplot(df_fam) +
   annotate(geom="text", x=250, y=30, label="Lomolino slope = 1.85",hjust=1, alpha=0.7)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
+  ylab("Number of families") +
   theme_bw() + 
-  ggtitle("D")
+  ggtitle("C")
 
 fam_edna
 
 #combined plots
 
-plot_acc_fam <- ggarrange(family_RLS, fam_edna +rremove("ylab"), nrow = 1, ncol=2)
+plot_acc_fam <- ggarrange(fam_edna, family_RLS +rremove("ylab"), nrow = 1, ncol=2)
 ggsave("outputs/03_accumulation_curves/accumulation_families_panels.png")
 save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
 
@@ -141,8 +139,6 @@ all_accumulation_species_RLS <- specaccum(RLS_species[,2:ncol(RLS_species)],
 # Accumulation for plot 
 all_accumulation_species_RLS_df <- data.frame(richness = all_accumulation_species_RLS$richness, sd = all_accumulation_species_RLS$sd, sites = all_accumulation_species_RLS$sites)
 
-# Save
-save(all_accumulation_species_RLS_df, file = "Rdata/accumulation_species_RLS.rdata")
 
 # Asymptote of RLS  
 
@@ -173,6 +169,9 @@ asymp_species_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
 # Add to DF
 all_accumulation_species_RLS_df$asymptote <- asymp_species_RLS
 
+# Save
+save(all_accumulation_species_RLS_df, file = "Rdata/accumulation_species_RLS.rdata")
+
 # plot
 species_RLS <- ggplot(all_accumulation_species_RLS_df) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
@@ -181,10 +180,9 @@ species_RLS <- ggplot(all_accumulation_species_RLS_df) +
   annotate(geom="text", x=2990, y=2322+150, label="RLS Species : 2322",hjust=1, alpha=0.7) +
   annotate(geom="text", x=2990, y=600, label="Lomolino slope = 1.68",hjust=1, alpha=0.7) +
   ylim(0,3000)+
-  ylab("Number of Species / MOTUs") +
   xlab("Number of transects") +
   theme_bw() + 
-  ggtitle("A")
+  ggtitle("B")
 
 species_RLS
 
@@ -201,12 +199,13 @@ species_edna <- ggplot(df_motus) +
   ylim(0,3000)+
   ylab("") +
   xlab("Number of samples")+
+  ylab("Number of Species / MOTUs") +
   theme_bw() + 
-  ggtitle("B")
+  ggtitle("A")
 
 species_edna
 
-plot_acc_species <- ggarrange(species_RLS, species_edna, nrow = 1, ncol=2)
+plot_acc_species <- ggarrange(species_edna, species_RLS, nrow = 1, ncol=2)
 ggsave("outputs/03_accumulation_curves/accumulation_species_motus_panels.png")
 save(plot_acc_species, file = "Rdata/plot_acc_species.rdata")
 
