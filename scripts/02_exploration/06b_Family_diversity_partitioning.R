@@ -271,6 +271,7 @@ for (i in 1:length(site)) {
 
 
 betatotal <- rbind(betaregion, betasite, betastation)
+write.csv(betatotal, "outputs/06_diversity_partitioning/beta_families.csv")
 
 beta_melt <- reshape2::melt(betatotal)
 

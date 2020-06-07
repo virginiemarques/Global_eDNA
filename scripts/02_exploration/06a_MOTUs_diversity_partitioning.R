@@ -106,30 +106,17 @@ for (i in 1:length(station)) {
   alpha_station[i,4] <- motu
 }
 
-alpha_station_car <- alpha_station %>%
-  subset(region == "Caribbean")
-mean_alpha_station_car <- mean(alpha_station_car$motu)
+mean_a_station <- data.frame(stringsAsFactors = FALSE)
 
-alpha_station_leng <- alpha_station %>%
-  subset(region == "Central_Indo_Pacific")
-mean_alpha_station_leng <- mean(alpha_station_leng$motu)
+for (i in 1:length(site)) {
+  df <- alpha_station %>%
+    subset(site==site[i])
+  mean_a_station[i,1] <- mean(df$motu)
+  
+}
 
-alpha_station_faka <- alpha_station %>%
-  subset(region == "Central_Pacific")
-mean_alpha_station_faka <- mean(alpha_station_faka$motu)
-
-alpha_station_eparse <- alpha_station %>%
-  subset(region == "West_Indian")
-mean_alpha_station_eparse <- mean(alpha_station_eparse$motu)
-
-alpha_station_cal <- alpha_station %>%
-  subset(region == "South_West_Pacific")
-mean_alpha_station_cal <- mean(alpha_station_cal$motu)
-
-
-a_station <- c(mean_alpha_station_car, mean_alpha_station_faka, mean_alpha_station_leng, mean_alpha_station_eparse, mean_alpha_station_cal)
-mean_alpha_station <- mean(a_station)
-sd_alpha_station <- sd(a_station)
+mean_alpha_station <- mean(mean_a_station)
+sd_alpha_station <- sd(mean_a_station)
 
 # calculate beta inter-station
 
@@ -281,6 +268,7 @@ for (i in 1:length(site)) {
 
 
 betatotal <- rbind(betaregion, betasite, betastation)
+write.csv(betatotal, "outputs/06_diversity_partitioning/beta_motus.csv")
 
 beta_melt <- reshape2::melt(betatotal)
 

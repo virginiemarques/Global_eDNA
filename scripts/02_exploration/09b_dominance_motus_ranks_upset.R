@@ -167,7 +167,7 @@ p2 <- upset(matrix_family,
               plots = list(list(
                 type = "matrix_rows",
                 column = "region", 
-                colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+                colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
                 alpha = 0.3
               ))
             ))
@@ -329,7 +329,7 @@ p4_color <- upset(matrix_family,
                     plots = list(list(
                       type = "matrix_rows",
                       column = "region", 
-                      colors = c(`Central_IndoPacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+                      colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
                       alpha = 0.3
                     ))
                   ))

@@ -4,8 +4,156 @@ library(vegan)
 library(betapart)
 '%ni%' <- Negate("%in%")
 
+# gamma global =2175
+
+RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_species <- RLS_species %>%
+  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_species <- RLS_species[, c(1,2,9,12:2051)]
+RLS_species <- melt(RLS_species, id=c("SurveyID", "SiteCode", "Ecoregion"))
+RLS_species <- RLS_species%>%
+  filter(value!=0)
+RLS_species <- RLS_species[,-5]
+colnames(RLS_species) <- c("SurveyID", "SiteCode", "Ecoregion", "Species")
+
+gamma_global <- as.numeric(RLS_species %>%
+                             summarise(n = n_distinct(Species)))
+
+
+region <- unique(RLS_species$Ecoregion)
+site <- unique(RLS_species$SiteCode)
+transect <- unique(RLS_species$SurveyID)
+
+# calculate alpha region
+
+alpha_region=data.frame(region=character(48), species=numeric(48), stringsAsFactors = FALSE)
+
+for (i in 1:length(region)) {
+  r <- region[i]
+  species <- RLS_species[RLS_species$Ecoregion == region[i],] %>%
+    summarise(n = n_distinct(Species))
+  alpha_region[i,1] <- r
+  alpha_region[i,2] <- species
+}
+
+# Calculate beta interregion
+beta_region <- data.frame(alpha=mean(alpha_region$species), gamma=gamma_global, beta=numeric(1), scale="inter-region")
+beta_region$beta <- beta_region$gamma - beta_region$alpha
+
+
+# calculate alpha site
+
+alpha_site=data.frame(region=character(), site=character(), species=numeric(), stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  r <- unique(RLS_species[RLS_species$SiteCode == site[i],]$Ecoregion)
+  species <- RLS_species[RLS_species$SiteCode == site[i],] %>%
+    summarise(n = n_distinct(Species))
+  alpha_site[i,1] <- r
+  alpha_site[i,2] <- s
+  alpha_site[i,3] <- species
+}
+
+
+# calculate beta inter-site
+
+beta_site <- data.frame(region=character(48), alpha=numeric(48), gamma=numeric(48), beta=numeric(48), scale="inter-site", stringsAsFactors = FALSE)
+
+for (i in 1:length(region)) {
+  r <- region[i]
+  gamma <- alpha_region[alpha_region$region==region[i],]$species
+  alpha <- mean(alpha_site[alpha_site$region==region[i],]$species)
+  beta_site[i,1] <- r
+  beta_site[i,2] <- alpha
+  beta_site[i,3] <- gamma
+  beta_site[i,4] <- gamma - alpha
+  
+}
+
+mean_beta_site <- mean(beta_site$beta) 
+sd_beta_site <- sd(beta_site$beta)
+
+
+
+# calculate alpha transect
+alpha_transect=data.frame(region=character(), site=character(), transect=character(), species=numeric(), stringsAsFactors = FALSE)
+
+for (i in 1:length(transect)) {
+  st <- transect[i]
+  r <- unique(RLS_species[RLS_species$SurveyID == transect[i],]$Ecoregion)
+  s <- unique(RLS_species[RLS_species$SurveyID == transect[i],]$SiteCode)
+  species <- RLS_species[RLS_species$SurveyID == transect[i],] %>%
+    summarise(n = n_distinct(Species))
+  alpha_transect[i,1] <- r
+  alpha_transect[i,2] <- s
+  alpha_transect[i,3] <- st
+  alpha_transect[i,4] <- species
+}
+
+alpha_transect$species <- as.numeric(alpha_transect$species)
+mean_a_transect <- data.frame(stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  df <- alpha_transect %>%
+    subset(site==site[i])
+  mean_a_transect[i,1] <- mean(df$species)
+  
+}
+
+
+mean_alpha_transect <- mean(mean_a_transect$V1)
+sd_alpha_transect <- sd(mean_a_transect$V1)
+
+# calculate beta inter-station
+
+beta_transect <- data.frame(region=character(1310), site=character(1310), alpha=numeric(1310), gamma=numeric(1310), beta=numeric(1310), scale="inter-transect", stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  s <- site[i]
+  r <- unique(alpha_transect[alpha_transect$site==site[i],]$region)
+  gamma <- alpha_site[alpha_site$site==site[i],]$species
+  alpha <- mean(alpha_transect[alpha_transect$site==site[i],]$species)
+  beta_transect[i,1] <- r
+  beta_transect[i,2] <- s
+  beta_transect[i,3] <- alpha
+  beta_transect[i,4] <- gamma
+  beta_transect[i,5] <- gamma - alpha
+}
+
+
+mean_b_transect <- data.frame(stringsAsFactors = FALSE)
+
+for (i in 1:length(site)) {
+  df <- beta_transect %>%
+    subset(site==site[i])
+  mean_b_transect[i,1] <- mean(df$beta)
+  
+}
+
+
+mean_beta_transect <- mean(mean_b_transect$V1)
+sd_beta_transect <- sd(mean_b_transect$V1)
+
+beta_region$beta+mean_beta_site+mean_beta_transect+mean_alpha_transect
+
+# calculate diversity partitioning
+
+div_partition <- data.frame(component=c("mean_alpha_transect", "mean_beta_transect", "mean_beta_site", "beta_region"), 
+                            value=c(mean_alpha_transect, mean_beta_transect, mean_beta_site, beta_region$beta),
+                            sd=c(sd_alpha_transect, sd_beta_transect, sd_beta_site, 0),
+                            percent=numeric(4))
+div_partition$percent <- (div_partition$value*100)/gamma_global
+
+
+write.csv(div_partition, "outputs/06_diversity_partitioning/RLS_diversity_partitioning.csv")
+
+
+
+
+
 #__________________________________________________________________________
-### On species ###
+### Beta On species ###
 #__________________________________________________________________________
 RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_species <- RLS_species %>%
@@ -96,7 +244,7 @@ for (i in 1:length(site)) {
 
 
 betatotal <- rbind(betaregion, betasite, betatransect)
-
+write.csv(betatotal, "outputs/06_diversity_partitioning/beta_RLS_species.csv")
 beta_melt <- reshape2::melt(betatotal)
 
 beta_species_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
@@ -110,7 +258,7 @@ ggsave("outputs/06_diversity_partitioning/beta_RLS_species_Ecoregion.png")
 
 
 #__________________________________________________________________________
-### On families ###
+### Beta On families ###
 #__________________________________________________________________________
 RLS_families <- read.csv("data/RLS/RLS_families.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_families <- RLS_families %>%
@@ -201,7 +349,7 @@ for (i in 1:length(site)) {
 
 
 betatotal <- rbind(betaregion, betasite, betatransect)
-
+write.csv(betatotal, "outputs/06_diversity_partitioning/beta_RLS_families.csv")
 beta_melt <- reshape2::melt(betatotal)
 
 beta_family_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
