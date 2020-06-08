@@ -84,7 +84,8 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=116+10, label="RLS Family : 116",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=116+10, label="Asymptote RLS Family : 116",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=2990, y=94+10, label="RLS Family : 94",hjust=1, alpha=0.7, size=3.5)+
   annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.46",hjust=1, alpha=0.7)+
   ylim(0,190)+
   xlab("Number of transects") +
@@ -101,7 +102,8 @@ fam_edna <- ggplot(df_fam) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=250, y=178+10, label="eDNA Family : 178",hjust=1,color="#457277") +
+  annotate(geom="text", x=250, y=178+10, label="Asymptote eDNA Family : 178",hjust=1,color="#457277", size=3.5) +
+  annotate(geom="text", x=250, y=145+10, label="eDNA Family : 145",hjust=1,color="#457277", size=3.5) +
   annotate(geom="text", x=250, y=30, label="Lomolino slope = 1.85",hjust=1, alpha=0.7)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
@@ -121,7 +123,7 @@ save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
 #### On species ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
 RLS_species <- RLS_species %>%
   filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
 RLS_sp <- RLS_species[,c(12:2051)]
@@ -177,7 +179,8 @@ species_RLS <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2322+150, label="RLS Species : 2322",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=2322+150, label="Asymptote RLS Species : 2322",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=2990, y=1786+150, label="RLS Species : 1786",hjust=1, alpha=0.7, size=3.5) +
   annotate(geom="text", x=2990, y=600, label="Lomolino slope = 1.68",hjust=1, alpha=0.7) +
   ylim(0,3000)+
   xlab("Number of transects") +
@@ -194,7 +197,8 @@ species_edna <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2818+150, label="eDNA MOTUs : 2818", hjust=1, color="#d2981a") +
+  annotate(geom="text", x=250, y=2818+150, label="Asymptote eDNA MOTUs : 2818", hjust=1, color="#d2981a", size=3.5) +
+  annotate(geom="text", x=250, y=2175+150, label="eDNA MOTUs : 2175", hjust=1, color="#d2981a", size=3.5) +
   annotate(geom="text", x=250, y=600, label="Lomolino slope = 2.3", hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("") +
@@ -205,7 +209,7 @@ species_edna <- ggplot(df_motus) +
 
 species_edna
 
-plot_acc_species <- ggarrange(species_edna, species_RLS, nrow = 1, ncol=2)
+plot_acc_species <- ggarrange(species_edna, species_RLS +rremove("ylab"), nrow = 1, ncol=2)
 ggsave("outputs/03_accumulation_curves/accumulation_species_motus_panels.png")
 save(plot_acc_species, file = "Rdata/plot_acc_species.rdata")
 

@@ -4,7 +4,7 @@ library(vegan)
 library(betapart)
 '%ni%' <- Negate("%in%")
 
-# gamma global =2175
+# gamma global 
 
 RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_species <- RLS_species %>%
