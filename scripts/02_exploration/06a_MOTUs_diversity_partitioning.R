@@ -134,27 +134,17 @@ for (i in 1:length(site)) {
   beta_station[i,5] <- gamma - alpha
 }
 
-beta_station_car <- beta_station %>%
-  subset(region == "Caribbean")
-mean_beta_station_car <- mean(beta_station_car$beta)
+mean_b_station <- data.frame(stringsAsFactors = FALSE)
 
-beta_station_leng <- beta_station %>%
-  subset(region == "Central_Indo_Pacific")
-mean_beta_station_leng <- mean(beta_station_leng$beta)
+for (i in 1:length(site)) {
+  df <- beta_station %>%
+    subset(site==site[i])
+  mean_b_station[i,1] <- mean(df$beta)
+  
+}
 
-beta_station_eparse <- beta_station %>%
-  subset(region == "West_Indian")
-mean_beta_station_eparse <- mean(beta_station_eparse$beta)
-
-beta_station_cal <- beta_station %>%
-  subset(region == "South_West_Pacific")
-mean_beta_station_cal <- mean(beta_station_cal$beta)
-
-beta_station_faka <- beta_station[beta_station$region=="Central_Pacific",]$beta
-
-b_station <- c(mean_beta_station_car, beta_station_faka, mean_beta_station_leng, mean_beta_station_eparse, mean_beta_station_cal)
-mean_beta_station <- mean(b_station)
-sd_beta_station <- sd(b_station)
+mean_beta_station <- mean(mean_b_station$V1)
+sd_beta_station <- sd(mean_b_station$V1)
 
 beta_region$beta+mean_beta_site+mean_beta_station+mean_alpha_station
 

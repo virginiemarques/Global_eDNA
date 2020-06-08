@@ -181,7 +181,7 @@ asymptote_mm <- function(x, column_station = "sample_name_all_pcr",
   res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(gom_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
   
   # Calculation asymptote value
-  asymp_edna <- data.frame(asymptote = weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"]))
+  asymp_edna <- data.frame(asymptote = weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"]), slope= coef(lomo_edna)[[3]])
   
   # Return 
   return(asymp_edna)
