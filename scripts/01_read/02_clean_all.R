@@ -77,11 +77,15 @@ df_all_filters <- df_all_filters%>%
 
 scaridae <- c("Scarus", "Bolbometopon", "Cetoscarus", "Chlorurus", "Hipposcarus", "Calotomus", "Cryptotomus", "Leptoscarus", "Nicholsina", "Sparisoma")
 
-df_all_filters <- df_all_filters %>%
-  mutate(new_family_name = case_when(
-    new_genus_name %in% scaridae ~ "Scaridae"
-  ))
+df_scaridae <- df_all_filters%>%
+  filter(new_genus_name%in%scaridae)
 
+df <- df_all_filters%>%
+  filter(new_genus_name%ni%scaridae)
+
+df_scaridae$new_family_name <- "Scaridae"
+
+df_all_filters <- rbind(df, df_scaridae)
 
 # Simplify at the sample level, instead of PCR level?
 df_all_filters_sample <- simplify_sample_level(df_all_filters)
