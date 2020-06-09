@@ -12,6 +12,7 @@ source('scripts/00_functions.R')
 
 # Solve the conflicts with dplyr
 conflict_prefer("filter", "dplyr")
+'%ni%' <- Negate("%in%")
 
 # Load data
 load('Rdata/01_liste_all_read_edna.Rdata')
@@ -69,6 +70,18 @@ lapply(liste_read_edna_LULU, function(x){
 
 # Combine list to one big dataset
 df_all_filters <- do.call("rbind", liste_read_edna_LULU) 
+
+##Clean families
+df_all_filters <- df_all_filters%>%
+  filter(new_family_name%ni%c("Cichlidae", "Cyprinidae", "Poeciliidae"))
+
+scaridae <- c("Scarus", "Bolbometopon", "Cetoscarus", "Chlorurus", "Hipposcarus", "Calotomus", "Cryptotomus", "Leptoscarus", "Nicholsina", "Sparisoma")
+
+df_all_filters <- df_all_filters %>%
+  mutate(new_family_name = case_when(
+    new_genus_name %in% scaridae ~ "Scaridae"
+  ))
+
 
 # Simplify at the sample level, instead of PCR level?
 df_all_filters_sample <- simplify_sample_level(df_all_filters)
