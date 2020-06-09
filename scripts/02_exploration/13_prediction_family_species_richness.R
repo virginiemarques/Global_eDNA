@@ -92,13 +92,13 @@ summary(lm_species)
 plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.74, intercept = 1.54, size=0.8)+
+  geom_abline(slope = 0.76, intercept = 1.54, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
   labs(x="log(1+Number of species in eDNA)",
        y="log(1+Number of species in RLS)")+
-  annotate(geom="text", x=6, y=1, label="y = 0.74x+1.54\nR² = 0.38\np < 0.001", hjust=1, size=3.5) +
+  annotate(geom="text", x=6, y=1, label="y = 0.76x+1.54\nR² = 0.38\np < 0.001", hjust=1, size=3.5) +
   ggtitle("E")
 
 
@@ -123,8 +123,8 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.84, intercept = 0.49, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.84x+0.49\nR² = 0.59\np < 0.001", hjust=1, size=3.5) +
+  geom_abline(slope = 0.85, intercept = 0.5, size=0.8)+
+  annotate(geom="text", x=6, y=1, label="y = 0.85x+0.5\nR² = 0.59\np < 0.001", hjust=1, size=3.5) +
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
@@ -178,7 +178,7 @@ plot_rich_log
 
 plot_rich_perc <- ggarrange(perc_species2, perc_motu2, nrow = 1, ncol = 2, labels = c("A", "B"), label.x = -0.007, label.y = 1)
 plot_rich_perc
-ggsave("outputs/Figures papier/ED_Figure3.png", width = 7, height = 3.5)
+
 
 
 

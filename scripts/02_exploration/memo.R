@@ -55,6 +55,31 @@ df_all_filters %>%
   summarise(n = n_distinct(amplicon)) %>% pull()
 
 
+## total number of reads after cleaning per region
+df <- df_all_filters %>%
+  filter(region=="West_Indian")
+sum(df$count_reads)
+## nb of unique Motus per region
+df_all_filters %>%
+  filter(region=="West_Indian")%>%
+  summarise(n = n_distinct(sequence))
+## nb of reads assigned per region
+df <- df_all_filters %>%
+  filter(region=="West_Indian")%>%
+  filter(new_rank_ncbi != "higher")
+sum(df$count_reads)
+## nb of unique Motus per region
+df_all_filters %>%
+  filter(region=="West_Indian")%>%
+  filter(new_rank_ncbi != "higher")%>%
+  summarise(n = n_distinct(sequence))
+## number of species per region
+df_all_filters %>%
+  filter(region=="West_Indian")%>%
+  filter(!is.na(new_species_name))%>%
+  summarise(n = n_distinct(sequence))
+
+
 ## nb motus Labridae, gobiidae et pomacentridae
 df_all_filters %>%
   filter(new_family_name == "Poridae")%>%

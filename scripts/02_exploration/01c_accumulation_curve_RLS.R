@@ -102,8 +102,8 @@ fam_edna <- ggplot(df_fam) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=250, y=178+10, label="Asymptote eDNA Family : 178",hjust=1,color="#457277", size=3.5) +
-  annotate(geom="text", x=250, y=145+10, label="eDNA Family : 145",hjust=1,color="#457277", size=3.5) +
+  annotate(geom="text", x=250, y=177+10, label="Asymptote eDNA Family : 177",hjust=1,color="#457277", size=3.5) +
+  annotate(geom="text", x=250, y=143+10, label="eDNA Family : 143",hjust=1,color="#457277", size=3.5) +
   annotate(geom="text", x=250, y=30, label="Lomolino slope = 1.85",hjust=1, alpha=0.7)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
@@ -197,8 +197,8 @@ species_edna <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2818+150, label="Asymptote eDNA MOTUs : 2818", hjust=1, color="#d2981a", size=3.5) +
-  annotate(geom="text", x=250, y=2175+150, label="eDNA MOTUs : 2175", hjust=1, color="#d2981a", size=3.5) +
+  annotate(geom="text", x=250, y=2789+150, label="Asymptote eDNA MOTUs : 2789", hjust=1, color="#d2981a", size=3.5) +
+  annotate(geom="text", x=250, y=2160+150, label="eDNA MOTUs : 2160", hjust=1, color="#d2981a", size=3.5) +
   annotate(geom="text", x=250, y=600, label="Lomolino slope = 2.3", hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("") +
