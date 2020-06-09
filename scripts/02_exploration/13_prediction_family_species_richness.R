@@ -131,7 +131,8 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   labs(x="log(1+Number of MOTUs in eDNA)", y="log(1+Number of species in RLS")+
   ggtitle("F")
 
-
+lm_motu <- lm(log_checklist~log_motu +offset(log_motu), data=fam_summary)
+summary(lm_motu)
 
 
 ## plot percentage of our data ~ checklist
