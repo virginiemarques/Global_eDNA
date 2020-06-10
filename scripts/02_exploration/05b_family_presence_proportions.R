@@ -527,7 +527,7 @@ ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proport
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean, count_families_site_eparse, count_families_site_fakarava, count_families_site_caledonia[,c(-7)])
+df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean[,-7], count_families_site_eparse, count_families_site_fakarava, count_families_site_caledonia[,c(-7)])
 save(df_all_site, file = "Rdata/family_proportion_per_site.rdata")
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")

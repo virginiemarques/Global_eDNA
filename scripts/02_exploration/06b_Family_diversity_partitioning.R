@@ -18,24 +18,24 @@ df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
 
-# gamma global =145
+# gamma global =143
 
 gamma_global <- as.numeric(df_all_filters %>%
   summarise(n = n_distinct(new_family_name)))
   
 
-region <- unique(df_all_filters$region)
-site <- unique(df_all_filters$site)
-station <- unique(df_all_filters$station)
+Region <- unique(df_all_filters$region)
+Site <- unique(df_all_filters$site)
+Station <- unique(df_all_filters$station)
 
 
 # calculate alpha diversity per region
 
 alpha_region=data.frame(region=character(5), family=numeric(5), stringsAsFactors = FALSE)
 
-for (i in 1:length(region)) {
-  r <- region[i]
-  family <- df_all_filters[df_all_filters$region == region[i],] %>%
+for (i in 1:length(Region)) {
+  r <- Region[i]
+  family <- df_all_filters[df_all_filters$region == Region[i],] %>%
     summarise(n = n_distinct(new_family_name))
   alpha_region[i,1] <- r
   alpha_region[i,2] <- family
@@ -51,10 +51,10 @@ beta_region$beta <- beta_region$gamma - beta_region$alpha
 
 alpha_site=data.frame(region=character(), site=character(), family=numeric(), stringsAsFactors = FALSE)
 
-for (i in 1:length(site)) {
-  s <- site[i]
-  r <- unique(df_all_filters[df_all_filters$site == site[i],]$region)
-  family <- df_all_filters[df_all_filters$site == site[i],] %>%
+for (i in 1:length(Site)) {
+  s <- Site[i]
+  r <- unique(df_all_filters[df_all_filters$site == Site[i],]$region)
+  family <- df_all_filters[df_all_filters$site == Site[i],] %>%
     summarise(n = n_distinct(new_family_name))
   alpha_site[i,1] <- r
   alpha_site[i,2] <- s
@@ -66,10 +66,10 @@ for (i in 1:length(site)) {
 
 beta_site <- data.frame(region=character(5), alpha=numeric(5), gamma=numeric(5), beta=numeric(5), scale="inter-site", stringsAsFactors = FALSE)
 
-for (i in 1:length(region)) {
-  r <- region[i]
-  gamma <- alpha_region[alpha_region$region==region[i],]$family
-  alpha <- mean(alpha_site[alpha_site$region==region[i],]$family)
+for (i in 1:length(Region)) {
+  r <- Region[i]
+  gamma <- alpha_region[alpha_region$region==Region[i],]$family
+  alpha <- mean(alpha_site[alpha_site$region==Region[i],]$family)
   beta_site[i,1] <- r
   beta_site[i,2] <- alpha
   beta_site[i,3] <- gamma
@@ -85,7 +85,7 @@ sd_beta_site <- sd(beta_site$beta)
 # calculate alpha diversity per station
 alpha_station=data.frame(region=character(), site=character(), station=character(), family=numeric(), stringsAsFactors = FALSE)
 
-for (i in 1:length(station)) {
+for (i in 1:length(Station)) {
   st <- station[i]
   r <- unique(df_all_filters[df_all_filters$station == station[i],]$region)
   s <- unique(df_all_filters[df_all_filters$station == station[i],]$site)
@@ -114,11 +114,11 @@ sd_alpha_station <- sd(mean_a_station)
 
 beta_station <- data.frame(region=character(25), site=character(25), alpha=numeric(25), gamma=numeric(25), beta=numeric(25), scale="inter-station", stringsAsFactors = FALSE)
 
-for (i in 1:length(site)) {
-  s <- site[i]
-  r <- unique(alpha_station[alpha_station$site==site[i],]$region)
-  gamma <- alpha_site[alpha_site$site==site[i],]$family
-  alpha <- mean(alpha_station[alpha_station$site==site[i],]$family)
+for (i in 1:length(Site)) {
+  s <- Site[i]
+  r <- unique(alpha_station[alpha_station$site==Site[i],]$region)
+  gamma <- alpha_site[alpha_site$site==Site[i],]$family
+  alpha <- mean(alpha_station[alpha_station$site==Site[i],]$family)
   beta_station[i,1] <- r
   beta_station[i,2] <- s
   beta_station[i,3] <- alpha
@@ -128,9 +128,9 @@ for (i in 1:length(site)) {
 
 mean_b_station <- data.frame(stringsAsFactors = FALSE)
 
-for (i in 1:length(site)) {
+for (i in 1:length(Region)) {
   df <- beta_station %>%
-    subset(site==site[i])
+    subset(region==Region[i])
   mean_b_station[i,1] <- mean(df$beta)
   
 }
@@ -174,10 +174,10 @@ ggsave("outputs/06_diversity_partitioning/family_alpha_beta~gamma.png")
 
 df_region=data.frame(family=character())
 
-for (i in 1:length(region)) {
-  df <- df_all_filters[df_all_filters$region == region[i],] %>%
+for (i in 1:length(Region)) {
+  df <- df_all_filters[df_all_filters$region == Region[i],] %>%
     distinct(new_family_name, region)
-  colnames(df) <- c("family", region[i])
+  colnames(df) <- c("family", Region[i])
   df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
@@ -195,14 +195,14 @@ df_site=vector("list", 5)
 betasite <- data.frame(scale="inter-site", total=numeric(5), turnover=numeric(5), nestedness=numeric(5))
 
 
-for (i in 1:length(region)) {
-  df <- df_all_filters[df_all_filters$region == region[i],]
-  site <- unique(df$site)
+for (i in 1:length(Region)) {
+  df <- df_all_filters[df_all_filters$region == Region[i],]
+  Site <- unique(df$site)
   df_site[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
-    for (j in 1:length(site)) {
-      df2 <- df[df$site==site[j],] %>%
+    for (j in 1:length(Site)) {
+      df2 <- df[df$site==Site[j],] %>%
         distinct(new_family_name, site)
-      colnames(df2) <- c("family", site[j])
+      colnames(df2) <- c("family", Site[j])
       df_site[[i]] <- full_join(df_site[[i]], df2, by="family")
     }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
@@ -220,19 +220,19 @@ for (i in 1:length(region)) {
 
 ## beta inter-station
 
-site <- unique(df_all_filters$site)
+Site <- unique(df_all_filters$site)
 df_station=vector("list", 25)
 betastation <- data.frame(scale="inter-station", total=numeric(25), turnover=numeric(25), nestedness=numeric(25))
 
 
-for (i in 1:length(site)) {
-  df <- df_all_filters[df_all_filters$site == site[i],]
-  station <- unique(df$station)
+for (i in 1:length(Site)) {
+  df <- df_all_filters[df_all_filters$site == Site[i],]
+  Station <- unique(df$station)
   df_station[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
-  for (j in 1:length(station)) {
-    df2 <- df[df$station==station[j],] %>%
+  for (j in 1:length(Station)) {
+    df2 <- df[df$station==Station[j],] %>%
       distinct(new_family_name, station)
-    colnames(df2) <- c("family", station[j])
+    colnames(df2) <- c("family", Station[j])
     df_station[[i]] <- full_join(df_station[[i]], df2, by="family")
   }
   rownames(df_station[[i]]) <- df_station[[i]][,1]

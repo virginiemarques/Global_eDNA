@@ -367,4 +367,4 @@ load("Rdata/beta_family_eDNA.rdata")
 
 ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("A", "B", "C", "D"), widths = c(1,1.4))
 
-ggsave("outputs/Figures papier/ED_Figure7.png")
+ggsave("outputs/Figures papier/ED_Figure6.png")

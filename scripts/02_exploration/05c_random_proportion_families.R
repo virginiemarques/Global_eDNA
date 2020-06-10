@@ -65,9 +65,9 @@ for (j in seq(1:1000)) {
   random_prop_tot <- rbind(random_prop_tot, random_prop)
 }
 
-save(random_prop_tot, file = "Rdata/random_family_proportions.rdata")
+save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 
-load("Rdata/random_family_proportions.rdata")
+load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions.rdata")
 
 
 

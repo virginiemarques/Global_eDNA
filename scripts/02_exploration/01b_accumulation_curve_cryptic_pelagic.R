@@ -21,11 +21,6 @@ df_all_filters <- df_all_filters %>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
-# Re-format at region scale
-# -----# After LULU 
-df_all_filters_temp <- do.call("rbind", liste_read_edna_LULU) %>%
-  filter(region != "East_Pacific")
-
 
 
 # ------------------------------------------------------------------------------- # 
@@ -360,7 +355,7 @@ ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", 
 
 
 ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("A", "B"))
-ggsave("outputs/Figures papier/ED_figure3a.png", width=8, height = 6)
+ggsave("outputs/Figures papier/ED_figure3.png", width=8, height = 6)
 
 
 

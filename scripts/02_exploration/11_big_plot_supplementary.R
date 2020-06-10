@@ -90,7 +90,7 @@ prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop,
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
 
 coverage <- ggplot(family_coverage_main, aes(x=order, y = coef_sequencing)) + 
@@ -98,7 +98,7 @@ coverage <- ggplot(family_coverage_main, aes(x=order, y = coef_sequencing)) +
   theme_bw() +
   labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
   scale_x_continuous(breaks=family_coverage_main$order, labels=family_coverage_main$Family, expand = c(0,0))+
   ylim(0, 1)+
@@ -110,7 +110,7 @@ resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) +
   theme_bw() +
   labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
   scale_x_continuous(breaks=family_coverage_main$order, labels=family_coverage_main$Family, expand = c(0,0))+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -130,7 +130,7 @@ similarity <- ggplot(prop_similarity_main, aes(x=class, y = order)) +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_main <- ggarrange(prop, coverage, resolution, similarity, ncol=4, nrow=1, widths = c(2,1,1,1), labels = c("A", "B", "C", "D"))
+plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"))
 plot_all_main
 ggsave("outputs/Figures papier/Figure2.png", width = 7.8, height = 8)
 
@@ -143,7 +143,7 @@ prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, f
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
   theme(legend.position = "none")+
   ylim(0, 0.02)+
-  theme(plot.title = element_text(size = 6, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
 
 coverage <- ggplot(family_coverage_ED, aes(x=order, y = coef_sequencing)) + 
@@ -151,7 +151,7 @@ coverage <- ggplot(family_coverage_ED, aes(x=order, y = coef_sequencing)) +
   theme_bw() +
   labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
   scale_x_continuous(breaks=family_coverage_ED$order, labels=family_coverage_ED$Family, expand = c(0,0))+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -162,7 +162,7 @@ resolution <- ggplot(family_coverage_ED, aes(x=order, y = coef_resolution)) +
   theme_bw() +
   labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
   theme(legend.position = "none")+
-  theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
+  theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
   scale_x_continuous(breaks=family_coverage_ED$order, labels=family_coverage_ED$Family, expand = c(0,0))+
   scale_y_continuous(breaks = c(0, 0.5, 1))+
@@ -182,7 +182,7 @@ similarity <- ggplot(prop_similarity_ED, aes(x=class, y = order)) +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_ED <- ggarrange(prop, coverage, resolution, similarity, ncol=4, nrow=1, widths = c(2,1,1,1), labels = c("A", "B", "C", "D"))
+plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"))
 plot_all_ED
 ggsave("outputs/Figures papier/ED_Figure4.png", width = 7.8, height = 10)
 
