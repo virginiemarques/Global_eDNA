@@ -107,11 +107,18 @@ motu_site <- df_all_filters %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(sequence))%>%
   mutate(rank = "site")
-
+save(motu_site, file="Rdata/rarete_motu_site.rdata")
 # plot
 p_motu_site <- fct_barplot(motu_site, rank_x="site", rank_y = "MOTUs")
 p_motu_site
 
+ggplot(motu_site)+
+  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#d2981a")+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA))+
+  labs(x="Number of sites",y="Number of MOTUs")
 # --------------------- # 
 # station scale 
 
@@ -125,10 +132,18 @@ motu_station <- df_all_filters %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(sequence))%>%
   mutate(rank = "station")
-
+save(motu_station, file="Rdata/rarete_motu_station.rdata")
 # plot
-p_motu_station <- fct_barplot(motu_station, rank_x="station", rank_y = "MOTUs", color = "grey")
+p_motu_station <- fct_barplot(motu_station, rank_x="station", rank_y = "MOTUs", color = "#d2981a")
 p_motu_station
+
+ggplot(motu_station)+
+  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#d2981a")+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA))+
+  labs(x="Number of stations",y="Number of MOTUs")
 
 # --------------------- # 
 # sample scale 
@@ -190,7 +205,7 @@ p_family_region
 length(unique(df_all_filters$site))
 
 # Count
-dataset <- df_all_filters %>%
+family_site <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(site)) %>%
@@ -198,10 +213,18 @@ dataset <- df_all_filters %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
   mutate(rank = "site")
-
+save(family_site, file="Rdata/rarete_family_site.rdata")
 # plot
 p_family_site <- fct_barplot(dataset, rank_x="site", rank_y = "families", n_tot = Nfamily)
 p_family_site
+
+ggplot(family_site)+
+  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#457277")+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA))+
+  labs(x="Number of sites",y="Number of families")
 
 # --------------------- # 
 # station scale 
@@ -209,7 +232,7 @@ p_family_site
 length(unique(df_all_filters$station))
 
 # Count
-dataset <- df_all_filters %>%
+family_station <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
   summarise(n = n_distinct(station)) %>%
@@ -217,10 +240,18 @@ dataset <- df_all_filters %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
   mutate(rank = "station")
-
+save(family_station, file="Rdata/rarete_family_station.rdata")
 # plot
 p_family_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
 p_family_station
+
+ggplot(family_station)+
+  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#457277")+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA))+
+  labs(x="Number of stations",y="Number of families")
 
 # --------------------- # 
 # sample scale 

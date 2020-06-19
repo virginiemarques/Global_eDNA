@@ -80,6 +80,7 @@ for (i in 1:length(families3)) {
 fam_summary$fam <- gsub("(?<=\\S)[aeiouy]", "", fam_summary$new_family_name, perl = TRUE)
 fam_summary$fam <- substring(fam_summary$fam, 1, 4)
 
+save(fam_summary, file="Rdata/all_predictions_motus_species.rdata")
 
 ## plot log(number of species in checklist) ~ log(our data)
 #-----------------------------------------------------------------------------------------------------------
@@ -99,9 +100,9 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   labs(x="log(1+Number of species in eDNA)",
        y="log(1+Number of species in RLS)")+
   annotate(geom="text", x=6, y=1, label="y = 0.76x+1.54\nR² = 0.38\np < 0.001", hjust=1, size=3.5) +
-  ggtitle("E")
+  ggtitle("e")
 
-
+save(plot_species, "Rdata/plot_prediction_species.rdata")
 
 # linear regression and plot for motus
 lm_motu <- lm(log_checklist~log_motu, data=fam_summary)
@@ -127,14 +128,14 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotate(geom="text", x=6, y=1, label="y = 0.85x+0.5\nR² = 0.59\np < 0.001", hjust=1, size=3.5) +
   xlim(0,6)+
   ylim(0,6)+
-  theme_bw()+
-  labs(x="log(1+Number of MOTUs in eDNA)", y="log(1+Number of species in RLS")+
-  ggtitle("F")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
+  labs(x="log(1+Number of MOTUs in eDNA)", y="log(1+Number of species in RLS)")+
+  ggtitle("f")
 
 lm_motu <- lm(log_checklist~log_motu +offset(log_motu), data=fam_summary)
 summary(lm_motu)
 
-
+save(plot_motu, "Rdata/plot_prediction_motus.rdata")
 ## plot percentage of our data ~ checklist
 #-----------------------------------------------------------------------------------------------------------
 

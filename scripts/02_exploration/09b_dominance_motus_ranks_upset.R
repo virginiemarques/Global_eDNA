@@ -120,6 +120,7 @@ p1 <- upset(matrix_motus,
       ))
 p1
 
+save(p1, file = "Rdata/upset_plot_motus_region.rdata")
 png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=300)
 p1
 grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))

@@ -52,6 +52,7 @@ families_prop_global_main <- families_prop_global %>%
   subset(family%in%families_main)
 families_prop_global_main <- reshape2::melt(families_prop_global_main)
 colnames(families_prop_global_main) <- c("family", "Region", "prop")
+save(families_prop_global_main, file="Rdata/family_proportion_region_main.rdata")
 
 families_prop_global_ED <- families_prop_global %>%
   subset(family%in%family_coverage_ED$Family)

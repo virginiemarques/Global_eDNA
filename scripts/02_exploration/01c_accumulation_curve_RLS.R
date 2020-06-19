@@ -6,6 +6,7 @@ library(ggplot2)
 library(ggpubr)
 library(dplyr)
 library(vegan)
+library(ggthemes)
 
 # data
 load("Rdata/02_clean_all.Rdata")
@@ -84,13 +85,13 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=116+10, label="Asymptote RLS Family : 116",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=2990, y=116+10, label="Asymptote : 116",hjust=1, alpha=0.7, size=3.5) +
   annotate(geom="text", x=2990, y=94+10, label="RLS Family : 94",hjust=1, alpha=0.7, size=3.5)+
-  annotate(geom="text", x=2990, y=30, label="Lomolino slope = 1.46",hjust=1, alpha=0.7)+
+  annotate(geom="text", x=2990, y=30, label="Slope = 1.46",hjust=1, alpha=0.7)+
   ylim(0,190)+
   xlab("Number of transects") +
-  theme_bw() + 
-  ggtitle("D")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
+  ggtitle("d")
   
 family_RLS
 
@@ -102,14 +103,14 @@ fam_edna <- ggplot(df_fam) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=250, y=177+10, label="Asymptote eDNA Family : 177",hjust=1,color="#457277", size=3.5) +
+  annotate(geom="text", x=250, y=177+10, label="Asymptote : 177",hjust=1,color="#457277", size=3.5) +
   annotate(geom="text", x=250, y=143+10, label="eDNA Family : 143",hjust=1,color="#457277", size=3.5) +
-  annotate(geom="text", x=250, y=30, label="Lomolino slope = 1.85",hjust=1, alpha=0.7)+
+  annotate(geom="text", x=250, y=30, label="Slope = 1.85",hjust=1, alpha=0.7)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
   ylab("Number of families") +
-  theme_bw() + 
-  ggtitle("C")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
+  ggtitle("c")
 
 fam_edna
 
@@ -179,13 +180,13 @@ species_RLS <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2322+150, label="Asymptote RLS Species : 2322",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=2990, y=2322+150, label="Asymptote : 2322",hjust=1, alpha=0.7, size=3.5) +
   annotate(geom="text", x=2990, y=1786+150, label="RLS Species : 1786",hjust=1, alpha=0.7, size=3.5) +
-  annotate(geom="text", x=2990, y=600, label="Lomolino slope = 1.68",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=2990, y=600, label="Slope = 1.68",hjust=1, alpha=0.7) +
   ylim(0,3000)+
   xlab("Number of transects") +
-  theme_bw() + 
-  ggtitle("B")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
+  ggtitle("b")
 
 species_RLS
 
@@ -197,15 +198,15 @@ species_edna <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2789+150, label="Asymptote eDNA MOTUs : 2789", hjust=1, color="#d2981a", size=3.5) +
+  annotate(geom="text", x=250, y=2789+150, label="Asymptote : 2789", hjust=1, color="#d2981a", size=3.5) +
   annotate(geom="text", x=250, y=2160+150, label="eDNA MOTUs : 2160", hjust=1, color="#d2981a", size=3.5) +
-  annotate(geom="text", x=250, y=600, label="Lomolino slope = 2.3", hjust=1, alpha=0.7) +
+  annotate(geom="text", x=250, y=600, label="Slope = 2.3", hjust=1, alpha=0.7) +
   ylim(0,3000)+
   ylab("") +
   xlab("Number of samples")+
   ylab("Number of Species / MOTUs") +
-  theme_bw() + 
-  ggtitle("A")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
+  ggtitle("a")
 
 species_edna
 

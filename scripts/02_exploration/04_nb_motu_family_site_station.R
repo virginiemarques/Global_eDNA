@@ -561,6 +561,7 @@ to_merge <- rich_site %>%
   dplyr::select(region, dist_to_CT) %>%
   dplyr::group_by(region) %>%
   dplyr::summarise(dist_to_CT = mean(dist_to_CT))
+save(rich_site, file="Rdata/richness_station_site_region.rdata")
 
 ### MOTUs 
 # DF for plot - ici je compte le nombre de motus par region et je joins le df précédent pour avoir la distance au CT
@@ -569,7 +570,7 @@ all_region <- df_all_filters %>%
   summarise(n_motus = n_distinct(sequence)) %>%
   left_join(., to_merge)
 
-
+save(all_region, file = "Rdata/richness_motu_region.rdata")
 # Plot
 all_motus <- ggplot(rich_site, aes(col=region))+
   geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
@@ -591,7 +592,7 @@ all_region <- df_all_filters %>%
   group_by(region) %>%
   summarise(n_family = n_distinct(new_family_name)) %>%
   left_join(., to_merge)
-
+save(all_region, file = "Rdata/richness_family_region.rdata")
 
 # Plot
 all_family <- ggplot(rich_site, aes(col=region))+

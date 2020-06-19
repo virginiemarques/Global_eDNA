@@ -72,7 +72,7 @@ load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_fam
 
 
 # calculate 2.5 and 97.5 quantile for each sample size and each family
-family <- family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
+family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 CI_family <- data.frame()
 quant <- data.frame(upper=numeric(800), lower=numeric(800))
@@ -87,6 +87,7 @@ for (j in 1:length(family)) {
   CI_family <- rbind(CI_family, quant)
 }
 
+save(CI_family, file = "Rdata/CI_null_model_family_proportions.rdata")
 
 load("Rdata/family_proportion_per_site.rdata")
 
