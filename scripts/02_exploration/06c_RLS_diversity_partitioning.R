@@ -157,11 +157,11 @@ write.csv(div_partition, "outputs/06_diversity_partitioning/RLS_diversity_partit
 #__________________________________________________________________________
 RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_species <- RLS_species %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+  subset(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
 RLS_sp <- RLS_species[,c(12:2051)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species[,c(1,2,9)], RLS_sp)
-
+save(RLS_species, file = "Rdata/RLS_species_clean.rdata")
 
 region <- unique(RLS_species$Ecoregion)
 site <- unique(RLS_species$SiteCode)

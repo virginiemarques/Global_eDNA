@@ -5,6 +5,7 @@ library(grid)
 library(gridExtra)
 library(ggpubr)
 library(scales)
+library(dplyr)
 
 #################################################################################################################################•
 #### Plot figure 1
@@ -181,7 +182,8 @@ all_motus <- ggplot(rich_site, aes(col=region))+
   geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
   geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=21, size=2, fill="white", alpha=0.7, show.legend = FALSE) +
-  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
+  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) +
+  geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
@@ -198,7 +200,8 @@ all_family <- ggplot(rich_site, aes(col=region))+
   geom_jitter(aes(x=dist_to_CT, y=family), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
   geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=21, size=2, alpha=0.7, fill="white", show.legend = FALSE) +
-  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_family), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
+  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_family), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) +
+  geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
@@ -220,6 +223,7 @@ a <- grid.arrange(plot, bottom=x.grob)
 # b
 load("Rdata/family_proportion_per_site.rdata")
 load("Rdata/CI_null_model_family_proportions.rdata")
+family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
 
 prop <- vector("list")
 for (i in 1:length(family)) {
@@ -260,39 +264,49 @@ ggsave("outputs/Figures papier/Figure2.png", width = 7, height = 8)
 #############################################################################################################################
 ### Plot figure 4
 
-# a
-load("Rdata/rarete_motu_site.rdata")
-a <- ggplot(motu_site)+
-  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#d2981a")+
-  ggtitle("a")+
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        panel.background = element_blank(), 
-        panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size = 10, face = "bold"),
-        axis.title.x = element_text(size = 10, face = "bold"),
-        plot.title = element_text(size=12, face = "bold"))+
-  labs(x="Number of sites",y="Number of MOTUs")
+# a = plot log10(occurence species/motus)
 
-# b
-load("Rdata/rarete_family_site.rdata")
-b <- ggplot(family_site)+
-  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#457277")+
-  ggtitle("b")+
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        panel.background = element_blank(), 
-        panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size = 10, face = "bold"),
-        axis.title.x = element_text(size = 10, face = "bold"),
-        plot.title = element_text(size=12, face = "bold"))+
-  labs(x="Number of sites",y="Number of families")
+library(gambin)
+library(sads)
+library(vegan)
+library(plyr)
 
-# c
+
 load("Rdata/rarete_motu_station.rdata")
-c <- ggplot(motu_station)+
-  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#d2981a")+
-  ggtitle("c")+
+tab=as.data.frame(motu_station)
+
+ls=fitsad(tab[,2], "ls")
+ln=fitsad(tab[,2],"lnorm")
+po=fitsad(tab[,2], "power")
+gb=fit_abundances(tab[,2])
+AICtab(ls, po, ln,gb, weights=TRUE)
+
+
+load("Rdata/RLS_species_clean.rdata")
+RLS_species <- decostand(RLS_species[,4:ncol(RLS_species)], "pa",na.rm = TRUE)
+occ_RLS <- colSums(RLS_species)
+species_transects <- as.data.frame(table(occ_RLS))
+species_transects[,1] <- as.numeric(species_transects[,1])
+species_transects[,2] <- as.numeric(species_transects[,2])
+
+ls2=fitsad(species_transects[,2], "ls")
+ln2=fitsad(species_transects[,2],"lnorm")
+po2=fitsad(species_transects[,2], "power")
+gb2=fit_abundances(species_transects[,2])
+AICtab(ls2, po2, ln2, gb2, weights=TRUE)
+
+tab2 <- species_transects
+tab2$n_transect <- log10(species_transects[,1])
+tab2$n_species <- log10(species_transects[,2])
+
+
+ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
+  geom_point(data=tab2, aes(x=n_transect, y=n_species), size=2, show.legend = TRUE)+
+  geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  xlim(0,3)+
+  ylim(0,3)+
+  annotate(geom="text", x=3, y=3, label="eDNA MOTUs ~ stations, slope=2.7", hjust=1, size=4, colour="#d2981a") +
+  annotate(geom="text", x=3, y=2.8, label="RLS species ~ transects, slope=0.5", hjust=1, size=4) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -300,32 +314,49 @@ c <- ggplot(motu_station)+
         axis.title.y = element_text(size = 10, face = "bold"),
         axis.title.x = element_text(size = 10, face = "bold"),
         plot.title = element_text(size=12, face = "bold"))+
-  labs(x="Number of stations",y="Number of MOTUs")
+  labs(x="log10(Number of observations)",y="log10(Number of species)")
+
+ggsave("outputs/Figures papier/Figure4.png")
+
+# b 
+
+load("Rdata/02_clean_all.Rdata")
+df_all_filters <- df_all_filters %>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
+  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 
-# d
-load("Rdata/rarete_family_station.rdata")
-d <- ggplot(family_station)+
-  geom_bar(aes(x=n, y=n_motus), stat= 'identity', fill="#457277")+
-  ggtitle("d")+
+occu_edna <- df_all_filters %>%
+  group_by(sequence) %>%
+  summarise(n = n_distinct(station))
+  
+occu_edna$perc <- (occu_edna$n/145)*100
+
+ggplot(occu_edna, aes(x=reorder(sequence, 1-perc), y=perc))+
+  geom_bar(stat = "identity", color="#d2981a")+
+  ylim(0,65)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
         panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size = 10, face = "bold"),
-        axis.title.x = element_text(size = 10, face = "bold"),
-        plot.title = element_text(size=12, face = "bold"))+
-  labs(x="Number of stations",y="Number of families")
+        axis.text.x = element_blank())+
+  labs(x="eDNA MOTUs", y="Percentage of stations where MOTU detected")
+ggsave("outputs/Figures papier/Figure4b.png")
 
-a_d <- ggarrange(a, b, c, d, nrow=2, ncol=2)
-ggsave("outputs/Figures papier/Figure4a_d.png", width = 6, height = 5, units = "in")
+# c percentage of transects where each species detected
+occu_RLS <- as.data.frame(occ_RLS)
+occu_RLS$species <- rownames(occu_RLS)
+occu_RLS$perc <- (occu_RLS$occ_RLS/2811)*100
 
-# e
-load("Rdata/upset_plot_motus_region.rdata")
-p1
-png('outputs/Figures papier/Figure4e.png', width = 6, height=3, units = "in", res=300)
-p1
-grid.text("e",x = 0.1, y=0.95, gp=gpar(fontsize=12, fontface="bold"))
-dev.off()
-#marche pas
-grid.arrange(a_d, e, nrow=2, heights = c(2,1))
+ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
+  geom_bar(stat = "identity")+
+  ylim(0,65)+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.text.x = element_blank())+
+  labs(x="RLS species", y="Percentage of transects where species detected")
+ggsave("outputs/Figures papier/Figure4c.png")
