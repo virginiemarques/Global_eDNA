@@ -6,6 +6,16 @@ library(gridExtra)
 library(ggpubr)
 library(scales)
 library(dplyr)
+library(conflicted)
+library(gambin)
+library(sads)
+library(vegan)
+library(plyr)
+
+# 
+conflict_prefer("filter", "dplyr")
+conflict_prefer("summarise", "dplyr")
+'%ni%' <- Negate("%in%")
 
 #################################################################################################################################•
 #### Plot figure 1
@@ -223,7 +233,7 @@ a <- grid.arrange(plot, bottom=x.grob)
 # b
 load("Rdata/family_proportion_per_site.rdata")
 load("Rdata/CI_null_model_family_proportions.rdata")
-family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
+family <- c("Acanthuridae", "Labridae", "Serranidae", "Carangidae", "Pomacentridae","Gobiidae")
 
 prop <- vector("list")
 for (i in 1:length(family)) {
@@ -249,7 +259,7 @@ for (i in 1:length(family)) {
           plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
-plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
+plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3)
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=10))
 y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site", 
@@ -265,12 +275,6 @@ ggsave("outputs/Figures papier/Figure2.png", width = 7, height = 8)
 ### Plot figure 4
 
 # a = plot log10(occurence species/motus)
-
-library(gambin)
-library(sads)
-library(vegan)
-library(plyr)
-
 
 load("Rdata/rarete_motu_station.rdata")
 tab=as.data.frame(motu_station)
@@ -301,6 +305,8 @@ tab2$n_species <- log10(species_transects[,2])
 
 
 ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
+  geom_smooth(se=FALSE, color="grey", alpha=1, size=0.9)+
+  geom_smooth(data=tab2, aes(x=n_transect, y=n_species, alpha=0.2),se=FALSE, color="grey", alpha=1, size=0.9)+
   geom_point(data=tab2, aes(x=n_transect, y=n_species), size=2, show.legend = TRUE)+
   geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
   xlim(0,3)+
@@ -314,7 +320,7 @@ ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
         axis.title.y = element_text(size = 10, face = "bold"),
         axis.title.x = element_text(size = 10, face = "bold"),
         plot.title = element_text(size=12, face = "bold"))+
-  labs(x="log10(Number of observations)",y="log10(Number of species)")
+  labs(x="log10(Number of sampling units)",y="log10(Number of species/MOTUs)")
 
 ggsave("outputs/Figures papier/Figure4.png")
 
