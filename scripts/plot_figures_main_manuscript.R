@@ -107,25 +107,7 @@ d <- ggplot(all_accumulation_RLS_df) +
 
 # e 
 load("Rdata/all_predictions_motus_species.rdata")
-e <- ggplot(fam_summary, aes(log_species, log_checklist))+
-  geom_point(size=2)+
-  geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.76, intercept = 1.54, size=0.8)+
-  xlim(0,6)+
-  ylim(0,6)+
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        panel.background = element_blank(),
-        axis.title.y = element_text(size=10),
-        axis.title.x = element_text(size=10),
-        panel.border = element_rect(fill = NA),
-        plot.margin=unit(c(0,0.1,0.1,0.1), "cm")) + 
-  labs(x="log(1+Nb of species in eDNA)",
-       y="log(1+Nb of species in RLS)")+
-  annotate(geom="text", x=6, y=1, label="y = 0.76x+1.54\nR² = 0.38\np < 0.001", hjust=1, size=3.2) +
-  ggtitle("e")
 
-# f
 gobiidae <- readPNG("data/fish_vignette/gobiidae.png")
 muraenidae <- readPNG("data/fish_vignette/muraenidae.png")
 pomacentridae <- readPNG("data/fish_vignette/pomacentridae.png")
@@ -133,7 +115,7 @@ labridae <- readPNG("data/fish_vignette/labridae.png")
 mugilidae <- readPNG("data/fish_vignette/mugilidae.png")
 kyphosidae <- readPNG("data/fish_vignette/kyphosidae.png")
 
-f <- ggplot(fam_summary, aes(log_motu, log_checklist))+
+e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(gobiidae), xmin = 5.1, xmax = 6, ymin = 4.2, ymax = 5)+
   annotation_custom(rasterGrob(muraenidae), xmin = 4.3, xmax = 5.2, ymin = 3, ymax = 3.5)+
   annotation_custom(rasterGrob(pomacentridae), xmin = 3.8, xmax = 4.7, ymin = 5.4, ymax = 6)+
@@ -152,13 +134,13 @@ f <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         panel.border = element_rect(fill = NA),
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
-        plot.margin=unit(c(0,0.1,0.1,0), "cm")) + 
-  labs(x="log(1+Nb of MOTUs in eDNA)", y="")+
-  ggtitle("f")
+        plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
+  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in RLS")+
+  ggtitle("e")
 
 # g
 load("Rdata/family_proportion_region_main.rdata")
-g <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
@@ -176,8 +158,8 @@ g <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fi
   coord_flip()
 
 
-a_f <- ggarrange(a, b, c, d, e, f, nrow = 3, ncol=2)
-all <- ggarrange(a_f, g, ncol=2, widths = c(2,1))
+a_e <- ggarrange(a, b, c, d, e, nrow = 3, ncol=2)
+all <- ggarrange(a_e, f, ncol=2, widths = c(2,1))
 all
 ggsave("outputs/Figures papier/Figure1.png", width = 7.5, height = 7.5)
 
@@ -192,7 +174,7 @@ all_motus <- ggplot(rich_site, aes(col=region))+
   geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
   geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=21, size=2, fill="white", alpha=0.7, show.legend = FALSE) +
-  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_motus), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) +
+  geom_point(data=all_region, aes(x=dist_to_CT, y=n_motus), shape=23, size=2.5, show.legend = FALSE) +
   geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
@@ -210,7 +192,7 @@ all_family <- ggplot(rich_site, aes(col=region))+
   geom_jitter(aes(x=dist_to_CT, y=family), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
   geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=21, size=2, alpha=0.7, fill="white", show.legend = FALSE) +
-  geom_bar(data=all_region, aes(x=dist_to_CT, y=n_family), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) +
+  geom_point(data=all_region, aes(x=dist_to_CT, y=n_family), shape=23, size=2.5, show.legend = FALSE) +
   geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
   scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   theme(legend.position = "none")+
@@ -366,3 +348,29 @@ ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
         axis.text.x = element_blank())+
   labs(x="RLS species", y="Percentage of transects where species detected")
 ggsave("outputs/Figures papier/Figure4c.png")
+
+
+## plot les deux courbes rarete sur le meme graphe
+occu_edna <- dplyr::arrange(occu_edna, desc(n))
+occu_edna$rank <- c(1:2160)
+occu_RLS <- dplyr::arrange(occu_RLS, desc(perc))
+occu_RLS$rank <- c(1:1786)
+
+
+ggplot(occu_edna, aes(x=rank, y=perc))+
+  geom_point(color="#d2981a")+
+  geom_point(data=occu_RLS, aes(x=rank, y=perc))+
+  geom_segment(aes(x=1786, y=0, xend=1786, yend=20), linetype="dashed", size=1)+
+  geom_segment(aes(x=2160, y=0, xend=2160, yend=20), linetype="dashed", size=1, color="#d2981a")+
+  annotate(geom="text", x=1900, y=22, label="1786 species", hjust=1, size=4) +
+  annotate(geom="text", x=2300, y=22, label="2160 species", hjust=1, size=4, color="#d2981a") +
+  annotate(geom="text", x=2200, y=55, label="ADN environnemental", hjust=1, size=6, color="#d2981a") +
+  annotate(geom="text", x=2200, y=60, label="Plongée", hjust=1, size=6) +
+  ylim(0,65)+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.text.x = element_blank())+
+  labs(x="", y="")
+ggsave("c:/Users/mathon/Desktop/rareté.png")
