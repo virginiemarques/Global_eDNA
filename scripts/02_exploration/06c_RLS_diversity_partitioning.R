@@ -6,11 +6,11 @@ library(betapart)
 
 # gamma global 
 
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_species <- RLS_species %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_species <- RLS_species[, c(1,2,9,12:2051)]
-RLS_species <- melt(RLS_species, id=c("SurveyID", "SiteCode", "Ecoregion"))
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_species <- RLS_species[, c(1,2,6,10:2165)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Ecoregion"))
 RLS_species <- RLS_species%>%
   filter(value!=0)
 RLS_species <- RLS_species[,-5]
@@ -107,7 +107,7 @@ sd_alpha_transect <- sd(mean_a_transect$V1)
 
 # calculate beta inter-station
 
-beta_transect <- data.frame(region=character(1310), site=character(1310), alpha=numeric(1310), gamma=numeric(1310), beta=numeric(1310), scale="inter-transect", stringsAsFactors = FALSE)
+beta_transect <- data.frame(region=character(1311), site=character(1311), alpha=numeric(1311), gamma=numeric(1311), beta=numeric(1311), scale="inter-transect", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
@@ -155,12 +155,12 @@ write.csv(div_partition, "outputs/06_diversity_partitioning/RLS_diversity_partit
 #__________________________________________________________________________
 ### Beta On species ###
 #__________________________________________________________________________
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_species <- RLS_species %>%
-  subset(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(12:2051)]
+  subset(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_sp <- RLS_species[,c(10:2165)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
-RLS_species <- cbind(RLS_species[,c(1,2,9)], RLS_sp)
+RLS_species <- cbind(RLS_species[,c(1,2,6)], RLS_sp)
 save(RLS_species, file = "Rdata/RLS_species_clean.rdata")
 
 region <- unique(RLS_species$Ecoregion)
@@ -177,7 +177,7 @@ for (i in 1:length(region)) {
   df <- RLS_species[RLS_species$Ecoregion == region[i],]
   df <- df[,c(4:ncol(df))]
   df_region[i,"region"] <- region[i]
-  df_region[i, 2:1787] <- colSums(df)
+  df_region[i, 2:1888] <- colSums(df)
 }
 rownames(df_region) <- df_region[,1]
 df_region <- decostand(df_region[,2:ncol(df_region)], "pa",na.rm = TRUE)
@@ -200,7 +200,7 @@ for (i in 1:length(region)) {
       df2 <- df[df$SiteCode==site[j],]
       df2 <- df2[,c(4:ncol(df2))]
       df_site[[i]][j,"site"]<- site[j]
-      df_site[[i]][j,2:1787] <- colSums(df2)
+      df_site[[i]][j,2:1888] <- colSums(df2)
     }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
   df_site[[i]] <- decostand(df_site[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -217,8 +217,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(RLS_species$SiteCode)
-df_transect=vector("list", 1310)
-betatransect <- data.frame(scale="inter-transect", total=numeric(1310), turnover=numeric(1310), nestedness=numeric(1310))
+df_transect=vector("list", 1311)
+betatransect <- data.frame(scale="inter-transect", total=numeric(1311), turnover=numeric(1311), nestedness=numeric(1311))
 
 
 for (i in 1:length(site)) {
@@ -229,7 +229,7 @@ for (i in 1:length(site)) {
     df2 <- df[df$SurveyID==transect[j],]
     df2 <- df2[,c(4:ncol(df2))]
     df_transect[[i]][j, "transect"] <- transect[j]
-    df_transect[[i]][j, 2:1787] <- colSums(df2)
+    df_transect[[i]][j, 2:1888] <- colSums(df2)
   }
   rownames(df_transect[[i]]) <- df_transect[[i]][,1]
   df_transect[[i]] <- decostand(df_transect[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -260,12 +260,12 @@ ggsave("outputs/06_diversity_partitioning/beta_RLS_species_Ecoregion.png")
 #__________________________________________________________________________
 ### Beta On families ###
 #__________________________________________________________________________
-RLS_families <- read.csv("data/RLS/RLS_families.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ",", stringsAsFactors = FALSE)
 RLS_families <- RLS_families %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_fam <- RLS_families[,c(12:128)]
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_fam <- RLS_families[,c(10:130)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
-RLS_families <- cbind(RLS_families[,c(1,2,9)], RLS_fam)
+RLS_families <- cbind(RLS_families[,c(1,2,6)], RLS_fam)
 
 
 region <- unique(RLS_families$Ecoregion)
@@ -282,7 +282,7 @@ for (i in 1:length(region)) {
   df <- RLS_families[RLS_families$Ecoregion == region[i],]
   df <- df[,c(4:ncol(df))]
   df_region[i,"region"] <- region[i]
-  df_region[i, 2:95] <- colSums(df)
+  df_region[i, 2:97] <- colSums(df)
 }
 rownames(df_region) <- df_region[,1]
 df_region <- decostand(df_region[,2:ncol(df_region)], "pa",na.rm = TRUE)
@@ -305,7 +305,7 @@ for (i in 1:length(region)) {
     df2 <- df[df$SiteCode==site[j],]
     df2 <- df2[,c(4:ncol(df2))]
     df_site[[i]][j,"site"]<- site[j]
-    df_site[[i]][j,2:95] <- colSums(df2)
+    df_site[[i]][j,2:97] <- colSums(df2)
   }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
   df_site[[i]] <- decostand(df_site[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -322,8 +322,8 @@ for (i in 1:length(region)) {
 ## beta inter-station
 
 site <- unique(RLS_families$SiteCode)
-df_transect=vector("list", 1310)
-betatransect <- data.frame(scale="inter-transect", total=numeric(1310), turnover=numeric(1310), nestedness=numeric(1310))
+df_transect=vector("list", 1311)
+betatransect <- data.frame(scale="inter-transect", total=numeric(1311), turnover=numeric(1311), nestedness=numeric(1311))
 
 
 for (i in 1:length(site)) {
@@ -334,7 +334,7 @@ for (i in 1:length(site)) {
     df2 <- df[df$SurveyID==transect[j],]
     df2 <- df2[,c(4:ncol(df2))]
     df_transect[[i]][j, "transect"] <- transect[j]
-    df_transect[[i]][j, 2:95] <- colSums(df2)
+    df_transect[[i]][j, 2:97] <- colSums(df2)
   }
   rownames(df_transect[[i]]) <- df_transect[[i]][,1]
   df_transect[[i]] <- decostand(df_transect[[i]][,c(-1)], "pa",na.rm = TRUE)

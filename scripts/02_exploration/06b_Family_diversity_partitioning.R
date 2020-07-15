@@ -177,7 +177,7 @@ df_region=data.frame(family=character())
 for (i in 1:length(Region)) {
   df <- df_all_filters[df_all_filters$region == Region[i],] %>%
     distinct(new_family_name, region)
-  colnames(df) <- c("family", Region[i])
+  colnames(df) <- c(Region[i], "family")
   df_region <- full_join(df_region, df, by="family")
 }
 rownames(df_region) <- df_region[,1]
@@ -202,7 +202,7 @@ for (i in 1:length(Region)) {
     for (j in 1:length(Site)) {
       df2 <- df[df$site==Site[j],] %>%
         distinct(new_family_name, site)
-      colnames(df2) <- c("family", Site[j])
+      colnames(df2) <- c(Site[j], "family")
       df_site[[i]] <- full_join(df_site[[i]], df2, by="family")
     }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
@@ -232,7 +232,7 @@ for (i in 1:length(Site)) {
   for (j in 1:length(Station)) {
     df2 <- df[df$station==Station[j],] %>%
       distinct(new_family_name, station)
-    colnames(df2) <- c("family", Station[j])
+    colnames(df2) <- c(Station[j], "family")
     df_station[[i]] <- full_join(df_station[[i]], df2, by="family")
   }
   rownames(df_station[[i]]) <- df_station[[i]][,1]

@@ -3,7 +3,7 @@ library(reshape2)
 library(vegan)
 library(betapart)
 
-setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
+
 load("Rdata/02_clean_all.Rdata")
 '%ni%' <- Negate("%in%")
 #Remove estuary stations and deep niskin station

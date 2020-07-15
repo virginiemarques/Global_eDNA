@@ -16,7 +16,9 @@ library(ggpubr)
 
 # fct
 "%ni%" <- Negate("%in%")
-
+conflict_prefer("arrange", "dplyr")
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("summarize", "dplyr")
 # data
 load("Rdata/02_clean_all.Rdata")
 
@@ -57,17 +59,17 @@ pal
 # Construct the inital matrix - add some important infos as a side
 motus_fam_region <-  df_all_filters %>%
   group_by(region) %>%
-  summarize(n_motus = n_distinct(sequence), 
+  dplyr::summarize(n_motus = n_distinct(sequence), 
             n_family = n_distinct(new_family_name)) %>%
   as.data.frame() %>%
-  arrange(n_motus)
+  dplyr::arrange(n_motus)
 
 # metadata - needed to control colors?
 metadata1 <- df_all_filters %>%
   distinct(region) %>% 
-  mutate(sets = region) %>%
+  dplyr::mutate(sets = region) %>%
   select(sets, region) %>%
-  mutate(color = case_when(
+  dplyr::mutate(color = case_when(
     region == "South_West_Pacific" ~ pal[5],
     region == "Central_Pacific" ~ pal[4],
     region == "West_Indian" ~ pal[3],
@@ -80,7 +82,7 @@ metadata1 <- df_all_filters %>%
 # MOTUs
 matrix_motus <- df_all_filters %>%
   distinct(sequence, new_scientific_name_ncbi) %>%
-  mutate(`Central_Indo_Pacific` = ifelse(sequence %in% df_regions$`Central_Indo_Pacific`$sequence, 1, 0), 
+  dplyr::mutate(`Central_Indo_Pacific` = ifelse(sequence %in% df_regions$`Central_Indo_Pacific`$sequence, 1, 0), 
          Central_Pacific = ifelse(sequence %in% df_regions$Central_Pacific$sequence, 1, 0),
          Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0),
          West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0),
@@ -121,7 +123,7 @@ p1 <- upset(matrix_motus,
 p1
 
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
-png('outputs/09_dominance_motus_ranks/upset_plot_region_motus.png', width = 6, height=3, units = "in", res=300)
+png('outputs/Figures papier/Figure4a.png', width = 6, height=4.6, units = "in", res=300)
 p1
 grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()

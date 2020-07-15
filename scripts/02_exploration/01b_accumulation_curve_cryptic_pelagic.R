@@ -37,20 +37,20 @@ df_all_filters <- subset(df_all_filters, new_family_name %in% cryptic_family)
 
 # Add a global saturation curve
 all_accumulation_cryp <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, richness, sd, sites)
 
 
 # Asymptote of all plots 
 all_asymptote_cryp <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, asymptote, slope)
 
 
 # 
 df_join_all_cryp <- all_accumulation_cryp %>%
   left_join(., all_asymptote_cryp, by = "project_name") %>%
-  mutate(position_asymptote_y = 1.05*asymptote, 
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
          position_asymptote_x = max(sites),
          position_slope_y = 0.20 * max(asymptote))
 df_join_all_cryp$family <- "cryptobenthic"
@@ -69,19 +69,19 @@ df_all_filters <- subset(df_all_filters, new_family_name %in% pelagic_family$fam
 
 # Add a global saturation curve
 all_accumulation_pel <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, richness, sd, sites)
 
 
 # Asymptote of all plots 
 all_asymptote_pel <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, asymptote, slope)
 
 # 
 df_join_all_pel <- all_accumulation_pel %>%
   left_join(., all_asymptote_pel, by = "project_name") %>%
-  mutate(position_asymptote_y = 1.05*asymptote, 
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
          position_asymptote_x = max(sites),
          position_slope_y = 0.20 * max(asymptote))
 df_join_all_pel$family <- "pelagic"
@@ -102,19 +102,19 @@ df_all_filters <- df_all_filters%>%
 
 # Add a global saturation curve
 all_accumulation_dem <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, richness, sd, sites)
 
 
 # Asymptote of all plots 
 all_asymptote_dem <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
+  dplyr::mutate(project_name = "All") %>%
   select(project_name, asymptote, slope)
 
 # 
 df_join_all_dem <- all_accumulation_dem %>%
   left_join(., all_asymptote_dem, by = "project_name") %>%
-  mutate(position_asymptote_y = 1.05*asymptote, 
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
          position_asymptote_x = max(sites),
          position_slope_y = 0.20 * max(asymptote))
 df_join_all_dem$family <- "demersal"
@@ -158,10 +158,10 @@ akaike.weights <- function(x)
 }
 
 
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
 RLS_species <- RLS_species %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(12:2051)]
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_sp <- RLS_species[,c(10:2165)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 colnames(RLS_species)[1] <- "SurveyID"
@@ -347,7 +347,7 @@ plot_acc_all_RLS <- ggplot(df_join_all_RLS) +
 
 plot_acc_all_RLS
 
-ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", plot_acc_all_eDNA, width = 12, height = 4)
+ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", plot_acc_all_RLS, width = 12, height = 4)
 
 # --------------------------------------------------------------------- # 
 #### Final figure - combine all levels  ----

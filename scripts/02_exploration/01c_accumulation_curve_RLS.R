@@ -33,10 +33,10 @@ akaike.weights <- function(x)
 #### On family ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_families <- read.csv("data/RLS/RLS_families.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ",", stringsAsFactors = FALSE)
 RLS_families <- RLS_families %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_fam <- RLS_families[,c(12:128)]
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_fam <- RLS_families[,c(10:130)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
 RLS_families <- cbind(RLS_families$SurveyID, RLS_fam)
 # method
@@ -85,9 +85,9 @@ family_RLS <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=116+10, label="Asymptote : 116",hjust=1, alpha=0.7, size=3.5) +
-  annotate(geom="text", x=2990, y=94+10, label="RLS Family : 94",hjust=1, alpha=0.7, size=3.5)+
-  annotate(geom="text", x=2990, y=30, label="Slope = 1.46",hjust=1, alpha=0.7)+
+  annotate(geom="text", x=2990, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=2990, y=96+10, label="RLS Family : 96",hjust=1, alpha=0.7, size=3.5)+
+  annotate(geom="text", x=2990, y=30, label="Slope = 1.44",hjust=1, alpha=0.7)+
   ylim(0,190)+
   xlab("Number of transects") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
@@ -124,10 +124,10 @@ save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
 #### On species ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
 RLS_species <- RLS_species %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(12:2051)]
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_sp <- RLS_species[,c(10:2165)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 

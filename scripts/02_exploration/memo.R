@@ -92,10 +92,10 @@ family_coverage %>%
 
 library(reshape2)
 # count RLS
-RLS_species <- read.csv("data/RLS/RLS_species.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
 RLS_species <- RLS_species %>%
-  filter(realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(12:2051)]
+  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
+RLS_sp <- RLS_species[,c(10:2165)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 coral_fishes <- as.data.frame(colnames(RLS_sp))
 colnames(coral_fishes) <- "Species"

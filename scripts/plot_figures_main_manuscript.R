@@ -48,9 +48,9 @@ b <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2322+150, label="Asymptote : 2322",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=1786+150, label="RLS Species : 1786",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=600, label="Slope = 1.68",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=2403+150, label="Asymptote : 2403",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=1887+150, label="RLS Species : 1887",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=600, label="Slope = 1.69",hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   xlab("Number of transects") +
   ylab("")+
@@ -90,9 +90,9 @@ d <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=116+10, label="Asymptote : 116",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=94+10, label="RLS Family : 94",hjust=1, alpha=0.7, size=3.2)+
-  annotate(geom="text", x=2990, y=30, label="Slope = 1.46",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=2990, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=96+10, label="RLS Family : 96",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=2990, y=30, label="Slope = 1.44",hjust=1, alpha=0.7, size=3.2)+
   ylim(0,190)+
   xlab("Number of transects") +
   ylab("")+
@@ -120,12 +120,12 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(muraenidae), xmin = 4.3, xmax = 5.2, ymin = 3, ymax = 3.5)+
   annotation_custom(rasterGrob(pomacentridae), xmin = 3.8, xmax = 4.7, ymin = 5.4, ymax = 6)+
   annotation_custom(rasterGrob(labridae), xmin = 4.9, xmax = 5.6, ymin = 5.5, ymax = 6.1)+
-  annotation_custom(rasterGrob(mugilidae), xmin = 3.1, xmax = 4.1, ymin = 0.8, ymax = 1.4)+
+  annotation_custom(rasterGrob(mugilidae), xmin = 3.3, xmax = 4.3, ymin = 0.8, ymax = 1.4)+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
   geom_abline(slope = 0.85, intercept = 0.5, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.85x+0.5\nR² = 0.59\np < 0.001", hjust=1, size=3.2) +
+  annotate(geom="text", x=6, y=1, label="y = 0.83x+0.6\nR² = 0.56\np < 0.001", hjust=1, size=3.2) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), 
@@ -135,17 +135,17 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
-  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in RLS")+
+  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in RLS)")+
   ggtitle("e")
 
-# g
+# f
 load("Rdata/family_proportion_region_main.rdata")
 f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(x="", y="Proportion of MOTUs \nat global scale")+
-  ggtitle("g")+
+  ggtitle("f")+
   scale_y_continuous(labels = percent, breaks = c(0, 0.05, 0.10))+
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
@@ -256,7 +256,11 @@ ggsave("outputs/Figures papier/Figure2.png", width = 7, height = 8)
 #############################################################################################################################
 ### Plot figure 4
 
-# a = plot log10(occurence species/motus)
+# a = upset plot
+
+load("Rdata/upset_plot_motus_region.rdata")
+
+# b = plot log10(occurence species/motus)
 
 load("Rdata/rarete_motu_station.rdata")
 tab=as.data.frame(motu_station)
@@ -286,7 +290,7 @@ tab2$n_transect <- log10(species_transects[,1])
 tab2$n_species <- log10(species_transects[,2])
 
 
-ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
+b <- ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
   geom_smooth(se=FALSE, color="grey", alpha=1, size=0.9)+
   geom_smooth(data=tab2, aes(x=n_transect, y=n_species, alpha=0.2),se=FALSE, color="grey", alpha=1, size=0.9)+
   geom_point(data=tab2, aes(x=n_transect, y=n_species), size=2, show.legend = TRUE)+
@@ -304,9 +308,16 @@ ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
         plot.title = element_text(size=12, face = "bold"))+
   labs(x="log10(Number of sampling units)",y="log10(Number of species/MOTUs)")
 
-ggsave("outputs/Figures papier/Figure4.png")
+ggsave("outputs/Figures papier/Figure4b.png")
 
-# b 
+
+
+
+
+
+
+
+# Histogrammes rarete supp 
 
 load("Rdata/02_clean_all.Rdata")
 df_all_filters <- df_all_filters %>%
@@ -322,7 +333,7 @@ occu_edna <- df_all_filters %>%
   
 occu_edna$perc <- (occu_edna$n/145)*100
 
-ggplot(occu_edna, aes(x=reorder(sequence, 1-perc), y=perc))+
+a <- ggplot(occu_edna, aes(x=reorder(sequence, 1-perc), y=perc))+
   geom_bar(stat = "identity", color="#d2981a")+
   ylim(0,65)+
   theme(panel.grid.major = element_blank(), 
@@ -336,9 +347,9 @@ ggsave("outputs/Figures papier/Figure4b.png")
 # c percentage of transects where each species detected
 occu_RLS <- as.data.frame(occ_RLS)
 occu_RLS$species <- rownames(occu_RLS)
-occu_RLS$perc <- (occu_RLS$occ_RLS/2811)*100
+occu_RLS$perc <- (occu_RLS$occ_RLS/2813)*100
 
-ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
+b <- ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
   geom_bar(stat = "identity")+
   ylim(0,65)+
   theme(panel.grid.major = element_blank(), 
@@ -349,6 +360,8 @@ ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
   labs(x="RLS species", y="Percentage of transects where species detected")
 ggsave("outputs/Figures papier/Figure4c.png")
 
+ggarrange(a, b, nrow=2, labels = c("a", "b"))
+ggsave("outputs/Figures papier/ED_Figurexx.png")
 
 ## plot les deux courbes rarete sur le meme graphe
 occu_edna <- dplyr::arrange(occu_edna, desc(n))

@@ -41,7 +41,7 @@ families3 <- unique(fam_summary$new_family_name)
 for (i in 1:length(families3)) {
   fam_summary[i,"n_species_checklist"] <- coral_fishes %>%
     subset(Family==families3[i]) %>%
-    summarize(n_distinct(Species))
+    dplyr::summarize(n_distinct(Species))
 }
 
 # calculate number of species per family in our data
@@ -50,7 +50,7 @@ for (i in 1:length(families3)) {
   fam_summary[i,"n_species"] <- df_all_filters %>%
     subset(new_family_name==families3[i]) %>%
     filter(!is.na(new_species_name)) %>%
-    summarize(n_distinct(new_species_name))
+    dplyr::summarize(n_distinct(new_species_name))
 }
 
 # calculate delta checklist - us (%)
