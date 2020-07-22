@@ -264,12 +264,15 @@ load("Rdata/upset_plot_motus_region.rdata")
 
 load("Rdata/rarete_motu_station.rdata")
 tab=as.data.frame(motu_station)
+tab$log10_n <- log10(tab$n)
+tab$log10_nmotus <- log10(tab$n_motus)
 
 ls=fitsad(tab[,2], "ls")
 ln=fitsad(tab[,2],"lnorm")
-po=fitsad(tab[,2], "power")
-gb=fit_abundances(tab[,2])
-AICtab(ls, po, ln,gb, weights=TRUE)
+po=fitsad(tab[,2], "pareto")
+
+AICtab(ls, po, ln,weights=TRUE)
+
 
 
 load("Rdata/RLS_species_clean.rdata")
@@ -281,9 +284,9 @@ species_transects[,2] <- as.numeric(species_transects[,2])
 
 ls2=fitsad(species_transects[,2], "ls")
 ln2=fitsad(species_transects[,2],"lnorm")
-po2=fitsad(species_transects[,2], "power")
-gb2=fit_abundances(species_transects[,2])
-AICtab(ls2, po2, ln2, gb2, weights=TRUE)
+po2=fitsad(species_transects[,2], "pareto")
+
+AICtab(ls2, po2, ln2, weights=TRUE)
 
 tab2 <- species_transects
 tab2$n_transect <- log10(species_transects[,1])
@@ -291,14 +294,14 @@ tab2$n_species <- log10(species_transects[,2])
 
 
 b <- ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
-  geom_smooth(se=FALSE, color="grey", alpha=1, size=0.9)+
-  geom_smooth(data=tab2, aes(x=n_transect, y=n_species, alpha=0.2),se=FALSE, color="grey", alpha=1, size=0.9)+
   geom_point(data=tab2, aes(x=n_transect, y=n_species), size=2, show.legend = TRUE)+
+  geom_abline(intercept = 3.259, slope = -1.707, colour="#d2981a")+
   geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  geom_abline(intercept = 2.457, slope = -1.004)+
   xlim(0,3)+
   ylim(0,3)+
-  annotate(geom="text", x=3, y=3, label="eDNA MOTUs ~ stations, slope=2.7", hjust=1, size=4, colour="#d2981a") +
-  annotate(geom="text", x=3, y=2.8, label="RLS species ~ transects, slope=0.5", hjust=1, size=4) +
+  annotate(geom="text", x=3, y=3, label="eDNA MOTUs ~ stations, beta=0.45", hjust=1, size=4, colour="#d2981a") +
+  annotate(geom="text", x=3, y=2.8, label="RLS species ~ transects, beta=1.21", hjust=1, size=4) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -309,9 +312,6 @@ b <- ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
   labs(x="log10(Number of sampling units)",y="log10(Number of species/MOTUs)")
 
 ggsave("outputs/Figures papier/Figure4b.png")
-
-
-
 
 
 
