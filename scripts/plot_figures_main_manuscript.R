@@ -241,7 +241,7 @@ for (i in 1:length(family)) {
           plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
-plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3)
+plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3, common.legend = TRUE, legend = "bottom")
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=10))
 y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site", 
@@ -254,7 +254,7 @@ ggsave("outputs/Figures papier/Figure2.png", width = 7, height = 8)
 
 
 #############################################################################################################################
-### Plot figure 4
+### Plot figure 3
 
 # a = upset plot
 
@@ -262,10 +262,9 @@ load("Rdata/upset_plot_motus_region.rdata")
 
 # b = plot log10(occurence species/motus)
 
+# fit models on eDNA
 load("Rdata/rarete_motu_station.rdata")
 tab=as.data.frame(motu_station)
-tab$log10_n <- log10(tab$n)
-tab$log10_nmotus <- log10(tab$n_motus)
 
 ls=fitsad(tab[,2], "ls")
 ln=fitsad(tab[,2],"lnorm")
@@ -274,29 +273,32 @@ po=fitsad(tab[,2], "pareto")
 AICtab(ls, po, ln,weights=TRUE)
 
 
+# fit models on RLS
+load("Rdata/rarete_species_transects.rdata")
+tab2 <- species_transects
 
-load("Rdata/RLS_species_clean.rdata")
-RLS_species <- decostand(RLS_species[,4:ncol(RLS_species)], "pa",na.rm = TRUE)
-occ_RLS <- colSums(RLS_species)
-species_transects <- as.data.frame(table(occ_RLS))
-species_transects[,1] <- as.numeric(species_transects[,1])
-species_transects[,2] <- as.numeric(species_transects[,2])
-
-ls2=fitsad(species_transects[,2], "ls")
-ln2=fitsad(species_transects[,2],"lnorm")
-po2=fitsad(species_transects[,2], "pareto")
+ls2=fitsad(tab2[,2], "ls")
+ln2=fitsad(tab2[,2],"lnorm")
+po2=fitsad(tab2[,2], "pareto")
 
 AICtab(ls2, po2, ln2, weights=TRUE)
 
-tab2 <- species_transects
-tab2$n_transect <- log10(species_transects[,1])
-tab2$n_species <- log10(species_transects[,2])
+# transform log10
+tab$log10_nstation <- log10(tab$n)
+tab$log10_nmotus <- log10(tab$n_motus)
 
+tab2$log10_ntransect <- log10(tab2[,1])
+tab2$log10_nspecies <- log10(tab2[,2])
 
-b <- ggplot(tab, aes(x=log10(n), y=log10(n_motus)))+
-  geom_point(data=tab2, aes(x=n_transect, y=n_species), size=2, show.legend = TRUE)+
-  geom_abline(intercept = 3.259, slope = -1.707, colour="#d2981a")+
+# linear regressions log-log
+lm(tab$log10_nmotus ~ tab$log10_nstation)
+lm(tab2$log10_nspecies ~ tab2$log10_ntransect)
+
+# plot figure 3b (with linear regression slopes)
+ggplot(tab, aes(x=log10_nstation, y=log10_nmotus))+
   geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  geom_abline(intercept = 3.259, slope = -1.707, colour="#d2981a")+
+  geom_point(data=tab2, aes(x=log10_ntransect, y=log10_nspecies), size=2, show.legend = TRUE)+
   geom_abline(intercept = 2.457, slope = -1.004)+
   xlim(0,3)+
   ylim(0,3)+
