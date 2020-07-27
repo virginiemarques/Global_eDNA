@@ -48,6 +48,7 @@ family_coverage_main <- family_coverage %>%
 family_coverage_ED <- family_coverage %>%
   subset(Family%in%families_ED)
 
+colnames(families_prop_global) <- c("family", "Central_Pacific", "Caribbean", "West_Indian", "South_West_Pacific", "Central Indo_Pacific")
 families_prop_global_main <- families_prop_global %>%
   subset(family%in%families_main)
 families_prop_global_main <- reshape2::melt(families_prop_global_main)
@@ -103,7 +104,6 @@ coverage <- ggplot(family_coverage_main, aes(x=order, y = coef_sequencing)) +
   theme(axis.text.y = element_blank())+
   scale_x_continuous(breaks=family_coverage_main$order, labels=family_coverage_main$Family, expand = c(0,0))+
   ylim(0, 1)+
-  #scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
 resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) + 
@@ -131,9 +131,9 @@ similarity <- ggplot(prop_similarity_main, aes(x=class, y = order)) +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"))
+plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_main
-ggsave("outputs/Figures papier/Figure2.png", width = 7.8, height = 8)
+ggsave("outputs/Figures papier/ED_Figure3.png", width = 7.8, height = 8)
 
 
 ## plot all for extended Data
@@ -183,7 +183,7 @@ similarity <- ggplot(prop_similarity_ED, aes(x=class, y = order)) +
   theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"))
+plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_ED
 ggsave("outputs/Figures papier/ED_Figure4.png", width = 7.8, height = 10)
 

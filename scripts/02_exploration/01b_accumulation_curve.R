@@ -283,8 +283,8 @@ motus
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("A", "B"))
-ggsave("outputs/Figures papier/ED_figure2.png", width=10, height = 12)
+ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("a", "b"))
+ggsave("outputs/Figures papier/ED_figure5.png", width=10, height = 12)
 
 
 

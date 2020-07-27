@@ -10,7 +10,7 @@ library(cowplot)
 library(ggplot2)
 library(ggpubr)
 
-setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
+
 load("Rdata/02_clean_all.Rdata")
 
 '%ni%' <- Negate("%in%")
@@ -482,6 +482,7 @@ write.csv(rich_site_caledonia, "outputs/04_exploration_richness/richness_caledon
 
 
 rich_station_total <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru, rich_station_caledonia)
+rich_station_total$region <- gsub("Central_Pacific", "CP", rich_station_total$region)
 
 ggplot(rich_station_total)+
   geom_violin(aes(site, motu), color="#D2981A", fill="#D2981A", position = position_nudge(-0.3, 0))+
@@ -525,10 +526,10 @@ family <- ggplot(rich_station_total)+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "Family richness")
 
-ggarrange(motu, family, ncol=1, nrow=2, labels=c("A", "B"), heights = c(1,1.3))
+ggarrange(motu, family, ncol=1, nrow=2, labels=c("a", "b"), heights = c(1,1.3))
 
 ggsave("outputs/04_exploration_richness/violin_plot_per_rank.png", width = 12, height = 8)
-ggsave("outputs/Figures papier/ED_Figure5.png", width = 12, height = 8)
+ggsave("outputs/Figures papier/ED_Figure6.png", width = 7, height = 6)
 
 
 

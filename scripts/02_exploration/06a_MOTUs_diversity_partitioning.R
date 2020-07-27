@@ -251,7 +251,7 @@ beta_motus_eDNA <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   theme_bw()+
   ylim(0,1)+
   theme(legend.position = "none")+
-  labs(x=" Beta component", y="Jaccard dissimilarity (motus)")
+  labs(x="", y="Jaccard dissimilarity (motus)")
 
 ggsave("outputs/06_diversity_partitioning/all_motus_diversity_partitioning.png")  
 save(beta_motus_eDNA, file = "Rdata/beta_motus_eDNA.rdata")
@@ -259,28 +259,3 @@ save(beta_motus_eDNA, file = "Rdata/beta_motus_eDNA.rdata")
 
 
 
-
-
-
-
-
-
-#### not used
-
-# plot alpha and beta ~ gamma at each spatial scale
-
-alpha_beta <- rbind(beta_station[,-c(1,2)], beta_site[,c(-1)], beta_region)
-
-
-ggplot(alpha_beta, aes(colour=scale))+
-  geom_point(data=beta_region, aes(gamma, alpha))+
-  geom_point(data=beta_region, aes(gamma, beta))+
-  geom_smooth(method=lm, se=FALSE, aes(x=gamma, y=alpha))+
-  geom_smooth(method=lm,  linetype="longdash", se=FALSE, aes(x=gamma, y=beta))+
-  geom_abline(intercept = 0, slope=1)+
-  geom_abline(intercept = 0, slope=0.5, linetype="dotted")+
-  xlim(0,1600)+
-  ylim(0,1600)+
-  labs(x="Regional MOTUs richness", y="Alpha and Beta richness")
-
-ggsave("outputs/06_diversity_partitioning/motus_alpha_beta~gamma.png")

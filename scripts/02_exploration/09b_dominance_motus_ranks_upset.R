@@ -13,12 +13,14 @@ library(reshape2)
 library(vegan)
 library(betapart)
 library(ggpubr)
+library(conflicted)
 
 # fct
 "%ni%" <- Negate("%in%")
 conflict_prefer("arrange", "dplyr")
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarize", "dplyr")
+conflict_prefer("filter", "dplyr")
 # data
 load("Rdata/02_clean_all.Rdata")
 
@@ -266,7 +268,7 @@ p3_color <- upset(matrix_motus,
 p3_color
 
 # Save - w/ colors
-png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus_colors.png', width = 12, height=12, units = "in", res=300)
+png('outputs/Figures papier/ED_Figure7.png', width = 12, height=12, units = "in", res=300)
 p3_color
 grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()
