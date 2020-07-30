@@ -135,12 +135,13 @@ plot_acc_all
 # ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet_family.png", plot_acc_all, width = 12, height = 8)
 
 # Plot with facet
-plot_acc_family <- ggplot(df_join_all, aes(fill = project_name)) + 
+colnames(df_join_all) <- c("Region", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
+plot_acc_family <- ggplot(df_join_all, aes(fill = Region)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
-  facet_wrap(~project_name, scales = "free") +
+  facet_wrap(~Region, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
   theme_bw() + 
@@ -232,11 +233,12 @@ df_join_all <- df_all_accumulation %>%
          position_slope_y = 0.30 * max(asymptote))
 
 # Plot with facet
-plot_acc_motus <- ggplot(df_join_all, aes(fill = project_name)) + 
+colnames(df_join_all) <- c("Region", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
+plot_acc_motus <- ggplot(df_join_all, aes(fill = Region)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  facet_wrap(~project_name, scales = "free") +
+  facet_wrap(~Region, scales = "free") +
   scale_fill_manual(values=c("#A41D1A", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   ylab("Number of genus") +
   xlab("Samples (filter)") +

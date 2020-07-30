@@ -241,16 +241,18 @@ for (i in 1:length(family)) {
           plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
-plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3, common.legend = TRUE, legend = "bottom")
+plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3, common.legend = TRUE, legend = "top")
+
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=10))
 y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site", 
                    gp=gpar(fontface="bold", col="black", fontsize=10), rot = 90)
 b <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
+
 ggarrange(a, b, nrow = 2, ncol = 1, labels = c("a", "b"), heights = c(1,2.5))
 
-ggsave("outputs/Figures papier/Figure2.png", width = 7, height = 8)
+ggsave("outputs/Figures papier/Figure2.png", width = 7.5, height = 8)
 
 
 #############################################################################################################################
