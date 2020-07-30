@@ -252,7 +252,7 @@ b <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 ggarrange(a, b, nrow = 2, ncol = 1, labels = c("a", "b"), heights = c(1,2.5))
 
-ggsave("outputs/Figures papier/Figure2.png", width = 7.5, height = 8)
+ggsave("outputs/Figures papier/Figure2.png", width = 7.5, height = 8, dpi = 300)
 
 
 #############################################################################################################################
