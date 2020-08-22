@@ -334,7 +334,8 @@ df_all_filters <- df_all_filters %>%
 occu_edna <- df_all_filters %>%
   group_by(sequence) %>%
   summarise(n = n_distinct(station))
-  
+colnames(occu_edna) <- c("sequence_MOTU", "n_station")
+save(occu_edna, file="Rdata/occurence_MOTU.rdata")
 occu_edna$perc <- (occu_edna$n/145)*100
 
 a <- ggplot(occu_edna, aes(x=reorder(sequence, 1-perc), y=perc))+
@@ -349,8 +350,12 @@ a <- ggplot(occu_edna, aes(x=reorder(sequence, 1-perc), y=perc))+
 ggsave("outputs/Figures papier/Figure4b.png")
 
 # c percentage of transects where each species detected
-occu_RLS <- as.data.frame(occ_RLS)
+occu_RLS <- t(RLS_species[,4:1890])
+occu_RLS <- as.data.frame(occu_RLS)
 occu_RLS$species <- rownames(occu_RLS)
+occu_RLS$n_transect <- rowSums(occu_RLS[,1:2813])
+occu_RLS <- occu_RLS[,2814:2815]
+save(occu_RLS, file="Rdata/occurence_RLS_species.rdata")
 occu_RLS$perc <- (occu_RLS$occ_RLS/2813)*100
 
 b <- ggplot(occu_RLS, aes(x=reorder(species, 1-perc), y=perc))+
