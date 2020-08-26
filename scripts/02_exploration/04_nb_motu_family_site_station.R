@@ -619,10 +619,13 @@ plot_all_rich_site <- grid.arrange(plot, bottom=x.grob)
 save(plot_all_rich_site, file = "Rdata/plot_richness_site~dist_CT.rdata")
 
 
+library(pgirmess)
+library(FSA)
 
-
-kruskal.test(rich_site$mean_motu, rich_site$region)
-kruskal(rich_site$mean_motu, rich_site$region, group=TRUE)$groups
+kruskal.test(motu~region, data = rich_site)
+kruskalmc(rich_site$motu~rich_site$region)
+dt <- dunnTest(motu~region, data = rich_site)
+kruskal(rich_site$mean_motu, rich_site$site, group=TRUE)$groups
 kruskal(rich_site$motu, rich_site$region, group=TRUE)$groups
 
 

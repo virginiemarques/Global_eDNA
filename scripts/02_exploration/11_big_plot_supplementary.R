@@ -98,7 +98,7 @@ prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop,
 coverage <- ggplot(family_coverage_main, aes(x=order, y = coef_sequencing)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
+  labs(title="Proportion of sequences \nknown in databases", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
@@ -109,7 +109,7 @@ coverage <- ggplot(family_coverage_main, aes(x=order, y = coef_sequencing)) +
 resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
+  labs(title="Proportion of resolutive \nsequences in databases", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
@@ -150,7 +150,7 @@ prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, f
 coverage <- ggplot(family_coverage_ED, aes(x=order, y = coef_sequencing)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  labs(title="Percentage of sequences \nknown in databases", x="", y="")+ 
+  labs(title="Proportion of sequences \nknown in databases", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+
@@ -161,7 +161,7 @@ coverage <- ggplot(family_coverage_ED, aes(x=order, y = coef_sequencing)) +
 resolution <- ggplot(family_coverage_ED, aes(x=order, y = coef_resolution)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  labs(title="Percentage of resolutive \nsequences in databases", x="", y="")+ 
+  labs(title="Proportion of resolutive \nsequences in databases", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face = "bold"), plot.margin=unit(c(0.1,0.1,0.6,0), "cm"))+
   theme(axis.text.y = element_blank())+

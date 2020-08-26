@@ -104,6 +104,15 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
 
 save(plot_species, "Rdata/plot_prediction_species.rdata")
 
+## pearson correlation test
+mcor <- cor(fam_summary[,2:3], method = c("pearson"))
+rcorr(as.matrix(fam_summary[,10:11]), type = c("pearson"))
+
+cor.test(fam_summary$n_motus, fam_summary$n_species_checklist, method = c("pearson"))
+
+library(corrplot)
+corrplot(mcor, type="upper", order="hclust", tl.col="black", tl.srt=45)
+
 # linear regression and plot for motus
 lm_motu <- lm(log_checklist~log_motu, data=fam_summary)
 summary(lm_motu)
@@ -136,6 +145,14 @@ lm_motu <- lm(log_checklist~log_motu +offset(log_motu), data=fam_summary)
 summary(lm_motu)
 
 save(plot_motu, "Rdata/plot_prediction_motus.rdata")
+
+
+
+
+
+
+
+
 ## plot percentage of our data ~ checklist
 #-----------------------------------------------------------------------------------------------------------
 
