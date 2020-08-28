@@ -49,7 +49,7 @@ b <- ggplot(all_accumulation_species_RLS_df) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
   annotate(geom="text", x=2990, y=2403+150, label="Asymptote : 2403",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=1887+150, label="RLS Species : 1887",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=1887+150, label="Visual census Species : 1887",hjust=1, alpha=0.7, size=3.2) +
   annotate(geom="text", x=2990, y=600, label="Slope = 1.69",hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   xlab("Number of transects") +
@@ -91,7 +91,7 @@ d <- ggplot(all_accumulation_RLS_df) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
   annotate(geom="text", x=2990, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=96+10, label="RLS Families : 96",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=2990, y=96+10, label="Visual census Families : 96",hjust=1, alpha=0.7, size=3.2)+
   annotate(geom="text", x=2990, y=30, label="Slope = 1.44",hjust=1, alpha=0.7, size=3.2)+
   ylim(0,190)+
   xlab("Number of transects") +
@@ -135,7 +135,7 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
-  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in RLS)")+
+  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in Visual Census)")+
   ggtitle("e")
 
 # f

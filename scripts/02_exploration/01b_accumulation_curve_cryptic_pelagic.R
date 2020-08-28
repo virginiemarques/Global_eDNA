@@ -132,7 +132,7 @@ plot_acc_all_eDNA <- ggplot(df_join_all) +
   facet_wrap(~family, scales = "free") +
   ggtitle("eDNA MOTUs")+
   geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 1), "MOTUs")), col = "black", size=3)+
-  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("Lomolino slope=",round(slope, 1))), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
   theme_bw()
 
 plot_acc_all_eDNA
@@ -340,9 +340,9 @@ plot_acc_all_RLS <- ggplot(df_join_all_RLS) +
   ylab("Number of species") +
   xlab("Transects") +
   facet_wrap(~family, scales = "free") +
-  ggtitle("RLS species")+
+  ggtitle("Visual census species")+
   geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 1), "species")), col = "black", size=3)+
-  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("Lomolino slope=",round(slope, 1))), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
   theme_bw()
 
 plot_acc_all_RLS
