@@ -16,31 +16,43 @@ library(MASS)
 library(fitdistrplus)
 
 # repertoire David
-
 setwd("/Users/davidmouillot/Documents/articles/en cours/Global eDNA")
-
 
 # fit log-log models
 
-load("rarete_motu_station.rdata")
+load("rarete_motu_station.rdata") # VM: cant open it here. I added a line with the proper path. 
+load("Rdata/rarete_motu_station.rdata")
+
 tab=as.data.frame(motu_station)
 
-# logn=log10(tab$n)
-# logmotus=log10(tab$n_motus)
-# mlogn=-log10(tab$n)
-
-# tab=cbind(tab,logn,logmotus,mlogn)
+#logn=log10(tab$n)
+#logmotus=log10(tab$n_motus)
+#mlogn=-log10(tab$n)
+#
+#tab=cbind(tab,logn,logmotus,mlogn)
 
 head(tab)
 
-load("rarete_species_transects.rdata")
+load("rarete_species_transects.rdata") # Same
+load("Rdata/rarete_species_transects.rdata")
+
 tab2 <- species_transects
 
 # logocc=log10(tab2$occ_RLS)
 # logfreq=log10(tab2$Freq)
 # mlogocc=-log10(tab2$occ_RLS)
-
+# 
 # tab2=cbind(tab2,logocc,logfreq,mlogocc)
+
+# -------- # Modif VM: add the logs sur tab et tab2 properly # 
+tab$logn=log10(tab$n)
+tab$logmotus=log10(tab$n_motus)
+tab$mlogn=-log10(tab$n)
+
+tab2$logocc <- log10(tab2$occ_RLS)
+tab2$logfreq <- log10(tab2$Freq)
+tab2$mlogocc <- -log10(tab2$occ_RLS)
+# -------- #  End of modif VM
 
 head(tab2)
 
@@ -89,7 +101,7 @@ linmod.rls <- lm(log10(Freq) ~ log10(occ_RLS), data = tab2)
 coef(linmod.rls)
 
 rls.po <- mle2(Freq ~ dnbinom(mu=b0*occ_RLS^b1, size=exp(logdisp)),data=tab2,
-                start=list(b0 = 10^(coef(linmod.rls)[1]), b1 = coef(linmod.rls)[2],logdisp=0))
+               start=list(b0 = 10^(coef(linmod.rls)[1]), b1 = coef(linmod.rls)[2],logdisp=0))
 
 confint(rls.po,method="quad")
 
@@ -108,7 +120,7 @@ lines(log10(tab$n), log10(predict(edna.ls)), col = 'red')
 confint(edna.ls,method="quad")
 
 rls.ls <- mle2(Freq ~ dnbinom(mu=b0*(1/occ_RLS)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
-                start=list(b0 = 256, b2 = 0,logdisp=0))
+               start=list(b0 = 256, b2 = 0,logdisp=0))
 
 plot(log10(Freq) ~ log10(occ_RLS), tab2)
 lines(log10(tab2$occ_RLS), log10(predict(rls.ls )), col = 'red')
@@ -130,7 +142,7 @@ lines(log10(tab$n), log10(predict(edna.pb)), col = 'green')
 
 
 rls.pb <- mle2(Freq ~ dnbinom(mu=b0*(occ_RLS^b1)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
-                start=list(b0 = 10^(coef(linmod.rls)[1]), b1=coef(linmod.rls)[2],b2 = 0,logdisp=0))
+               start=list(b0 = 10^(coef(linmod.rls)[1]), b1=coef(linmod.rls)[2],b2 = 0,logdisp=0))
 
 confint(rls.pb,method="quad")
 
@@ -170,7 +182,8 @@ edna_ls <- ggplot(tab, aes(x=logn, y=logmotus))+
   geom_line(aes(x=logn, y=log10(ls)), linetype = "solid", size = 0.8)+
   xlim(0,2)+
   ylim(0,3)+
-  annotate(geom="text", x=2, y=2.5, label="Log-series\nAIC=307", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=3, label="Log-series", hjust=1, size=3.5, fontface = "bold")+
+  annotate(geom="text", x=2, y=2.5, label="slope= -1\nBending=0.04\nCI=[0.038:0.046]\nAIC=307", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -185,7 +198,8 @@ edna_pb <- ggplot(tab, aes(x=logn, y=logmotus))+
   geom_line(aes(x=logn, y=log10(pb)), linetype = "solid", size = 0.8)+
   xlim(0,2)+
   ylim(0,3)+
-  annotate(geom="text", x=2, y=2.5, label="Pareto-bended\nslope=-1.3\nCI=[-1.46:-1.24]\nBending=..\nCI=..\nAIC=322", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold")+
+  annotate(geom="text", x=2, y=2.4, label="slope= -1.03\nCI=[-1.12:-0.94]\nBending=0.04\nCI=[0.029:0.053]\nAIC=309", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -201,7 +215,8 @@ edna_po <- ggplot(tab, aes(x=logn, y=logmotus))+
   geom_line(aes(x=logn, y=log10(po)), linetype = "solid", size = 0.8)+
   xlim(0,2)+
   ylim(0,3)+
-  annotate(geom="text", x=2, y=2.5, label="Pareto\nslope=-1.65\nCI=[-1.69:-1.60]\nAIC=333", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold")+
+  annotate(geom="text", x=2, y=2.6, label="slope= -1.64\nCI=[-1.69:-1.60]\nAIC=333", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -224,7 +239,8 @@ rls_ls <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   geom_line(aes(x=logocc, y=log10(ls)), linetype = "solid", size = 0.8)+
   xlim(0,3)+
   ylim(0,3)+
-  annotate(geom="text", x=3, y=2.5, label="Log-series\nAIC=1078", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=3, label="Log-series", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.5, label="slope= -1\nBending=0.004\nCI=[-6e-04:3e-04]\nAIC=1078", hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -239,7 +255,8 @@ rls_pb <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   geom_line(aes(x=logocc, y=log10(pb)), linetype = "solid", size = 0.8)+
   xlim(0,3)+
   ylim(0,3)+
-  annotate(geom="text", x=3, y=2.5, label="Pareto-bended\nslope=-0.96\nCI=[-9.9:-0.94]\nBending=..\nCI=..\nAIC=1076", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.4, label="slope= -0.96\nCI=[-9.9:-0.94]\nBending=0.0005\nCI=[-0.003:0.001]\nAIC=1076", hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -254,7 +271,8 @@ rls_po <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   geom_line(aes(x=logocc, y=log10(po)), linetype = "solid", size = 0.8)+
   xlim(0,3)+
   ylim(0,3)+
-  annotate(geom="text", x=3, y=2.5, label="Pareto\nslope=-0.97\nCI=[-0.99:-0.94]\nAIC=1074", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.6, label="slope= -0.97\nCI=[-0.99:-0.94]\nAIC=1074", hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -272,6 +290,8 @@ x.grob <- textGrob("log10(Nb of transects)",
 b <- grid.arrange(plot2, bottom=x.grob)
 
 ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
+
+conflict_prefer("ggsave", "ggplot2")
 
 ggsave("outputs/Figures papier/Figure4.png")
 
