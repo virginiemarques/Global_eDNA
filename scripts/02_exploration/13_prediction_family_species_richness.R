@@ -105,6 +105,7 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
 save(plot_species, "Rdata/plot_prediction_species.rdata")
 
 ## pearson correlation test
+library(Hmisc)
 mcor <- cor(fam_summary[,2:3], method = c("pearson"))
 rcorr(as.matrix(fam_summary[,10:11]), type = c("pearson"))
 
