@@ -6,7 +6,7 @@ library(rfishbase)
 library(grid)
 library(png)
 
-## build figure prediction of number of species (Fig 1C)
+## build figure prediction of number of species (Fig 1e)
 '%ni%' <- Negate("%in%")
 
 load("Rdata/02_clean_all.Rdata")
@@ -148,66 +148,3 @@ summary(lm_motu)
 save(plot_motu, "Rdata/plot_prediction_motus.rdata")
 
 
-
-
-
-
-
-
-## plot percentage of our data ~ checklist
-#-----------------------------------------------------------------------------------------------------------
-
-
-# perc checklist - species
-lm_species <- lm(perc_species~n_species_checklist, data=fam_summary)
-summary(lm_species)
-
-perc_species <- ggplot(fam_summary, aes(n_species_checklist, perc_species))+
-  geom_point(size=2)+
-  geom_text(data=fam_summary[fam_summary$perc_species > 100,], aes(label=fam), size=3, position = position_jitter(width=20, height = 20))+
-  geom_hline(yintercept=100, color="red")+
-  theme_bw()+
-  labs(x="Number of species in RLS",
-       y="%(species eDNA ~ species RLS)")
-grob <- grobTree(textGrob("R² = 0.01\np = 0.18", x=0.8, y=0.9))
-perc_species2 <- perc_species+annotation_custom(grob)
-perc_species2
-
-# perc checklist - motu
-lm_motu <- lm(perc_motu~n_species_checklist, data=fam_summary)
-summary(lm_motu)
-
-perc_motu <- ggplot(fam_summary, aes(n_species_checklist, perc_motu))+
-  geom_point(size=2)+
-  geom_text(data=fam_summary[fam_summary$perc_motu > 100,], aes(label=fam), size=3, position = position_jitter(width=20, height = 20))+
-  geom_hline(yintercept=100, color="red")+
-  theme_bw()+
-  labs(x="Number of species in RLS",
-       y="%(MOTUs eDNA ~ species RLS)")
-grob <- grobTree(textGrob("R² = 0.02\np = 0.11", x=0.8, y=0.9))
-perc_motu2 <- perc_motu+annotation_custom(grob)
-perc_motu2
-
-
-
-
-# plot all together 
-plot_rich_log <- ggarrange(plot_species, plot_motu, nrow = 1, ncol = 2)
-plot_rich_log
-
-plot_rich_perc <- ggarrange(perc_species2, perc_motu2, nrow = 1, ncol = 2, labels = c("A", "B"), label.x = -0.007, label.y = 1)
-plot_rich_perc
-
-
-
-
-
-## plot avec le reste de figure 1
-
-load("Rdata/plot_acc_species.rdata")
-load("Rdata/plot_acc_family.rdata")
-
-
-
-ggarrange(plot_acc_species, plot_acc_fam, plot_rich_log, nrow = 3, ncol = 1)
-ggsave("outputs/Figures papier/Figure1.png", width = 7, height = 8)

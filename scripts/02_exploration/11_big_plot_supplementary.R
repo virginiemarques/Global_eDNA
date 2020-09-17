@@ -41,7 +41,7 @@ count_families_global_ED <- count_families_global %>%
 families_main <- as.character(unique(count_families_global_main$family))
 families_ED <- as.character(unique(count_families_global_ED$family))
 
-# mise en forme data pour ordonner correctement
+# Format to order properly
 
 family_coverage_main <- family_coverage %>%
   subset(Family%in%families_main)
@@ -85,7 +85,7 @@ prop_similarity_ED$order <- order(order_ED$fam)
 
 
 
-# plot chaque plot main
+# plot each panel of the first figure
 prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
@@ -136,7 +136,7 @@ plot_all_main
 ggsave("outputs/Figures papier/ED_Figure3.png", width = 7.8, height = 8)
 
 
-## plot all for extended Data
+## plot each panel for second figure
 prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +

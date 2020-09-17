@@ -175,20 +175,3 @@ write.csv(asymptote_fam, "outputs/10_acculation_curve_family/table_asymptote_fam
 
 
 
-
-
-
-####### !!!!!!!!! ########
-# We need to add the empty samples without the family of interest 
-# Otherwise, the accumulation is wrong 
-
-# Add an option to the function: add the samples missing after the first cleaning 
-# Would be the missing samples in first column, and then all 0 in all the columns 
-
-
-
-
-
-
-
-

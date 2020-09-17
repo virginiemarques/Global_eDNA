@@ -13,7 +13,6 @@ load("Rdata/02_clean_all.Rdata")
 # Functions
 source('scripts/02_exploration/00_functions.R')
 
-# Ajouter une colonne nom assigné unique lié aux MOTUs? Pour éviter d avoir des noms de colonnes avec des séquences?
 
 # First, remove the assignations above family (we can remove it in the 02_read script if necessary) --> keep it, put the families only in the supl. mat. 
 liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
@@ -27,7 +26,6 @@ liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
 
 # On the df as well
 df_all_filters <- df_all_filters %>%
-  #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
   filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
@@ -287,14 +285,6 @@ motus
 
 ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("a", "b"))
 ggsave("outputs/Figures papier/ED_figure5.png", width=10, height = 12)
-
-
-
-
-
-
-
-
 
 
 

@@ -38,7 +38,6 @@ cols <- c("low" = "red", "fine" = "blue")
 # Sequencing biais
 plot_sequencing_bias <- ggplot(family_global_coef %>% filter(n >5), aes(x=reorder(Family, n), y=coef_sequencing)) +
   geom_segment( aes(x=reorder(Family, n), xend=reorder(Family, n), y=0, yend=coef_sequencing), color="skyblue") +
-  #geom_point( color="blue", size=6, alpha=0.6, shape = 21) +
   geom_point( aes(color=plot_low_coef_seq), size=6, alpha=0.6, shape = 21, show.legend = FALSE) +
   geom_text(aes(label = n)) +
   theme_bw() + coord_flip() +
@@ -52,7 +51,6 @@ plot_sequencing_bias
 # Resolution biais
 plot_resolution_bias <- ggplot(family_global_coef %>% filter(n >5), aes(x=reorder(Family, n), y=coef_resolution)) +
   geom_segment( aes(x=reorder(Family, n), xend=reorder(Family, n), y=0, yend=coef_resolution), color="skyblue") +
-  #geom_point( color="blue", size=6, alpha=0.6, shape = 21) +
   geom_point( aes(color=plot_low_coef_reso), size=6, alpha=0.6, shape = 21, show.legend = FALSE) +
   geom_text(aes(label = n)) +
   theme_bw() + coord_flip() +
@@ -75,7 +73,6 @@ ggsave("outputs/08_reference/biais_reference_families_5.png", width = 10, height
 # Sequencing biais_2
 plot_sequencing_bias_low <- ggplot(family_global_coef %>% filter(n < 6), aes(x=reorder(Family, n), y=coef_sequencing)) +
   geom_segment( aes(x=reorder(Family, n), xend=reorder(Family, n), y=0, yend=coef_sequencing), color="skyblue") +
-  #geom_point( color="blue", size=6, alpha=0.6, shape = 21) +
   geom_point( aes(color=plot_low_coef_seq), size=6, alpha=0.6, shape = 21, show.legend = FALSE) +
   geom_text(aes(label = n)) +
   theme_bw() + coord_flip() +
@@ -89,7 +86,6 @@ plot_sequencing_bias_low
 # Resolution biais
 plot_resolution_bias_low <- ggplot(family_global_coef %>% filter(n < 6), aes(x=reorder(Family, n), y=coef_resolution)) +
   geom_segment( aes(x=reorder(Family, n), xend=reorder(Family, n), y=0, yend=coef_resolution), color="skyblue") +
-  #geom_point( color="blue", size=6, alpha=0.6, shape = 21) +
   geom_point( aes(color=plot_low_coef_reso), size=6, alpha=0.6, shape = 21, show.legend = FALSE) +
   geom_text(aes(label = n)) +
   theme_bw() + coord_flip() +

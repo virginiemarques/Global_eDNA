@@ -13,7 +13,7 @@ df_all_filters <- df_all_filters %>%
 df_all_filters <- df_all_filters %>%
   filter(!is.na(new_family_name))
 
-
+# Calculate proportion of MOTUs in each family, within each similarity intervals
 family <- unique(df_all_filters$new_family_name)
 
 prop_similarity <- data.frame(stringsAsFactors = FALSE)
