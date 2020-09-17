@@ -26,9 +26,6 @@ df_all_filters <- df_all_filters %>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
-# on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? Faire les deux
-#df_all_filters <- df_all_filters %>%
-#  filter(!is.na(new_family_name))
 
 # N global 
 Nmotus <- length(unique(df_all_filters$sequence))
@@ -108,6 +105,7 @@ motu_site <- df_all_filters %>%
   summarise(n_motus = n_distinct(sequence))%>%
   mutate(rank = "site")
 save(motu_site, file="Rdata/rarete_motu_site.rdata")
+
 # plot
 p_motu_site <- fct_barplot(motu_site, rank_x="site", rank_y = "MOTUs")
 p_motu_site
@@ -119,6 +117,7 @@ ggplot(motu_site)+
         panel.background = element_blank(), 
         panel.border = element_rect(fill = NA))+
   labs(x="Number of sites",y="Number of MOTUs")
+
 # --------------------- # 
 # station scale 
 
@@ -133,6 +132,7 @@ motu_station <- df_all_filters %>%
   summarise(n_motus = n_distinct(sequence))%>%
   mutate(rank = "station")
 save(motu_station, file="Rdata/rarete_motu_station.rdata")
+
 # plot
 p_motu_station <- fct_barplot(motu_station, rank_x="station", rank_y = "MOTUs", color = "#d2981a")
 p_motu_station
@@ -166,8 +166,6 @@ p_motu_sample
 # --------------------- # 
 # all scales
 
-# Trial 1
-
 ggarrange(p_motu_region, 
           p_motu_site + rremove("ylab"), 
           p_motu_station, 
@@ -175,6 +173,9 @@ ggarrange(p_motu_region,
           nrow=1, ncol=2)
 
 ggsave("outputs/09_dominance_motus_ranks/repartition_MOTUs_regions_site_station.png", height = 10, width = 15)
+
+
+
 
 
 # --------------------------------------------------------------------- # 
@@ -199,6 +200,7 @@ family_region <- df_all_filters %>%
 p_family_region <- fct_barplot(family_region, rank_x="region", rank_y = "families", n_tot = Nfamily)
 p_family_region
 
+
 # --------------------- # 
 # site scale 
 
@@ -214,6 +216,7 @@ family_site <- df_all_filters %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
   mutate(rank = "site")
 save(family_site, file="Rdata/rarete_family_site.rdata")
+
 # plot
 p_family_site <- fct_barplot(dataset, rank_x="site", rank_y = "families", n_tot = Nfamily)
 p_family_site
@@ -241,6 +244,7 @@ family_station <- df_all_filters %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
   mutate(rank = "station")
 save(family_station, file="Rdata/rarete_family_station.rdata")
+
 # plot
 p_family_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
 p_family_station
@@ -275,7 +279,6 @@ p_family_sample
 # --------------------- # 
 # all scales
 
-# Trial 1
 
 ggarrange(#p_motu_region, 
           #p_motu_site + rremove("ylab"), 
@@ -293,6 +296,8 @@ ggarrange(p_motu_station,
           nrow=2, ncol=2)
 
 ggsave("outputs/09_dominance_motus_ranks/histogrammes_rarete.png", height = 15, width = 15)
+
+
 # --------------------------------------------------------------------- # 
 #### Genus unit  ----
 

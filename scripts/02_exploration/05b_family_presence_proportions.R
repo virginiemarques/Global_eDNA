@@ -525,6 +525,8 @@ ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Regi
 ggsave("outputs/05_family_proportion/02_based_on_species_presence/family_proportion_global_region.png", width=6, height=16)
 
 
+
+
 ## Bellwood figures : proportion of families per site
 
 df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean[,-7], count_families_site_eparse, count_families_site_fakarava, count_families_site_caledonia[,c(-7)])
@@ -556,46 +558,6 @@ plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 
 
-load("Rdata/plot_richness_site~dist_CT.rdata")
-
-ggarrange(plot_all_rich_site, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
-
-
-
-## same for stations
-df_all_station <- rbind(count_families_station_lengguru, count_families_station_caribbean, count_families_station_eparse, count_families_station_fakarava, count_families_station_caledonia)
-
-
-family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")
-
-prop <- vector("list")
-for (i in 1:length(family)) {
-  fam <- df_all_station[df_all_station$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.5, colour=region))+
-    geom_point(size=2)+
-    scale_y_continuous(breaks = c(0, 0.2, 0.4))+
-    xlim(0, 310)+
-    theme(legend.position = "none")+
-    theme_bw()+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#C67052"))+ #863b34
-    labs(title=family[i], x="", y="")+
-    theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
-}
-
-
-plot <- ggarrange(plotlist = prop, ncol=3, nrow = 3, common.legend = TRUE, legend = "top")
-x.grob <- textGrob("Total number of MOTUs per station", 
-                   gp=gpar(fontface="bold", col="black", fontsize=12))
-y.grob <- textGrob("Proportion of MOTUs assigned to the family in each station", 
-                   gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
-plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
-
-
-
-load("Rdata/plot_richness~dist_CT.rdata")
-
-ggarrange(plot_all_rich_station, plot_grid, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,3))
-
 
 
 ## test chi²
@@ -614,17 +576,3 @@ subset_fam_spread[is.na(subset_fam_spread)] <- 0
 
 test3 <- chisq.test(subset_fam_spread[,c(-1)])
 
-
-  ## on all families, all stations
-test1 <- chisq.test(df_all_station$prop)
-
-  ## selected families, all stations
-subset_fam <- df_all_station[df_all_station$family%in%family,]
-test2 <- chisq.test(subset_fam$prop)
-
-  ## selected families, by stations
-subset_fam <- subset_fam[, -c(2,3,6)]
-subset_fam_spread <- spread(subset_fam, family, prop)
-subset_fam_spread[is.na(subset_fam_spread)] <- 0
-
-test3 <- chisq.test(subset_fam_spread[,-c(1,2)])

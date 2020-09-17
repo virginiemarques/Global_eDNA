@@ -31,13 +31,6 @@ df_all_filters <- df_all_filters %>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
-# on est d'accord qu'on enlève toujours les MOTUs non assignés au dessus de la famille dans ce MS? 
-# -> faire les deux et mettre les familles seulement en SI. 
-#df_all_filters <- df_all_filters %>%
-#  filter(!is.na(new_family_name))
-
-# Des que le style des figures est bien posé, faire une fonction pour simplifier le code 
-
 unique(df_all_filters$region)
 
 # the motus 
@@ -48,7 +41,6 @@ df_site <- split(df_all_filters, df_all_filters$site)
 #### REGION - MOTUs ---- 
 
 # Color panel 
-#pal <- park_palette("Everglades", 3)
 # order des regions: 
 # 1) central indo pacific (lengguru)
 # 2) Caraibes
@@ -92,18 +84,10 @@ matrix_motus <- df_all_filters %>%
   as.data.frame()
 
 # Supp Settings
-# Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut être ? 
+# Ideas: rajouter le nombre de familles/genres sur le cote, par region? en boxplot. Le nombre de samples peut etre ? 
 
-# Construct a nicer plot
-# Base plot
-upset(matrix_motus, 
-      order.by = c("freq"),
-      mainbar.y.label = "Number of MOTUs", 
-      sets.x.label = "Number of MOTUs", 
-      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2))
 
-# Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
-# Work in progress
+# Plot MOTUs distribution in regions
 p1 <- upset(matrix_motus, 
             mb.ratio = c(0.7, 0.3),
       order.by = c("freq"),
@@ -125,7 +109,7 @@ p1 <- upset(matrix_motus,
 p1
 
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
-png('outputs/Figures papier/Figure4a.png', width = 7, height=3.6, units = "in", res=300)
+png('outputs/Figures papier/Figure3a.png', width = 7, height=3.6, units = "in", res=300)
 p1
 grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()
@@ -151,14 +135,8 @@ matrix_family <- df_all_filters %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
 
-# Simple plot
-upset(matrix_family, 
-      order.by = c("freq"),
-      mainbar.y.label = "Number of families", 
-      sets.x.label = "Number of families", 
-      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2))
 
-# Alternative plot
+# Plot families distrbution across regions
 p2 <- upset(matrix_family, 
             order.by = c("freq"),
             mainbar.y.label = "Number of families", 
@@ -226,26 +204,7 @@ for (i in all_sites){
   print(i)
 }
 
-# Plotter les 40 premieres intersections pour la lisibilité
-p3 <- upset(matrix_motus, 
-            nsets = 25,
-            order.by = c("freq"),
-            mainbar.y.label = "Number of MOTUs", 
-            sets.x.label = "Number of MOTUs", 
-            nintersects = 40)
-
-p3
-
-# Save
-#   png('outputs/09_dominance_motus_ranks/upset_plot_sites_motus.png', width = 12, height=8, units = "in", res=300)
-#   p3
-#   grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
-#   dev.off()
-
-# Alternative plot 
-# Work in progress
-
-# Trials ameliorations: color in set bar, points and lines and alpha heatmap by region groups
+# Plot MOTUs distribution across sites
 p3_color <- upset(matrix_motus, 
       nsets = 25,
       order.by = c("freq"),
@@ -318,7 +277,7 @@ for (i in all_sites){
   print(i)
 }
 
-# Plot color
+# Plot families distribution across sites
 p4_color <- upset(matrix_family, 
                   nsets = 25,
                   nintersects = 13,

@@ -55,7 +55,7 @@ for (i in 1:length(Region)) {
 # Calculate beta interregion
 beta_region <- data.frame(alpha=mean(alpha_region$motu), gamma=gamma_global, beta=numeric(1), scale="inter-region")
 beta_region$beta <- beta_region$gamma - beta_region$alpha
-
+save(beta_region, file="Rdata/beta_region.rdata")
 
 # calculate alpha site
 
@@ -89,7 +89,7 @@ for (i in 1:length(Region)) {
 
 mean_beta_site <- mean(beta_site$beta) 
 sd_beta_site <- sd(beta_site$beta)
-
+save(beta_site, file="Rdata/beta_site.rdata")
 
 
 # calculate alpha station
@@ -108,7 +108,7 @@ for (i in 1:length(Station)) {
 }
 
 mean_a_station <- data.frame(stringsAsFactors = FALSE)
-
+save(alpha_station, file="Rdata/alpha_station.rdata")
 for (i in 1:length(Site)) {
   df <- alpha_station %>%
     filter(site==Site[i])
@@ -137,6 +137,7 @@ for (i in 1:length(Site)) {
 }
 
 mean_b_station <- data.frame(stringsAsFactors = FALSE)
+save(beta_station, file="Rdata/beta_station.rdata")
 
 for (i in 1:length(Region)) {
   df <- beta_station %>%

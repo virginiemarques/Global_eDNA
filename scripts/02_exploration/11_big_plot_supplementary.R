@@ -10,7 +10,7 @@ library(ggpubr)
 library(RColorBrewer)
 
 
-# code for the figure like de Vargas 2015
+
 load("Rdata/02_clean_all.Rdata")
 '%ni%' <- Negate("%in%")
 df_all_filters <- df_all_filters %>%

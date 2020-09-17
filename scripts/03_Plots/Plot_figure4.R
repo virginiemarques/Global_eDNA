@@ -15,46 +15,28 @@ library(nlreg)
 library(MASS)
 library(fitdistrplus)
 
-# repertoire David
-setwd("/Users/davidmouillot/Documents/articles/en cours/Global eDNA")
+
+## For panel a : Run script "scripts/02_exploration/09_dominance_motus_ranks.R
+## Or load Rdata :
+load("Rdata/rarete_motu_station.rdata")
+
+
+
+## For panel b load Rdata :
+load("Rdata/rarete_species_transects.rdata")
 
 # fit log-log models
 
-load("rarete_motu_station.rdata") # VM: cant open it here. I added a line with the proper path. 
-load("Rdata/rarete_motu_station.rdata")
-
 tab=as.data.frame(motu_station)
-
-#logn=log10(tab$n)
-#logmotus=log10(tab$n_motus)
-#mlogn=-log10(tab$n)
-#
-#tab=cbind(tab,logn,logmotus,mlogn)
-
-head(tab)
-
-load("rarete_species_transects.rdata") # Same
-load("Rdata/rarete_species_transects.rdata")
-
-tab2 <- species_transects
-
-# logocc=log10(tab2$occ_RLS)
-# logfreq=log10(tab2$Freq)
-# mlogocc=-log10(tab2$occ_RLS)
-# 
-# tab2=cbind(tab2,logocc,logfreq,mlogocc)
-
-# -------- # Modif VM: add the logs sur tab et tab2 properly # 
 tab$logn=log10(tab$n)
 tab$logmotus=log10(tab$n_motus)
 tab$mlogn=-log10(tab$n)
 
+tab2 <- species_transects
 tab2$logocc <- log10(tab2$occ_RLS)
 tab2$logfreq <- log10(tab2$Freq)
 tab2$mlogocc <- -log10(tab2$occ_RLS)
-# -------- #  End of modif VM
 
-head(tab2)
 
 # distribution
 
@@ -289,9 +271,10 @@ x.grob <- textGrob("log10(Nb of transects)",
 
 b <- grid.arrange(plot2, bottom=x.grob)
 
-ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
 
-conflict_prefer("ggsave", "ggplot2")
+# Plot all together
 
-ggsave("outputs/Figures papier/Figure4.png")
+Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
+
+ggsave(Fig4,"outputs/Figures papier/Figure4.png")
 
