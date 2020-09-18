@@ -1,9 +1,3 @@
-# Automatisation des traitements 
-# Create functions to treat data 
-# And maybe a table at the beggining saying whether its rapidrun or MiSeq as the treatment and filters are different 
-# OR! Clean the 0.0006 filter before all this to proceed with clean data 
-# OR! Import clean metadata to do the filter easily 
-# To ameliorate the performances, work on the list of files before to identify is fish or not, create a column. And store it for later. That way, it does not run at each iteration. OR! do a specific function before the big one to store. 
 
 # Libs 
 library(tidyverse)
@@ -34,11 +28,11 @@ read_data <- function(taxo_motu, table_otu,
   taxo_motu$amplicon <- str_trim(taxo_motu$amplicon)
   taxo_motu$sequence <- toupper(taxo_motu$sequence)
   
-  # Checks - for sequences: all sequences from the table must be in the csv. (The opposite is not true du to sequence loss while cleaning rapidrun data)
+  # Checks - for sequences: all sequences from the table must be in the csv. (The opposite is not true due to sequence loss while cleaning rapidrun data)
   verif_seq <- table_otu$sequence %in% taxo_motu$sequence
   if( length(verif_seq[verif_seq==FALSE]) > 0 ) stop(paste(" error: some sequences are in table but not in csv file"))
   
-  # Checks - for sequences: all MOTUs from the table must be in the csv. (The opposite is not true du to sequence loss while cleaning rapidrun data)
+  # Checks - for sequences: all MOTUs from the table must be in the csv. (The opposite is not true due to sequence loss while cleaning rapidrun data)
   verif_motu <- table_otu$amplicon %in% taxo_motu$amplicon
   if( length(verif_motu[verif_motu==FALSE]) > 0  ) stop(paste(" error: some MOTU names are in table but not in csv file"))
   
@@ -189,7 +183,7 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
                        min_size_seq = 30, max_size_seq = 100, tag_jump=TRUE, tag_jump_value = 0.001, min_PCR = 1,
                        min_PCR_sample = 0, habitat_select = c("marine"), min_percentage_id = 0.80, delete_gps_col=TRUE){
   
-  # Verification that the class column exists
+  # Verify that the class column exists
   if( remove_not_fish_taxize & !('class_name' %in% colnames(edna_file)) ) stop(paste(" error: the column class_name does not exist. Please use the add_class_name function before or set the remove_not_fish_taxize option to FALSE."))
   
   # Isolate the PCR blanks for the filter
@@ -197,8 +191,8 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
     # Base filters
     dplyr::filter(count_reads > min_reads) %>% 
     `if`(remove_chimera, filter(., chimera == "N"), .) %>%
-    # SEUILS 1/1000
-    group_by(sample_name_all_pcr, amplicon) %>% # Enlever les reads inferieurs au seuil de 1 pour 1000
+    # Threshold 1/1000
+    group_by(sample_name_all_pcr, amplicon) %>% 
     mutate(count_reads_all_pcr = sum(count_reads)) %>%
     ungroup() %>%
     group_by(Run, amplicon) %>%
@@ -242,7 +236,7 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
     mutate(length_sequence = nchar(sequence)) %>%
     filter(length_sequence > min_size_seq & length_sequence < max_size_seq) %>%
     # Tag-jump, 1/1000
-    group_by(sample_name_all_pcr, amplicon) %>% # Enlever les reads inferieurs au seuil de 1 pour 1000
+    group_by(sample_name_all_pcr, amplicon) %>% 
     mutate(count_reads_all_pcr = sum(count_reads)) %>%
     ungroup() %>%
     group_by(Run, amplicon) %>%
@@ -271,21 +265,6 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
   
 }
 
-# For debug
-# edna_file <- sw4_with_class
-# remove_blanks = TRUE
-# min_reads=10
-# remove_chimera=TRUE
-# remove_not_fish_manual=FALSE
-# remove_not_fish_taxize = TRUE
-# min_size_seq = 30
-# max_size_seq = 100
-# tag_jump=TRUE
-# tag_jump_value = 0.001
-# min_PCR = 1
-# min_PCR_sample = 0
-# habitat_select = c("marine")
-# min_percentage_id = 0.80
 
 # ---------------------------------------------------------------------------------- # 
 #### PCR_LEVEL ----
@@ -303,8 +282,8 @@ simplify_sample_level <- function(edna_file){
   
 }
 
-# ------------------------------------------------------------------------ # 
-#### APPLY LULU                                                     -----
+# ---------------------------------------------------------------------------------- # 
+#### APPLY LULU -----
 
 # To apply this function, you need to have a UNIX OS system (The system function doesn't work on windows)
 # And you need to install the blastn tools in your local machine 
@@ -336,7 +315,7 @@ apply_lulu <- function(edna_file, path_lulu, match_lulu = 84, co_occurence_lulu 
   
   # Format for LULU function
   otutab <- edna_file %>%
-    select(amplicon, count_reads, sample_name) %>% # Here, sample name or sample name no pcr to try 
+    select(amplicon, count_reads, sample_name) %>%  
     spread(sample_name, count_reads) %>%
     replace(., is.na(.), "0") %>%
     as.data.frame()
@@ -353,8 +332,7 @@ apply_lulu <- function(edna_file, path_lulu, match_lulu = 84, co_occurence_lulu 
   matchlist_blastn <- read.table(paste(path_lulu, "match_list_blastn.txt", sep=""), header=FALSE,as.is=TRUE, stringsAsFactors=FALSE)
   
   # Run LULU 
-  # megablast: 11 MOTUs lost, blastn: 25 MOTUs lost 
-  lulu_edna <- lulu(otutab, matchlist, minimum_match = match_lulu, minimum_relative_cooccurence = co_occurence_lulu) # 94% is 3 mismatchs
+  lulu_edna <- lulu(otutab, matchlist, minimum_match = match_lulu, minimum_relative_cooccurence = co_occurence_lulu) 
   
   # Clean the logs 
   system("rm lulu.log*")
