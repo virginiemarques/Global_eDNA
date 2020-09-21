@@ -11,6 +11,8 @@ load("Rdata/02_clean_all.Rdata")
 
 # 
 '%ni%' <- Negate("%in%")
+conflict_prefer("select", "dplyr")
+conflict_prefer("mutate", "dplyr")
 
 # Functions
 source('scripts/03_Analysis/00_functions.R')
@@ -155,7 +157,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 
 # Table
 stats_family <- df_join_all %>%
-  group_by(project_name) %>%
+  group_by(Region) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'Family')
@@ -165,12 +167,12 @@ write.csv(stats_family, "outputs/03_accumulation_curves/asymptotes_family.csv", 
 
 # Simple plot on all 
 df_fam <- df_join_all %>% 
-  filter(project_name == "All") %>%
+  filter(Region == "All") %>%
   mutate(level = "family")
 
 save(df_fam, file = "Rdata/accumulation_asymptote_families_all.rdata")
 
-family <- ggplot(df_fam, aes(fill = project_name, col = project_name)) + 
+family <- ggplot(df_fam, aes(fill = Region, col = Region)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
@@ -253,7 +255,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 
 # Table
 stats<- df_join_all %>%
-  group_by(project_name) %>%
+  group_by(Region) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'MOTUs')
@@ -263,12 +265,12 @@ write.csv(stats, "outputs/03_accumulation_curves/asymptotes_motus.csv", row.name
 
 # Simple plot on all 
 df_motus <- df_join_all %>% 
-  filter(project_name == "All") %>%
+  filter(Region == "All") %>%
   mutate(level = "MOTUs")
 
 save(df_motus, file = "Rdata/accumulation_asymptote_motus_all.rdata")
 
-motus <- ggplot(df_motus, aes(fill = project_name, col = project_name)) + 
+motus <- ggplot(df_motus, aes(fill = Region, col = Region)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
@@ -285,102 +287,11 @@ motus
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("a", "b"))
-ggsave("outputs/Figures papier/ED_figure5.png", width=10, height = 12)
+ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("A", "B"))
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure5.png", width=10, height = 12)
 
 
 
-
-
-
-
-# ------------------------------------------------------------------------------- # 
-#### On Order ----
-# ------------------------------------------------------------------------------- # 
-
-# rank_specify
-rank_choice = 'order_name'
-
-# accumlation all plots
-liste_accumulation <- lapply(liste_read_edna_LULU, accumulation_curve_df, species_unit = rank_choice)
-
-# Asymptote of all plots 
-liste_asymptote <- lapply(liste_read_edna_LULU, asymptote_mm, species_unit = rank_choice)
-
-# Unlist
-df_accumulation <- bind_rows(liste_accumulation, .id = "project_name")
-df_asymptote <- bind_rows(liste_asymptote, .id = "project_name")
-
-# Dataset for plot
-df_accumulation_all <- left_join(df_accumulation, df_asymptote, by = "project_name") %>%
-  group_by(project_name) %>%
-  mutate(position_asymptote_y = 0.20 * max(asymptote), 
-         position_asymptote_x = max(sites))
-
-# Add All samples
-# Add a global saturation curve, i.e. all samples together?
-all_accumulation <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
-  select(project_name, richness, sd, sites)
-
-# Asymptote of all plots 
-all_asymptote <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
-  mutate(project_name = "All") %>%
-  select(project_name, asymptote)
-
-# Bind together
-df_all_accumulation <- rbind(df_accumulation, all_accumulation)
-df_all_asymptote <- rbind(df_asymptote, all_asymptote)
-
-# 
-df_join_all <- df_all_accumulation %>%
-  left_join(., df_all_asymptote, by = "project_name") %>%
-  group_by(project_name) %>%
-  mutate(position_asymptote_y = 0.20 * max(asymptote), 
-         position_asymptote_x = max(sites))
-
-# Plot with facet
-plot_acc_order <- ggplot(df_join_all, aes(fill = project_name, col = project_name)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  facet_wrap(~project_name, scales = "free") +
-  ylab("Number of orders") +
-  xlab("Samples (filter)") +
-  theme_bw() + 
-  ggtitle("Orders") + 
-  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 1), "Orders")), col = "black") 
-
-plot_acc_order
-
-# ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combination_no_facet_order.png", width = 12, height = 8)
-
-# Table
-stats<- df_join_all %>%
-  group_by(project_name) %>%
-  summarise(richness = max(richness), 
-            asymptote = round(max(asymptote), 0)) %>%
-  mutate(rank = 'Order')
-
-# Save
-write.csv(stats, "outputs/03_accumulation_curves/asymptotes_order.csv", row.names = F)
-
-# Simple plot on all 
-df_order <- df_join_all %>% 
-  filter(project_name == "All") %>%
-  mutate(level = "order")
-
-order <- ggplot(df_order, aes(fill = project_name, col = project_name)) + 
-  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
-  geom_line(aes(x = sites, y = richness)) +
-  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  ylab("Number of orders") +
-  xlab("Samples (filter)") +
-  theme_bw() + 
-  ggtitle("Orders") + 
-  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste("asymptote =", round(asymptote, 0), "Orders")), col = "black") 
-
-order
 
 # ------------------------------------------------------------------------------- # 
 #### On genus ----
@@ -446,7 +357,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 
 # Table
 stats<- df_join_all %>%
-  group_by(project_name) %>%
+  group_by(Region) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'Genus')
@@ -459,7 +370,7 @@ df_genus <- df_join_all %>%
   filter(project_name == "All") %>%
   mutate(level = "genus")
 
-genus <- ggplot(df_genus, aes(fill = project_name, col = project_name)) + 
+genus <- ggplot(df_genus, aes(fill = Region, col = Region)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +

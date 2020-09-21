@@ -116,6 +116,6 @@ b <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 # plot all together
 
-Fig2 <- ggarrange(a, b, nrow = 2, ncol = 1, labels = c("a", "b"), heights = c(1,2.5))
-
-ggsave(Fig2, "outputs/00_Figures_for_paper/Figure2.png", width = 7.5, height = 8, dpi = 300)
+Fig2 <- ggarrange(a, b, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,2.5))
+Fig2
+ggsave("outputs/00_Figures_for_paper/Figure2.png", width = 7.5, height = 8, dpi = 300)

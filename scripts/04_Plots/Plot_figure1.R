@@ -46,8 +46,9 @@ a <- ggplot(df_motus) +
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         panel.border = element_rect(fill = NA),
+        plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0,0.1), "cm")) + 
-  ggtitle("a")
+  ggtitle("A")
 
 # plot panel b : accumulation curve species visual survey
 
@@ -67,8 +68,9 @@ b <- ggplot(all_accumulation_species_RLS_df) +
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         panel.border = element_rect(fill = NA),
+        plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.15,0,0), "cm")) + 
-  ggtitle("b")
+  ggtitle("B")
 
 # plot panel c : accumulation curve families eDNA
 
@@ -88,8 +90,9 @@ c <- ggplot(df_fam) +
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         panel.border = element_rect(fill = NA),
+        plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0,0.1), "cm")) + 
-  ggtitle("c")
+  ggtitle("C")
 
 # plot panel d : accumulation curve families visual census
 
@@ -109,8 +112,9 @@ d <- ggplot(all_accumulation_RLS_df) +
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
         panel.border = element_rect(fill = NA),
+        plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.15,0,0), "cm")) + 
-  ggtitle("d")
+  ggtitle("D")
 
 
 ## For panel e : Run script "scripts/03_Analysis/02_prediction_family_species_richness.R"
@@ -145,9 +149,10 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         panel.border = element_rect(fill = NA),
         axis.title.y = element_text(size=10),
         axis.title.x = element_text(size=10),
+        plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
   labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in Visual Census)")+
-  ggtitle("e")
+  ggtitle("E")
 
 
 
@@ -164,7 +169,7 @@ f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fi
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
   labs(x="", y="Percentage of MOTUs \nat global scale")+
-  ggtitle("f")+
+  ggtitle("F")+
   scale_y_continuous(labels = percent, breaks = c(0, 0.05, 0.10))+
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
@@ -180,9 +185,9 @@ f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fi
 # plot all together
 
 a_e <- ggarrange(a, b, c, d, e, nrow = 3, ncol=2)
-Fig1 <- ggarrange(a_e, f, ncol=2, widths = c(2,1), common.legend = TRUE, legend = "bottom")
-
-ggsave(Fig1, "outputs/00_Figures_for_paper/Figure1.png", width = 7.5, height = 7.5)
+Fig1 <- ggarrange(a_e, f, ncol=2, widths = c(2,1))
+Fig1
+ggsave("outputs/00_Figures_for_paper/Figure1.png", width = 7.5, height = 7.5)
 
 
 ## legend added on powerpoint afterward

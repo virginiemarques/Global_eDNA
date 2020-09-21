@@ -274,7 +274,7 @@ b <- grid.arrange(plot2, bottom=x.grob)
 
 # Plot all together
 
-Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
-
-ggsave(Fig4,"outputs/00_Figures_for_paper/Figure4.png")
+Fig4 <- ggarrange(a, b, nrow=2, labels = c("A", "B"), label.x =0, label.y=1)
+Fig4
+ggsave("outputs/00_Figures_for_paper/Figure4.png")
 

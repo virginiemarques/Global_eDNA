@@ -254,7 +254,7 @@ beta_species_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   labs(x=" Beta component", y="Jaccard dissimilarity (RLS Species)")
 
 ggsave("outputs/07_diversity_partitioning/beta_RLS_species_Ecoregion.png")  
-
+save(beta_species_RLS, file="Rdata/beta_species_RLS.rdata")
 
 
 #__________________________________________________________________________
@@ -358,13 +358,15 @@ beta_family_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   labs(x=" Beta component", y="Jaccard dissimilarity (RLS families)")
 
 ggsave("outputs/07_diversity_partitioning/beta_RLS_families_Ecoregion.png")  
+save(beta_family_RLS, file="Rdata/beta_family_RLS.rdata")
 
 
-
+load("Rdata/beta_family_RLS.rdata")
+load("Rdata/beta_species_RLS.rdata")
 load("Rdata/beta_motus_eDNA.rdata")
 load("Rdata/beta_family_eDNA.rdata")
 
 
-ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("a", "b", "c", "d"), label.y = c(1, 1, 1.1,1.1), widths = c(1,1.4))
+ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("A", "B", "C", "D"), label.y = c(1, 1, 1.1,1.1), widths = c(1,1.4))
 
 ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure8.png")

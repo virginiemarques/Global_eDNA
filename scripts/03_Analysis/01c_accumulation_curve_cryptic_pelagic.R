@@ -355,7 +355,7 @@ ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", 
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("a", "b"))
+ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("A", "B"))
 ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure2.png", width=8, height = 6)
 
 
