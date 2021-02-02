@@ -23,7 +23,7 @@ fam_coral2 <- unique(fam_coral$Family)
 # our data
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -99,10 +99,10 @@ plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   theme_bw()+
   labs(x="log(1+Number of species in eDNA)",
        y="log(1+Number of species in RLS)")+
-  annotate(geom="text", x=6, y=1, label="y = 0.76x+1.54\nRÂ² = 0.38\np < 0.001", hjust=1, size=3.5) +
+  annotate(geom="text", x=6, y=1, label="y = 0.72x+1.61\nR² = 0.35\np < 0.001", hjust=1, size=3.5) +
   ggtitle("e")
 
-save(plot_species, "Rdata/plot_prediction_species.rdata")
+save(plot_species, file="Rdata/plot_prediction_species.rdata")
 
 ## pearson correlation test
 library(Hmisc)
@@ -135,7 +135,7 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
   geom_abline(slope = 0.85, intercept = 0.5, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.85x+0.5\nRÂ² = 0.59\np < 0.001", hjust=1, size=3.5) +
+  annotate(geom="text", x=6, y=1, label="y = 0.83x+0.57\nR² = 0.56\np < 0.001", hjust=1, size=3.5) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
@@ -145,6 +145,6 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
 lm_motu <- lm(log_checklist~log_motu +offset(log_motu), data=fam_summary)
 summary(lm_motu)
 
-save(plot_motu, "Rdata/plot_prediction_motus.rdata")
+save(plot_motu, file="Rdata/plot_prediction_motus.rdata")
 
 

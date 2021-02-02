@@ -11,7 +11,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -37,6 +37,7 @@ for (i in 1:length(site)) {
   df_site <- full_join(df_site, df, by="motu")
 }
 rownames(df_site) <- df_site[,1]
+df_site <- df_site[order(rownames(df_site)),]
 df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
 df_site[is.na(df_site)] <- 0
 df_site <- as.data.frame(t(df_site))
