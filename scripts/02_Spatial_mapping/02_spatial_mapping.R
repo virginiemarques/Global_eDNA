@@ -23,7 +23,7 @@ metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$lati
 
 metadata_sampling <- subset(metadata_sampling, !(station %in% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")))
 metadata_sampling <- subset(metadata_sampling, sample_method!="niskin")
-metadata_sampling <- subset(metadata_sampling, !region %in% c("East_Pacific", "Mediterranean"))
+metadata_sampling <- subset(metadata_sampling, !region %in% c("Mediterranean"))
 metadata_sampling <- subset(metadata_sampling, !(comment %in% c("Distance decay 600m", "Distance decay 300m")))
 metadata_sampling <- subset(metadata_sampling, habitat=="marine")
 

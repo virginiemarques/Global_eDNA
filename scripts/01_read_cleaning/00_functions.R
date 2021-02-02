@@ -248,7 +248,7 @@ clean_data <- function(edna_file, remove_blanks = TRUE, min_reads=10, remove_chi
     group_by(Run, amplicon) %>%
     mutate(somme_tot = sum(count_reads), seuil = tag_jump_value * somme_tot) %>%
     ungroup() %>%
-    `if`(tag_jump, filter(., sample_name_all_pcr > seuil), .) %>%
+    `if`(tag_jump, filter(., count_reads_all_pcr > seuil), .) %>%
     # PCR - all dataset
     group_by(amplicon) %>%
     mutate(n_PCR = n_distinct(sample_name)) %>%
