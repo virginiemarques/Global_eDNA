@@ -11,7 +11,7 @@ library(rnaturalearth)
 library(ggplot2)
 library(htmlwidgets)
 
-setwd("c:/Users/mathon/Desktop/linux/Global_eDNA/")
+
 # data 
 # WARNING: there is some empty lines in the .csv
 metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V4.csv", sep=";", stringsAsFactors = F, na.strings=c("","NA"))

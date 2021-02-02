@@ -17,7 +17,9 @@ source('scripts/03_Analysis/00_functions.R')
 df_all_filters <- df_all_filters %>%
   #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(project != "SEAMOUNTS") %>% 
+  filter(habitat_type %ni% c("BAIE", "Sommet"))
 
 # Summary of the families
 fam_summary <- df_all_filters %>%
