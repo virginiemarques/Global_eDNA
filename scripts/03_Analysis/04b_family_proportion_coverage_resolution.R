@@ -15,7 +15,7 @@ load("Rdata/02_clean_all.Rdata")
 '%ni%' <- Negate("%in%")
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -48,17 +48,17 @@ family_coverage_main <- family_coverage %>%
 family_coverage_ED <- family_coverage %>%
   subset(Family%in%families_ED)
 
-colnames(families_prop_global) <- c("family", "Central_Pacific", "Caribbean", "West_Indian", "South_West_Pacific", "Central Indo_Pacific")
+colnames(families_prop_global) <- c("family", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Indian_Ocean", "Tropical_SouthWestern_Pacific", "Western_Coral_Triangle")
 families_prop_global_main <- families_prop_global %>%
   subset(family%in%families_main)
 families_prop_global_main <- reshape2::melt(families_prop_global_main)
-colnames(families_prop_global_main) <- c("family", "Region", "prop")
+colnames(families_prop_global_main) <- c("family", "Province", "prop")
 save(families_prop_global_main, file="Rdata/family_proportion_region_main.rdata")
 
 families_prop_global_ED <- families_prop_global %>%
   subset(family%in%family_coverage_ED$Family)
 families_prop_global_ED <- reshape2::melt(families_prop_global_ED)
-colnames(families_prop_global_ED) <- c("family", "Region", "prop")
+colnames(families_prop_global_ED) <- c("family", "Province", "prop")
 
 
 order_main <- as.data.frame(levels(reorder(families_prop_global_main$family, families_prop_global_main$prop)))
@@ -86,11 +86,11 @@ family_coverage_ED$order<- order(order_ED$fam)
 
 
 # plot each panel of the first figure
-prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
-  labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
+  labs(title="Proportion of MOTUs at global scale, \nand their distribution in provinces", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
   coord_flip()
@@ -137,11 +137,11 @@ ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 7.8,
 
 
 ## plot each panel for second figure
-prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
-  labs(title="Proportion of MOTUs at global scale, \nand their distribution in regions", x="", y="")+ 
+  labs(title="Proportion of MOTUs at global scale, \nand their distribution in provinces", x="", y="")+ 
   theme(legend.position = "none")+
   ylim(0, 0.003)+
   theme(plot.title = element_text(size = 8, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+

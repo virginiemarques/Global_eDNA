@@ -35,9 +35,7 @@ akaike.weights <- function(x)
 # ------------------------------------------------------------------------------- # 
 
 RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ",", stringsAsFactors = FALSE)
-RLS_families <- RLS_families %>%
-  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_fam <- RLS_families[,c(10:130)]
+RLS_fam <- RLS_families[,c(11:131)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
 RLS_families <- cbind(RLS_families$SurveyID, RLS_fam)
 # method
@@ -126,9 +124,7 @@ save(plot_acc_fam, file = "Rdata/plot_acc_family.rdata")
 # ------------------------------------------------------------------------------- # 
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
-RLS_species <- RLS_species %>%
-  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(10:2165)]
+RLS_sp <- RLS_species[,c(12:2167)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 

@@ -24,7 +24,7 @@ liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
   x %>%
     #filter(new_rank_ncbi != "higher") %>%
     filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-    filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+    filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
     filter(project != "SEAMOUNTS") %>% 
     filter(habitat_type %ni% c("BAIE", "Sommet"))
 })
@@ -32,7 +32,7 @@ liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
 # On the df as well
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -41,7 +41,7 @@ df_all_filters <- df_all_filters %>%
 df_all_filters_temp <- do.call("rbind", liste_read_edna_LULU) 
 
 # Split by region
-liste_read_edna_LULU <- split(df_all_filters_temp, df_all_filters_temp$region)
+liste_read_edna_LULU <- split(df_all_filters_temp, df_all_filters_temp$province)
 
 # Counts
 lapply(liste_read_edna_LULU, function(x){
@@ -137,13 +137,13 @@ plot_acc_all
 # ggsave("outputs/03_accumulation_curves/01_accumulation_curve_all_projects_combination_no_facet_family.png", plot_acc_all, width = 12, height = 8)
 
 # Plot with facet
-colnames(df_join_all) <- c("Region", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
-plot_acc_family <- ggplot(df_join_all, aes(fill = Region)) + 
+colnames(df_join_all) <- c("Province", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
+plot_acc_family <- ggplot(df_join_all, aes(fill = Province)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   scale_fill_manual(values=c("grey", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
-  facet_wrap(~Region, scales = "free") +
+  facet_wrap(~Province, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
   theme_bw() + 
@@ -159,7 +159,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 # 
 
 stats_family <- df_join_all %>%
-  group_by(Region) %>%
+  group_by(Province) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'Family')
@@ -169,11 +169,11 @@ write.csv(stats_family, "outputs/03_accumulation_curves/asymptotes_family.csv", 
 
 # Simple plot on all 
 df_fam <- df_join_all %>% 
-  filter(Region == "All") 
+  filter(Province == "All") 
 
 save(df_fam, file = "Rdata/accumulation_asymptote_families_all.rdata")
 
-family <- ggplot(df_fam, aes(fill = Region, col = Region)) + 
+family <- ggplot(df_fam, aes(fill = Province, col = Province)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
@@ -236,12 +236,12 @@ df_join_all <- df_all_accumulation %>%
          position_slope_y = 0.30 * max(asymptote)) 
 
 # Plot with facet
-colnames(df_join_all) <- c("Region", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
-plot_acc_motus <- ggplot(df_join_all, aes(fill = Region)) + 
+colnames(df_join_all) <- c("Province", "richness", "sd", "sites", "asymptote", "slope", "position_asymptote_y", "position_asymptote_x", "position_slope_y")
+plot_acc_motus <- ggplot(df_join_all, aes(fill = Province)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  facet_wrap(~Region, scales = "free") +
+  facet_wrap(~Province, scales = "free") +
   scale_fill_manual(values=c("grey", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
   ylab("Number of MOTUs") +
   xlab("Samples (filter)") +
@@ -257,7 +257,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 # Table
 
 stats<- df_join_all %>%
-  group_by(Region) %>%
+  group_by(Province) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'MOTUs')
@@ -267,11 +267,11 @@ write.csv(stats, "outputs/03_accumulation_curves/asymptotes_motus.csv", row.name
 
 # Simple plot on all 
 df_motus <- df_join_all %>% 
-  filter(Region == "All") 
+  filter(Province == "All") 
 
 save(df_motus, file = "Rdata/accumulation_asymptote_motus_all.rdata")
 
-motus <- ggplot(df_motus, aes(fill = Region, col = Region)) + 
+motus <- ggplot(df_motus, aes(fill = Province, col = Province)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
@@ -358,7 +358,7 @@ ggsave("outputs/03_accumulation_curves/01b_accumulation_curve_all_projects_combi
 
 # Table
 stats<- df_join_all %>%
-  group_by(Region) %>%
+  group_by(Province) %>%
   summarise(richness = max(richness), 
             asymptote = round(max(asymptote), 0)) %>%
   mutate(rank = 'Genus')
@@ -371,7 +371,7 @@ df_genus <- df_join_all %>%
   filter(project_name == "All") %>%
   mutate(level = "genus")
 
-genus <- ggplot(df_genus, aes(fill = Region, col = Region)) + 
+genus <- ggplot(df_genus, aes(fill = Province, col = Province)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +

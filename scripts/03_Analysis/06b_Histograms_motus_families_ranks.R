@@ -21,7 +21,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -72,20 +72,20 @@ fct_barplot <- function(dataset, rank_x, rank_y = "MOTUs", color = "#56B4E9", n_
 # --------------------- # 
 # Region scale 
 
-length(unique(df_all_filters$region))
+length(unique(df_all_filters$province))
 
 # Count
-motu_region <- df_all_filters %>%
+motu_province <- df_all_filters %>%
   group_by(sequence) %>%
-  summarise(n = n_distinct(region)) %>%
+  summarise(n = n_distinct(province)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(sequence)) %>%
-  mutate(rank = "region")
+  mutate(rank = "province")
 
 # plot
-p_motu_region <- fct_barplot(motu_region, rank_x="region", rank_y = "MOTUs")
-p_motu_region
+p_motu_province <- fct_barplot(motu_province, rank_x="province", rank_y = "MOTUs")
+p_motu_province
 
 # 2 MOTUs are present in all 5 regions:
 
@@ -165,7 +165,7 @@ p_motu_sample
 # --------------------- # 
 # all scales
 
-ggarrange(p_motu_region, 
+ggarrange(p_motu_province, 
           p_motu_site + rremove("ylab"), 
           p_motu_station, 
           p_motu_sample+ rremove("ylab"),
@@ -183,21 +183,21 @@ ggsave("outputs/06_Upset_plots_Histograms_motus_family/repartition_MOTUs_regions
 # --------------------- # 
 # Region scale 
 
-length(unique(df_all_filters$region))
+length(unique(df_all_filters$province))
 
 # Count
-family_region <- df_all_filters %>%
+family_province <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
-  summarise(n = n_distinct(region)) %>%
+  summarise(n = n_distinct(province)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
-  mutate(rank = "region")
+  mutate(rank = "province")
 
 # plot
-p_family_region <- fct_barplot(family_region, rank_x="region", rank_y = "families", n_tot = Nfamily)
-p_family_region
+p_family_province <- fct_barplot(family_province, rank_x="province", rank_y = "families", n_tot = Nfamily)
+p_family_province
 
 
 # --------------------- # 
@@ -303,21 +303,21 @@ ggsave("outputs/06_Upset_plots_Histograms_motus_family/histogrammes_rarete.png",
 # --------------------- # 
 # Region scale 
 
-length(unique(df_all_filters$region))
+length(unique(df_all_filters$province))
 
 # Count
 dataset <- df_all_filters %>%
   filter(!is.na(new_genus_name))  %>%
   group_by(new_genus_name) %>%
-  summarise(n = n_distinct(region)) %>%
+  summarise(n = n_distinct(province)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_genus_name)) %>%
-  mutate(rank = "region")
+  mutate(rank = "province")
 
 # plot
-p_motu_region <- fct_barplot(dataset, rank_x="region", rank_y = "genus", n_tot = Ngenus)
-p_motu_region
+p_motu_province <- fct_barplot(dataset, rank_x="province", rank_y = "genus", n_tot = Ngenus)
+p_motu_province
 
 # --------------------- # 
 # site scale 
@@ -380,7 +380,7 @@ p_motu_sample
 # --------------------- # 
 # all scales
 
-ggarrange(p_motu_region, 
+ggarrange(p_motu_province, 
           p_motu_site + rremove("ylab"), 
           p_motu_station, 
           p_motu_sample+ rremove("ylab"),

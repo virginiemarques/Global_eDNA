@@ -18,7 +18,7 @@ source('scripts/03_Analysis/00_functions.R')
 df_all_filters <- df_all_filters %>%
   #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -61,7 +61,7 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- df_all_filters %>%
   #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -93,7 +93,7 @@ load("Rdata/02_clean_all.Rdata")
 df_all_filters <- df_all_filters %>%
   #filter(new_rank_ncbi != "higher") %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -160,9 +160,7 @@ akaike.weights <- function(x)
 
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
-RLS_species <- RLS_species %>%
-  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_sp <- RLS_species[,c(10:2165)]
+RLS_sp <- RLS_species[,c(12:2167)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 colnames(RLS_species)[1] <- "SurveyID"

@@ -38,4 +38,16 @@ for (i in 1:length(survey)) {
 
 RLS_sub_CC <- left_join(RLS_sub, Survey_CC, by="SurveyID")
 
-write.csv(RLS_sub_CC, "data/RLS/RLS_species_NEW.csv")
+RLS_fin <- RLS_sub_CC %>%
+  filter(coral_cover >= 20)
+
+write.csv(RLS_fin, "data/RLS/RLS_species_NEW.csv")
+
+# same filters on families file
+
+RLS_fam <- read.csv("data/RLS/RLS_families_NEW_all.csv")
+RLS_fam_sub <- RLS_fam %>%
+  subset(SurveyID %in% RLS_fin$SurveyID)
+
+RLS_fam_fin <- left_join(RLS_fam_sub, RLS_fin[,c("SurveyID","Province")], by="SurveyID")
+write.csv(RLS_fam_fin, "data/RLS/RLS_families_NEW.csv")

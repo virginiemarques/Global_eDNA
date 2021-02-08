@@ -27,14 +27,14 @@ load("Rdata/02_clean_all.Rdata")
 # Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
-unique(df_all_filters$region)
+unique(df_all_filters$province)
 
 # the motus 
-df_regions <- split(df_all_filters, df_all_filters$region)
+df_provinces <- split(df_all_filters, df_all_filters$province)
 df_site <- split(df_all_filters, df_all_filters$site)
 
 # ------------------------------------------------------------------------------- # 
@@ -53,7 +53,7 @@ pal <- c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34")
 
 # Construct the inital matrix - add some important infos as a side
 motus_fam_region <-  df_all_filters %>%
-  group_by(region) %>%
+  group_by(province) %>%
   dplyr::summarize(n_motus = n_distinct(sequence), 
             n_family = n_distinct(new_family_name)) %>%
   as.data.frame() %>%
@@ -61,15 +61,15 @@ motus_fam_region <-  df_all_filters %>%
 
 # metadata - 
 metadata1 <- df_all_filters %>%
-  distinct(region) %>% 
-  dplyr::mutate(sets = region) %>%
-  select(sets, region) %>%
+  distinct(province) %>% 
+  dplyr::mutate(sets = province) %>%
+  select(sets, province) %>%
   dplyr::mutate(color = case_when(
-    region == "South_West_Pacific" ~ pal[5],
-    region == "Central_Pacific" ~ pal[4],
-    region == "West_Indian" ~ pal[3],
-    region == "Caribbean" ~ pal[2], 
-    region == "Central_Indo_Pacific" ~ pal[1]
+    province == "Tropical_Southwestern_Pacific" ~ pal[5],
+    province == "Southeast_Polynesia" ~ pal[4],
+    province == "Western_Indian_Ocean" ~ pal[3],
+    province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
+    province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
   as.data.frame() %>%
   left_join(., motus_fam_region)
@@ -77,11 +77,11 @@ metadata1 <- df_all_filters %>%
 # MOTUs
 matrix_motus <- df_all_filters %>%
   distinct(sequence, new_scientific_name_ncbi) %>%
-  dplyr::mutate(`Central_Indo_Pacific` = ifelse(sequence %in% df_regions$`Central_Indo_Pacific`$sequence, 1, 0), 
-         Central_Pacific = ifelse(sequence %in% df_regions$Central_Pacific$sequence, 1, 0),
-         Caribbean = ifelse(sequence %in% df_regions$Caribbean$sequence, 1, 0),
-         West_Indian = ifelse(sequence %in% df_regions$West_Indian$sequence, 1, 0),
-         South_West_Pacific = ifelse(sequence %in% df_regions$South_West_Pacific$sequence, 1, 0)) %>%
+  dplyr::mutate(`Western_Coral_Triangle` = ifelse(sequence %in% df_provinces$`Western_Coral_Triangle`$sequence, 1, 0), 
+         Southeast_Polynesia = ifelse(sequence %in% df_provinces$Southeast_Polynesia$sequence, 1, 0),
+         Tropical_Northwestern_Atlantic = ifelse(sequence %in% df_provinces$Tropical_Northwestern_Atlantic$sequence, 1, 0),
+         Western_Indian_Ocean = ifelse(sequence %in% df_provinces$Western_Indian_Ocean$sequence, 1, 0),
+         Tropical_Southwestern_Pacific = ifelse(sequence %in% df_provinces$Tropical_Southwestern_Pacific$sequence, 1, 0)) %>%
   as.data.frame()
 
 
@@ -100,8 +100,8 @@ p1 <- upset(matrix_motus,
         data = metadata1,
         plots = list(list(
           type = "matrix_rows",
-          column = "region", 
-          colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+          column = "province", 
+          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -110,7 +110,7 @@ p1
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
 png('outputs/00_Figures_for_paper/Figure3a.png', width = 7, height=3.6, units = "in", res=300)
 p1
-grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+grid.text("Provinces - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()
 
 # ------------------------------------------------------------------------------- # 
@@ -126,11 +126,11 @@ family_samples_rarity <- df_all_filters %>%
 matrix_family <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   distinct(new_family_name) %>%
-  mutate(`Central_Indo_Pacific` = ifelse(new_family_name %in% df_regions$`Central_Indo_Pacific`$new_family_name, 1, 0), 
-         Central_Pacific = ifelse(new_family_name %in% df_regions$Central_Pacific$new_family_name, 1, 0),
-         Caribbean = ifelse(new_family_name %in% df_regions$Caribbean$new_family_name, 1, 0),
-         West_Indian = ifelse(new_family_name %in% df_regions$West_Indian$new_family_name, 1, 0),
-         South_West_Pacific = ifelse(new_family_name %in% df_regions$South_West_Pacific$new_family_name, 1, 0)) %>%
+  mutate(`Western_Coral_Triangle` = ifelse(new_family_name %in% df_provinces$`Western_Coral_Triangle`$new_family_name, 1, 0), 
+         Southeast_Polynesia = ifelse(new_family_name %in% df_provinces$Southeast_Polynesia$new_family_name, 1, 0),
+         Tropical_Northwestern_Atlantic = ifelse(new_family_name %in% df_provinces$Tropical_Northwestern_Atlantic$new_family_name, 1, 0),
+         Western_Indian_Ocean = ifelse(new_family_name %in% df_provinces$Western_Indian_Ocean$new_family_name, 1, 0),
+         Tropical_Southwestern_Pacific = ifelse(new_family_name %in% df_provinces$Tropical_Southwestern_Pacific$new_family_name, 1, 0)) %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
 
@@ -148,8 +148,8 @@ p2 <- upset(matrix_family,
               data = metadata1,
               plots = list(list(
                 type = "matrix_rows",
-                column = "region", 
-                colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+                column = "province", 
+                colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
                 alpha = 0.3
               ))
             ))
@@ -157,7 +157,7 @@ p2
 
 png('outputs/06_Upset_plots_Histograms_motus_family/upset_plot_region_family.png', width = 6, height=3, units = "in", res=300)
 p2
-grid.text("Regions - Family",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+grid.text("provinces - Family",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()
 
 # ------------------------------------------------------------------------------- # 
@@ -173,15 +173,15 @@ motus_sites <- df_all_filters %>%
 
 # metadata - needed to control colors?
 metadata1 <- df_all_filters %>%
-  distinct(site, region) %>% 
+  distinct(site, province) %>% 
   mutate(sets = site) %>%
-  select(sets, region) %>%
+  select(sets, province) %>%
   mutate(color = case_when(
-    region == "South_West_Pacific" ~ pal[5],
-    region == "Central_Pacific" ~ pal[4], 
-    region == "West_Indian" ~ pal[3],
-    region == "Caribbean" ~ pal[2], 
-    region == "Central_Indo_Pacific" ~ pal[1]
+    province == "Tropical_Southwestern_Pacific" ~ pal[5],
+    province == "Southeast_Polynesia" ~ pal[4], 
+    province == "Western_Indian_Ocean" ~ pal[3],
+    province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
+    province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
   left_join(., motus_sites, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -217,8 +217,8 @@ p3_color <- upset(matrix_motus,
         data = metadata1,
         plots = list(list(
           type = "matrix_rows",
-          column = "region", 
-          colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+          column = "province", 
+          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
@@ -245,15 +245,15 @@ motus_family <- df_all_filters %>%
 
 # metadata
 metadata1 <- df_all_filters %>%
-  distinct(site, region) %>% 
+  distinct(site, province) %>% 
   mutate(sets = site) %>%
-  select(sets, region) %>%
+  select(sets, province) %>%
   mutate(color = case_when(
-    region == "South_West_Pacific" ~ pal[5],
-    region == "Central_Pacific" ~ pal[4],
-    region == "West_Indian" ~ pal[3],
-    region == "Caribbean" ~ pal[2], 
-    region == "Central_Indo_Pacific" ~ pal[1]
+    province == "Tropical_Southwestern_Pacific" ~ pal[5],
+    province == "Southeast_Polynesia" ~ pal[4],
+    province == "Western_Indian_Ocean" ~ pal[3],
+    province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
+    province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
   left_join(., motus_family, by = c("sets" = "site")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
@@ -291,8 +291,8 @@ p4_color <- upset(matrix_family,
                     data = metadata1,
                     plots = list(list(
                       type = "matrix_rows",
-                      column = "region", 
-                      colors = c(`Central_Indo_Pacific` = pal[1], Caribbean =  pal[2], West_Indian = pal[3], Central_Pacific =  pal[4], South_West_Pacific = pal[5]),
+                      column = "province", 
+                      colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
                       alpha = 0.3
                     ))
                   ))

@@ -7,47 +7,45 @@ library(betapart)
 # gamma global 
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE)
-RLS_species <- RLS_species %>%
-  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_species <- RLS_species[, c(1,2,6,10:2165)]
-RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Ecoregion"))
+RLS_species <- RLS_species[, c(1,2,7,12:2167)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Province"))
 RLS_species <- RLS_species%>%
   filter(value!=0)
 RLS_species <- RLS_species[,-5]
-colnames(RLS_species) <- c("SurveyID", "SiteCode", "Ecoregion", "Species")
+colnames(RLS_species) <- c("SurveyID", "SiteCode", "Province", "Species")
 
 gamma_global <- as.numeric(RLS_species %>%
                              summarise(n = n_distinct(Species)))
 
 
-region <- unique(RLS_species$Ecoregion)
+province <- unique(RLS_species$Province)
 site <- unique(RLS_species$SiteCode)
 transect <- unique(RLS_species$SurveyID)
 
-# calculate alpha region
+# calculate alpha province
 
-alpha_region=data.frame(region=character(48), species=numeric(48), stringsAsFactors = FALSE)
+alpha_province=data.frame(province=character(48), species=numeric(48), stringsAsFactors = FALSE)
 
-for (i in 1:length(region)) {
-  r <- region[i]
-  species <- RLS_species[RLS_species$Ecoregion == region[i],] %>%
+for (i in 1:length(province)) {
+  r <- province[i]
+  species <- RLS_species[RLS_species$Province == province[i],] %>%
     summarise(n = n_distinct(Species))
-  alpha_region[i,1] <- r
-  alpha_region[i,2] <- species
+  alpha_province[i,1] <- r
+  alpha_province[i,2] <- species
 }
 
-# Calculate beta interregion
-beta_region <- data.frame(alpha=mean(alpha_region$species), gamma=gamma_global, beta=numeric(1), scale="inter-region")
-beta_region$beta <- beta_region$gamma - beta_region$alpha
+# Calculate beta interprovince
+beta_province <- data.frame(alpha=mean(alpha_province$species), gamma=gamma_global, beta=numeric(1), scale="inter-province")
+beta_province$beta <- beta_province$gamma - beta_province$alpha
 
 
 # calculate alpha site
 
-alpha_site=data.frame(region=character(), site=character(), species=numeric(), stringsAsFactors = FALSE)
+alpha_site=data.frame(province=character(), site=character(), species=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
-  r <- unique(RLS_species[RLS_species$SiteCode == site[i],]$Ecoregion)
+  r <- unique(RLS_species[RLS_species$SiteCode == site[i],]$Province)
   species <- RLS_species[RLS_species$SiteCode == site[i],] %>%
     summarise(n = n_distinct(Species))
   alpha_site[i,1] <- r
@@ -58,12 +56,12 @@ for (i in 1:length(site)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(48), alpha=numeric(48), gamma=numeric(48), beta=numeric(48), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(province=character(48), alpha=numeric(48), gamma=numeric(48), beta=numeric(48), scale="inter-site", stringsAsFactors = FALSE)
 
-for (i in 1:length(region)) {
-  r <- region[i]
-  gamma <- alpha_region[alpha_region$region==region[i],]$species
-  alpha <- mean(alpha_site[alpha_site$region==region[i],]$species)
+for (i in 1:length(province)) {
+  r <- province[i]
+  gamma <- alpha_province[alpha_province$province==province[i],]$species
+  alpha <- mean(alpha_site[alpha_site$province==province[i],]$species)
   beta_site[i,1] <- r
   beta_site[i,2] <- alpha
   beta_site[i,3] <- gamma
@@ -77,11 +75,11 @@ sd_beta_site <- sd(beta_site$beta)
 
 
 # calculate alpha transect
-alpha_transect=data.frame(region=character(), site=character(), transect=character(), species=numeric(), stringsAsFactors = FALSE)
+alpha_transect=data.frame(province=character(), site=character(), transect=character(), species=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(transect)) {
   st <- transect[i]
-  r <- unique(RLS_species[RLS_species$SurveyID == transect[i],]$Ecoregion)
+  r <- unique(RLS_species[RLS_species$SurveyID == transect[i],]$Province)
   s <- unique(RLS_species[RLS_species$SurveyID == transect[i],]$SiteCode)
   species <- RLS_species[RLS_species$SurveyID == transect[i],] %>%
     summarise(n = n_distinct(Species))
@@ -107,11 +105,11 @@ sd_alpha_transect <- sd(mean_a_transect$V1)
 
 # calculate beta inter-station
 
-beta_transect <- data.frame(region=character(1311), site=character(1311), alpha=numeric(1311), gamma=numeric(1311), beta=numeric(1311), scale="inter-transect", stringsAsFactors = FALSE)
+beta_transect <- data.frame(province=character(1311), site=character(1311), alpha=numeric(1311), gamma=numeric(1311), beta=numeric(1311), scale="inter-transect", stringsAsFactors = FALSE)
 
 for (i in 1:length(site)) {
   s <- site[i]
-  r <- unique(alpha_transect[alpha_transect$site==site[i],]$region)
+  r <- unique(alpha_transect[alpha_transect$site==site[i],]$province)
   gamma <- alpha_site[alpha_site$site==site[i],]$species
   alpha <- mean(alpha_transect[alpha_transect$site==site[i],]$species)
   beta_transect[i,1] <- r
@@ -135,12 +133,12 @@ for (i in 1:length(site)) {
 mean_beta_transect <- mean(mean_b_transect$V1)
 sd_beta_transect <- sd(mean_b_transect$V1)
 
-beta_region$beta+mean_beta_site+mean_beta_transect+mean_alpha_transect
+beta_province$beta+mean_beta_site+mean_beta_transect+mean_alpha_transect
 
 # calculate diversity partitioning
 
-div_partition <- data.frame(component=c("mean_alpha_transect", "mean_beta_transect", "mean_beta_site", "beta_region"), 
-                            value=c(mean_alpha_transect, mean_beta_transect, mean_beta_site, beta_region$beta),
+div_partition <- data.frame(component=c("mean_alpha_transect", "mean_beta_transect", "mean_beta_site", "beta_province"), 
+                            value=c(mean_alpha_transect, mean_beta_transect, mean_beta_site, beta_province$beta),
                             sd=c(sd_alpha_transect, sd_beta_transect, sd_beta_site, 0),
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
@@ -163,28 +161,28 @@ RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species[,c(1,2,6)], RLS_sp)
 save(RLS_species, file = "Rdata/RLS_species_clean.rdata")
 
-region <- unique(RLS_species$Ecoregion)
+province <- unique(RLS_species$Province)
 site <- unique(RLS_species$SiteCode)
 transect <- unique(RLS_species$SurveyID)
 
 # calculate beta, turnover and nestedness with betapart
-## beta inter-regions
+## beta inter-provinces
 
-df_region=data.frame()
+df_province=data.frame()
 
 
-for (i in 1:length(region)) {
-  df <- RLS_species[RLS_species$Ecoregion == region[i],]
+for (i in 1:length(province)) {
+  df <- RLS_species[RLS_species$Province == province[i],]
   df <- df[,c(4:ncol(df))]
-  df_region[i,"region"] <- region[i]
-  df_region[i, 2:1888] <- colSums(df)
+  df_province[i,"province"] <- province[i]
+  df_province[i, 2:1888] <- colSums(df)
 }
-rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:ncol(df_region)], "pa",na.rm = TRUE)
+rownames(df_province) <- df_province[,1]
+df_province <- decostand(df_province[,2:ncol(df_province)], "pa",na.rm = TRUE)
 
-b <- betapart.core(df_region)
+b <- betapart.core(df_province)
 beta <- beta.multi(b, "jaccard")
-betaregion <- data.frame(scale="inter-region", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
+betaprovince <- data.frame(scale="inter-province", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
 
   ## beta inter-site
 
@@ -192,8 +190,8 @@ df_site=vector("list", 48)
 betasite <- data.frame(scale="inter-site", total=numeric(48), turnover=numeric(48), nestedness=numeric(48))
 
 
-for (i in 1:length(region)) {
-  df <- RLS_species[RLS_species$Ecoregion == region[i],]
+for (i in 1:length(province)) {
+  df <- RLS_species[RLS_species$Province == province[i],]
   site <- unique(df$SiteCode)
   df_site[[i]] <- data.frame(stringsAsFactors = FALSE)
     for (j in 1:length(site)) {
@@ -243,7 +241,7 @@ for (i in 1:length(site)) {
 }
 
 
-betatotal <- rbind(betaregion, betasite, betatransect)
+betatotal <- rbind(betaprovince, betasite, betatransect)
 write.csv(betatotal, "outputs/07_diversity_partitioning/beta_RLS_species.csv")
 beta_melt <- reshape2::melt(betatotal)
 
@@ -253,7 +251,7 @@ beta_species_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   theme(legend.position = "none")+
   labs(x=" Beta component", y="Jaccard dissimilarity (RLS Species)")
 
-ggsave("outputs/07_diversity_partitioning/beta_RLS_species_Ecoregion.png")  
+ggsave("outputs/07_diversity_partitioning/beta_RLS_species_Province.png")  
 save(beta_species_RLS, file="Rdata/beta_species_RLS.rdata")
 
 
@@ -268,28 +266,28 @@ RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
 RLS_families <- cbind(RLS_families[,c(1,2,6)], RLS_fam)
 
 
-region <- unique(RLS_families$Ecoregion)
+province <- unique(RLS_families$Province)
 site <- unique(RLS_families$SiteCode)
 transect <- unique(RLS_families$SurveyID)
 
 # calculate beta, turnover and nestedness with betapart
-## beta inter-regions
+## beta inter-provinces
 
-df_region=data.frame()
+df_province=data.frame()
 
 
-for (i in 1:length(region)) {
-  df <- RLS_families[RLS_families$Ecoregion == region[i],]
+for (i in 1:length(province)) {
+  df <- RLS_families[RLS_families$Province == province[i],]
   df <- df[,c(4:ncol(df))]
-  df_region[i,"region"] <- region[i]
-  df_region[i, 2:97] <- colSums(df)
+  df_province[i,"province"] <- province[i]
+  df_province[i, 2:97] <- colSums(df)
 }
-rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:ncol(df_region)], "pa",na.rm = TRUE)
+rownames(df_province) <- df_province[,1]
+df_province <- decostand(df_province[,2:ncol(df_province)], "pa",na.rm = TRUE)
 
-b <- betapart.core(df_region)
+b <- betapart.core(df_province)
 beta <- beta.multi(b, "jaccard")
-betaregion <- data.frame(scale="inter-region", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
+betaprovince <- data.frame(scale="inter-province", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
 
 ## beta inter-site
 
@@ -297,8 +295,8 @@ df_site=vector("list", 48)
 betasite <- data.frame(scale="inter-site", total=numeric(48), turnover=numeric(48), nestedness=numeric(48))
 
 
-for (i in 1:length(region)) {
-  df <- RLS_families[RLS_families$Ecoregion == region[i],]
+for (i in 1:length(province)) {
+  df <- RLS_families[RLS_families$Province == province[i],]
   site <- unique(df$SiteCode)
   df_site[[i]] <- data.frame(stringsAsFactors = FALSE)
   for (j in 1:length(site)) {
@@ -348,7 +346,7 @@ for (i in 1:length(site)) {
 }
 
 
-betatotal <- rbind(betaregion, betasite, betatransect)
+betatotal <- rbind(betaprovince, betasite, betatransect)
 write.csv(betatotal, "outputs/07_diversity_partitioning/beta_RLS_families.csv")
 beta_melt <- reshape2::melt(betatotal)
 
@@ -357,7 +355,7 @@ beta_family_RLS <- ggplot(beta_melt, aes(variable, value, colour=scale))+
   theme_bw()+
   labs(x=" Beta component", y="Jaccard dissimilarity (RLS families)")
 
-ggsave("outputs/07_diversity_partitioning/beta_RLS_families_Ecoregion.png")  
+ggsave("outputs/07_diversity_partitioning/beta_RLS_families_Province.png")  
 save(beta_family_RLS, file="Rdata/beta_family_RLS.rdata")
 
 

@@ -12,7 +12,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -24,7 +24,7 @@ df_all_filters <- df_all_filters %>%
 
   ## Caribbean total
 caribbean <- df_all_filters %>%
-  filter(region=="Caribbean") 
+  filter(province=="Tropical_Northwestern_Atlantic") 
 
 cari_motu <- caribbean %>%
   distinct(sequence, .keep_all = TRUE)
@@ -61,7 +61,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
-  count_families$region <- "Caribbean"
+  count_families$province <- "Tropical_Northwestern_Atlantic"
   count_families_site_caribbean <- rbind(count_families_site_caribbean, count_families)
 }
 
@@ -104,7 +104,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
-  count_families$region <- "Caribbean"
+  count_families$province <- "Tropical_Northwestern_Atlantic"
   count_families_station_caribbean <- rbind(count_families_station_caribbean, count_families)
 }
 
@@ -115,7 +115,7 @@ write.csv(count_families_station_caribbean, "outputs/04_family_proportion/Statio
   ## Lengguru total
 
 lengguru <- df_all_filters %>%
-  filter(region=="Central_Indo_Pacific") 
+  filter(province=="Western_Coral_Triangle") 
 
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
@@ -154,7 +154,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
-  count_families$region <- "Central_IndoPacific"
+  count_families$province <- "Western_Coral_Triangle"
   count_families_site_lengguru <- rbind(count_families_site_lengguru, count_families)
 }
 
@@ -201,7 +201,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
-  count_families$region <- "Central_IndoPacific"
+  count_families$province <- "Western_Coral_Triangle"
   count_families_station_lengguru <- rbind(count_families_station_lengguru, count_families)
 }
 
@@ -212,7 +212,7 @@ write.csv(count_families_station_lengguru, "outputs/04_family_proportion/Station
   ## par site = region
 
 fakarava <- df_all_filters %>%
-  filter(region=="Central_Pacific")
+  filter(province=="Southeast_Polynesia")
 
 faka_motu <- fakarava %>%
   distinct(sequence, .keep_all = TRUE)
@@ -221,7 +221,7 @@ count_families_site_fakarava <- data.frame(table(faka_motu$new_family_name))
 colnames(count_families_site_fakarava) <- c("family", "n_motus")
 count_families_site_fakarava$n_motus_total <- nrow(faka_motu)
 count_families_site_fakarava$site <- "fakarava"
-count_families_site_fakarava$region <- "Central_Pacific"
+count_families_site_fakarava$province <- "Southeast_Polynesia"
 count_families_site_fakarava$prop <- count_families_site_fakarava$n_motus / count_families_site_fakarava$n_motus_total
 
 
@@ -253,7 +253,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- "fakarava"
-  count_families$region <- "Central_Pacific"
+  count_families$province <- "Southeast_Polynesia"
   count_families_station_fakarava <- rbind(count_families_station_fakarava, count_families)
 }
 
@@ -264,7 +264,7 @@ write.csv(count_families_station_fakarava, "outputs/04_family_proportion/Station
   ## eparse total
 
 eparse <- df_all_filters %>%
-  filter(region=="West_Indian") 
+  filter(province=="Western_Indian_Ocean") 
 
 eparse_motu <- eparse %>%
   distinct(sequence, .keep_all = TRUE)
@@ -303,7 +303,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
-  count_families$region <- "West_Indian"
+  count_families$province <- "Western_Indian_Ocean"
   count_families_site_eparse <- rbind(count_families_site_eparse, count_families)
 }
 
@@ -347,7 +347,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
-  count_families$region <- "West_Indian"
+  count_families$province <- "Western_Indian_Ocean"
   count_families_station_eparse <- rbind(count_families_station_eparse, count_families)
 }
 
@@ -358,7 +358,7 @@ write.csv(count_families_station_eparse, "outputs/04_family_proportion/Station/f
 ## caledonia total
 
 caledonia <- df_all_filters %>%
-  filter(region=="South_West_Pacific") 
+  filter(province=="Tropical_Southwestern_Pacific") 
 
 cal_motu <- caledonia %>%
   distinct(sequence, .keep_all = TRUE)
@@ -397,7 +397,7 @@ for (i in 1:length(site)) {
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site <- s
-  count_families$region <- "South_West_Pacific"
+  count_families$province <- "Tropical_Southwestern_Pacific"
   count_families_site_caledonia <- rbind(count_families_site_caledonia, count_families)
 }
 
@@ -444,7 +444,7 @@ for (i in 1:length(station)) {
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$station <- st
   count_families$site <- s
-  count_families$region <- "South_West_Pacific"
+  count_families$province <- "Tropical_Southwestern_Pacific"
   count_families_station_caledonia <- rbind(count_families_station_caledonia, count_families)
 }
 
@@ -508,11 +508,11 @@ families_prop_global$Lengguru <- (families_prop_global$new_n_leng*families_prop_
 
 families_prop_global <- families_prop_global[,c(1,14:18)]
 families_prop_global2 <- reshape2::melt(families_prop_global)
-colnames(families_prop_global2) <- c("family", "Region", "prop")
+colnames(families_prop_global2) <- c("family", "Province", "prop")
 
 save(families_prop_global, file = "Rdata/family_proportion_global.Rdata")
 
-ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#4F4D1D", "#E5A729", "#C67052", "#863b34", "#8AAE8A"))+ 
@@ -534,7 +534,7 @@ family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serrani
 prop <- vector("list")
 for (i in 1:length(family)) {
   fam <- df_all_site[df_all_site$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.2, colour=region))+
+  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop, ymin=0, ymax=0.2, colour=province))+
     geom_point(size=2)+
     scale_y_continuous(breaks = c(0, 0.1, 0.2))+
     xlim(0, 800)+

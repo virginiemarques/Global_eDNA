@@ -10,7 +10,7 @@ load("Rdata/02_clean_all.Rdata")
 #Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & region!="East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
+  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
   filter(project != "SEAMOUNTS") %>% 
   filter(habitat_type %ni% c("BAIE", "Sommet"))
 
@@ -36,34 +36,34 @@ gamma_global <- as.numeric(df_all_filters %>%
   summarise(n = n_distinct(sequence)))
   
 
-Region <- unique(df_all_filters$region)
+Province <- unique(df_all_filters$province)
 Site <- unique(df_all_filters$site)
 Station <- unique(df_all_filters$station)
 
 # calculate alpha region
 
-alpha_region=data.frame(region=character(5), motu=numeric(5), stringsAsFactors = FALSE)
+alpha_province=data.frame(province=character(5), motu=numeric(5), stringsAsFactors = FALSE)
 
-for (i in 1:length(Region)) {
-  r <- Region[i]
-  motu <- df_all_filters[df_all_filters$region == Region[i],] %>%
+for (i in 1:length(Province)) {
+  r <- Province[i]
+  motu <- df_all_filters[df_all_filters$province == Province[i],] %>%
     summarise(n = n_distinct(sequence))
-  alpha_region[i,1] <- r
-  alpha_region[i,2] <- motu
+  alpha_province[i,1] <- r
+  alpha_province[i,2] <- motu
 }
 
 # Calculate beta interregion
-beta_region <- data.frame(alpha=mean(alpha_region$motu), gamma=gamma_global, beta=numeric(1), scale="inter-region")
-beta_region$beta <- beta_region$gamma - beta_region$alpha
-save(beta_region, file="Rdata/beta_region.rdata")
+beta_province <- data.frame(alpha=mean(alpha_province$motu), gamma=gamma_global, beta=numeric(1), scale="inter-province")
+beta_province$beta <- beta_province$gamma - beta_province$alpha
+save(beta_province, file="Rdata/beta_province.rdata")
 
 # calculate alpha site
 
-alpha_site=data.frame(region=character(), site=character(), motu=numeric(), stringsAsFactors = FALSE)
+alpha_site=data.frame(province=character(), site=character(), motu=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(Site)) {
   s <- Site[i]
-  r <- unique(df_all_filters[df_all_filters$site == Site[i],]$region)
+  r <- unique(df_all_filters[df_all_filters$site == Site[i],]$province)
   motu <- df_all_filters[df_all_filters$site == Site[i],] %>%
     summarise(n = n_distinct(sequence))
   alpha_site[i,1] <- r
@@ -74,12 +74,12 @@ for (i in 1:length(Site)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(region=character(5), alpha=numeric(5), gamma=numeric(5), beta=numeric(5), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(province=character(5), alpha=numeric(5), gamma=numeric(5), beta=numeric(5), scale="inter-site", stringsAsFactors = FALSE)
 
-for (i in 1:length(Region)) {
-  r <- Region[i]
-  gamma <- alpha_region[alpha_region$region==Region[i],]$motu
-  alpha <- mean(alpha_site[alpha_site$region==Region[i],]$motu)
+for (i in 1:length(Province)) {
+  r <- Province[i]
+  gamma <- alpha_province[alpha_province$province==Province[i],]$motu
+  alpha <- mean(alpha_site[alpha_site$province==Province[i],]$motu)
   beta_site[i,1] <- r
   beta_site[i,2] <- alpha
   beta_site[i,3] <- gamma
@@ -93,11 +93,11 @@ save(beta_site, file="Rdata/beta_site.rdata")
 
 
 # calculate alpha station
-alpha_station=data.frame(region=character(), site=character(), station=character(), motu=numeric(), stringsAsFactors = FALSE)
+alpha_station=data.frame(province=character(), site=character(), station=character(), motu=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(Station)) {
   st <- Station[i]
-  r <- unique(df_all_filters[df_all_filters$station == Station[i],]$region)
+  r <- unique(df_all_filters[df_all_filters$station == Station[i],]$province)
   s <- unique(df_all_filters[df_all_filters$station == Station[i],]$site)
   motu <- df_all_filters[df_all_filters$station == Station[i],] %>%
     summarise(n = n_distinct(sequence))
@@ -122,11 +122,11 @@ sd_alpha_station <- sd(mean_a_station$V1)
 
 # calculate beta inter-station
 
-beta_station <- data.frame(region=character(25), site=character(25), alpha=numeric(25), gamma=numeric(25), beta=numeric(25), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(province=character(25), site=character(25), alpha=numeric(25), gamma=numeric(25), beta=numeric(25), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(Site)) {
   s <- Site[i]
-  r <- unique(alpha_station[alpha_station$site==Site[i],]$region)
+  r <- unique(alpha_station[alpha_station$site==Site[i],]$province)
   gamma <- alpha_site[alpha_site$site==Site[i],]$motu
   alpha <- mean(alpha_station[alpha_station$site==Site[i],]$motu)
   beta_station[i,1] <- r
@@ -139,9 +139,9 @@ for (i in 1:length(Site)) {
 mean_b_station <- data.frame(stringsAsFactors = FALSE)
 save(beta_station, file="Rdata/beta_station.rdata")
 
-for (i in 1:length(Region)) {
+for (i in 1:length(Province)) {
   df <- beta_station %>%
-    subset(region==Region[i])
+    subset(province==Province[i])
   mean_b_station[i,1] <- mean(df$beta)
   
 }
@@ -149,12 +149,12 @@ for (i in 1:length(Region)) {
 mean_beta_station <- mean(mean_b_station$V1)
 sd_beta_station <- sd(mean_b_station$V1)
 
-beta_region$beta+mean_beta_site+mean_beta_station+mean_alpha_station
+beta_province$beta+mean_beta_site+mean_beta_station+mean_alpha_station
 
 # calculate diversity partitioning
 
-div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_region"), 
-                            value=c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_region$beta),
+div_partition <- data.frame(component=c("mean_alpha_station", "mean_beta_station", "mean_beta_site", "beta_province"), 
+                            value=c(mean_alpha_station, mean_beta_station, mean_beta_site, beta_province$beta),
                             sd=c(sd_alpha_station, sd_beta_station, sd_beta_site, 0),
                             percent=numeric(4))
 div_partition$percent <- (div_partition$value*100)/gamma_global
@@ -167,22 +167,22 @@ write.csv(div_partition, "outputs/07_diversity_partitioning/all_motus_diversity_
 # calculate beta, turnover and nestedness with betapart
   ## beta inter-regions
 
-df_region=data.frame(motu=character())
+df_province=data.frame(motu=character())
 
-for (i in 1:length(Region)) {
-  df <- df_all_filters[df_all_filters$region == Region[i],] %>%
-    distinct(sequence, region)
-  colnames(df) <- c("motu", Region[i])
-  df_region <- full_join(df_region, df, by="motu")
+for (i in 1:length(Province)) {
+  df <- df_all_filters[df_all_filters$province == Province[i],] %>%
+    distinct(sequence, province)
+  colnames(df) <- c("motu", Province[i])
+  df_province <- full_join(df_province, df, by="motu")
 }
-rownames(df_region) <- df_region[,1]
-df_region <- decostand(df_region[,2:6], "pa",na.rm = TRUE)
-df_region[is.na(df_region)] <- 0
-df_region <- as.data.frame(t(df_region))
+rownames(df_province) <- df_province[,1]
+df_province <- decostand(df_province[,2:6], "pa",na.rm = TRUE)
+df_province[is.na(df_province)] <- 0
+df_province <- as.data.frame(t(df_province))
 
-b <- betapart.core(df_region)
+b <- betapart.core(df_province)
 beta <- beta.multi(b, "jaccard")
-betaregion <- data.frame(scale="inter-region", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
+betaprovince <- data.frame(scale="inter-province", total=beta$beta.JAC, turnover=beta$beta.JTU, nestedness=beta$beta.JNE)
 
   ## beta inter-site
 
@@ -190,8 +190,8 @@ df_site=vector("list", 5)
 betasite <- data.frame(scale="inter-site", total=numeric(5), turnover=numeric(5), nestedness=numeric(5))
 
 
-for (i in 1:length(Region)) {
-  df <- df_all_filters[df_all_filters$region == Region[i],]
+for (i in 1:length(Province)) {
+  df <- df_all_filters[df_all_filters$province == Province[i],]
   Site <- unique(df$site)
   df_site[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
     for (j in 1:length(Site)) {
@@ -243,7 +243,7 @@ for (i in 1:length(Site)) {
 }
 
 
-betatotal <- rbind(betaregion, betasite, betastation)
+betatotal <- rbind(betaprovince, betasite, betastation)
 write.csv(betatotal, "outputs/07_diversity_partitioning/beta_motus.csv")
 
 beta_melt <- reshape2::melt(betatotal)

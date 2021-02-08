@@ -12,14 +12,12 @@ library(ggpubr)
 # load and format data
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = F, check.names = F)
-RLS_species <- RLS_species %>%
-  filter(Realm%ni%c("Temperate Australasia", "Temperate Northern Atlantic", "Temperate Southern Africa", "Temperate Northern Pacific"))
-RLS_species <- RLS_species[, c(1,2,6,10:2165)]
-RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Ecoregion"))
+RLS_species <- RLS_species[, c(1,2,7,12:2167)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Province"))
 RLS_species <- RLS_species%>%
   filter(value!=0)
 RLS_species <- RLS_species[,-5]
-colnames(RLS_species) <- c("SurveyID", "SiteCode", "Ecoregion", "Species")
+colnames(RLS_species) <- c("SurveyID", "SiteCode", "Province", "Species")
 
 # add family name
 library(rfishbase)
