@@ -18,7 +18,7 @@ metadata_dist  <- metadata_sampling %>%
 center_CT <- data.frame(longitude=133.679826, latitude=-1.307436)
 
 
-pts = metadata_dist[,44:45]
+pts = metadata_dist[,49:50]
 pts$latitude_start_clean <- as.numeric(pts$latitude_start_clean)
 pts$longitude_start_clean <- as.numeric(pts$longitude_start_clean)
 
@@ -46,13 +46,13 @@ metadata  <- metadata %>%
 ## put Coral triangle in the middle
 metadata1 <- metadata %>%
   mutate(dist_to_CT = case_when(
-    region == "Central_Pacific" ~ paste0(dist_to_CT),
-    region == "Caribbean" ~ paste0(dist_to_CT),
-    region == "South_West_Pacific" ~ paste0(dist_to_CT),
-    region == "East_Pacific" ~ paste0(dist_to_CT),
-    region == "West_Indian" ~ paste0("-", dist_to_CT),
-    region == "Central_Indo_Pacific" ~ paste0("-", dist_to_CT),
-    region == "West_Atlantic" ~ paste0("-", dist_to_CT),
-    region == "Mediterranean" ~ paste0("-", dist_to_CT)))
+    province == "Southeast_Polynesia" ~ paste0(dist_to_CT),
+    province == "Tropical_Northwestern_Atlantic" ~ paste0(dist_to_CT),
+    province == "Tropical_Southwestern_Pacific" ~ paste0(dist_to_CT),
+    province == "Tropical_East_Pacific" ~ paste0(dist_to_CT),
+    province == "Western_Indian_Ocean" ~ paste0("-", dist_to_CT),
+    province == "Westren_Coral_Triangle" ~ paste0("-", dist_to_CT),
+    province == "Lusitanian" ~ paste0("-", dist_to_CT),
+    province == "Mediterranean_Sea" ~ paste0("-", dist_to_CT)))
 
-write.csv(metadata1, "metadata/Metadata_eDNA_global_V6.csv")
+write.csv(metadata1, "metadata/Metadata_eDNA_global_V6.csv", row.names = F)

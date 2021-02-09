@@ -7,7 +7,7 @@ library(gissr)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V4.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V4.csv", header = T, sep = ",", stringsAsFactors = F, na.strings=c("","NA"))
 metadata_sampling$longitude_start_clean <- gsub('\\?', '', metadata_sampling$longitude_start)
 metadata_sampling$latitude_start_clean <- gsub('\\?', '', metadata_sampling$latitude_start)
 
@@ -27,7 +27,7 @@ coastline <- readOGR("/Users/mathon/Downloads/GSHHS_shp/f/GSHHS_f_L1.shp", verbo
 coastline <- spTransform(coastline, crsmerc)
   
   # Formate GPS points and project
-pts = metadata_dist[,43:44]
+pts = metadata_dist[,49:50]
 pts$latitude_start_clean <- as.numeric(pts$latitude_start_clean)
 pts$longitude_start_clean <- as.numeric(pts$longitude_start_clean)
 pts_sp <- SpatialPoints(pts,proj4string = crswgs84)
@@ -46,7 +46,7 @@ colnames(dist_min) <- c("dist_to_coast (m)", "code_spygen")
   # assemble with metadata
 metadata <- left_join(metadata_sampling, dist_min, by="code_spygen")
 
-write.csv(metadata, "metadata/Metadata_eDNA_global_V5.csv")
+write.csv(metadata, "metadata/Metadata_eDNA_global_V5.csv", row.names = F)
 
 
 
