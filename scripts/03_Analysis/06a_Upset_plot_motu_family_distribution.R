@@ -35,7 +35,7 @@ unique(df_all_filters$province)
 
 # the motus 
 df_provinces <- split(df_all_filters, df_all_filters$province)
-df_site <- split(df_all_filters, df_all_filters$site)
+df_site <- split(df_all_filters, df_all_filters$site35)
 
 # ------------------------------------------------------------------------------- # 
 #### REGION - MOTUs ---- 
@@ -167,14 +167,14 @@ all_sites <- names(df_site)
 
 # Count MOTUs per site
 motus_sites <- df_all_filters %>%
-  group_by(site) %>%
+  group_by(site35) %>%
   dplyr::summarize(n_motus = n_distinct(sequence)) %>%
   arrange(n_motus)
 
 # metadata - needed to control colors?
 metadata1 <- df_all_filters %>%
-  distinct(site, province) %>% 
-  mutate(sets = site) %>%
+  distinct(site35, province) %>% 
+  mutate(sets = site35) %>%
   select(sets, province) %>%
   mutate(color = case_when(
     province == "Tropical_Southwestern_Pacific" ~ pal[5],
@@ -183,7 +183,7 @@ metadata1 <- df_all_filters %>%
     province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
     province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
-  left_join(., motus_sites, by = c("sets" = "site")) %>%
+  left_join(., motus_sites, by = c("sets" = "site35")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
   arrange(-n_motus) %>%
   as.data.frame()
@@ -239,14 +239,14 @@ all_sites <- names(df_site)
 
 # Count MOTUs per site
 motus_family <- df_all_filters %>%
-  group_by(site) %>%
+  group_by(site35) %>%
   dplyr::summarize(n_family = n_distinct(new_family_name)) %>%
   arrange(n_family)
 
 # metadata
 metadata1 <- df_all_filters %>%
-  distinct(site, province) %>% 
-  mutate(sets = site) %>%
+  distinct(site35, province) %>% 
+  mutate(sets = site35) %>%
   select(sets, province) %>%
   mutate(color = case_when(
     province == "Tropical_Southwestern_Pacific" ~ pal[5],
@@ -255,7 +255,7 @@ metadata1 <- df_all_filters %>%
     province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
     province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
-  left_join(., motus_family, by = c("sets" = "site")) %>%
+  left_join(., motus_family, by = c("sets" = "site35")) %>%
   # Arrange by n_motu frequency to get the color right in the plot
   arrange(-n_family) %>%
   as.data.frame()

@@ -27,11 +27,11 @@ global_family <- df_all_filters %>%
 colnames(global_family) <- c("motu", "family")
 
 #calculate frequency of motus
-site <- unique(df_all_filters$site)
+site <- unique(df_all_filters$site35)
 
 df_site <- data.frame(motu=character(), stringsAsFactors = FALSE)
 for (i in 1:length(site)) {
-  df <- df_all_filters[df_all_filters$site==site[i],] %>%
+  df <- df_all_filters[df_all_filters$site35==site[i],] %>%
     distinct(sequence, site)
   colnames(df) <- c("motu", site[i])
   df_site <- full_join(df_site, df, by="motu")
@@ -42,7 +42,7 @@ df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
 df_site[is.na(df_site)] <- 0
 df_site <- as.data.frame(t(df_site))
 
-prob_motu <- colSums(df_site)/25
+prob_motu <- colSums(df_site)/length(site)
 
 # sample random family assignations for site with 1-800 species, 1000 times (long! load Rdata)
 random_sp <- vector("list", 800)

@@ -258,14 +258,15 @@ save(beta_species_RLS, file="Rdata/beta_species_RLS.rdata")
 #__________________________________________________________________________
 ### Beta On families ###
 #__________________________________________________________________________
-RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ",", stringsAsFactors = FALSE)
-RLS_fam <- RLS_families[,c(10:130)]
+RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_fam <- RLS_families[,c(17:137)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
-RLS_families <- cbind(RLS_families[,c(1,2,6)], RLS_fam)
+RLS_families <- cbind(RLS_families[,c("SurveyID", "Station", "site35", "Province")], RLS_fam)
 
 
 province <- unique(RLS_families$Province)
-site <- unique(RLS_families$SiteCode)
+site <- unique(RLS_families$site35)
+station <- unique(RLS_families$Station)
 transect <- unique(RLS_families$SurveyID)
 
 # calculate beta, turnover and nestedness with betapart
@@ -276,9 +277,9 @@ df_province=data.frame()
 
 for (i in 1:length(province)) {
   df <- RLS_families[RLS_families$Province == province[i],]
-  df <- df[,c(4:ncol(df))]
+  df <- df[,c(5:ncol(df))]
   df_province[i,"province"] <- province[i]
-  df_province[i, 2:97] <- colSums(df)
+  df_province[i, 2:(ncol(df)+1)] <- colSums(df)
 }
 rownames(df_province) <- df_province[,1]
 df_province <- decostand(df_province[,2:ncol(df_province)], "pa",na.rm = TRUE)
@@ -289,19 +290,19 @@ betaprovince <- data.frame(scale="inter-province", total=beta$beta.JAC, turnover
 
 ## beta inter-site
 
-df_site=vector("list", 48)
-betasite <- data.frame(scale="inter-site", total=numeric(48), turnover=numeric(48), nestedness=numeric(48))
+df_site=vector("list", length(province))
+betasite <- data.frame(scale="inter-site", total=numeric(length(province)), turnover=numeric(length(province)), nestedness=numeric(length(province)))
 
 
 for (i in 1:length(province)) {
   df <- RLS_families[RLS_families$Province == province[i],]
-  site <- unique(df$SiteCode)
+  site <- unique(df$site35)
   df_site[[i]] <- data.frame(stringsAsFactors = FALSE)
   for (j in 1:length(site)) {
-    df2 <- df[df$SiteCode==site[j],]
-    df2 <- df2[,c(4:ncol(df2))]
+    df2 <- df[df$site35==site[j],]
+    df2 <- df2[,c(5:ncol(df2))]
     df_site[[i]][j,"site"]<- site[j]
-    df_site[[i]][j,2:97] <- colSums(df2)
+    df_site[[i]][j,2:(ncol(df2)+1)] <- colSums(df2)
   }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
   df_site[[i]] <- decostand(df_site[[i]][,c(-1)], "pa",na.rm = TRUE)
@@ -317,34 +318,34 @@ for (i in 1:length(province)) {
 
 ## beta inter-station
 
-site <- unique(RLS_families$SiteCode)
-df_transect=vector("list", 1311)
-betatransect <- data.frame(scale="inter-transect", total=numeric(1311), turnover=numeric(1311), nestedness=numeric(1311))
+site <- unique(RLS_families$site35)
+df_station=vector("list", length(site))
+betastation <- data.frame(scale="inter-station", total=numeric(length(site)), turnover=numeric(length(site)), nestedness=numeric(length(site)))
 
 
 for (i in 1:length(site)) {
-  df <- RLS_families[RLS_families$SiteCode == site[i],]
-  transect <- unique(df$SurveyID)
-  df_transect[[i]] <- data.frame(stringsAsFactors = FALSE)
-  for (j in 1:length(transect)) {
-    df2 <- df[df$SurveyID==transect[j],]
-    df2 <- df2[,c(4:ncol(df2))]
-    df_transect[[i]][j, "transect"] <- transect[j]
-    df_transect[[i]][j, 2:97] <- colSums(df2)
+  df <- RLS_families[RLS_families$site35 == site[i],]
+  station <- unique(df$Station)
+  df_station[[i]] <- data.frame(stringsAsFactors = FALSE)
+  for (j in 1:length(station)) {
+    df2 <- df[df$Station==station[j],]
+    df2 <- df2[,c(5:ncol(df2))]
+    df_station[[i]][j, "station"] <- station[j]
+    df_station[[i]][j, 2:(ncol(df2)+1)] <- colSums(df2)
   }
-  rownames(df_transect[[i]]) <- df_transect[[i]][,1]
-  df_transect[[i]] <- decostand(df_transect[[i]][,c(-1)], "pa",na.rm = TRUE)
+  rownames(df_station[[i]]) <- df_station[[i]][,1]
+  df_station[[i]] <- decostand(df_station[[i]][,c(-1)], "pa",na.rm = TRUE)
   
   
-  b <- betapart.core(df_transect[[i]])
+  b <- betapart.core(df_station[[i]])
   beta <- beta.multi(b, "jaccard")
-  betatransect[i,2] <- beta$beta.JAC
-  betatransect[i,3] <- beta$beta.JTU
-  betatransect[i,4] <- beta$beta.JNE
+  betastation[i,2] <- beta$beta.JAC
+  betastation[i,3] <- beta$beta.JTU
+  betastation[i,4] <- beta$beta.JNE
 }
 
 
-betatotal <- rbind(betaprovince, betasite, betatransect)
+betatotal <- rbind(betaprovince, betasite, betastation)
 write.csv(betatotal, "outputs/07_diversity_partitioning/beta_RLS_families.csv")
 beta_melt <- reshape2::melt(betatotal)
 

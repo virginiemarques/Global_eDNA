@@ -46,13 +46,13 @@ ggsave("outputs/04_family_proportion/Region/family_proportion_caribbean.png", wi
 write.csv(count_families_caribbean, "outputs/04_family_proportion/Region/family_proportion_caribbean.csv")
 
   ## Caribbean sites
-site <- c(unique(caribbean$site))
+site <- c(unique(caribbean$site35))
 
 count_families_site_caribbean=NULL 
 
 for (i in 1:length(site)) {
   s <- site[i]
-  cari_site <- caribbean[caribbean$site == site[i],]
+  cari_site <- caribbean[caribbean$site35 == site[i],]
   cari_motu_site <- cari_site%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(cari_motu_site$new_family_name))
@@ -94,7 +94,7 @@ count_families_station_caribbean=NULL
 for (i in 1:length(station)) {
   cari_station <- caribbean[caribbean$station == station[i],]
   st <- station[i]
-  s <- unique(cari_station$site)
+  s <- unique(cari_station$site35)
   cari_motu_station <- cari_station%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(cari_motu_station$new_family_name))
@@ -139,13 +139,13 @@ write.csv(count_families_lengguru, "outputs/04_family_proportion/Region/family_p
 
   ## Lengguru sites
 
-site <- c(unique(lengguru$site))
+site <- c(unique(lengguru$site35))
 
 count_families_site_lengguru=NULL 
 
 for (i in 1:length(site)) {
   s <- site[i]
-  leng_site <- lengguru[lengguru$site == site[i],]
+  leng_site <- lengguru[lengguru$site35 == site[i],]
   leng_motu_site <- leng_site%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(leng_motu_site$new_family_name))
@@ -191,7 +191,7 @@ count_families_station_lengguru=NULL
 for (i in 1:length(station)) {
   leng_station <- lengguru[lengguru$station == station[i],]
   st <- station[i]
-  s <- unique(leng_station$site)
+  s <- unique(leng_station$site35)
   leng_motu_station <- leng_station%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(leng_motu_station$new_family_name))
@@ -288,13 +288,13 @@ write.csv(count_families_eparse, "outputs/04_family_proportion/Region/family_pro
 
   ## eparse sites
 
-site <- c(unique(eparse$site))
+site <- c(unique(eparse$site35))
 
 count_families_site_eparse=NULL 
 
 for (i in 1:length(site)) {
   s <- site[i]
-  eparse_site <- eparse[eparse$site == site[i],]
+  eparse_site <- eparse[eparse$site35 == site[i],]
   eparse_motu_site <- eparse_site%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(eparse_motu_site$new_family_name))
@@ -337,7 +337,7 @@ count_families_station_eparse=NULL
 for (i in 1:length(station)) {
   eparse_station <- eparse[eparse$station == station[i],]
   st <- station[i]
-  s <- unique(eparse_station$site)
+  s <- unique(eparse_station$site35)
   eparse_motu_station <- eparse_station%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(eparse_motu_station$new_family_name))
@@ -382,13 +382,13 @@ write.csv(count_families_caledonia, "outputs/04_family_proportion/Region/family_
 
 ## caledonia sites
 
-site <- c(unique(caledonia$site))
+site <- c(unique(caledonia$site35))
 
 count_families_site_caledonia=NULL 
 
 for (i in 1:length(site)) {
   s <- site[i]
-  cal_site <- caledonia[caledonia$site == site[i],]
+  cal_site <- caledonia[caledonia$site35 == site[i],]
   cal_motu_site <- cal_site%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(cal_motu_site$new_family_name))
@@ -434,7 +434,7 @@ count_families_station_caledonia=NULL
 for (i in 1:length(station)) {
   cal_station <- caledonia[caledonia$station == station[i],]
   st <- station[i]
-  s <- unique(cal_station$site)
+  s <- unique(cal_station$site35)
   cal_motu_station <- cal_station%>%
     distinct(sequence, .keep_all = TRUE)
   count_families <- data.frame(table(cal_motu_station$new_family_name))

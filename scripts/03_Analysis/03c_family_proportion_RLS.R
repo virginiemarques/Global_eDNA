@@ -12,12 +12,13 @@ library(ggpubr)
 # load and format data
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = F, check.names = F)
-RLS_species <- RLS_species[, c(1,2,7,12:2167)]
-RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "SiteCode", "Province"))
+RLS_species <- RLS_species[, c(1,11,7,18:2173)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "site35", "Province"))
 RLS_species <- RLS_species%>%
   filter(value!=0)
 RLS_species <- RLS_species[,-5]
-colnames(RLS_species) <- c("SurveyID", "SiteCode", "Province", "Species")
+colnames(RLS_species) <- c("SurveyID", "site35", "Province", "Species")
+
 
 # add family name
 library(rfishbase)
@@ -27,11 +28,11 @@ RLS_species <- left_join(RLS_species, all_fishbase[,c(2,5)], by="Species")
 
 # count family proportion at each site
 count_families_site_RLS=NULL
-site <- unique(RLS_species$SiteCode)
+site <- unique(RLS_species$site35)
 
 for (i in 1:length(site)) {
   s <- site[i]
-  RLS_site <- RLS_species[RLS_species$SiteCode == site[i],]
+  RLS_site <- RLS_species[RLS_species$site35 == site[i],]
   RLS_sp_site <- RLS_site%>%
     distinct(Species, .keep_all = TRUE)
   count_families <- data.frame(table(RLS_sp_site$Family))
@@ -67,8 +68,8 @@ unique_sp <- unique(RLS_species$Species)
 
 df_site <- data.frame(species=character(), stringsAsFactors = FALSE)
 for (i in 1:length(site)) {
-  df <- RLS_species[RLS_species$SiteCode==site[i],] %>%
-    distinct(Species, SiteCode)
+  df <- RLS_species[RLS_species$site35==site[i],] %>%
+    distinct(Species, site35)
   colnames(df) <- c("species", site[i])
   df_site <- full_join(df_site, df, by="species")
 }
@@ -78,16 +79,16 @@ df_site <- decostand(df_site[,c(-1)], "pa",na.rm = TRUE)
 df_site[is.na(df_site)] <- 0
 df_site <- as.data.frame(t(df_site))
 
-prob_species <- colSums(df_site)/1311
+prob_species <- colSums(df_site)/length(site)
 
 
 # sample random family assignations for site with 1-300 species, 1000 times (long! load Rdata)
 random_sp <- vector("list", 300)
-random_prop_tot10 <- data.frame()
+random_prop_tot <- data.frame()
 rep <- 300
 
 
-for (j in seq(1:100)) {
+for (j in seq(1:1000)) {
   random_prop <- vector("list" )
   for (i in 1:rep) {
     random_sp[[i]] <- as.data.frame(sample(unique_sp, i, replace = TRUE, prob = prob_species))
@@ -101,7 +102,7 @@ for (j in seq(1:100)) {
     random_sp[[i]]$prop <- random_sp[[i]]$n_species / random_sp[[i]]$n_total
     random_prop <- rbind(random_prop, random_sp[[i]])
   }
-  random_prop_tot10 <- rbind(random_prop_tot10, random_prop)
+  random_prop_tot <- rbind(random_prop_tot, random_prop)
 }
 
 random_prop_tot <- rbind(random_prop_tot1, random_prop_tot2, random_prop_tot3, random_prop_tot4, random_prop_tot5, random_prop_tot6, random_prop_tot7, random_prop_tot8, random_prop_tot9, random_prop_tot10)

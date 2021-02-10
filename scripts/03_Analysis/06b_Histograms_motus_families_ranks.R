@@ -93,20 +93,20 @@ p_motu_province
 # --------------------- # 
 # site scale 
 
-length(unique(df_all_filters$site))
+length(unique(df_all_filters$site35))
 
 # Count
 motu_site <- df_all_filters %>%
   group_by(sequence) %>%
-  summarise(n = n_distinct(site)) %>%
+  summarise(n = n_distinct(site35)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(sequence))%>%
-  mutate(rank = "site")
+  mutate(rank = "site35")
 save(motu_site, file="Rdata/rarete_motu_site.rdata")
 
 # plot
-p_motu_site <- fct_barplot(motu_site, rank_x="site", rank_y = "MOTUs")
+p_motu_site <- fct_barplot(motu_site, rank_x="site35", rank_y = "MOTUs")
 p_motu_site
 
 ggplot(motu_site)+
@@ -203,21 +203,21 @@ p_family_province
 # --------------------- # 
 # site scale 
 
-length(unique(df_all_filters$site))
+length(unique(df_all_filters$site35))
 
 # Count
 family_site <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
   group_by(new_family_name) %>%
-  summarise(n = n_distinct(site)) %>%
+  summarise(n = n_distinct(site35)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_family_name)) %>%
-  mutate(rank = "site")
+  mutate(rank = "site35")
 save(family_site, file="Rdata/rarete_family_site.rdata")
 
 # plot
-p_family_site <- fct_barplot(dataset, rank_x="site", rank_y = "families", n_tot = Nfamily)
+p_family_site <- fct_barplot(dataset, rank_x="site35", rank_y = "families", n_tot = Nfamily)
 p_family_site
 
 ggplot(family_site)+
@@ -322,20 +322,20 @@ p_motu_province
 # --------------------- # 
 # site scale 
 
-length(unique(df_all_filters$site))
+length(unique(df_all_filters$site35))
 
 # Count
 dataset <- df_all_filters %>%
   filter(!is.na(new_genus_name))  %>%
   group_by(new_genus_name) %>%
-  summarise(n = n_distinct(site)) %>%
+  summarise(n = n_distinct(site35)) %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(new_genus_name)) %>%
-  mutate(rank = "site")
+  mutate(rank = "site35")
 
 # plot
-p_motu_site <- fct_barplot(dataset, rank_x="site", rank_y = "genus", n_tot = Ngenus)
+p_motu_site <- fct_barplot(dataset, rank_x="site35", rank_y = "genus", n_tot = Ngenus)
 p_motu_site
 
 # --------------------- # 

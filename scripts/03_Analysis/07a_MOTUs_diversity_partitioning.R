@@ -37,12 +37,12 @@ gamma_global <- as.numeric(df_all_filters %>%
   
 
 Province <- unique(df_all_filters$province)
-Site <- unique(df_all_filters$site)
+Site <- unique(df_all_filters$site35)
 Station <- unique(df_all_filters$station)
 
 # calculate alpha region
 
-alpha_province=data.frame(province=character(5), motu=numeric(5), stringsAsFactors = FALSE)
+alpha_province=data.frame(province=character(), motu=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(Province)) {
   r <- Province[i]
@@ -63,8 +63,8 @@ alpha_site=data.frame(province=character(), site=character(), motu=numeric(), st
 
 for (i in 1:length(Site)) {
   s <- Site[i]
-  r <- unique(df_all_filters[df_all_filters$site == Site[i],]$province)
-  motu <- df_all_filters[df_all_filters$site == Site[i],] %>%
+  r <- unique(df_all_filters[df_all_filters$site35 == Site[i],]$province)
+  motu <- df_all_filters[df_all_filters$site35 == Site[i],] %>%
     summarise(n = n_distinct(sequence))
   alpha_site[i,1] <- r
   alpha_site[i,2] <- s
@@ -74,7 +74,7 @@ for (i in 1:length(Site)) {
 
 # calculate beta inter-site
 
-beta_site <- data.frame(province=character(5), alpha=numeric(5), gamma=numeric(5), beta=numeric(5), scale="inter-site", stringsAsFactors = FALSE)
+beta_site <- data.frame(province=character(length(Province)), alpha=numeric(length(Province)), gamma=numeric(length(Province)), beta=numeric(length(Province)), scale="inter-site", stringsAsFactors = FALSE)
 
 for (i in 1:length(Province)) {
   r <- Province[i]
@@ -98,7 +98,7 @@ alpha_station=data.frame(province=character(), site=character(), station=charact
 for (i in 1:length(Station)) {
   st <- Station[i]
   r <- unique(df_all_filters[df_all_filters$station == Station[i],]$province)
-  s <- unique(df_all_filters[df_all_filters$station == Station[i],]$site)
+  s <- unique(df_all_filters[df_all_filters$station == Station[i],]$site35)
   motu <- df_all_filters[df_all_filters$station == Station[i],] %>%
     summarise(n = n_distinct(sequence))
   alpha_station[i,1] <- r
@@ -122,7 +122,7 @@ sd_alpha_station <- sd(mean_a_station$V1)
 
 # calculate beta inter-station
 
-beta_station <- data.frame(province=character(25), site=character(25), alpha=numeric(25), gamma=numeric(25), beta=numeric(25), scale="inter-station", stringsAsFactors = FALSE)
+beta_station <- data.frame(province=character(length(Site)), site=character(length(Site)), alpha=numeric(length(Site)), gamma=numeric(length(Site)), beta=numeric(length(Site)), scale="inter-station", stringsAsFactors = FALSE)
 
 for (i in 1:length(Site)) {
   s <- Site[i]
@@ -186,16 +186,16 @@ betaprovince <- data.frame(scale="inter-province", total=beta$beta.JAC, turnover
 
   ## beta inter-site
 
-df_site=vector("list", 5)
-betasite <- data.frame(scale="inter-site", total=numeric(5), turnover=numeric(5), nestedness=numeric(5))
+df_site=vector("list", length(Province))
+betasite <- data.frame(scale="inter-site", total=numeric(length(Province)), turnover=numeric(length(Province)), nestedness=numeric(length(Province)))
 
 
 for (i in 1:length(Province)) {
   df <- df_all_filters[df_all_filters$province == Province[i],]
-  Site <- unique(df$site)
+  Site <- unique(df$site35)
   df_site[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
     for (j in 1:length(Site)) {
-      df2 <- df[df$site==Site[j],] %>%
+      df2 <- df[df$site35==Site[j],] %>%
         distinct(sequence, site)
       colnames(df2) <- c("motu", Site[j])
       df_site[[i]] <- full_join(df_site[[i]], df2, by="motu")
@@ -215,13 +215,13 @@ for (i in 1:length(Province)) {
 
 ## beta inter-station
 
-Site <- unique(df_all_filters$site)
+Site <- unique(df_all_filters$site35)
 df_station=vector("list", 25)
-betastation <- data.frame(scale="inter-station", total=numeric(25), turnover=numeric(25), nestedness=numeric(25))
+betastation <- data.frame(scale="inter-station", total=numeric(length(Site)), turnover=numeric(length(Site)), nestedness=numeric(length(Site)))
 
 
 for (i in 1:length(Site)) {
-  df <- df_all_filters[df_all_filters$site == Site[i],]
+  df <- df_all_filters[df_all_filters$site35 == Site[i],]
   Station <- unique(df$station)
   df_station[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
   for (j in 1:length(Station)) {
