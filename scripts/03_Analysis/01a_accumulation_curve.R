@@ -142,7 +142,7 @@ plot_acc_family <- ggplot(df_join_all, aes(fill = Province)) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  scale_fill_manual(values=c("grey", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  scale_fill_manual(values=c("grey", "#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
   facet_wrap(~Province, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
@@ -242,7 +242,7 @@ plot_acc_motus <- ggplot(df_join_all, aes(fill = Province)) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~Province, scales = "free") +
-  scale_fill_manual(values=c("grey", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  scale_fill_manual(values=c("grey", "#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
   ylab("Number of MOTUs") +
   xlab("Samples (filter)") +
   theme_bw() + 
@@ -289,7 +289,7 @@ motus
 
 
 ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("A", "B"), common.legend = T, legend = "right")
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure5.png", width=10, height = 12)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure7.png", width=10, height = 12)
 
 
 
@@ -344,7 +344,7 @@ plot_acc_genus <- ggplot(df_join_all, aes(fill = project_name)) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  scale_fill_manual(values=c("grey", "#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  scale_fill_manual(values=c("grey", "#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
   facet_wrap(~project_name, scales = "free") +
   ylab("Number of genus") +
   xlab("Samples (filter)") +

@@ -515,7 +515,7 @@ save(families_prop_global, file = "Rdata/family_proportion_global.Rdata")
 ggplot(families_prop_global2, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#4F4D1D", "#E5A729", "#C67052", "#863b34", "#8AAE8A"))+ 
+  scale_fill_manual(values =c("#a6611a", "#E5A729", "#015462", "#b2182b", "#80cdc1"))+ 
   labs(x="Family", y="Proportion")+
   coord_flip()
 
@@ -540,7 +540,7 @@ for (i in 1:length(family)) {
     xlim(0, 800)+
     theme(legend.position = "none")+
     theme_bw()+
-    scale_color_manual(values =c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+    scale_color_manual(values =c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
     labs(title=family[i], x="", y="")+
     theme(plot.title = element_text(size = 10, face="bold"), plot.margin=unit(c(0,0.1,0,0), "cm"))
 }

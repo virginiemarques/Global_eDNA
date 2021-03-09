@@ -48,7 +48,7 @@ df_site <- split(df_all_filters, df_all_filters$site35)
 # 4) Central pacific
 # 5) South-west Pacific
 
-pal <- c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34") 
+pal <- c("#80cdc1", "#E5A729", "#015462", "#a6611a", "#b2182b") 
 
 
 # Construct the inital matrix - add some important infos as a side
@@ -94,7 +94,7 @@ p1 <- upset(matrix_motus,
       sets.x.label = "Number of MOTUs", 
       text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
       # Color bar 
-      sets.bar.color=c("#8AAE8A", "#863b34", "#E5A729", "#C67052", "#4F4D1D"), 
+      sets.bar.color=c("#80cdc1", "#b2182b", "#E5A729", "#015462", "#a6611a"), 
       # Color matrix
       set.metadata = list(
         data = metadata1,
@@ -142,7 +142,7 @@ p2 <- upset(matrix_family,
             sets.x.label = "Number of families", 
             text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
             # Color bar 
-            sets.bar.color=c("#8AAE8A", "#863b34", "#E5A729", "#C67052", "#4F4D1D"), 
+            sets.bar.color=c("#80cdc1", "#b2182b", "#E5A729", "#015462", "#a6611a"), 
             # Color matrix
             set.metadata = list(
               data = metadata1,
@@ -226,7 +226,7 @@ p3_color <- upset(matrix_motus,
 p3_color
 
 # Save - w/ colors
-png('outputs/00_Figures_for_paper/Extended_Data/ED_Figure7.png', width = 12, height=12, units = "in", res=300)
+png('outputs/00_Figures_for_paper/Extended_Data/ED_Figure5.png', width = 12, height=12, units = "in", res=300)
 p3_color
 grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()

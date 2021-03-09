@@ -41,7 +41,7 @@ df_regions <- split(df_all_filters, df_all_filters$region)
 df_site <- split(df_all_filters, df_all_filters$site)
 
 
-pal <- c("#8AAE8A", "#E5A729", "#C67052", "#4F4D1D", "#863b34") 
+pal <- c("#80cdc1", "#E5A729", "#015462", "#a6611a", "#b2182b") 
 pal
 
 # Construct the inital matrix - add some important infos as a side
@@ -86,7 +86,7 @@ p1 <- upset(matrix_motus,
             sets.x.label = "Number of MOTUs", 
             text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
             # Color bar 
-            sets.bar.color=c("#8AAE8A", "#863b34", "#E5A729", "#C67052", "#4F4D1D"), 
+            sets.bar.color=c("#80cdc1", "#b2182b", "#E5A729", "#015462", "#a6611a"), 
             # Color matrix
             set.metadata = list(
               data = metadata1,
@@ -182,7 +182,7 @@ all_data <- all_data%>%
 
 p2 <-ggplot(all_data[3:17,], aes(x=reorder(scale,mean), y=mean, fill=region, group= position))+
   geom_col(stat = "identity", position=position_dodge(), width=0.5)+
-  scale_fill_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D",  "#863b34", "#C67052"))+
+  scale_fill_manual(values=c("#E5A729", "#80cdc1", "#a6611a",  "#b2182b", "#015462"))+
   geom_errorbar(data=all_data[3:17,], aes(ymin=mean-sd, ymax=mean+sd), width=.3,
                 position=position_dodge(0.5), size=0.5)+
   geom_errorbar(aes(ymin=label, ymax=label), width=0.5, size=1)+

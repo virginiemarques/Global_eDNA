@@ -89,7 +89,7 @@ family_coverage_ED$order<- order(order_ED$fam)
 prop <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
+  scale_fill_manual(values =c("#a6611a", "#E5A729",  "#015462", "#b2182b", "#80cdc1"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in provinces", x="", y="")+ 
   theme(legend.position = "none")+
   theme(plot.title = element_text(size = 8, face="bold"), plot.margin=unit(c(0.1,0.2,0.6,0), "cm"))+
@@ -140,7 +140,7 @@ ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 7.8,
 prop <- ggplot(families_prop_global_ED, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
-  scale_fill_manual(values =c("#4F4D1D", "#E5A729",  "#C67052", "#863b34", "#8AAE8A"))+ 
+  scale_fill_manual(values =c("#a6611a", "#E5A729",  "#015462", "#b2182b", "#80cdc1"))+ 
   labs(title="Proportion of MOTUs at global scale, \nand their distribution in provinces", x="", y="")+ 
   theme(legend.position = "none")+
   ylim(0, 0.003)+

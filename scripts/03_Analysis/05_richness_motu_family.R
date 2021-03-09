@@ -529,7 +529,7 @@ family <- ggplot(rich_station_total)+
 ggarrange(motu, family, ncol=1, nrow=2, labels=c("A", "B"), heights = c(1,1.3))
 
 ggsave("outputs/05_richness_motus_families/violin_plot_per_rank.png", width = 12, height = 8)
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure6.png", width = 7, height = 6)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure8.png", width = 7, height = 6)
 
 
 
@@ -575,7 +575,7 @@ all_motus <- ggplot(rich_site, aes(col=province))+
   geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
   geom_bar(data=all_province, aes(x=dist_to_CT, y=n_motus), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
-  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  scale_color_manual(values=c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
   theme(legend.position = "none")+
   theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
@@ -598,7 +598,7 @@ all_family <- ggplot(rich_site, aes(col=province))+
   geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
   geom_bar(data=all_province, aes(x=dist_to_CT, y=n_family), stat= 'identity', orientation = "x", alpha=0.05, show.legend = FALSE) + 
-  scale_color_manual(values=c("#E5A729", "#8AAE8A", "#4F4D1D", "#863b34", "#C67052"))+ 
+  scale_color_manual(values=c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
   theme(legend.position = "none")+
   theme_bw()+
   theme(axis.title.y = element_text(size = 10, face = "bold"), plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
