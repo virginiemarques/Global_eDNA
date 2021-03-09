@@ -5,14 +5,16 @@ library(betapart)
 library(ggpubr)
 
 
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 '%ni%' <- Negate("%in%")
 #Remove estuary stations and deep niskin station
 df_all_filters <- df_all_filters %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 
 # different tests

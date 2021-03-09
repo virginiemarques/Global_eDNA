@@ -8,51 +8,56 @@ library(ggpubr)
 library(conflicted)
 
 # data
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 
 # 
 '%ni%' <- Negate("%in%")
 conflict_prefer("select", "dplyr")
 conflict_prefer("mutate", "dplyr")
+conflict_prefer("filter", "dplyr")
 
 # Functions
 source('scripts/03_Analysis/00_functions.R')
 
 
 # First, remove the assignations above family (we can remove it in the 02_read script if necessary) --> keep it, put the families only in the supl. mat. 
-liste_read_edna_LULU <- lapply(liste_read_edna_LULU, function(x){
+list_read_step4 <- lapply(list_read_step4, function(x){
   x %>%
     #filter(new_rank_ncbi != "higher") %>%
-    filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-    filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-    filter(project != "SEAMOUNTS") %>% 
-    filter(habitat_type %ni% c("BAIE", "Sommet"))
+    filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+    filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+    filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+    filter(project.y != "SEAMOUNTS") %>%
+    filter(habitat=="marine")%>%
+    filter(habitat_type %ni% c("BAIE"))
 })
 
 # On the df as well
 df_all_filters <- df_all_filters %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 # Re-format at region scale
 # -----# After LULU 
-df_all_filters_temp <- do.call("rbind", liste_read_edna_LULU) 
+df_all_filters_temp <- do.call("rbind", list_read_step4) 
 
 # Split by region
-liste_read_edna_LULU <- split(df_all_filters_temp, df_all_filters_temp$province)
+list_read_step4 <- split(df_all_filters_temp, df_all_filters_temp$province)
 
 # Counts
-lapply(liste_read_edna_LULU, function(x){
+lapply(list_read_step4, function(x){
   length(unique(x$amplicon))
 })
 
-lapply(liste_read_edna_LULU, function(x){
+lapply(list_read_step4, function(x){
   length(unique(x$station))
 })
 
-lapply(liste_read_edna_LULU, function(x){
+lapply(list_read_step4, function(x){
   length(unique(x$new_family_name))
 })
 
@@ -66,10 +71,10 @@ lapply(liste_read_edna_LULU, function(x){
 rank_choice = 'new_family_name'
 
 # accumlation all plots
-liste_accumulation <- lapply(liste_read_edna_LULU, accumulation_curve_df, species_unit = rank_choice)
+liste_accumulation <- lapply(list_read_step4, accumulation_curve_df, species_unit = rank_choice)
 
 # Asymptote of all plots 
-liste_asymptote <- lapply(liste_read_edna_LULU, asymptote_mm, species_unit = rank_choice)
+liste_asymptote <- lapply(list_read_step4, asymptote_mm, species_unit = rank_choice)
 
 # Unlist
 df_accumulation <- bind_rows(liste_accumulation, .id = "project_name")
@@ -195,10 +200,10 @@ family
 rank_choice = 'sequence'
 
 # accumlation all plots
-liste_accumulation <- lapply(liste_read_edna_LULU, accumulation_curve_df, species_unit = rank_choice)
+liste_accumulation <- lapply(list_read_step4, accumulation_curve_df, species_unit = rank_choice)
 
 # Asymptote of all plots 
-liste_asymptote <- lapply(liste_read_edna_LULU, asymptote_mm, species_unit = rank_choice)
+liste_asymptote <- lapply(list_read_step4, asymptote_mm, species_unit = rank_choice)
 
 # Unlist
 df_accumulation <- bind_rows(liste_accumulation, .id = "project_name")
@@ -302,10 +307,10 @@ ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure7.png", width=10, he
 rank_choice = 'new_genus_name'
 
 # accumlation all plots
-liste_accumulation <- lapply(liste_read_edna_LULU, accumulation_curve_df, species_unit = rank_choice)
+liste_accumulation <- lapply(list_read_step4, accumulation_curve_df, species_unit = rank_choice)
 
 # Asymptote of all plots 
-liste_asymptote <- lapply(liste_read_edna_LULU, asymptote_mm, species_unit = rank_choice)
+liste_asymptote <- lapply(list_read_step4, asymptote_mm, species_unit = rank_choice)
 
 # Unlist
 df_accumulation <- bind_rows(liste_accumulation, .id = "project_name")

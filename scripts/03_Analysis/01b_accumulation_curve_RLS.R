@@ -10,7 +10,7 @@ library(vegan)
 library(ggthemes)
 
 # data
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 
 # 
 '%ni%' <- Negate("%in%")

@@ -6,7 +6,7 @@ library(ggplot2)
 library(ggpubr)
 
 # data
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 
 # 
 '%ni%' <- Negate("%in%")
@@ -16,12 +16,12 @@ source('scripts/03_Analysis/00_functions.R')
 
 # On the df as well
 df_all_filters <- df_all_filters %>%
-  #filter(new_rank_ncbi != "higher") %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
-
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 
 # ------------------------------------------------------------------------------- # 
@@ -57,13 +57,14 @@ df_join_all_cryp <- all_accumulation_cryp %>%
 df_join_all_cryp$family <- "cryptobenthic"
 
 ## select pelagic species
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 df_all_filters <- df_all_filters %>%
-  #filter(new_rank_ncbi != "higher") %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 load("Rdata/pelagic_family.Rdata")
 df_all_filters <- subset(df_all_filters, new_family_name %in% pelagic_family$family_name)
@@ -89,13 +90,14 @@ df_join_all_pel$family <- "pelagic"
 
 
 ## select demersal species
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 df_all_filters <- df_all_filters %>%
-  #filter(new_rank_ncbi != "higher") %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 
 df_all_filters <- df_all_filters%>%

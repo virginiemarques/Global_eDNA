@@ -9,7 +9,7 @@ library(png)
 ## build figure prediction of number of species (Fig 1e)
 '%ni%' <- Negate("%in%")
 
-load("Rdata/02_clean_all.Rdata")
+load("Rdata/02-clean-data.Rdata")
 
 
 # coral fish species data
@@ -22,10 +22,12 @@ fam_coral2 <- unique(fam_coral$Family)
 
 # our data
 df_all_filters <- df_all_filters %>%
-  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3")) %>%
-  filter(sample_method !="niskin" & province!="Tropical_East_Pacific" & comment %ni% c("Distance decay 600m", "Distance decay 300m") & station!="glorieuse_distance_300m")%>%
-  filter(project != "SEAMOUNTS") %>% 
-  filter(habitat_type %ni% c("BAIE", "Sommet"))
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project.y != "SEAMOUNTS") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
 
 fam_summary <- df_all_filters %>%
   filter(!is.na(new_family_name)) %>%
