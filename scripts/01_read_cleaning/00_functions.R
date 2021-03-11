@@ -417,5 +417,14 @@ apply_lulu <- function(edna_file, path_lulu, match_lulu = 84, co_occurence_lulu 
   return(lulu_edna)
 }
 
+# ---------------------------------------------------------------------------------- # 
+#### infos_statistiques ----
 
-
+infos_statistiques <- function(file){
+  Reads <- sum(file$count_reads)
+  MOTUs <- file %>% summarise(n = n_distinct(sequence)) %>% pull()
+  Species <-  file %>% filter(!is.na(species_name_corrected))%>%summarise(n = n_distinct(species_name_corrected)) %>% pull()
+  
+  ab <- data.frame(Reads, MOTUs, Species)
+  return(ab)
+}

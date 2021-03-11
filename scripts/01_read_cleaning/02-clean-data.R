@@ -49,9 +49,9 @@ fish_species_0_PCR_explo <- list_read_step3_0PCR %>%
 
 message(paste0("There is ", nrow(fish_species_0_PCR), " lost fish species during the PCR cleaning step (for each project separatly), including ", length(unique(fish_species_0_PCR$scientific_name_ncbi_corrected)), " unique taxa"))
 
-all_df_before <- bind_rows(list_read_step2)
-all_df_lost <- bind_rows(list_read_step3_0PCR)
-all_df_clean <- bind_rows(list_read_step3)
+# all_df_before <- bind_rows(list_read_step2)
+# all_df_lost <- bind_rows(list_read_step3_0PCR)
+# all_df_clean <- bind_rows(list_read_step3)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- # 
@@ -77,14 +77,18 @@ list_read_step4 <- lapply(list_read_step3, function(x){
 })
 
 # Cout the number of MOTUs before LULU
-lapply(list_read_step3, function(x){
+count_motu_before_lulu <- lapply(list_read_step3, function(x){
   length(unique(x$definition))
 })
 
 # Cout the number of MOTUs after LULU
-lapply(list_read_step4, function(x){
+count_motus_after_lulu <- lapply(list_read_step4, function(x){
   length(unique(x$definition))
 })
+
+# Lost MOTUs due to LULU 
+Map('-', count_motu_before_lulu, count_motus_after_lulu)
+
 
 ## Join metadata
 columns_delete_field_metadata <- c("turbidity", "gps_start", "gps_b", "lat_gps_b", "long_gps_b", "gps_c", "long_gps_c", "lat_gps_d", "gps_half_turn", "longitude_turn", "latitude_end", "longitude_end", 
