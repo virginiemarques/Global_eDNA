@@ -86,7 +86,7 @@ lapply(list_read_step4, function(x){
   length(unique(x$definition))
 })
 
-## Bind all together and join metadata
+## Join metadata
 
 
 
@@ -101,6 +101,26 @@ list_read_step4 <- lapply(list_read_step4, function(x){
   x <- left_join(x, metadata_field, by=c("sample_name_all_pcr" = "code_spygen"))
 })
 
+# Clean wrong family assigment
+
+list_read_step4 <- lapply(list_read_step4, function(x){
+  scaridae <- c("Scarus", "Bolbometopon", "Cetoscarus", "Chlorurus", "Hipposcarus", "Calotomus", "Cryptotomus", "Leptoscarus", "Nicholsina", "Sparisoma")
+  x_scaridae <- x%>%
+  filter(genus_name_corrected%in%scaridae)
+  x <- x%>%
+  filter(genus_name_corrected%ni%scaridae)
+  x_scaridae$family_name_corrected <- "Scaridae"
+  x <- rbind(x, x_scaridae)
+  x_taeniura <- x%>%
+    filter(genus_name_corrected=="Taeniura")
+  x <- x%>%
+    filter(genus_name_corrected!="Taeniura")
+  x_taeniura$family_name_corrected <- "Dasyatidae"
+  x <- rbind(x, x_taeniura)
+})
+
+
+ 
 df_all_filters <- bind_rows(list_read_step4)
 
 
