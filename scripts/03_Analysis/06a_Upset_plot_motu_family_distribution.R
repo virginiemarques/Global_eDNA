@@ -29,7 +29,7 @@ df_all_filters <- df_all_filters %>%
   filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project.y != "SEAMOUNTS") %>%
+  filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))
 
@@ -78,7 +78,7 @@ metadata1 <- df_all_filters %>%
 
 # MOTUs
 matrix_motus <- df_all_filters %>%
-  distinct(sequence, new_scientific_name_ncbi) %>%
+  distinct(sequence, scientific_name_ncbi_corrected) %>%
   dplyr::mutate(`Western_Coral_Triangle` = ifelse(sequence %in% df_provinces$`Western_Coral_Triangle`$sequence, 1, 0), 
          Southeast_Polynesia = ifelse(sequence %in% df_provinces$Southeast_Polynesia$sequence, 1, 0),
          Tropical_Northwestern_Atlantic = ifelse(sequence %in% df_provinces$Tropical_Northwestern_Atlantic$sequence, 1, 0),

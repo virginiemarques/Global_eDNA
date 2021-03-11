@@ -236,7 +236,7 @@ stat_by_project <- rbind(before, tenreads, blanks, fishonly, readlength, PCR_all
 
 # Write
 write.csv(stat_by_project, "outputs/01_read_data_stats/stats_by_project.csv", row.names = FALSE)
-write.csv(stat_by_project, "outputs/00_Figures_for_paper/Extended_Data/ED_Table2.csv", row.names = FALSE)
+write.csv(stat_by_project, "outputs/00_Figures_for_paper/Extended_Data/ED_Table3.csv", row.names = FALSE)
 
 
 

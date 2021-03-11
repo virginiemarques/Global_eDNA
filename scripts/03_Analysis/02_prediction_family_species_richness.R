@@ -25,7 +25,7 @@ df_all_filters <- df_all_filters %>%
   filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project.y != "SEAMOUNTS") %>%
+  filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))
 
@@ -51,8 +51,8 @@ for (i in 1:length(families3)) {
 for (i in 1:length(families3)) {
   fam_summary[i,"n_species"] <- df_all_filters %>%
     subset(family_name_corrected==families3[i]) %>%
-    filter(!is.na(new_species_name)) %>%
-    dplyr::summarize(n_distinct(new_species_name))
+    filter(!is.na(species_name_corrected)) %>%
+    dplyr::summarize(n_distinct(species_name_corrected))
 }
 
 # calculate delta checklist - us (%)

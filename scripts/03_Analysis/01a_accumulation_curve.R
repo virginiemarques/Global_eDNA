@@ -27,7 +27,7 @@ list_read_step4 <- lapply(list_read_step4, function(x){
     filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
     filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
     filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-    filter(project.y != "SEAMOUNTS") %>%
+    filter(project != "Curacao") %>%
     filter(habitat=="marine")%>%
     filter(habitat_type %ni% c("BAIE"))
 })
@@ -37,7 +37,7 @@ df_all_filters <- df_all_filters %>%
   filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project.y != "SEAMOUNTS") %>%
+  filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))
 
@@ -304,7 +304,7 @@ ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure7.png", width=10, he
 # ------------------------------------------------------------------------------- # 
 
 # rank_specify
-rank_choice = 'new_genus_name'
+rank_choice = 'genus_name_corrected'
 
 # accumlation all plots
 liste_accumulation <- lapply(list_read_step4, accumulation_curve_df, species_unit = rank_choice)

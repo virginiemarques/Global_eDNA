@@ -19,7 +19,7 @@ df_all_filters <- df_all_filters %>%
   filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project.y != "SEAMOUNTS") %>%
+  filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))
 
@@ -52,7 +52,7 @@ rich_tot_lengguru <- data.frame(motu=numeric(1), genus=numeric(1), family=numeri
 rich_tot_lengguru$motu <- lengguru %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_lengguru$genus <- lengguru %>% 
-  summarise(n = n_distinct(new_genus_name))
+  summarise(n = n_distinct(genus_name_corrected))
 rich_tot_lengguru$family <- lengguru %>% 
   summarise(n = n_distinct(family_name_corrected))
 
@@ -68,7 +68,7 @@ for (i in 1:length(station)) {
   motu <- lengguru[lengguru$station == station[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- lengguru[lengguru$station == station[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- lengguru[lengguru$station == station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_station_lengguru[i,2] <- s
@@ -89,7 +89,7 @@ for (i in 1:length(sample)) {
   motu <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_sample_lengguru[i,2] <- s
@@ -111,7 +111,7 @@ for (i in 1:length(site)) {
   mm <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$motu)
   sdm <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$motu)
   gen <- lengguru[lengguru$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   mg <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
   sdg <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
   fam <- lengguru[lengguru$site35 == site[i],] %>%
@@ -144,7 +144,7 @@ rich_tot_caribbean <- data.frame(province="Tropical_Northwestern_Atlantic", motu
 rich_tot_caribbean$motu <- caribbean %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_caribbean$genus <- caribbean %>% 
-  summarise(n = n_distinct(new_genus_name))
+  summarise(n = n_distinct(genus_name_corrected))
 rich_tot_caribbean$family <- caribbean %>% 
   summarise(n = n_distinct(family_name_corrected))
 
@@ -160,7 +160,7 @@ for (i in 1:length(station)) {
   motu <- caribbean[caribbean$station == station[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- caribbean[caribbean$station == station[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- caribbean[caribbean$station == station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_station_caribbean[i,2] <- s
@@ -181,7 +181,7 @@ for (i in 1:length(sample)) {
   motu <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_sample_caribbean[i,2] <- s
@@ -203,7 +203,7 @@ for (i in 1:length(site)) {
   mm <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$motu)
   sdm <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$motu)
   gen <- caribbean[caribbean$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   mg <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
   sdg <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
   fam <- caribbean[caribbean$site35 == site[i],] %>%
@@ -241,7 +241,7 @@ for (i in 1:length(station)) {
   motu <- fakarava[fakarava$station == station[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- fakarava[fakarava$station == station[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- fakarava[fakarava$station == station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_station_fakarava[i,3] <- st
@@ -263,7 +263,7 @@ for (i in 1:length(sample)) {
   motu <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_sample_fakarava[i,3] <- sa
@@ -281,7 +281,7 @@ rich_site_fakarava <- data.frame(province="Southeast_Polynesia",
                                  motu=fakarava %>% 
                                    summarise(n = n_distinct(sequence)),
                                  genus=fakarava %>% 
-                                   summarise(n = n_distinct(new_genus_name)),
+                                   summarise(n = n_distinct(genus_name_corrected)),
                                  family=fakarava %>% 
                                    summarise(n = n_distinct(family_name_corrected)),
                                  mean_motu=mean(rich_station_fakarava$motu),
@@ -307,7 +307,7 @@ rich_tot_eparse <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(
 rich_tot_eparse$motu <- eparse %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_eparse$genus <- eparse %>% 
-  summarise(n = n_distinct(new_genus_name))
+  summarise(n = n_distinct(genus_name_corrected))
 rich_tot_eparse$family <- eparse %>% 
   summarise(n = n_distinct(family_name_corrected))
 
@@ -323,7 +323,7 @@ for (i in 1:length(station)) {
   motu <- eparse[eparse$station == station[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- eparse[eparse$station == station[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- eparse[eparse$station == station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_station_eparse[i,2] <- s
@@ -345,7 +345,7 @@ for (i in 1:length(sample)) {
   motu <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_sample_eparse[i,2] <- s
@@ -368,7 +368,7 @@ for (i in 1:length(site)) {
   mm <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
   sdm <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$motu)
   gen <- eparse[eparse$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   mg <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
   sdg <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
   fam <- eparse[eparse$site35 == site[i],] %>%
@@ -399,7 +399,7 @@ rich_tot_caledonia <- data.frame(motu=numeric(1), genus=numeric(1), family=numer
 rich_tot_caledonia$motu <- caledonia %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_caledonia$genus <- caledonia %>% 
-  summarise(n = n_distinct(new_genus_name))
+  summarise(n = n_distinct(genus_name_corrected))
 rich_tot_caledonia$family <- caledonia %>% 
   summarise(n = n_distinct(family_name_corrected))
 
@@ -415,7 +415,7 @@ for (i in 1:length(station)) {
   motu <- caledonia[caledonia$station == station[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- caledonia[caledonia$station == station[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- caledonia[caledonia$station == station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_station_caledonia[i,2] <- s
@@ -436,7 +436,7 @@ for (i in 1:length(sample)) {
   motu <- caledonia[caledonia$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(sequence))
   gen <- caledonia[caledonia$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   fam <- caledonia[caledonia$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   rich_sample_caledonia[i,2] <- s
@@ -458,7 +458,7 @@ for (i in 1:length(site)) {
   mm <- mean(rich_station_caledonia[rich_station_caledonia$site == site[i],]$motu)
   sdm <- sd(rich_station_caledonia[rich_station_caledonia$site == site[i],]$motu)
   gen <- caledonia[caledonia$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_genus_name))
+    summarise(n = n_distinct(genus_name_corrected))
   mg <- mean(rich_station_caledonia[rich_station_caledonia$site == site[i],]$genus)
   sdg <- sd(rich_station_caledonia[rich_station_caledonia$site == site[i],]$genus)
   fam <- caledonia[caledonia$site35 == site[i],] %>%
@@ -543,7 +543,7 @@ metadata <- metadata %>%
   filter(province%in%c("Western_Coral_Triangle", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Indian_Ocean", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project != "SEAMOUNTS") %>% 
+  filter(project != "Curacao") %>%
   filter(habitat_type %ni% c("BAIE"))%>%
   subset(habitat=="marine")
 

@@ -23,7 +23,7 @@ df_all_filters <- df_all_filters %>%
   filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
-  filter(project.y != "SEAMOUNTS") %>%
+  filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))
 
@@ -42,8 +42,8 @@ Nfamily
 
 # N genus
 Ngenus <- df_all_filters %>%
-  filter(!is.na(new_genus_name)) %>%
-  distinct(new_genus_name) %>% pull() %>% length()
+  filter(!is.na(genus_name_corrected)) %>%
+  distinct(genus_name_corrected) %>% pull() %>% length()
 Ngenus
 #373
 
@@ -309,12 +309,12 @@ length(unique(df_all_filters$province))
 
 # Count
 dataset <- df_all_filters %>%
-  filter(!is.na(new_genus_name))  %>%
-  group_by(new_genus_name) %>%
+  filter(!is.na(genus_name_corrected))  %>%
+  group_by(genus_name_corrected) %>%
   summarise(n = n_distinct(province)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_genus_name)) %>%
+  summarise(n_motus = n_distinct(genus_name_corrected)) %>%
   mutate(rank = "province")
 
 # plot
@@ -328,12 +328,12 @@ length(unique(df_all_filters$site35))
 
 # Count
 dataset <- df_all_filters %>%
-  filter(!is.na(new_genus_name))  %>%
-  group_by(new_genus_name) %>%
+  filter(!is.na(genus_name_corrected))  %>%
+  group_by(genus_name_corrected) %>%
   summarise(n = n_distinct(site35)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_genus_name)) %>%
+  summarise(n_motus = n_distinct(genus_name_corrected)) %>%
   mutate(rank = "site35")
 
 # plot
@@ -347,12 +347,12 @@ length(unique(df_all_filters$station))
 
 # Count
 dataset <- df_all_filters %>%
-  filter(!is.na(new_genus_name))  %>%
-  group_by(new_genus_name) %>%
+  filter(!is.na(genus_name_corrected))  %>%
+  group_by(genus_name_corrected) %>%
   summarise(n = n_distinct(station)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_genus_name)) %>%
+  summarise(n_motus = n_distinct(genus_name_corrected)) %>%
   mutate(rank = "station")
 
 # plot
@@ -367,12 +367,12 @@ length(unique(df_all_filters$sample_name_all_pcr))
 
 # Count
 dataset <- df_all_filters %>%
-  filter(!is.na(new_genus_name))  %>%
-  group_by(new_genus_name) %>%
+  filter(!is.na(genus_name_corrected))  %>%
+  group_by(genus_name_corrected) %>%
   summarise(n = n_distinct(sample_name_all_pcr)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_genus_name)) %>%
+  summarise(n_motus = n_distinct(genus_name_corrected)) %>%
   mutate(rank = "sample_name")
 
 # plot
