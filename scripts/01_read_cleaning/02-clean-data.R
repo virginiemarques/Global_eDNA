@@ -91,7 +91,7 @@ lapply(list_read_step4, function(x){
 
 
 columns_delete_field_metadata <- c("turbidity", "gps_start", "gps_b", "lat_gps_b", "long_gps_b", "gps_c", "long_gps_c", "lat_gps_d", "gps_half_turn", "longitude_turn", "latitude_end", "longitude_end", 
-                                   "gps_end", "long_gps_d", "gps_d", "lat_gps_c", "latitude_turn", "data_manager", "gps_owner")
+                                   "gps_end", "long_gps_d", "gps_d", "lat_gps_c", "latitude_turn", "data_manager", "gps_owner", "project")
 
 metadata_field <- read.csv("metadata/Metadata_eDNA_global_V6.csv", sep=";", stringsAsFactors = F)
 metadata_field <- select(metadata_field, -c(columns_delete_field_metadata))
@@ -103,6 +103,7 @@ list_read_step4 <- lapply(list_read_step4, function(x){
 
 # Clean wrong family assigment
 
+# BUG chez moi ici 
 list_read_step4 <- lapply(list_read_step4, function(x){
   scaridae <- c("Scarus", "Bolbometopon", "Cetoscarus", "Chlorurus", "Hipposcarus", "Calotomus", "Cryptotomus", "Leptoscarus", "Nicholsina", "Sparisoma")
   x_scaridae <- x%>%
@@ -119,7 +120,20 @@ list_read_step4 <- lapply(list_read_step4, function(x){
   x <- rbind(x, x_taeniura)
 })
 
-
+# même chose codé différement pour que ça marche
+scaridae <- c("Scarus", "Bolbometopon", "Cetoscarus", "Chlorurus", "Hipposcarus", "Calotomus", "Cryptotomus", "Leptoscarus", "Nicholsina", "Sparisoma")
+list_read_step4 <- lapply(list_read_step4, function(x){
+  
+  x <- x %>%
+    mutate(family_name_corrected = case_when(
+      # Correct Scaridae
+      genus_name_corrected %in% scaridae ~ "Scaridae", 
+      genus_name_corrected %in% c("Taeniura") ~ "Dasyatidae", 
+      TRUE ~ family_name_corrected
+    )) 
+    
+  return(x)
+})
  
 df_all_filters <- bind_rows(list_read_step4)
 

@@ -10,8 +10,8 @@ library("purrr")
 conflict_prefer("filter", "dplyr")
 
 # Load data
-load('Rdata/01_liste_all_read_edna.Rdata')
-load("Rdata/02_clean_all.Rdata")
+#load('Rdata/01_liste_all_read_edna.Rdata')
+#load("Rdata/02_clean_all.Rdata")
 
 load("Rdata/01_read_data.Rdata")
 load("Rdata/02-clean-data.Rdata")
