@@ -30,13 +30,13 @@ df_all_filters <- df_all_filters %>%
   filter(habitat_type %ni% c("BAIE"))
 
 fam_summary <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n_motus = n_distinct(sequence))%>%
-  #filter(new_family_name%in%(fam_coral %>%filter(n_species > 3) %>%distinct(Family) %>% pull()))
-  filter(new_family_name%in%fam_coral2)
+  #filter(family_name_corrected%in%(fam_coral %>%filter(n_species > 3) %>%distinct(Family) %>% pull()))
+  filter(family_name_corrected%in%fam_coral2)
             
-families3 <- unique(fam_summary$new_family_name)
+families3 <- unique(fam_summary$family_name_corrected)
 
 
 # calculate number of species per family on the checklist
@@ -50,7 +50,7 @@ for (i in 1:length(families3)) {
 
 for (i in 1:length(families3)) {
   fam_summary[i,"n_species"] <- df_all_filters %>%
-    subset(new_family_name==families3[i]) %>%
+    subset(family_name_corrected==families3[i]) %>%
     filter(!is.na(new_species_name)) %>%
     dplyr::summarize(n_distinct(new_species_name))
 }
@@ -79,7 +79,7 @@ for (i in 1:length(families3)) {
 }
 
 # add short family name
-fam_summary$fam <- gsub("(?<=\\S)[aeiouy]", "", fam_summary$new_family_name, perl = TRUE)
+fam_summary$fam <- gsub("(?<=\\S)[aeiouy]", "", fam_summary$family_name_corrected, perl = TRUE)
 fam_summary$fam <- substring(fam_summary$fam, 1, 4)
 
 save(fam_summary, file="Rdata/all_predictions_motus_species.rdata")

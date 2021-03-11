@@ -35,8 +35,8 @@ Nmotus
 
 # N families
 Nfamily <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  distinct(new_family_name) %>% pull() %>% length()
+  filter(!is.na(family_name_corrected)) %>%
+  distinct(family_name_corrected) %>% pull() %>% length()
 Nfamily
 # 145
 
@@ -189,12 +189,12 @@ length(unique(df_all_filters$province))
 
 # Count
 family_province <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n = n_distinct(province)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_family_name)) %>%
+  summarise(n_motus = n_distinct(family_name_corrected)) %>%
   mutate(rank = "province")
 
 # plot
@@ -209,12 +209,12 @@ length(unique(df_all_filters$site35))
 
 # Count
 family_site <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n = n_distinct(site35)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_family_name)) %>%
+  summarise(n_motus = n_distinct(family_name_corrected)) %>%
   mutate(rank = "site35")
 save(family_site, file="Rdata/rarete_family_site.rdata")
 
@@ -237,12 +237,12 @@ length(unique(df_all_filters$station))
 
 # Count
 family_station <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n = n_distinct(station)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_family_name)) %>%
+  summarise(n_motus = n_distinct(family_name_corrected)) %>%
   mutate(rank = "station")
 save(family_station, file="Rdata/rarete_family_station.rdata")
 
@@ -265,12 +265,12 @@ length(unique(df_all_filters$sample_name_all_pcr))
 
 # Count
 dataset <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n = n_distinct(sample_name_all_pcr)) %>%
   ungroup() %>%
   group_by(n) %>%
-  summarise(n_motus = n_distinct(new_family_name)) %>%
+  summarise(n_motus = n_distinct(family_name_corrected)) %>%
   mutate(rank = "sample")
 
 # plot

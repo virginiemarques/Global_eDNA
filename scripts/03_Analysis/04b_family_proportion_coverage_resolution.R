@@ -29,7 +29,7 @@ load("Rdata/nb_motus_per_family_global.Rdata")
 load("Rdata/family_proportion_global.Rdata")
 #load("Rdata/proportion_motus_similarity_threshold.Rdata")
 family_coverage <- read.csv("outputs/01_read_data_stats/family_resolution_coefs.csv")
-family <- unique(df_all_filters$new_family_name)
+family <- unique(df_all_filters$family_name_corrected)
 family_coverage <- subset(family_coverage, Family%in%family)
 
 

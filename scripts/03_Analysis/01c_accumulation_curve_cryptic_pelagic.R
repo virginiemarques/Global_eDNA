@@ -34,7 +34,7 @@ rank_choice = 'sequence'
 ## select cryptic species
 cryptic_family <- c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae", "Kurtidae")
 cryptic_order <- c("Kurtiformes", "Gobiiformes", "Blenniiformes", "Syngnathiformes")
-df_all_filters <- filter(df_all_filters, order_name %in% cryptic_order | new_family_name %in% cryptic_family)
+df_all_filters <- filter(df_all_filters, order_name %in% cryptic_order | family_name_corrected %in% cryptic_family)
 
 # Add a global saturation curve
 all_accumulation_cryp <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
@@ -67,7 +67,7 @@ df_all_filters <- df_all_filters %>%
   filter(habitat_type %ni% c("BAIE"))
 
 load("Rdata/pelagic_family.Rdata")
-df_all_filters <- subset(df_all_filters, new_family_name %in% pelagic_family$family_name)
+df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
 
 # Add a global saturation curve
 all_accumulation_pel <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
@@ -101,7 +101,7 @@ df_all_filters <- df_all_filters %>%
 
 
 df_all_filters <- df_all_filters%>%
-  subset(new_family_name %ni% pelagic_family$family_name & new_family_name %ni% cryptic_family & order_name %ni% cryptic_order)
+  subset(family_name_corrected %ni% pelagic_family$family_name & family_name_corrected %ni% cryptic_family & order_name %ni% cryptic_order)
 
 # Add a global saturation curve
 all_accumulation_dem <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%

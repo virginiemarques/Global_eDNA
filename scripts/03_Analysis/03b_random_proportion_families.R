@@ -18,14 +18,14 @@ df_all_filters <- df_all_filters %>%
   filter(habitat_type %ni% c("BAIE"))
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
 unique_motus <- unique(df_all_filters$sequence)
-unique_family <- as.data.frame(unique(df_all_filters$new_family_name))
+unique_family <- as.data.frame(unique(df_all_filters$family_name_corrected))
 colnames(unique_family) <- "family"
 
 global_family <- df_all_filters %>%
-  distinct(sequence, new_family_name)
+  distinct(sequence, family_name_corrected)
 colnames(global_family) <- c("motu", "family")
 
 #calculate frequency of motus

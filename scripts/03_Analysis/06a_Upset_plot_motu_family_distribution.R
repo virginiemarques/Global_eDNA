@@ -57,7 +57,7 @@ pal <- c("#80cdc1", "#E5A729", "#015462", "#a6611a", "#b2182b")
 motus_fam_region <-  df_all_filters %>%
   group_by(province) %>%
   dplyr::summarize(n_motus = n_distinct(sequence), 
-            n_family = n_distinct(new_family_name)) %>%
+            n_family = n_distinct(family_name_corrected)) %>%
   as.data.frame() %>%
   dplyr::arrange(n_motus)
 
@@ -120,19 +120,19 @@ dev.off()
 
 # rarity in samples - by families 
 family_samples_rarity <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  group_by(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  group_by(family_name_corrected) %>%
   summarise(n_samples = n_distinct(sample_name_all_pcr))
 
 # Family
 matrix_family <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  distinct(new_family_name) %>%
-  mutate(`Western_Coral_Triangle` = ifelse(new_family_name %in% df_provinces$`Western_Coral_Triangle`$new_family_name, 1, 0), 
-         Southeast_Polynesia = ifelse(new_family_name %in% df_provinces$Southeast_Polynesia$new_family_name, 1, 0),
-         Tropical_Northwestern_Atlantic = ifelse(new_family_name %in% df_provinces$Tropical_Northwestern_Atlantic$new_family_name, 1, 0),
-         Western_Indian_Ocean = ifelse(new_family_name %in% df_provinces$Western_Indian_Ocean$new_family_name, 1, 0),
-         Tropical_Southwestern_Pacific = ifelse(new_family_name %in% df_provinces$Tropical_Southwestern_Pacific$new_family_name, 1, 0)) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  distinct(family_name_corrected) %>%
+  mutate(`Western_Coral_Triangle` = ifelse(family_name_corrected %in% df_provinces$`Western_Coral_Triangle`$family_name_corrected, 1, 0), 
+         Southeast_Polynesia = ifelse(family_name_corrected %in% df_provinces$Southeast_Polynesia$family_name_corrected, 1, 0),
+         Tropical_Northwestern_Atlantic = ifelse(family_name_corrected %in% df_provinces$Tropical_Northwestern_Atlantic$family_name_corrected, 1, 0),
+         Western_Indian_Ocean = ifelse(family_name_corrected %in% df_provinces$Western_Indian_Ocean$family_name_corrected, 1, 0),
+         Tropical_Southwestern_Pacific = ifelse(family_name_corrected %in% df_provinces$Tropical_Southwestern_Pacific$family_name_corrected, 1, 0)) %>%
   left_join(., family_samples_rarity) %>%
   as.data.frame()
 
@@ -242,7 +242,7 @@ all_sites <- names(df_site)
 # Count MOTUs per site
 motus_family <- df_all_filters %>%
   group_by(site35) %>%
-  dplyr::summarize(n_family = n_distinct(new_family_name)) %>%
+  dplyr::summarize(n_family = n_distinct(family_name_corrected)) %>%
   arrange(n_family)
 
 # metadata
@@ -264,12 +264,12 @@ metadata1 <- df_all_filters %>%
 
 # MOTUs
 matrix_family <- df_all_filters %>%
-  filter(!is.na(new_family_name)) %>%
-  distinct(new_family_name) %>%
+  filter(!is.na(family_name_corrected)) %>%
+  distinct(family_name_corrected) %>%
   as.data.frame()
 
 # Variables
-rank <- "new_family_name"
+rank <- "family_name_corrected"
 dataset <- df_site
 
 # Fill the sites - automatic

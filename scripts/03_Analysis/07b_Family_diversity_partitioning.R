@@ -17,13 +17,13 @@ df_all_filters <- df_all_filters %>%
 
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
 
 # gamma global =145
 
 gamma_global <- as.numeric(df_all_filters %>%
-  summarise(n = n_distinct(new_family_name)))
+  summarise(n = n_distinct(family_name_corrected)))
   
 
 Province <- unique(df_all_filters$province)
@@ -38,7 +38,7 @@ alpha_province=data.frame(province=character(), family=numeric(), stringsAsFacto
 for (i in 1:length(Province)) {
   r <- Province[i]
   family <- df_all_filters[df_all_filters$province == Province[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   alpha_province[i,1] <- r
   alpha_province[i,2] <- family
 }
@@ -57,7 +57,7 @@ for (i in 1:length(Site)) {
   s <- Site[i]
   r <- unique(df_all_filters[df_all_filters$site35 == Site[i],]$province)
   family <- df_all_filters[df_all_filters$site35 == Site[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   alpha_site[i,1] <- r
   alpha_site[i,2] <- s
   alpha_site[i,3] <- family
@@ -92,7 +92,7 @@ for (i in 1:length(Station)) {
   r <- unique(df_all_filters[df_all_filters$station == station[i],]$province)
   s <- unique(df_all_filters[df_all_filters$station == station[i],]$site35)
   family <- df_all_filters[df_all_filters$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   alpha_station[i,1] <- r
   alpha_station[i,2] <- s
   alpha_station[i,3] <- st
@@ -178,7 +178,7 @@ df_province=data.frame(family=character())
 
 for (i in 1:length(Province)) {
   df <- df_all_filters[df_all_filters$province == Province[i],] %>%
-    distinct(new_family_name, province)
+    distinct(family_name_corrected, province)
   colnames(df) <- c(Province[i], "family")
   df_province <- full_join(df_province, df, by="family")
 }
@@ -203,7 +203,7 @@ for (i in 1:length(Province)) {
   df_site[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
     for (j in 1:length(Site)) {
       df2 <- df[df$site35==Site[j],] %>%
-        distinct(new_family_name, site)
+        distinct(family_name_corrected, site)
       colnames(df2) <- c(Site[j], "family")
       df_site[[i]] <- full_join(df_site[[i]], df2, by="family")
     }
@@ -233,7 +233,7 @@ for (i in 1:length(Site)) {
   df_station[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
   for (j in 1:length(Station)) {
     df2 <- df[df$station==Station[j],] %>%
-      distinct(new_family_name, station)
+      distinct(family_name_corrected, station)
     colnames(df2) <- c(Station[j], "family")
     df_station[[i]] <- full_join(df_station[[i]], df2, by="family")
   }

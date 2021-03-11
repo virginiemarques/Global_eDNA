@@ -20,7 +20,7 @@ df_all_filters <- df_all_filters %>%
 
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
 ## Proportion of families in Caribbean
 
@@ -31,7 +31,7 @@ caribbean <- df_all_filters %>%
 cari_motu <- caribbean %>%
   distinct(sequence, .keep_all = TRUE)
 
-count_families_caribbean <- data.frame(table(cari_motu$new_family_name))
+count_families_caribbean <- data.frame(table(cari_motu$family_name_corrected))
 colnames(count_families_caribbean) <- c("family", "n_motus")
 count_families_caribbean$n_motus_total <- nrow(cari_motu)
 count_families_caribbean$prop <- count_families_caribbean$n_motus / count_families_caribbean$n_motus_total
@@ -57,7 +57,7 @@ for (i in 1:length(site)) {
   cari_site <- caribbean[caribbean$site35 == site[i],]
   cari_motu_site <- cari_site%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(cari_motu_site$new_family_name))
+  count_families <- data.frame(table(cari_motu_site$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(cari_motu_site)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -99,7 +99,7 @@ for (i in 1:length(station)) {
   s <- unique(cari_station$site35)
   cari_motu_station <- cari_station%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(cari_motu_station$new_family_name))
+  count_families <- data.frame(table(cari_motu_station$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(cari_motu_station)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -122,7 +122,7 @@ lengguru <- df_all_filters %>%
 leng_motu <- lengguru %>%
   distinct(sequence, .keep_all = TRUE)
 
-count_families_lengguru <- data.frame(table(leng_motu$new_family_name))
+count_families_lengguru <- data.frame(table(leng_motu$family_name_corrected))
 colnames(count_families_lengguru) <- c("family", "n_motus")
 count_families_lengguru$n_motus_total <- nrow(leng_motu)
 count_families_lengguru$prop <- count_families_lengguru$n_motus / count_families_lengguru$n_motus_total
@@ -150,7 +150,7 @@ for (i in 1:length(site)) {
   leng_site <- lengguru[lengguru$site35 == site[i],]
   leng_motu_site <- leng_site%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(leng_motu_site$new_family_name))
+  count_families <- data.frame(table(leng_motu_site$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(leng_motu_site)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -196,7 +196,7 @@ for (i in 1:length(station)) {
   s <- unique(leng_station$site35)
   leng_motu_station <- leng_station%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(leng_motu_station$new_family_name))
+  count_families <- data.frame(table(leng_motu_station$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(leng_motu_station)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -219,7 +219,7 @@ fakarava <- df_all_filters %>%
 faka_motu <- fakarava %>%
   distinct(sequence, .keep_all = TRUE)
 
-count_families_site_fakarava <- data.frame(table(faka_motu$new_family_name))
+count_families_site_fakarava <- data.frame(table(faka_motu$family_name_corrected))
 colnames(count_families_site_fakarava) <- c("family", "n_motus")
 count_families_site_fakarava$n_motus_total <- nrow(faka_motu)
 count_families_site_fakarava$site <- "fakarava"
@@ -248,7 +248,7 @@ for (i in 1:length(station)) {
   st <- station[i]
   faka_motu_station <- faka_station%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(faka_motu_station$new_family_name))
+  count_families <- data.frame(table(faka_motu_station$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(faka_motu_station)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -271,7 +271,7 @@ eparse <- df_all_filters %>%
 eparse_motu <- eparse %>%
   distinct(sequence, .keep_all = TRUE)
 
-count_families_eparse <- data.frame(table(eparse_motu$new_family_name))
+count_families_eparse <- data.frame(table(eparse_motu$family_name_corrected))
 colnames(count_families_eparse) <- c("family", "n_motus")
 count_families_eparse$n_motus_total <- nrow(eparse_motu)
 count_families_eparse$prop <- count_families_eparse$n_motus / count_families_eparse$n_motus_total
@@ -299,7 +299,7 @@ for (i in 1:length(site)) {
   eparse_site <- eparse[eparse$site35 == site[i],]
   eparse_motu_site <- eparse_site%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(eparse_motu_site$new_family_name))
+  count_families <- data.frame(table(eparse_motu_site$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(eparse_motu_site)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -342,7 +342,7 @@ for (i in 1:length(station)) {
   s <- unique(eparse_station$site35)
   eparse_motu_station <- eparse_station%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(eparse_motu_station$new_family_name))
+  count_families <- data.frame(table(eparse_motu_station$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(eparse_motu_station)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -365,7 +365,7 @@ caledonia <- df_all_filters %>%
 cal_motu <- caledonia %>%
   distinct(sequence, .keep_all = TRUE)
 
-count_families_caledonia <- data.frame(table(cal_motu$new_family_name))
+count_families_caledonia <- data.frame(table(cal_motu$family_name_corrected))
 colnames(count_families_caledonia) <- c("family", "n_motus")
 count_families_caledonia$n_motus_total <- nrow(cal_motu)
 count_families_caledonia$prop <- count_families_caledonia$n_motus / count_families_caledonia$n_motus_total
@@ -393,7 +393,7 @@ for (i in 1:length(site)) {
   cal_site <- caledonia[caledonia$site35 == site[i],]
   cal_motu_site <- cal_site%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(cal_motu_site$new_family_name))
+  count_families <- data.frame(table(cal_motu_site$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(cal_motu_site)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -439,7 +439,7 @@ for (i in 1:length(station)) {
   s <- unique(cal_station$site35)
   cal_motu_station <- cal_station%>%
     distinct(sequence, .keep_all = TRUE)
-  count_families <- data.frame(table(cal_motu_station$new_family_name))
+  count_families <- data.frame(table(cal_motu_station$family_name_corrected))
   colnames(count_families) <- c("family", "n_motus")
   count_families$n_motus_total <- nrow(cal_motu_station)
   count_families$prop <- count_families$n_motus / count_families$n_motus_total
@@ -461,7 +461,7 @@ global_motu <- df_all_filters %>%
   distinct(sequence, .keep_all = TRUE)
 
 
-count_families_global <- data.frame(table(global_motu$new_family_name))
+count_families_global <- data.frame(table(global_motu$family_name_corrected))
 colnames(count_families_global) <- c("family", "n_motus")
 save(count_families_global, file = "Rdata/nb_motus_per_family_global.Rdata")
 

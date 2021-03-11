@@ -58,7 +58,7 @@ lapply(list_read_step4, function(x){
 })
 
 lapply(list_read_step4, function(x){
-  length(unique(x$new_family_name))
+  length(unique(x$family_name_corrected))
 })
 
 
@@ -68,7 +68,7 @@ lapply(list_read_step4, function(x){
 # ------------------------------------------------------------------------------- # 
 
 # rank_specify
-rank_choice = 'new_family_name'
+rank_choice = 'family_name_corrected'
 
 # accumlation all plots
 liste_accumulation <- lapply(list_read_step4, accumulation_curve_df, species_unit = rank_choice)

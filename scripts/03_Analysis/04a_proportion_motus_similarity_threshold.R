@@ -13,15 +13,15 @@ df_all_filters <- df_all_filters %>%
 
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
 # Calculate proportion of MOTUs in each family, within each similarity intervals
-family <- unique(df_all_filters$new_family_name)
+family <- unique(df_all_filters$family_name_corrected)
 
 prop_similarity <- data.frame(stringsAsFactors = FALSE)
 
 for (i in 1:length(family)) {
-  df <- subset(df_all_filters, new_family_name==family[i])
+  df <- subset(df_all_filters, family_name_corrected==family[i])
   ntot <- nrow(df)
   prop_similarity[i,"family"] <- family[i]
   prop_similarity[i,"85-90%"] <- (nrow(subset(df, best_identity_database > 0.85 & best_identity_database <= 0.90))*100)/ntot

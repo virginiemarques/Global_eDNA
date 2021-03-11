@@ -26,13 +26,13 @@ df_all_filters <- df_all_filters %>%
 # calculate nb of reads per family at global scale
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
-family <- unique(df_all_filters$new_family_name)
+family <- unique(df_all_filters$family_name_corrected)
 nb_reads_family <- data.frame(family=character(), reads=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(family)) {
-  df <- subset(df_all_filters, new_family_name==family[i])
+  df <- subset(df_all_filters, family_name_corrected==family[i])
   nb_reads_family[i,1] <- family[i]
   nb_reads_family[i,2] <- sum(df$count_reads_all_pcr)
 }
@@ -54,7 +54,7 @@ rich_tot_lengguru$motu <- lengguru %>%
 rich_tot_lengguru$genus <- lengguru %>% 
   summarise(n = n_distinct(new_genus_name))
 rich_tot_lengguru$family <- lengguru %>% 
-  summarise(n = n_distinct(new_family_name))
+  summarise(n = n_distinct(family_name_corrected))
 
 
   # calculate unique motus and families at each station   
@@ -70,7 +70,7 @@ for (i in 1:length(station)) {
   gen <- lengguru[lengguru$station == station[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- lengguru[lengguru$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_station_lengguru[i,2] <- s
   rich_station_lengguru[i,3] <- st
   rich_station_lengguru[i,4] <- motu
@@ -91,7 +91,7 @@ for (i in 1:length(sample)) {
   gen <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- lengguru[lengguru$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_sample_lengguru[i,2] <- s
   rich_sample_lengguru[i,3] <- sa
   rich_sample_lengguru[i,4] <- motu
@@ -115,7 +115,7 @@ for (i in 1:length(site)) {
   mg <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
   sdg <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$genus)
   fam <- lengguru[lengguru$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   mf <- mean(rich_station_lengguru[rich_station_lengguru$site == site[i],]$family)
   sdf <- sd(rich_station_lengguru[rich_station_lengguru$site == site[i],]$family)
   rich_site_lengguru[i,2] <- s
@@ -146,7 +146,7 @@ rich_tot_caribbean$motu <- caribbean %>%
 rich_tot_caribbean$genus <- caribbean %>% 
   summarise(n = n_distinct(new_genus_name))
 rich_tot_caribbean$family <- caribbean %>% 
-  summarise(n = n_distinct(new_family_name))
+  summarise(n = n_distinct(family_name_corrected))
 
 
   # calculate unique motus and families at each station   
@@ -162,7 +162,7 @@ for (i in 1:length(station)) {
   gen <- caribbean[caribbean$station == station[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- caribbean[caribbean$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_station_caribbean[i,2] <- s
   rich_station_caribbean[i,3] <- st
   rich_station_caribbean[i,4] <- motu
@@ -183,7 +183,7 @@ for (i in 1:length(sample)) {
   gen <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- caribbean[caribbean$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_sample_caribbean[i,2] <- s
   rich_sample_caribbean[i,3] <- sa
   rich_sample_caribbean[i,4] <- motu
@@ -207,7 +207,7 @@ for (i in 1:length(site)) {
   mg <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
   sdg <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$genus)
   fam <- caribbean[caribbean$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   mf <- mean(rich_station_caribbean[rich_station_caribbean$site == site[i],]$family)
   sdf <- sd(rich_station_caribbean[rich_station_caribbean$site == site[i],]$family)
   rich_site_caribbean[i,2] <- s
@@ -243,7 +243,7 @@ for (i in 1:length(station)) {
   gen <- fakarava[fakarava$station == station[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- fakarava[fakarava$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_station_fakarava[i,3] <- st
   rich_station_fakarava[i,4] <- motu
   rich_station_fakarava[i,5] <- gen
@@ -265,7 +265,7 @@ for (i in 1:length(sample)) {
   gen <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- fakarava[fakarava$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_sample_fakarava[i,3] <- sa
   rich_sample_fakarava[i,4] <- motu
   rich_sample_fakarava[i,5] <- gen
@@ -283,7 +283,7 @@ rich_site_fakarava <- data.frame(province="Southeast_Polynesia",
                                  genus=fakarava %>% 
                                    summarise(n = n_distinct(new_genus_name)),
                                  family=fakarava %>% 
-                                   summarise(n = n_distinct(new_family_name)),
+                                   summarise(n = n_distinct(family_name_corrected)),
                                  mean_motu=mean(rich_station_fakarava$motu),
                                  sd_motu=sd(rich_station_fakarava$motu),
                                  mean_genus=mean(rich_station_fakarava$genus),
@@ -309,7 +309,7 @@ rich_tot_eparse$motu <- eparse %>%
 rich_tot_eparse$genus <- eparse %>% 
   summarise(n = n_distinct(new_genus_name))
 rich_tot_eparse$family <- eparse %>% 
-  summarise(n = n_distinct(new_family_name))
+  summarise(n = n_distinct(family_name_corrected))
 
 
   # calculate unique motus and families at each station   
@@ -325,7 +325,7 @@ for (i in 1:length(station)) {
   gen <- eparse[eparse$station == station[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- eparse[eparse$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_station_eparse[i,2] <- s
   rich_station_eparse[i,3] <- st
   rich_station_eparse[i,4] <- motu
@@ -347,7 +347,7 @@ for (i in 1:length(sample)) {
   gen <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- eparse[eparse$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_sample_eparse[i,2] <- s
   rich_sample_eparse[i,3] <- sa
   rich_sample_eparse[i,4] <- motu
@@ -372,7 +372,7 @@ for (i in 1:length(site)) {
   mg <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
   sdg <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$genus)
   fam <- eparse[eparse$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   mf <- mean(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
   sdf <- sd(rich_station_eparse[rich_station_eparse$site == site[i],]$family)
   rich_site_eparse[i,2] <- s
@@ -401,7 +401,7 @@ rich_tot_caledonia$motu <- caledonia %>%
 rich_tot_caledonia$genus <- caledonia %>% 
   summarise(n = n_distinct(new_genus_name))
 rich_tot_caledonia$family <- caledonia %>% 
-  summarise(n = n_distinct(new_family_name))
+  summarise(n = n_distinct(family_name_corrected))
 
 
 # calculate unique motus and families at each station   
@@ -417,7 +417,7 @@ for (i in 1:length(station)) {
   gen <- caledonia[caledonia$station == station[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- caledonia[caledonia$station == station[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_station_caledonia[i,2] <- s
   rich_station_caledonia[i,3] <- st
   rich_station_caledonia[i,4] <- motu
@@ -438,7 +438,7 @@ for (i in 1:length(sample)) {
   gen <- caledonia[caledonia$sample_name_all_pcr == sample[i],] %>%
     summarise(n = n_distinct(new_genus_name))
   fam <- caledonia[caledonia$sample_name_all_pcr == sample[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   rich_sample_caledonia[i,2] <- s
   rich_sample_caledonia[i,3] <- sa
   rich_sample_caledonia[i,4] <- motu
@@ -462,7 +462,7 @@ for (i in 1:length(site)) {
   mg <- mean(rich_station_caledonia[rich_station_caledonia$site == site[i],]$genus)
   sdg <- sd(rich_station_caledonia[rich_station_caledonia$site == site[i],]$genus)
   fam <- caledonia[caledonia$site35 == site[i],] %>%
-    summarise(n = n_distinct(new_family_name))
+    summarise(n = n_distinct(family_name_corrected))
   mf <- mean(rich_station_caledonia[rich_station_caledonia$site == site[i],]$family)
   sdf <- sd(rich_station_caledonia[rich_station_caledonia$site == site[i],]$family)
   rich_site_caledonia[i,2] <- s
@@ -590,7 +590,7 @@ all_motus <- ggplot(rich_site, aes(col=province))+
 # DF for plot - count number of families per region and join precedent df to get distance to CT
 all_province <- df_all_filters %>%
   group_by(province) %>%
-  summarise(n_family = n_distinct(new_family_name)) %>%
+  summarise(n_family = n_distinct(family_name_corrected)) %>%
   left_join(., to_merge)
 save(all_province, file = "Rdata/richness_family_region.rdata")
 

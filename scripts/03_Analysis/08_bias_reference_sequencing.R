@@ -18,16 +18,16 @@ df_all_filters <- df_all_filters %>%
   filter(habitat_type %ni% c("BAIE"))
 
 df_all_filters <- df_all_filters %>%
-  filter(!is.na(new_family_name))
+  filter(!is.na(family_name_corrected))
 
 # Count the abondance of MOTUs (global)
 family_motus <- df_all_filters %>%
-  group_by(new_family_name) %>%
+  group_by(family_name_corrected) %>%
   summarise(n = n_distinct(sequence))
 
 # See the coefs in the eDNA dataset global
 family_global_coef <- family_reference_coef %>%
-  inner_join(., family_motus, by = c("Family" = "new_family_name")) %>%
+  inner_join(., family_motus, by = c("Family" = "family_name_corrected")) %>%
   mutate(plot_low_coef_seq = ifelse(coef_sequencing <= 0.1, "low", "fine"), 
          plot_low_coef_reso = ifelse(coef_resolution <= 0.7, "low", "fine"), 
          plot_low_n_motus = ifelse(n >5, ">5 MOTUs", "<= 5 MOTUs")) 
