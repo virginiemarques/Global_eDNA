@@ -87,9 +87,6 @@ lapply(list_read_step4, function(x){
 })
 
 ## Join metadata
-
-
-
 columns_delete_field_metadata <- c("turbidity", "gps_start", "gps_b", "lat_gps_b", "long_gps_b", "gps_c", "long_gps_c", "lat_gps_d", "gps_half_turn", "longitude_turn", "latitude_end", "longitude_end", 
                                    "gps_end", "long_gps_d", "gps_d", "lat_gps_c", "latitude_turn", "data_manager", "gps_owner", "project")
 
@@ -136,7 +133,6 @@ list_read_step4 <- lapply(list_read_step4, function(x){
 })
  
 df_all_filters <- bind_rows(list_read_step4)
-
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- # 
 # save files
