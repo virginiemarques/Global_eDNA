@@ -218,7 +218,7 @@ for (i in 1:length(Province)) {
 ## beta inter-station
 
 Site <- unique(df_all_filters$site35)
-df_station=vector("list", 25)
+df_station=vector("list", length(Site))
 betastation <- data.frame(scale="inter-station", total=numeric(length(Site)), turnover=numeric(length(Site)), nestedness=numeric(length(Site)))
 
 
