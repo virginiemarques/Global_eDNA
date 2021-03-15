@@ -32,10 +32,20 @@ akaike.weights <- function(x)
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE)
 
-list_region_RLS <- split(RLS_species, RLS_species$Province)
-lapply(list_region_RLS, function(x){
-  length(unique(x$SurveyID))
+# subset RLS transects in the 3 most surveyed regions
+RLS_ok <- RLS_species %>%
+  subset(Province %ni% c("Northeast_Australian_Shelf", "Northwest_Australian_Shelf", "Tropical_Southwestern_Pacific"))
+RLS_subset <- RLS_species %>%
+  subset(Province %in% c("Northeast_Australian_Shelf", "Northwest_Australian_Shelf", "Tropical_Southwestern_Pacific"))
+list_subset_RLS <- split(RLS_subset, RLS_subset$Province)
+list_subset_RLS <- lapply(list_subset_RLS, function(x){
+  x[sample(nrow(x), 169, replace = FALSE),]
 })
+
+RLS_subset <- bind_rows(list_subset_RLS)
+RLS_subset <- bind_rows(RLS_subset, RLS_ok)
+
+subset_transect <- unique(RLS_subset$SurveyID)
 
 
 
@@ -44,7 +54,9 @@ lapply(list_region_RLS, function(x){
 #### On family ----
 # ------------------------------------------------------------------------------- # 
 
-RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ",", stringsAsFactors = FALSE)
+RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ";", stringsAsFactors = FALSE)
+RLS_families <- RLS_families %>%
+  filter(SurveyID %in% subset_transect)
 RLS_fam <- RLS_families[,c(11:131)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
 RLS_families <- cbind(RLS_families$SurveyID, RLS_fam)
@@ -113,6 +125,8 @@ family_RLS
 # ------------------------------------------------------------------------------- # 
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
+RLS_species <- RLS_species %>%
+  filter(SurveyID %in% subset_transect)
 RLS_sp <- RLS_species[,c(12:2167)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
