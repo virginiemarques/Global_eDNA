@@ -21,7 +21,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 # calculate nb of reads per family at global scale
 
@@ -34,7 +35,7 @@ nb_reads_family <- data.frame(family=character(), reads=numeric(), stringsAsFact
 for (i in 1:length(family)) {
   df <- subset(df_all_filters, family_name_corrected==family[i])
   nb_reads_family[i,1] <- family[i]
-  nb_reads_family[i,2] <- sum(df$count_reads_all_pcr)
+  nb_reads_family[i,2] <- sum(df$somme_tot)
 }
 
 
@@ -48,7 +49,7 @@ lengguru <- df_all_filters %>%
   filter(province=="Western_Coral_Triangle")
 
   # total MOTUs and family richness in Lengguru region
-rich_tot_lengguru <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), province="Central_IndoPacific")
+rich_tot_lengguru <- data.frame(motu=numeric(1), genus=numeric(1), family=numeric(1), province="Western_Coral_Triangle")
 rich_tot_lengguru$motu <- lengguru %>% 
   summarise(n = n_distinct(sequence))
 rich_tot_lengguru$genus <- lengguru %>% 
@@ -60,7 +61,7 @@ rich_tot_lengguru$family <- lengguru %>%
   # calculate unique motus and families at each station   
 station <- c(unique(lengguru$station))
 
-rich_station_lengguru <- data.frame(province="Central_IndoPacific", site=character(length(station)), station=character(length(station)), motu=numeric(length(station)), genus=numeric(length(station)), family=numeric(length(station)), stringsAsFactors = FALSE)
+rich_station_lengguru <- data.frame(province="Western_Coral_Triangle", site=character(length(station)), station=character(length(station)), motu=numeric(length(station)), genus=numeric(length(station)), family=numeric(length(station)), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   s <- unique(lengguru[lengguru$station == station[i],]$site35)
@@ -81,7 +82,7 @@ for (i in 1:length(station)) {
   # calculate unique motus and families in each sample  
 sample <- c(unique(lengguru$sample_name_all_pcr))
 
-rich_sample_lengguru <- data.frame(province="Central_IndoPacific", site=character(length(sample)), sample=character(length(sample)), motu=numeric(length(sample)), genus=numeric(length(sample)), family=numeric(length(sample)), stringsAsFactors = FALSE)
+rich_sample_lengguru <- data.frame(province="Western_Coral_Triangle", site=character(length(sample)), sample=character(length(sample)), motu=numeric(length(sample)), genus=numeric(length(sample)), family=numeric(length(sample)), stringsAsFactors = FALSE)
 
 for (i in 1:length(sample)) {
   s <- unique(lengguru[lengguru$sample_name_all_pcr == sample[i],]$site35)
@@ -234,7 +235,7 @@ fakarava <- df_all_filters %>%
   # calculate unique motus and families at each station   
 station <- c(unique(fakarava$station))
 
-rich_station_fakarava <- data.frame(province="Southeast_Polynesia", site="fakarava", station=character(length(station)), motu=numeric(length(station)), genus=numeric(length(station)), family=numeric(length(station)), stringsAsFactors = FALSE)
+rich_station_fakarava <- data.frame(province="Southeast_Polynesia", site="site7", station=character(length(station)), motu=numeric(length(station)), genus=numeric(length(station)), family=numeric(length(station)), stringsAsFactors = FALSE)
 
 for (i in 1:length(station)) {
   st <- station[i]
@@ -256,7 +257,7 @@ colnames(rich_station_fakarava) <- c("province", "site", "station", "motu", "gen
 # calculate unique motus and families in each sample  
 sample <- c(unique(fakarava$sample_name_all_pcr))
 
-rich_sample_fakarava <- data.frame(province="Southeast_Polynesia", site="fakarava", sample=character(length(sample)), motu=numeric(length(sample)), genus=numeric(length(sample)), family=numeric(length(sample)), stringsAsFactors = FALSE)
+rich_sample_fakarava <- data.frame(province="Southeast_Polynesia", site="site7", sample=character(length(sample)), motu=numeric(length(sample)), genus=numeric(length(sample)), family=numeric(length(sample)), stringsAsFactors = FALSE)
 
 for (i in 1:length(sample)) {
   sa <- sample[i]
@@ -277,7 +278,7 @@ colnames(rich_sample_fakarava) <- c("province", "site", "sample", "motu", "genus
 
   # total MOTUs and family richness in fakarava region (=site) (calculate mean and sd per station or sample) 
 rich_site_fakarava <- data.frame(province="Southeast_Polynesia",
-                                 site="fakarava",
+                                 site="site7",
                                  motu=fakarava %>% 
                                    summarise(n = n_distinct(sequence)),
                                  genus=fakarava %>% 
@@ -485,6 +486,9 @@ write.csv(rich_site_caledonia, "outputs/05_richness_motus_families/richness_cale
 
 rich_station_total <- rbind(rich_station_caribbean, rich_station_eparse, rich_station_fakarava, rich_station_lengguru, rich_station_caledonia)
 rich_station_total$province <- gsub("Southeast_Polynesia", "SP", rich_station_total$province)
+rich_station_total$province <- gsub("Tropical_Northwestern_Atlantic", "Tropical_NW_Atlantic", rich_station_total$province)
+rich_station_total$province <- gsub("Tropical_Southwestern_Pacific", "Tropical_SW_Pacific", rich_station_total$province)
+rich_station_total$province <- gsub("Western_Indian_Ocean", "W_Indian_Ocean", rich_station_total$province)
 
 ggplot(rich_station_total)+
   geom_violin(aes(site, motu), color="#D2981A", fill="#D2981A", position = position_nudge(-0.3, 0))+
@@ -528,10 +532,10 @@ family <- ggplot(rich_station_total)+
   theme(axis.text.x = element_text(size = 12, angle = 90, hjust = 1, vjust = 0.5))+
   labs(x="", y = "Family richness")
 
-ggarrange(motu, family, ncol=1, nrow=2, labels=c("A", "B"), heights = c(1,1.3))
+ggarrange(motu, family, ncol=1, nrow=2, labels=c("a", "b"), heights = c(1,1.3))
 
 ggsave("outputs/05_richness_motus_families/violin_plot_per_rank.png", width = 12, height = 8)
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure8.png", width = 7, height = 6)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure8.png", width = 7.5, height = 6)
 
 
 
@@ -545,22 +549,22 @@ metadata <- metadata %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  subset(habitat=="marine")
+  subset(habitat=="marine")%>%
+  filter(site35!="")
 
-
-
-metadata <- metadata[,c("site35", "station", "latitude_start_clean", "longitude_start_clean", "dist_to_coast..m.", "dist_to_CT")]
+to_merge <- metadata %>%
+  dplyr::select(site35, dist_to_CT) %>%
+  dplyr::group_by(site35) %>%
+  dplyr::summarise(dist_to_CT = mean(dist_to_CT))
+colnames(to_merge) <- c("site", "dist_to_CT")
 
 
 
 rich_site <- rbind(rich_site_caribbean, rich_site_fakarava, rich_site_lengguru, rich_site_eparse, rich_site_caledonia)
-rich_site <- left_join(rich_site, metadata[,c("site35", "dist_to_CT")], by=c("site"="site35"))
+rich_site <- merge(rich_site, to_merge, by="site")
 
 # Compile data - calculate mean distance to CT for each region 
-to_merge <- rich_site %>%
-  dplyr::select(province, dist_to_CT) %>%
-  dplyr::group_by(province) %>%
-  dplyr::summarise(dist_to_CT = mean(dist_to_CT))
+
 save(rich_site, file="Rdata/richness_station_site_region.rdata")
 
 ### MOTUs 

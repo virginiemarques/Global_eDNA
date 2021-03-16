@@ -13,7 +13,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 
 df_all_filters <- df_all_filters %>%
@@ -88,10 +89,10 @@ sd_beta_site <- sd(beta_site$beta)
 alpha_station=data.frame(province=character(), site=character(), station=character(), family=numeric(), stringsAsFactors = FALSE)
 
 for (i in 1:length(Station)) {
-  st <- station[i]
-  r <- unique(df_all_filters[df_all_filters$station == station[i],]$province)
-  s <- unique(df_all_filters[df_all_filters$station == station[i],]$site35)
-  family <- df_all_filters[df_all_filters$station == station[i],] %>%
+  st <- Station[i]
+  r <- unique(df_all_filters[df_all_filters$station == Station[i],]$province)
+  s <- unique(df_all_filters[df_all_filters$station == Station[i],]$site35)
+  family <- df_all_filters[df_all_filters$station == Station[i],] %>%
     summarise(n = n_distinct(family_name_corrected))
   alpha_station[i,1] <- r
   alpha_station[i,2] <- s
@@ -101,15 +102,15 @@ for (i in 1:length(Station)) {
 
 mean_a_station <- data.frame(stringsAsFactors = FALSE)
 
-for (i in 1:length(site)) {
+for (i in 1:length(Site)) {
   df <- alpha_station %>%
-    subset(site==site[i])
-  mean_a_station[i,1] <- mean(df$motu)
+    subset(site==Site[i])
+  mean_a_station[i,1] <- mean(df$family)
   
 }
 
-mean_alpha_station <- mean(mean_a_station)
-sd_alpha_station <- sd(mean_a_station)
+mean_alpha_station <- mean(mean_a_station$V1)
+sd_alpha_station <- sd(mean_a_station$V1)
 
 
 # calculate beta inter-station
@@ -155,7 +156,7 @@ write.csv(div_partition, "outputs/07_diversity_partitioning/Family_diversity_par
 
 # plot alpha and beta ~ gamma at each spatial scale
 
-alpha_beta <- rbind(beta_station[,c(-1)], beta_site[,c(-1)], beta_province)
+alpha_beta <- rbind(beta_station[,-c(1,2)], beta_site[,c(-1)], beta_province)
 
 
 ggplot(alpha_beta, aes(colour=scale))+
@@ -179,7 +180,7 @@ df_province=data.frame(family=character())
 for (i in 1:length(Province)) {
   df <- df_all_filters[df_all_filters$province == Province[i],] %>%
     distinct(family_name_corrected, province)
-  colnames(df) <- c(Province[i], "family")
+  colnames(df) <- c("family", Province[i])
   df_province <- full_join(df_province, df, by="family")
 }
 rownames(df_province) <- df_province[,1]
@@ -203,8 +204,8 @@ for (i in 1:length(Province)) {
   df_site[[i]] <- data.frame(family=character(), stringsAsFactors = FALSE)
     for (j in 1:length(Site)) {
       df2 <- df[df$site35==Site[j],] %>%
-        distinct(family_name_corrected, site)
-      colnames(df2) <- c(Site[j], "family")
+        distinct(family_name_corrected, site35)
+      colnames(df2) <- c("family", Site[j])
       df_site[[i]] <- full_join(df_site[[i]], df2, by="family")
     }
   rownames(df_site[[i]]) <- df_site[[i]][,1]
@@ -234,7 +235,7 @@ for (i in 1:length(Site)) {
   for (j in 1:length(Station)) {
     df2 <- df[df$station==Station[j],] %>%
       distinct(family_name_corrected, station)
-    colnames(df2) <- c(Station[j], "family")
+    colnames(df2) <- c("family", Station[j])
     df_station[[i]] <- full_join(df_station[[i]], df2, by="family")
   }
   rownames(df_station[[i]]) <- df_station[[i]][,1]

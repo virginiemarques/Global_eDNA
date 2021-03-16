@@ -14,7 +14,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 
 # different tests
@@ -22,17 +23,18 @@ df_all_filters <- df_all_filters %>%
   ## 2. all assigned MOTUs
 df_all_filters <- df_all_filters %>%
   filter(!is.na(species_name_corrected))
-  ## 3. all assigned MOTUs without cryptobenthics
-df_all_filters <- subset(df_all_filters, !(family_name_corrected %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae")))
   ## 4. crypto only
-df_all_filters <- subset(df_all_filters, family_name_corrected %in% c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae"))
+cryptic_family <- c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae", "Kurtidae")
+cryptic_order <- c("Kurtiformes", "Gobiiformes", "Blenniiformes", "Syngnathiformes")
+
+df_all_filters <- filter(df_all_filters, order_name %in% cryptic_order | family_name_corrected %in% cryptic_family)
   ## 5. pelagic only
 load("Rdata/pelagic_family.Rdata")
 df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
 
 
 
-# gamma global =2160
+# gamma global =2116
 
 gamma_global <- as.numeric(df_all_filters %>%
   summarise(n = n_distinct(sequence)))
@@ -198,7 +200,7 @@ for (i in 1:length(Province)) {
   df_site[[i]] <- data.frame(motu=character(), stringsAsFactors = FALSE)
     for (j in 1:length(Site)) {
       df2 <- df[df$site35==Site[j],] %>%
-        distinct(sequence, site)
+        distinct(sequence, site35)
       colnames(df2) <- c("motu", Site[j])
       df_site[[i]] <- full_join(df_site[[i]], df2, by="motu")
     }

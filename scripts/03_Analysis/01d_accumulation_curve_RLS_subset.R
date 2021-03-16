@@ -57,7 +57,7 @@ subset_transect <- unique(RLS_subset$SurveyID)
 RLS_families <- read.csv("data/RLS/RLS_families_NEW.csv", sep = ";", stringsAsFactors = FALSE)
 RLS_families <- RLS_families %>%
   filter(SurveyID %in% subset_transect)
-RLS_fam <- RLS_families[,c(11:131)]
+RLS_fam <- RLS_families[,c(17:137)]
 RLS_fam <- RLS_fam[,colSums(RLS_fam)>0]
 RLS_families <- cbind(RLS_families$SurveyID, RLS_fam)
 # method
@@ -99,25 +99,23 @@ asymp_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
 
 # Add to DF
 all_accumulation_RLS_df$asymptote <- asymp_RLS
-save(all_accumulation_RLS_df, file = "Rdata/accumulation_families_RLS.rdata")
+save(all_accumulation_RLS_df, file = "Rdata/accumulation_families_RLS_subset.rdata")
 
 # plot RLS
 family_RLS <- ggplot(all_accumulation_RLS_df) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.5) +
-  annotate(geom="text", x=2990, y=96+10, label="RLS Family : 96",hjust=1, alpha=0.7, size=3.5)+
-  annotate(geom="text", x=2990, y=30, label="Slope = 1.44",hjust=1, alpha=0.7)+
+  annotate(geom="text", x=1500, y=113+10, label="Asymptote : 113",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=1500, y=92+10, label="RLS Family : 92",hjust=1, alpha=0.7, size=3.5)+
+  annotate(geom="text", x=1500, y=30, label="Slope = 1.48",hjust=1, alpha=0.7)+
   ylim(0,190)+
   xlab("Number of transects") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
-  ggtitle("d")
+  ggtitle("b")
 
 family_RLS
 
-
-#combined plots
 
 
 # ------------------------------------------------------------------------------- # 
@@ -127,7 +125,7 @@ family_RLS
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
 RLS_species <- RLS_species %>%
   filter(SurveyID %in% subset_transect)
-RLS_sp <- RLS_species[,c(12:2167)]
+RLS_sp <- RLS_species[,c(18:2173)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 
@@ -173,21 +171,24 @@ asymp_species_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
 all_accumulation_species_RLS_df$asymptote <- asymp_species_RLS
 
 # Save
-save(all_accumulation_species_RLS_df, file = "Rdata/accumulation_species_RLS.rdata")
+save(all_accumulation_species_RLS_df, file = "Rdata/accumulation_species_RLS_subset.rdata")
 
 # plot
 species_RLS <- ggplot(all_accumulation_species_RLS_df) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2322+150, label="Asymptote : 2322",hjust=1, alpha=0.7, size=3.5) +
-  annotate(geom="text", x=2990, y=1786+150, label="RLS Species : 1786",hjust=1, alpha=0.7, size=3.5) +
-  annotate(geom="text", x=2990, y=600, label="Slope = 1.68",hjust=1, alpha=0.7) +
+  annotate(geom="text", x=1500, y=2195+150, label="Asymptote : 2195",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=1500, y=1778+150, label="RLS Species : 1778",hjust=1, alpha=0.7, size=3.5) +
+  annotate(geom="text", x=1500, y=600, label="Slope = 1.82",hjust=1, alpha=0.7) +
   ylim(0,3000)+
   xlab("Number of transects") +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
-  ggtitle("b")
+  ggtitle("a")
 
 species_RLS
 
+## Combined plot
 
+ggarrange(species_RLS, family_RLS, ncol=2, common.legend = T, legend = "right")
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_acc_RLS_subset.png", width=8, height = 4)

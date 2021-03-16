@@ -162,7 +162,7 @@ akaike.weights <- function(x)
 
 
 RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
-RLS_sp <- RLS_species[,c(12:2167)]
+RLS_sp <- RLS_species[,c(18:2173)]
 RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
 RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
 colnames(RLS_species)[1] <- "SurveyID"
@@ -355,7 +355,7 @@ ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", 
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("A", "B"))
+ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("a", "b"))
 ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure2.png", width=8, height = 6)
 
 

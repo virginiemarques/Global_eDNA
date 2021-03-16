@@ -39,7 +39,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 # Re-format at region scale
 # -----# After LULU 
@@ -147,7 +148,7 @@ plot_acc_family <- ggplot(df_join_all, aes(fill = Province)) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.7) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
-  scale_fill_manual(values=c("grey", "#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
+  scale_fill_manual(values=c("grey", "#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
   facet_wrap(~Province, scales = "free") +
   ylab("Number of families") +
   xlab("Samples (filter)") +
@@ -247,7 +248,7 @@ plot_acc_motus <- ggplot(df_join_all, aes(fill = Province)) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1) +
   facet_wrap(~Province, scales = "free") +
-  scale_fill_manual(values=c("grey", "#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
+  scale_fill_manual(values=c("grey", "#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
   ylab("Number of MOTUs") +
   xlab("Samples (filter)") +
   theme_bw() + 
@@ -293,7 +294,7 @@ motus
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("A", "B"), common.legend = T, legend = "right")
+ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("a", "b"), common.legend = T, legend = "right")
 ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure7.png", width=10, height = 12)
 
 

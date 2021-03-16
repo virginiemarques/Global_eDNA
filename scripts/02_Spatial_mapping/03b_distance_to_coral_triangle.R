@@ -8,8 +8,8 @@ library(raster)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ",", stringsAsFactors = F, na.strings=c("","NA"))
-
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V6.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- metadata_sampling[,-52]
 ## select samples with GPS data
 metadata_dist  <- metadata_sampling %>%
   filter(!is.na(longitude_start_clean))
@@ -39,10 +39,12 @@ colnames(dist_to_CT) <- c("dist_to_CT", "code_spygen")
 
 
 # assemble with metadata
+
 metadata <- left_join(metadata_sampling, dist_to_CT, by="code_spygen")
 metadata  <- metadata %>%
   filter(!is.na(longitude_start_clean))
-
+metadata <- metadata %>%
+  distinct(code_spygen, dist_to_CT, .keep_all = T)
 ## put Coral triangle in the middle
 metadata1 <- metadata %>%
   mutate(dist_to_CT = case_when(
@@ -51,7 +53,7 @@ metadata1 <- metadata %>%
     province == "Tropical_Southwestern_Pacific" ~ paste0(dist_to_CT),
     province == "Tropical_East_Pacific" ~ paste0(dist_to_CT),
     province == "Western_Indian_Ocean" ~ paste0("-", dist_to_CT),
-    province == "Westren_Coral_Triangle" ~ paste0("-", dist_to_CT),
+    province == "Western_Coral_Triangle" ~ paste0("-", dist_to_CT),
     province == "Lusitanian" ~ paste0("-", dist_to_CT),
     province == "Mediterranean_Sea" ~ paste0("-", dist_to_CT)))
 

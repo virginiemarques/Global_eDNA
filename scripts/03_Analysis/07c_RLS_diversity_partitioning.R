@@ -215,8 +215,8 @@ for (i in 1:length(province)) {
 ## beta inter-station
 
 site <- unique(RLS_species$site35)
-df_station=vector("list", length(station))
-betastation <- data.frame(scale="inter-transect", total=numeric(length(station)), turnover=numeric(length(station)), nestedness=numeric(length(station)))
+df_station=vector("list", length(site))
+betastation <- data.frame(scale="inter-transect", total=numeric(length(site)), turnover=numeric(length(site)), nestedness=numeric(length(site)))
 
 
 for (i in 1:length(site)) {
@@ -239,7 +239,8 @@ for (i in 1:length(site)) {
   betastation[i,3] <- beta$beta.JTU
   betastation[i,4] <- beta$beta.JNE
 }
-
+betastation <- betastation %>%
+  filter(!is.na(total))
 
 betatotal <- rbind(betaprovince, betasite, betastation)
 write.csv(betatotal, "outputs/07_diversity_partitioning/beta_RLS_species.csv")
@@ -364,6 +365,6 @@ load("Rdata/beta_motus_eDNA.rdata")
 load("Rdata/beta_family_eDNA.rdata")
 
 
-ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("A", "B", "C", "D"), label.y = c(1, 1, 1.1,1.1), widths = c(1,1.4))
+ggarrange(beta_motus_eDNA, beta_family_eDNA, beta_species_RLS, beta_family_RLS, nrow=2, ncol=2, labels = c("a", "b", "c", "d"), label.y = c(1, 1, 1.1,1.1), widths = c(1,1.4))
 
 ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure6.png")

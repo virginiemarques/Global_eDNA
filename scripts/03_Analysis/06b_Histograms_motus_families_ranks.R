@@ -25,7 +25,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 
 # N global 
@@ -104,11 +105,11 @@ motu_site <- df_all_filters %>%
   ungroup() %>%
   group_by(n) %>%
   summarise(n_motus = n_distinct(sequence))%>%
-  mutate(rank = "site35")
+  mutate(rank = "site")
 save(motu_site, file="Rdata/rarete_motu_site.rdata")
 
 # plot
-p_motu_site <- fct_barplot(motu_site, rank_x="site35", rank_y = "MOTUs")
+p_motu_site <- fct_barplot(motu_site, rank_x="site", rank_y = "MOTUs")
 p_motu_site
 
 ggplot(motu_site)+
@@ -219,7 +220,7 @@ family_site <- df_all_filters %>%
 save(family_site, file="Rdata/rarete_family_site.rdata")
 
 # plot
-p_family_site <- fct_barplot(dataset, rank_x="site35", rank_y = "families", n_tot = Nfamily)
+p_family_site <- fct_barplot(family_site, rank_x="site35", rank_y = "families", n_tot = Nfamily)
 p_family_site
 
 ggplot(family_site)+
@@ -247,7 +248,7 @@ family_station <- df_all_filters %>%
 save(family_station, file="Rdata/rarete_family_station.rdata")
 
 # plot
-p_family_station <- fct_barplot(dataset, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
+p_family_station <- fct_barplot(family_station, rank_x="station", rank_y = "families", n_tot = Nfamily, color = "grey")
 p_family_station
 
 ggplot(family_station)+

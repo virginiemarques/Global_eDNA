@@ -33,8 +33,8 @@ a <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2789+150, label="Asymptote : 2789", hjust=1, color="#d2981a", size=3.2) +
-  annotate(geom="text", x=250, y=2160+150, label="eDNA MOTUs : 2160", hjust=1, color="#d2981a", size=3.2) +
+  annotate(geom="text", x=250, y=2724+150, label="Asymptote : 2724", hjust=1, color="#d2981a", size=3.2) +
+  annotate(geom="text", x=250, y=2116+150, label="eDNA MOTUs : 2116", hjust=1, color="#d2981a", size=3.2) +
   annotate(geom="text", x=250, y=600, label="Slope = 2.3", hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   ylab("") +
@@ -48,7 +48,7 @@ a <- ggplot(df_motus) +
         panel.border = element_rect(fill = NA),
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0,0.1), "cm")) + 
-  ggtitle("A")
+  ggtitle("a")
 
 # plot panel b : accumulation curve species visual survey
 
@@ -56,9 +56,9 @@ b <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2403+150, label="Asymptote : 2403",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=1887+150, label="Visual census Species : 1887",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=600, label="Slope = 1.69",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=2268+150, label="Asymptote : 2268",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=1818+150, label="Visual census Species : 1818",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2990, y=600, label="Slope = 1.76",hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   xlab("Number of transects") +
   ylab("")+
@@ -70,7 +70,7 @@ b <- ggplot(all_accumulation_species_RLS_df) +
         panel.border = element_rect(fill = NA),
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.15,0,0), "cm")) + 
-  ggtitle("B")
+  ggtitle("b")
 
 # plot panel c : accumulation curve families eDNA
 
@@ -78,9 +78,9 @@ c <- ggplot(df_fam) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=250, y=177+10, label="Asymptote : 177",hjust=1,color="#457277", size=3.2) +
-  annotate(geom="text", x=250, y=143+10, label="eDNA Families : 143",hjust=1,color="#457277", size=3.2) +
-  annotate(geom="text", x=250, y=30, label="Slope = 1.85",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=250, y=154+10, label="Asymptote : 154",hjust=1,color="#457277", size=3.2) +
+  annotate(geom="text", x=250, y=133+10, label="eDNA Families : 133",hjust=1,color="#457277", size=3.2) +
+  annotate(geom="text", x=250, y=30, label="Slope = 1.95",hjust=1, alpha=0.7, size=3.2)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
   ylab("Number of families") +
@@ -92,7 +92,7 @@ c <- ggplot(df_fam) +
         panel.border = element_rect(fill = NA),
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0,0.1), "cm")) + 
-  ggtitle("C")
+  ggtitle("c")
 
 # plot panel d : accumulation curve families visual census
 
@@ -114,7 +114,7 @@ d <- ggplot(all_accumulation_RLS_df) +
         panel.border = element_rect(fill = NA),
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.15,0,0), "cm")) + 
-  ggtitle("D")
+  ggtitle("d")
 
 
 ## For panel e : Run script "scripts/03_Analysis/02_prediction_family_species_richness.R"
@@ -139,8 +139,8 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.85, intercept = 0.5, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.83x+0.6\nRÂ² = 0.56\np < 0.001", hjust=1, size=3.2) +
+  geom_abline(slope = 0.87, intercept = 0.48, size=0.8)+
+  annotate(geom="text", x=6, y=1, label="y = 0.87x+0.48\nR² = 0.59\np < 0.001", hjust=1, size=3.2) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), 
@@ -152,7 +152,7 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
   labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in Visual Census)")+
-  ggtitle("E")
+  ggtitle("e")
 
 
 
@@ -164,12 +164,12 @@ load("Rdata/family_proportion_region_main.rdata")
 
 # plot panel f : Proportion of each family globally and in each region
 
-f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Region)) + 
+f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fill = Province)) + 
   geom_bar(stat="identity", show.legend = TRUE) + 
   theme_bw() +
   scale_fill_manual(values =c("#a6611a", "#E5A729",  "#015462", "#b2182b", "#80cdc1"))+ 
   labs(x="", y="Percentage of MOTUs \nat global scale")+
-  ggtitle("F")+
+  ggtitle("f")+
   scale_y_continuous(labels = percent, breaks = c(0, 0.05, 0.10))+
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 

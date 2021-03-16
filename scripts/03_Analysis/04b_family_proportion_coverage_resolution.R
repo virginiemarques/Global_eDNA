@@ -19,7 +19,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 
 
@@ -133,9 +134,9 @@ resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) +
   #theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"), common.legend = TRUE, legend="bottom")
+plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_main
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 7.8, height = 8)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 10.1, height = 8)
 
 
 ## plot each panel for second figure
@@ -185,7 +186,7 @@ resolution <- ggplot(family_coverage_ED, aes(x=order, y = coef_resolution)) +
   #theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
-plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("A", "B", "C"), common.legend = TRUE, legend="bottom")
+plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_ED
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure4.png", width = 7.8, height = 10)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure4.png", width = 10.1, height = 10)
 

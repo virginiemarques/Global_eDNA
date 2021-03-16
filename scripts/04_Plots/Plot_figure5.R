@@ -25,13 +25,13 @@ load("Rdata/richness_motu_region.rdata")
 
 # plot panel a left : motu richness per region
 
-all_motus <- ggplot(rich_site, aes(col=region))+
-  geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
+all_motus <- ggplot(rich_site, aes(col=province))+
+  geom_point(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
-  geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=21, size=2, fill="white", alpha=0.7, show.legend = FALSE) +
-  geom_point(data=all_region, aes(x=dist_to_CT, y=n_motus), shape=23, size=2.5, show.legend = FALSE) +
+  geom_point(aes(x=dist_to_CT, y=mean_motu), shape=21, size=2, fill="white", alpha=0.7, show.legend = FALSE) +
+  geom_point(data=all_province, aes(x=dist_to_CT, y=n_motus), shape=23, size=2.5, show.legend = FALSE) +
   geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
-  scale_color_manual(values=c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
+  scale_color_manual(values=c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
@@ -45,13 +45,13 @@ all_motus <- ggplot(rich_site, aes(col=region))+
 # plot panel a right : family richness per region
 
 load("Rdata/richness_family_region.rdata")
-all_family <- ggplot(rich_site, aes(col=region))+
+all_family <- ggplot(rich_site, aes(col=province))+
   geom_jitter(aes(x=dist_to_CT, y=family), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
   geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=21, size=2, alpha=0.7, fill="white", show.legend = FALSE) +
-  geom_point(data=all_region, aes(x=dist_to_CT, y=n_family), shape=23, size=2.5, show.legend = FALSE) +
+  geom_point(data=all_province, aes(x=dist_to_CT, y=n_family), shape=23, size=2.5, show.legend = FALSE) +
   geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
-  scale_color_manual(values=c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
+  scale_color_manual(values=c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
   theme(legend.position = "none")+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
@@ -89,12 +89,12 @@ for (i in 1:length(family)) {
   prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
     geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
     geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
-    geom_point(size=2, aes(colour=region))+
+    geom_point(size=2, aes(colour=province))+
     xlim(0, 600)+
     ylim(0,0.3)+
     theme_bw()+
     theme(legend.position = "none")+
-    scale_color_manual(values =c("#E5A729", "#80cdc1", "#a6611a", "#b2182b", "#015462"))+ 
+    scale_color_manual(values =c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
     labs(title=family[i], x="", y="")+
     theme(panel.grid.major = element_blank(), 
           panel.grid.minor = element_blank(), 
@@ -105,7 +105,7 @@ for (i in 1:length(family)) {
           plot.margin=unit(c(0,0.1,0,0), "cm"))
 }
 
-plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3, common.legend = TRUE, legend = "top")
+plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3)
 
 x.grob <- textGrob("Total number of MOTUs per site", 
                    gp=gpar(fontface="bold", col="black", fontsize=10))
@@ -116,6 +116,6 @@ b <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
 # plot all together
 
-Fig2 <- ggarrange(a, b, nrow = 2, ncol = 1, labels = c("A", "B"), heights = c(1,2.5))
+Fig2 <- ggarrange(a, b, nrow = 2, ncol = 1, labels = c("a", "b"), heights = c(1,2.5))
 Fig2
 ggsave("outputs/00_Figures_for_paper/Figure5.png", width = 7.5, height = 8, dpi = 300)

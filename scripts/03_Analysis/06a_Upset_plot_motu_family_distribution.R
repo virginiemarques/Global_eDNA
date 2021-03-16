@@ -21,6 +21,7 @@ conflict_prefer("arrange", "dplyr")
 conflict_prefer("mutate", "dplyr")
 conflict_prefer("summarize", "dplyr")
 conflict_prefer("filter", "dplyr")
+conflict_prefer("select", "dplyr")
 # data
 load("Rdata/02-clean-data.Rdata")
 
@@ -31,7 +32,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 unique(df_all_filters$province)
 
@@ -207,7 +209,7 @@ for (i in all_sites){
 
 # Plot MOTUs distribution across sites
 p3_color <- upset(matrix_motus, 
-      nsets = 25,
+      nsets = 26,
       order.by = c("freq"),
       mainbar.y.label = "Number of MOTUs", 
       sets.x.label = "Number of MOTUs", 
@@ -280,7 +282,7 @@ for (i in all_sites){
 
 # Plot families distribution across sites
 p4_color <- upset(matrix_family, 
-                  nsets = 25,
+                  nsets = 26,
                   nintersects = 13,
                   order.by = c("freq"),
                   mainbar.y.label = "Number of families", 

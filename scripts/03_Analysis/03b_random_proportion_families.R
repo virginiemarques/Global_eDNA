@@ -5,6 +5,7 @@ library(grid)
 library(cowplot)
 library(ggplot2)
 library(ggpubr)
+library(vegan)
 
 load("Rdata/02-clean-data.Rdata")
 '%ni%' <- Negate("%in%")
@@ -15,7 +16,8 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(site35!="")
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(family_name_corrected))
@@ -34,7 +36,7 @@ site <- unique(df_all_filters$site35)
 df_site <- data.frame(motu=character(), stringsAsFactors = FALSE)
 for (i in 1:length(site)) {
   df <- df_all_filters[df_all_filters$site35==site[i],] %>%
-    distinct(sequence, site)
+    distinct(sequence, site35)
   colnames(df) <- c("motu", site[i])
   df_site <- full_join(df_site, df, by="motu")
 }

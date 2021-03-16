@@ -95,13 +95,13 @@ summary(lm_species)
 plot_species <- ggplot(fam_summary, aes(log_species, log_checklist))+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.76, intercept = 1.54, size=0.8)+
+  geom_abline(slope = 0.80, intercept = 1.52, size=0.8)+
   xlim(0,6)+
   ylim(0,6)+
   theme_bw()+
   labs(x="log(1+Number of species in eDNA)",
        y="log(1+Number of species in RLS)")+
-  annotate(geom="text", x=6, y=1, label="y = 0.72x+1.61\nR² = 0.35\np < 0.001", hjust=1, size=3.5) +
+  annotate(geom="text", x=6, y=1, label="y = 0.8x+1.52\nR² = 0.42\np < 0.001", hjust=1, size=3.5) +
   ggtitle("e")
 
 save(plot_species, file="Rdata/plot_prediction_species.rdata")
@@ -136,8 +136,8 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.85, intercept = 0.5, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.83x+0.57\nR² = 0.56\np < 0.001", hjust=1, size=3.5) +
+  geom_abline(slope = 0.87, intercept = 0.48, size=0.8)+
+  annotate(geom="text", x=6, y=1, label="y = 0.87x+0.48\nR² = 0.59\np < 0.001", hjust=1, size=3.5) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 
