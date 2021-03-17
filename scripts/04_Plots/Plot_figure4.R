@@ -14,9 +14,12 @@ library(bbmle)
 library(nlreg)
 library(MASS)
 library(fitdistrplus)
+library(broom)
 
 conflict_prefer("summarise", "dplyr")
 conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("ggsave", "ggplot2")
 
 ## For panel a : Run script "scripts/03_Analysis/06b_Histograms_motus_families_ranks.R
 ## Or load Rdata :
@@ -380,5 +383,5 @@ b <- grid.arrange(plot2, bottom=x.grob)
 
 Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
 Fig4
-ggsave("outputs/00_Figures_for_paper/Figure4.png")
+ggsave("outputs/00_Figures_for_paper/Figure4.png", width = 8, height = 8, unit = "in")
 
