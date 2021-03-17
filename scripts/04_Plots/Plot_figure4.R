@@ -15,6 +15,7 @@ library(nlreg)
 library(MASS)
 library(fitdistrplus)
 
+conflict_prefer("summarise", "dplyr")
 
 ## For panel a : Run script "scripts/03_Analysis/06b_Histograms_motus_families_ranks.R
 ## Or load Rdata :
@@ -23,7 +24,27 @@ load("Rdata/rarete_motu_station.rdata")
 
 
 ## For panel b load Rdata :
-load("Rdata/rarete_species_transects.rdata")
+
+
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = F, check.names = F)
+RLS_species <- RLS_species[, c(1,11,7,18:2173)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "site35", "Province"))
+RLS_species <- RLS_species%>%
+  filter(value!=0)
+RLS_species <- RLS_species[,-5]
+colnames(RLS_species) <- c("SurveyID", "site35", "Province", "Species")
+
+species_transects <- RLS_species %>%
+  group_by(Species) %>%
+  summarise(n = n_distinct(SurveyID)) %>%
+  ungroup() %>%
+  group_by(n) %>%
+  summarise(Freq = n_distinct(Species))
+colnames(species_transects) <- c("occ_RLS", "Freq")
+save(species_transects, file="Rdata/rarete_species_transects.rdata")
+
+
+
 
 # fit log-log models
 
@@ -165,7 +186,7 @@ edna_ls <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Log-series", hjust=1, size=3.5, fontface = "bold")+
-  annotate(geom="text", x=2, y=2.5, label="slope= -1\nBending=0.04\nCI=[0.038:0.046]\nAIC=307", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.5, label="slope= -1\nBending=0.05\nCI=[0.048:0.058]\nAIC=257", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -181,7 +202,7 @@ edna_pb <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.4, label="slope= -1.03\nCI=[-1.12:-0.94]\nBending=0.04\nCI=[0.029:0.053]\nAIC=309", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.4, label="slope= -0.83\nCI=[-0.93:-0.74]\nBending=0.07\nCI=[0.05:0.08]\nAIC=256", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -198,7 +219,7 @@ edna_po <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.6, label="slope= -1.64\nCI=[-1.69:-1.60]\nAIC=333", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.6, label="slope= -1.75\nCI=[-1.79:-1.7]\nAIC=297", hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -222,7 +243,7 @@ rls_ls <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Log-series", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.5, label="slope= -1\nBending=0.004\nCI=[-6e-04:3e-04]\nAIC=1078", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.5, label="slope= -1\nBending=0.0001\nCI=[-6e-04:3e-04]\nAIC=1078", hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -238,7 +259,7 @@ rls_pb <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.4, label="slope= -0.96\nCI=[-9.9:-0.94]\nBending=0.0005\nCI=[-0.003:0.001]\nAIC=1076", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.4, label="slope= -0.97\nCI=[-0.99:-0.94]\nBending=0.0005\nCI=[-0.0003:0.001]\nAIC=1076", hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -274,7 +295,7 @@ b <- grid.arrange(plot2, bottom=x.grob)
 
 # Plot all together
 
-Fig4 <- ggarrange(a, b, nrow=2, labels = c("A", "B"), label.x =0, label.y=1)
+Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
 Fig4
 ggsave("outputs/00_Figures_for_paper/Figure4.png")
 
