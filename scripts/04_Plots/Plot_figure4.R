@@ -385,3 +385,4 @@ Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
 Fig4
 ggsave("outputs/00_Figures_for_paper/Figure4.png", width = 8, height = 8, unit = "in")
 
+save.image(file = "Rdata/data_script_figure4.RData")
