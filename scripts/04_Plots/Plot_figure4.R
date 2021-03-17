@@ -272,7 +272,7 @@ edna_ls <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Log-series", hjust=1, size=3.5, fontface = "bold")+
-  annotate(geom="text", x=2, y=2.5, label=paste("slope= -1\nBending=",edna.ls.bend, "\nCI=(",edna.ls.bend_ci,")\nAIC=",edna.ls.AIC), hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.5, label=paste("slope= -1\nBending=",round(edna.ls.bend,2), " (",round(edna.ls.bend_ci,3),")\nAIC=",round(edna.ls.AIC,0), sep = ""), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -288,7 +288,7 @@ edna_pb <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.4, label=paste("slope=",edna.pb.sl,"\nCI=(",edna.pb.sl_ci,")\nBending=",edna.pb.bend,"\nCI=(",edna.pb.bend_ci,")\nAIC=",edna.pb.AIC), hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.4, label=paste("slope=",round(edna.pb.sl,2)," (",round(edna.pb.sl_ci,2),")\nBending=",round(edna.pb.bend,2)," (",round(edna.pb.bend_ci,3),")\nAIC=",round(edna.pb.AIC,0), sep = ""), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -305,7 +305,7 @@ edna_po <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.6, label=paste("slope=",edna.po.sl,"\nCI=(",edna.po.sl_ci,")\nAIC=",edna.po.AIC), hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.6, label=paste("slope=",round(edna.po.sl,2)," (",round(edna.po.sl_ci,2),")\nAIC=",round(edna.po.AIC,0), sep = ""), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -329,7 +329,7 @@ rls_ls <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Log-series", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.5, label=paste("slope= -1\nBending=",rls.ls.bend, "\nCI=(",rls.ls.bend_ci,")\nAIC=",rls.ls.AIC), hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.5, label=paste("slope= -1\nBending=",round(rls.ls.bend,3), " (",round(rls.ls.bend_ci,4),")\nAIC=",round(rls.ls.AIC,0), sep = ""), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -345,7 +345,7 @@ rls_pb <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.4, label=paste("slope=",rls.pb.sl,"\nCI=(",rls.pb.sl_ci,")\nBending=",rls.pb.bend,"\nCI=(",rls.pb.bend_ci,")\nAIC=",rls.pb.AIC), hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.4, label=paste("slope=",round(rls.pb.sl,2)," (",round(rls.pb.sl_ci,3),")\nBending=",round(rls.pb.bend,4)," (",round(rls.pb.bend_ci,4),")\nAIC=",round(rls.pb.AIC,0), sep = ""), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -361,7 +361,7 @@ rls_po <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.6, label=paste("slope=",rls.po.sl,"\nCI=(",rls.po.sl_ci,")\nAIC=",rls.po.AIC), hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.6, label=paste("slope=",round(rls.po.sl,2)," (",round(rls.po.sl_ci,3),")\nAIC=",round(rls.po.AIC,0), sep = ""), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
