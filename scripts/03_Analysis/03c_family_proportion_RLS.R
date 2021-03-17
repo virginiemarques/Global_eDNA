@@ -84,7 +84,7 @@ prob_species <- colSums(df_site)/length(site)
 
 # sample random family assignations for site with 1-300 species, 1000 times (long! load Rdata)
 random_sp <- vector("list", 300)
-random_prop_tot5 <- data.frame()
+random_prop_tot4 <- data.frame()
 rep <- 300
 
 
@@ -102,10 +102,11 @@ for (j in seq(1:100)) {
     random_sp[[i]]$prop <- random_sp[[i]]$Freq / random_sp[[i]]$n_total
     random_prop[[j]] <- rbind(random_prop[[j]], random_sp[[i]])
   }
-  random_prop_tot5 <- rbind(random_prop_tot5, random_prop[[j]])
+  random_prop_tot4 <- rbind(random_prop_tot4, random_prop[[j]])
 }
 
-#random_prop_tot <- rbind(random_prop_tot1, random_prop_tot2, random_prop_tot3, random_prop_tot4, random_prop_tot5, random_prop_tot6, random_prop_tot7, random_prop_tot8, random_prop_tot9, random_prop_tot10)
+random_prop_tot <- rbind(random_prop_tot1, random_prop_tot2, random_prop_tot3, random_prop_tot4, random_prop_tot5, random_prop_tot6, random_prop_tot7, random_prop_tot8, random_prop_tot9, random_prop_tot10)
+colnames(random_prop_tot) <- c("family", "n_species", "n_total", "prop")
 save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions_RLS.rdata")
 
 load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions_RLS.rdata")
@@ -158,6 +159,6 @@ y.grob <- textGrob("Proportion of species in the family in each site",
                    gp=gpar(fontface="bold", col="black", fontsize=12), rot = 90)
 plot_grid <- grid.arrange(plot, bottom=x.grob, left=y.grob)
 
-
+ggsave(plot_grid, file="outputs/00_Figures_for_paper/Extended_Data/ED_family_stability_RLS.png")
 
 
