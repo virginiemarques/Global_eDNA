@@ -16,6 +16,7 @@ library(MASS)
 library(fitdistrplus)
 
 conflict_prefer("summarise", "dplyr")
+conflict_prefer("select", "dplyr")
 
 ## For panel a : Run script "scripts/03_Analysis/06b_Histograms_motus_families_ranks.R
 ## Or load Rdata :
@@ -44,8 +45,6 @@ colnames(species_transects) <- c("occ_RLS", "Freq")
 save(species_transects, file="Rdata/rarete_species_transects.rdata")
 
 
-
-
 # fit log-log models
 
 tab=as.data.frame(motu_station)
@@ -59,111 +58,195 @@ tab2$logfreq <- log10(tab2$Freq)
 tab2$mlogocc <- -log10(tab2$occ_RLS)
 
 
-# distribution
-
-hist(tab$n_motus)
-
-motus.poisson=fitdist(tab$n_motus, "pois")
-
-motus.nb=fitdist(tab$n_motus, "nbinom")
-
-gofstat(list(motus.poisson, motus.nb),fitnames = c("Poisson", "Negative Binomial"))
-
-
-
-hist(tab2$Freq)
-
-rls.poisson=fitdist(tab2$Freq, "pois")
-
-rls.nb=fitdist(tab2$Freq, "nbinom")
-
-gofstat(list(rls.poisson, rls.nb),fitnames = c("Poisson", "Negative Binomial"))
-
 
 # fit non linear regression by maximum likelihood
 
-# power law
+  # power law (pareto)
 
-# initial parameters
+    # eDNA
 
 linmod.motus <- lm(log10(n_motus) ~ log10(n), data = tab)
-
-coef(linmod.motus)
 
 edna.po <- mle2(n_motus ~ dnbinom(mu=b0*n^b1, size=exp(logdisp)),data=tab,
                 start=list(b0 = 10^(coef(linmod.motus)[1]), b1 = coef(linmod.motus)[2],logdisp=0))
 
 confint(edna.po,method="quad")
+edna.po_tidy <- (as.data.frame(tidy(edna.po)))
+# recuperer parametre
+edna.po.AIC <- AIC(edna.po)
 
-plot(log10(n_motus) ~ log10(n), tab)
-lines(log10(tab$n), log10(predict(edna.po)), col = 'blue')
+edna.po.int <- edna.po_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+  
+edna.po.int_ci <- edna.po_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
 
+edna.po.sl <- edna.po_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+edna.po.sl_ci <- edna.po_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error)
+
+      # RLS
 
 linmod.rls <- lm(log10(Freq) ~ log10(occ_RLS), data = tab2)
-
-coef(linmod.rls)
 
 rls.po <- mle2(Freq ~ dnbinom(mu=b0*occ_RLS^b1, size=exp(logdisp)),data=tab2,
                start=list(b0 = 10^(coef(linmod.rls)[1]), b1 = coef(linmod.rls)[2],logdisp=0))
 
 confint(rls.po,method="quad")
 
-plot(log10(Freq) ~ log10(occ_RLS), tab2)
-lines(log10(tab2$occ_RLS), log10(predict(rls.po)), col = 'blue')
+rls.po_tidy <- (as.data.frame(tidy(rls.po)))
+# recuperer parametre
+rls.po.AIC <- AIC(rls.po)
 
+rls.po.int <- rls.po_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+rls.po.int_ci <- rls.po_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+rls.po.sl <- rls.po_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+rls.po.sl_ci <- rls.po_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error)
 
 # log series
-
+    #eDNA
 edna.ls <- mle2(n_motus ~ dnbinom(mu=b0*(1/n)*exp(-b2*n), size=exp(logdisp)),data=tab,control=list(maxit=1E5,trace=0),
                 start=list(b0 = 426, b2 = 0,logdisp=0))
 
-plot(log10(n_motus) ~ log10(n), tab)
-lines(log10(tab$n), log10(predict(edna.ls)), col = 'red')
-
 confint(edna.ls,method="quad")
 
+edna.ls_tidy <- (as.data.frame(tidy(edna.ls)))
+# recuperer parametre
+edna.ls.AIC <- AIC(edna.ls)
+
+edna.ls.int <- edna.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+edna.ls.int_ci <- edna.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+edna.ls.sl <- -1
+
+edna.ls.bend <- edna.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+edna.ls.bend_ci <- edna.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+    # RLS
 rls.ls <- mle2(Freq ~ dnbinom(mu=b0*(1/occ_RLS)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
                start=list(b0 = 256, b2 = 0,logdisp=0))
 
-plot(log10(Freq) ~ log10(occ_RLS), tab2)
-lines(log10(tab2$occ_RLS), log10(predict(rls.ls )), col = 'red')
-
 confint(rls.ls,method="quad")
+rls.ls_tidy <- (as.data.frame(tidy(rls.ls)))
+# recuperer parametre
+rls.ls.AIC <- AIC(rls.ls)
 
+rls.ls.int <- rls.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+rls.ls.int_ci <- rls.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+rls.ls.sl <- -1
+
+rls.ls.bend <- rls.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+rls.ls.bend_ci <- rls.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
 
 
 # power bended
-
+    
+    # eDNA
 edna.pb <- mle2(n_motus ~ dnbinom(mu=b0*(n^b1)*exp(-b2*n), size=exp(logdisp)),data=tab,control=list(maxit=1E5,trace=0),
                 start=list(b0 = 10^(coef(linmod.motus)[1]), b1=coef(linmod.motus)[2],b2 = 0,logdisp=0))
 
-
 confint(edna.pb,method="quad")
 
-plot(log10(n_motus) ~ log10(n), tab)
-lines(log10(tab$n), log10(predict(edna.pb)), col = 'green')
+edna.pb_tidy <- (as.data.frame(tidy(edna.pb)))
+# recuperer parametre
+edna.pb.AIC <- AIC(edna.pb)
 
+edna.pb.int <- edna.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+edna.pb.int_ci <- edna.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+edna.pb.sl <- edna.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+edna.pb.sl_ci <- edna.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error) 
+
+edna.pb.bend <- edna.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+edna.pb.bend_ci <- edna.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+    # RLS
 
 rls.pb <- mle2(Freq ~ dnbinom(mu=b0*(occ_RLS^b1)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
                start=list(b0 = 10^(coef(linmod.rls)[1]), b1=coef(linmod.rls)[2],b2 = 0,logdisp=0))
 
 confint(rls.pb,method="quad")
+rls.pb_tidy <- (as.data.frame(tidy(rls.pb)))
+# recuperer parametre
+rls.pb.AIC <- AIC(rls.pb)
 
-plot(log10(Freq) ~ log10(occ_RLS), tab2)
-lines(log10(tab2$occ_RLS), log10(predict(rls.pb )), col = 'green')
+rls.pb.int <- rls.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
 
+rls.pb.int_ci <- rls.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
 
-# model comparisons
+rls.pb.sl <- rls.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
 
-AICtab(edna.po, edna.ls, edna.pb, weights=TRUE)
+rls.pb.sl_ci <- rls.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error) 
 
-anova(edna.ls,edna.pb)
-anova(edna.po,edna.pb)
+rls.pb.bend <- rls.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
 
-AICtab(rls.po, rls.ls, rls.pb, weights=TRUE)
+rls.pb.bend_ci <- rls.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
 
-anova(rls.po,rls.pb)
-anova(rls.ls,rls.pb)
 
 
 # Figures
@@ -179,14 +262,14 @@ tab2$ls <- predict(rls.ls)
 
 
 
-# plot figure 4a edna
+# plot figure 4a edna --> automate parameters
 edna_ls <- ggplot(tab, aes(x=logn, y=logmotus))+
   geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
   geom_line(aes(x=logn, y=log10(ls)), linetype = "solid", size = 0.8)+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Log-series", hjust=1, size=3.5, fontface = "bold")+
-  annotate(geom="text", x=2, y=2.5, label="slope= -1\nBending=0.05\nCI=[0.048:0.058]\nAIC=257", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.5, label=paste("slope= -1\nBending=",edna.ls.bend, "\nCI=(",edna.ls.bend_ci,")\nAIC=",edna.ls.AIC), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -202,7 +285,7 @@ edna_pb <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.4, label="slope= -0.83\nCI=[-0.93:-0.74]\nBending=0.07\nCI=[0.05:0.08]\nAIC=256", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.4, label=paste("slope=",edna.pb.sl,"\nCI=(",edna.pb.sl_ci,")\nBending=",edna.pb.bend,"\nCI=(",edna.pb.bend_ci,")\nAIC=",edna.pb.AIC), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -219,7 +302,7 @@ edna_po <- ggplot(tab, aes(x=logn, y=logmotus))+
   xlim(0,2)+
   ylim(0,3)+
   annotate(geom="text", x=2, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold")+
-  annotate(geom="text", x=2, y=2.6, label="slope= -1.75\nCI=[-1.79:-1.7]\nAIC=297", hjust=1, size=3.5)+
+  annotate(geom="text", x=2, y=2.6, label=paste("slope=",edna.po.sl,"\nCI=(",edna.po.sl_ci,")\nAIC=",edna.po.AIC), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -243,7 +326,7 @@ rls_ls <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Log-series", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.5, label="slope= -1\nBending=0.0001\nCI=[-6e-04:3e-04]\nAIC=1078", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.5, label=paste("slope= -1\nBending=",rls.ls.bend, "\nCI=(",rls.ls.bend_ci,")\nAIC=",rls.ls.AIC), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -259,7 +342,7 @@ rls_pb <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.4, label="slope= -0.97\nCI=[-0.99:-0.94]\nBending=0.0005\nCI=[-0.0003:0.001]\nAIC=1076", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.4, label=paste("slope=",rls.pb.sl,"\nCI=(",rls.pb.sl_ci,")\nBending=",rls.pb.bend,"\nCI=(",rls.pb.bend_ci,")\nAIC=",rls.pb.AIC), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
@@ -275,7 +358,7 @@ rls_po <- ggplot(tab2, aes(x=logocc, y=logfreq))+
   xlim(0,3)+
   ylim(0,3)+
   annotate(geom="text", x=3, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold") +
-  annotate(geom="text", x=3, y=2.6, label="slope= -0.97\nCI=[-0.99:-0.94]\nAIC=1074", hjust=1, size=3.5) +
+  annotate(geom="text", x=3, y=2.6, label=paste("slope=",rls.po.sl,"\nCI=(",rls.po.sl_ci,")\nAIC=",rls.po.AIC), hjust=1, size=3.5) +
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 

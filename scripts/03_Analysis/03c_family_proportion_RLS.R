@@ -84,28 +84,28 @@ prob_species <- colSums(df_site)/length(site)
 
 # sample random family assignations for site with 1-300 species, 1000 times (long! load Rdata)
 random_sp <- vector("list", 300)
-random_prop_tot <- data.frame()
+random_prop_tot5 <- data.frame()
 rep <- 300
 
 
-for (j in seq(1:1000)) {
-  random_prop <- vector("list" )
+for (j in seq(1:100)) {
+  random_prop <- vector("list", 100)
   for (i in 1:rep) {
     random_sp[[i]] <- as.data.frame(sample(unique_sp, i, replace = TRUE, prob = prob_species))
     colnames(random_sp[[i]]) <- "species"
     random_sp[[i]] <- left_join(random_sp[[i]], global_family, by="species")
     random_sp[[i]] <- data.frame(table(random_sp[[i]]$family))
-    colnames(random_sp[[i]]) <- c("family", "n_species")
-    random_sp[[i]] <- full_join(random_sp[[i]], unique_family, by="family")
+    #colnames(random_sp[[i]]) <- c("family", "n_species")
+    random_sp[[i]] <- full_join(random_sp[[i]], unique_family, by=c("Var1"="family"))
     random_sp[[i]][is.na(random_sp[[i]])] <- 0
-    random_sp[[i]]$n_total <- sum(random_sp[[i]]$n_species)
-    random_sp[[i]]$prop <- random_sp[[i]]$n_species / random_sp[[i]]$n_total
-    random_prop <- rbind(random_prop, random_sp[[i]])
+    random_sp[[i]]$n_total <- sum(random_sp[[i]]$Freq)
+    random_sp[[i]]$prop <- random_sp[[i]]$Freq / random_sp[[i]]$n_total
+    random_prop[[j]] <- rbind(random_prop[[j]], random_sp[[i]])
   }
-  random_prop_tot <- rbind(random_prop_tot, random_prop)
+  random_prop_tot5 <- rbind(random_prop_tot5, random_prop[[j]])
 }
 
-random_prop_tot <- rbind(random_prop_tot1, random_prop_tot2, random_prop_tot3, random_prop_tot4, random_prop_tot5, random_prop_tot6, random_prop_tot7, random_prop_tot8, random_prop_tot9, random_prop_tot10)
+#random_prop_tot <- rbind(random_prop_tot1, random_prop_tot2, random_prop_tot3, random_prop_tot4, random_prop_tot5, random_prop_tot6, random_prop_tot7, random_prop_tot8, random_prop_tot9, random_prop_tot10)
 save(random_prop_tot, file = "c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions_RLS.rdata")
 
 load("c:/Users/mathon/Desktop/PhD/Projets/Megafauna/Global_eDNA/Rdata/random_family_proportions_RLS.rdata")
