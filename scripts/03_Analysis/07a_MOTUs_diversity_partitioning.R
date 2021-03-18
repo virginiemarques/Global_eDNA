@@ -23,15 +23,16 @@ df_all_filters <- df_all_filters %>%
   ## 2. all assigned MOTUs
 df_all_filters <- df_all_filters %>%
   filter(!is.na(species_name_corrected))
-  ## 4. crypto only
+  ## 3. crypto only
 cryptic_family <- c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae", "Kurtidae")
 cryptic_order <- c("Kurtiformes", "Gobiiformes", "Blenniiformes", "Syngnathiformes")
 
 df_all_filters <- filter(df_all_filters, order_name %in% cryptic_order | family_name_corrected %in% cryptic_family)
-  ## 5. pelagic only
+  ## 4. pelagic only
 load("Rdata/pelagic_family.Rdata")
 df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
-
+  ## 5. not crypto not pelagic
+df_all_filters <- subset(df_all_filters, order_name %ni% cryptic_order & family_name_corrected %ni% cryptic_family & family_name_corrected %ni% pelagic_family$family_name)
 
 
 # gamma global =2116

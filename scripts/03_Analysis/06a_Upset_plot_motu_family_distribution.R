@@ -112,9 +112,9 @@ p1 <- upset(matrix_motus,
 p1
 
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
-png('outputs/00_Figures_for_paper/Figure3a.png', width = 7, height=3.6, units = "in", res=300)
+png('outputs/00_Figures_for_paper/Figure4a.png', width = 7, height=3.6, units = "in", res=300)
 p1
-grid.text("Provinces - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()
 
 # ------------------------------------------------------------------------------- # 

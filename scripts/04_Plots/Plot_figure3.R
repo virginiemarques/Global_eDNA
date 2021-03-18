@@ -1,157 +1,364 @@
+# Accumulation curves on genus, family, order on eDNA and RLS data
+
+# Lib 
+library(tidyverse)
 library(ggplot2)
-library(cowplot)
-library(grid)
-library(gridExtra)
 library(ggpubr)
-library(scales)
-library(plyr)
-library(dplyr)
-library(conflicted)
-library(gambin)
-library(sads)
-library(vegan)
-library(bbmle)
-library(nlreg)
-library(MASS)
-library(fitdistrplus)
+
+# data
+load("Rdata/02-clean-data.Rdata")
 
 # 
-conflict_prefer("filter", "dplyr")
-conflict_prefer("summarise", "dplyr")
 '%ni%' <- Negate("%in%")
 
-#________________________________________________________________________________________________________________________________
-## Plot panel a (or run script "scripts/03_Analysis/06a_Upset_plot_motu_family_distribution.R")
-#________________________________________________________________________________________________________________________________
+# Functions
+source('scripts/03_Analysis/00_functions.R')
 
-load("Rdata/upset_plot_motus_region.rdata")
-p1
+# On the df as well
+df_all_filters <- df_all_filters %>%
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project != "Curacao") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
+
+
+# ------------------------------------------------------------------------------- # 
+#### On eDNA MOTUs ----
+# ------------------------------------------------------------------------------- # 
+
+# rank_specify
+rank_choice = 'sequence'
+
+## select cryptic species
+cryptic_family <- c("Tripterygiidae", "Grammatidae", "Aploactinidae", "Creediidae", "Gobiidae", "Chaenopsidae", "Gobiesocidae", "Labrisomidae", "Pseudochromidae", "Bythitidae", "Plesiopidae", "Dactyloscopidae", "Blenniidae", "Apogonidae", "Callionymidae", "Opistognathidae", "Syngnathidae", "Kurtidae")
+cryptic_order <- c("Kurtiformes", "Gobiiformes", "Blenniiformes", "Syngnathiformes")
+df_all_filters <- filter(df_all_filters, order_name %in% cryptic_order | family_name_corrected %in% cryptic_family)
+
+# Add a global saturation curve
+all_accumulation_cryp <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, richness, sd, sites)
+
+
+# Asymptote of all plots 
+all_asymptote_cryp <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, asymptote, slope)
+
+
+# 
+df_join_all_cryp <- all_accumulation_cryp %>%
+  left_join(., all_asymptote_cryp, by = "project_name") %>%
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
+         position_asymptote_x = max(sites),
+         position_slope_y = 0.20 * max(asymptote))
+df_join_all_cryp$family <- "cryptobenthic"
+
+## select pelagic species
+load("Rdata/02-clean-data.Rdata")
+df_all_filters <- df_all_filters %>%
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project != "Curacao") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
+
+load("Rdata/pelagic_family.Rdata")
+df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
+
+# Add a global saturation curve
+all_accumulation_pel <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, richness, sd, sites)
+
+
+# Asymptote of all plots 
+all_asymptote_pel <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, asymptote, slope)
+
+# 
+df_join_all_pel <- all_accumulation_pel %>%
+  left_join(., all_asymptote_pel, by = "project_name") %>%
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
+         position_asymptote_x = max(sites),
+         position_slope_y = 0.20 * max(asymptote))
+df_join_all_pel$family <- "pelagic"
+
+
+## select demersal species
+load("Rdata/02-clean-data.Rdata")
+df_all_filters <- df_all_filters %>%
+  filter(province %in% c("Western_Indian_Ocean", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Coral_Triangle", "Tropical_Southwestern_Pacific"))%>%
+  filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
+  filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
+  filter(project != "Curacao") %>%
+  filter(habitat=="marine")%>%
+  filter(habitat_type %ni% c("BAIE"))
+
+
+df_all_filters <- df_all_filters%>%
+  subset(family_name_corrected %ni% pelagic_family$family_name & family_name_corrected %ni% cryptic_family & order_name %ni% cryptic_order)
+
+# Add a global saturation curve
+all_accumulation_dem <- accumulation_curve_df(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, richness, sd, sites)
+
+
+# Asymptote of all plots 
+all_asymptote_dem <- asymptote_mm(df_all_filters, species_unit = rank_choice) %>%
+  dplyr::mutate(project_name = "All") %>%
+  select(project_name, asymptote, slope)
+
+# 
+df_join_all_dem <- all_accumulation_dem %>%
+  left_join(., all_asymptote_dem, by = "project_name") %>%
+  dplyr::mutate(position_asymptote_y = 1.05*asymptote, 
+         position_asymptote_x = max(sites),
+         position_slope_y = 0.20 * max(asymptote))
+df_join_all_dem$family <- "demersal"
+
+
+df_join_all <- rbind(df_join_all_cryp, df_join_all_pel, df_join_all_dem)
+
+# Plots
+plot_acc_all_eDNA <- ggplot(df_join_all) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5, fill="#d2981a") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5, col="#d2981a") +
+  ylab("Number of MOTUs") +
+  xlab("Samples (filter)") +
+  facet_wrap(~family, scales = "free") +
+  ggtitle("eDNA MOTUs")+
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "MOTUs")), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
+  theme_bw()
+
+plot_acc_all_eDNA
+
+ggsave("outputs/03_accumulation_curves/accumulation_curve_eDNA_family_type.png", plot_acc_all_eDNA, width = 12, height = 4)
 
 
 
 
-#_______________________________________________________________________________________________________________________________
-## Plot panel b
-#_______________________________________________________________________________________________________________________________
 
-## Run script "scripts/03_Analysis/07a_MOTUs_diversity_partitioning.R"
-## Or load Rdata :
-load("Rdata/beta_region.rdata")
-load("Rdata/beta_site.rdata")
-load("Rdata/beta_station.rdata")
-load("Rdata/alpha_station.rdata")
-
-Region <- unique(beta_site$province)
-
-gamma_global = 2116
-
-all_data <- data.frame()
-
-all_data[1,1] <- "gamma_global"
-all_data[1,2] <- "all"
-all_data[1,3] <- 100
-all_data[1,4] <- 0
-colnames(all_data) <- c("scale", "region", "mean", "sd")
-
-all_data[2,1] <- "Beta_inter-region"
-all_data[2,2] <- "all"
-all_data[2,3] <- 74
-all_data[2,4] <- 0
-
-for (i in 1:length(Region)) {
-  all_data[i+2,1] <- "mean_Beta_inter-site"
-  all_data[i+2,2] <- Region[i]
-  all_data[i+2,3] <- beta_site %>%
-    filter(province==Region[i])%>%
-    summarize(n=beta*100/gamma_global)
-  all_data[i+2,4] <- NA
+# ------------------------------------------------------------------------------- # 
+#### On RLS species ----
+# ------------------------------------------------------------------------------- # 
+# Functions 
+akaike.weights <- function(x)
+{
+  x <- x[!is.na(x)]
+  delta.aic <- x - min(x, na.rm = TRUE)
+  rel.LL <- exp(-0.5 * delta.aic)
+  sum.LL <- sum(rel.LL, na.rm = TRUE)
+  weights.aic <- rel.LL/sum.LL
+  return(list(deltaAIC = delta.aic, rel.LL = rel.LL, weights = weights.aic))
 }
 
-for (i in 1:length(Region)) {
-  all_data[i+7,1] <- "mean_Beta_inter-station"
-  all_data[i+7,2] <- Region[i]
-  all_data[i+7,3] <- beta_station %>%
-    filter(province==Region[i])%>%
-    summarize(n=mean(beta)*100/gamma_global)
-  all_data[i+7,4] <- beta_station %>%
-    filter(province==Region[i])%>%
-    summarize(n=sd(beta)*100/gamma_global)
-}
 
-for (i in 1:length(Region)) {
-  all_data[i+12,1] <- "mean_alpha_station"
-  all_data[i+12,2] <- Region[i]
-  all_data[i+12,3] <- alpha_station %>%
-    filter(province==Region[i])%>%
-    summarize(n=mean(motu)*100/gamma_global)
-  all_data[i+12,4] <- alpha_station %>%
-    filter(province==Region[i])%>%
-    summarize(n=sd(motu)*100/gamma_global)
-}
-all_data[9,4] <- 0
-all_data[4,3] <- 0.1
-all_data[2,4] <- NA
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = FALSE, check.names = FALSE)
+RLS_sp <- RLS_species[,c(18:2173)]
+RLS_sp <- RLS_sp[,colSums(RLS_sp)>0]
+RLS_species <- cbind(RLS_species$SurveyID, RLS_sp)
+colnames(RLS_species)[1] <- "SurveyID"
+
+library(rfishbase)
+all_fishbase <- load_taxa()
 
 
-all_data <- all_data %>%
-  group_by(scale)%>%
-  mutate(position= rank(mean))
+# select cryptobenthic species
 
-all_data <- all_data%>%
-  group_by(scale)%>%
-  mutate(label= case_when(
-    scale=="Beta_inter-region" ~ 74,
-    scale=="mean_Beta_inter-site" ~ 14.5,
-    scale=="mean_Beta_inter-station" ~ 6.2,
-    scale=="mean_alpha_station" ~ 5.3,
-    scale=="gamma_global" ~ 100
-  ))
+fishbase_crypto <- all_fishbase %>%
+  filter(Family %in% cryptic_family)
+RLS_crypto <- RLS_species %>%
+  select(one_of(fishbase_crypto$Species))
+RLS_crypto <- cbind(RLS_species$SurveyID, RLS_crypto)
+colnames(RLS_crypto)[1] <- "SurveyID"
+# method
+method_accumulation = "exact"
 
+# Add a global saturation curve for RLS
+all_accumulation_crypto_RLS <- specaccum(RLS_crypto[,2:ncol(RLS_crypto)], 
+                                          method = method_accumulation, permutations = 100,
+                                          conditioned =TRUE, gamma = "jack1")
 
-
-p2 <-ggplot(all_data[3:17,], aes(x=reorder(scale,mean), y=mean, fill=region, group= position))+
-  geom_col(stat = "identity", position=position_dodge(), width=0.5)+
-  scale_fill_manual(values=c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+
-  geom_errorbar(data=all_data[3:17,], aes(ymin=mean-sd, ymax=mean+sd), width=.3,
-                position=position_dodge(0.5), size=0.5)+
-  geom_errorbar(aes(ymin=label, ymax=label), width=0.5, size=1)+
-  ylim(0,100)+
-  theme(legend.position = "none")+
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        panel.background = element_blank(), 
-        panel.border = element_blank(), 
-        plot.title = element_text(size = 12, face="bold"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        plot.margin=unit(c(0,0,0,0), "cm"))+
-  coord_flip()
-
-p1 <-ggplot(all_data[1:2,], aes(x=reorder(scale,mean), y=mean, fill=region, group= position))+
-  geom_bar(stat = "identity", position=position_dodge(), width=0.2, fill="grey")+
-  geom_errorbar(aes(ymin=label, ymax=label), width=0.4, size=1)+
-  ylim(0,100)+
-  theme(legend.position = "none")+
-  theme(panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        panel.background = element_blank(), 
-        panel.border = element_blank(), 
-        plot.title = element_text(size = 12, face="bold"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        plot.margin=unit(c(0,0,0,0), "cm"))+
-  coord_flip()
-
-Fig3 <- ggarrange(p1, p2, nrow=2, heights = c(1, 2.5))
-
-ggsave(Fig3, file="outputs/00_Figures_for_paper/Figure3b.png")
+# Accumulation for plot 
+all_accumulation_crypto_RLS_df <- data.frame(richness = all_accumulation_crypto_RLS$richness, sd = all_accumulation_crypto_RLS$sd, sites = all_accumulation_crypto_RLS$sites)
 
 
-### Complete figure 3 is assembled on powerpoint "outputs/00Figures_fot_paper/Figure3.ppt"
+# Asymptote of RLS  
+# models asymptotes
+lomo_edna <- fitspecaccum(all_accumulation_crypto_RLS, "lomolino")
+aic_lomo_edna <-AIC(lomo_edna)
+mm_edna <- fitspecaccum(all_accumulation_crypto_RLS, "michaelis-menten")
+aic_mm_edna <- AIC(mm_edna)
+gom_edna <- fitspecaccum(all_accumulation_crypto_RLS, "gompertz")
+aic_gom_edna <- AIC(gom_edna)
+asy_edna <- fitspecaccum(all_accumulation_crypto_RLS, "asymp")
+aic_asy_edna <- AIC(asy_edna)
+gis_edna <- fitspecaccum(all_accumulation_crypto_RLS, "logis")
+aic_gis_edna <- AIC(gis_edna)
+
+# compute results
+res_edna <- matrix(NA,nrow = 4, ncol = 3)
+rownames(res_edna) <- c("lomolino", "michaelis-menten", "asymp", "logis")
+colnames(res_edna) <- c("AIC", "Asymptote", "Weigth")
+res_edna[,"AIC"] <- c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna)
+res_edna[,"Weigth"] <- akaike.weights(c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna))$weights
+res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
+
+# Calculation asymptote value
+asymp_crypto_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
+
+# Add to DF
+all_accumulation_crypto_RLS_df$asymptote <- asymp_crypto_RLS
+all_accumulation_crypto_RLS_df$slope <- coef(lomo_edna)[[3]]
+all_accumulation_crypto_RLS_df$family <- "cryptobenthic"
+all_accumulation_crypto_RLS_df$position_asymptote_y = 1.05*all_accumulation_crypto_RLS_df$asymptote
+all_accumulation_crypto_RLS_df$position_asymptote_x = max(all_accumulation_crypto_RLS_df$sites)
+all_accumulation_crypto_RLS_df$position_slope_y = 0.20 * max(all_accumulation_crypto_RLS_df$asymptote)
+
+# select pelagic species
+
+fishbase_pelagic <- all_fishbase %>%
+  filter(Family %in% pelagic_family$family_name)
+RLS_pelagic <- RLS_species %>%
+  select(one_of(fishbase_pelagic$Species))
+RLS_pelagic <- cbind(RLS_species$SurveyID, RLS_pelagic)
+colnames(RLS_pelagic)[1] <- "SurveyID"
+# method
+method_accumulation = "exact"
+
+# Add a global saturation curve for RLS
+all_accumulation_pelagic_RLS <- specaccum(RLS_pelagic[,2:ncol(RLS_pelagic)], 
+                                         method = method_accumulation, permutations = 100,
+                                         conditioned =TRUE, gamma = "jack1")
+
+# Accumulation for plot 
+all_accumulation_pelagic_RLS_df <- data.frame(richness = all_accumulation_pelagic_RLS$richness, sd = all_accumulation_pelagic_RLS$sd, sites = all_accumulation_pelagic_RLS$sites)
+
+
+# Asymptote of RLS  
+# models asymptotes
+lomo_edna <- fitspecaccum(all_accumulation_pelagic_RLS, "lomolino")
+aic_lomo_edna <-AIC(lomo_edna)
+mm_edna <- fitspecaccum(all_accumulation_pelagic_RLS, "michaelis-menten")
+aic_mm_edna <- AIC(mm_edna)
+gom_edna <- fitspecaccum(all_accumulation_pelagic_RLS, "gompertz")
+aic_gom_edna <- AIC(gom_edna)
+asy_edna <- fitspecaccum(all_accumulation_pelagic_RLS, "asymp")
+aic_asy_edna <- AIC(asy_edna)
+gis_edna <- fitspecaccum(all_accumulation_pelagic_RLS, "logis")
+aic_gis_edna <- AIC(gis_edna)
+
+# compute results
+res_edna <- matrix(NA,nrow = 4, ncol = 3)
+rownames(res_edna) <- c("lomolino", "michaelis-menten", "asymp", "logis")
+colnames(res_edna) <- c("AIC", "Asymptote", "Weigth")
+res_edna[,"AIC"] <- c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna)
+res_edna[,"Weigth"] <- akaike.weights(c(aic_lomo_edna, aic_mm_edna, aic_asy_edna, aic_gis_edna))$weights
+res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
+
+# Calculation asymptote value
+asymp_pelagic_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
+
+# Add to DF
+all_accumulation_pelagic_RLS_df$asymptote <- asymp_pelagic_RLS
+all_accumulation_pelagic_RLS_df$slope <- coef(lomo_edna)[[3]]
+all_accumulation_pelagic_RLS_df$family <- "pelagic"
+all_accumulation_pelagic_RLS_df$position_asymptote_y = 1.05*all_accumulation_pelagic_RLS_df$asymptote
+all_accumulation_pelagic_RLS_df$position_asymptote_x = max(all_accumulation_pelagic_RLS_df$sites)
+all_accumulation_pelagic_RLS_df$position_slope_y = 0.20 * max(all_accumulation_pelagic_RLS_df$asymptote)
+
+# select demersal species
+
+fishbase_demersal <- all_fishbase %>%
+  filter(Family %ni% cryptic_family & Family %ni% pelagic_family$family_name)
+RLS_demersal <- RLS_species %>%
+  select(one_of(fishbase_demersal$Species))
+RLS_demersal <- cbind(RLS_species$SurveyID, RLS_demersal)
+colnames(RLS_demersal)[1] <- "SurveyID"
+# method
+method_accumulation = "exact"
+
+# Add a global saturation curve for RLS
+all_accumulation_demersal_RLS <- specaccum(RLS_demersal[,2:ncol(RLS_demersal)], 
+                                         method = method_accumulation, permutations = 100,
+                                         conditioned =TRUE, gamma = "jack1")
+
+# Accumulation for plot 
+all_accumulation_demersal_RLS_df <- data.frame(richness = all_accumulation_demersal_RLS$richness, sd = all_accumulation_demersal_RLS$sd, sites = all_accumulation_demersal_RLS$sites)
+
+
+# Asymptote of RLS  
+# models asymptotes
+lomo_edna <- fitspecaccum(all_accumulation_demersal_RLS, "lomolino")
+aic_lomo_edna <-AIC(lomo_edna)
+mm_edna <- fitspecaccum(all_accumulation_demersal_RLS, "michaelis-menten")
+aic_mm_edna <- AIC(mm_edna)
+gom_edna <- fitspecaccum(all_accumulation_demersal_RLS, "gompertz")
+aic_gom_edna <- AIC(gom_edna)
+asy_edna <- fitspecaccum(all_accumulation_demersal_RLS, "asymp")
+aic_asy_edna <- AIC(asy_edna)
+gis_edna <- fitspecaccum(all_accumulation_demersal_RLS, "logis")
+aic_gis_edna <- AIC(gis_edna)
+
+# compute results
+res_edna <- matrix(NA,nrow = 5, ncol = 3)
+rownames(res_edna) <- c("lomolino", "michaelis-menten", "gompertz", "asymp", "logis")
+colnames(res_edna) <- c("AIC", "Asymptote", "Weigth")
+res_edna[,"AIC"] <- c(aic_lomo_edna, aic_mm_edna, aic_gom_edna, aic_asy_edna, aic_gis_edna)
+res_edna[,"Weigth"] <- akaike.weights(c(aic_lomo_edna, aic_mm_edna, aic_gom_edna, aic_asy_edna, aic_gis_edna))$weights
+res_edna[,"Asymptote"] <- c(coef(lomo_edna)[[1]], coef(mm_edna)[[1]], coef(gom_edna)[[1]], coef(asy_edna)[[1]], coef(gis_edna)[[1]])
+
+# Calculation asymptote value
+asymp_demersal_RLS <- weighted.mean(res_edna[,"Asymptote"], res_edna[,"Weigth"])
+
+# Add to DF
+all_accumulation_demersal_RLS_df$asymptote <- asymp_demersal_RLS
+all_accumulation_demersal_RLS_df$slope <- coef(lomo_edna)[[3]]
+all_accumulation_demersal_RLS_df$family <- "demersal"
+all_accumulation_demersal_RLS_df$position_asymptote_y = 1.05*all_accumulation_demersal_RLS_df$asymptote
+all_accumulation_demersal_RLS_df$position_asymptote_x = max(all_accumulation_demersal_RLS_df$sites)
+all_accumulation_demersal_RLS_df$position_slope_y = 0.20 * max(all_accumulation_demersal_RLS_df$asymptote)
+
+
+##join all
+
+df_join_all_RLS <- rbind(all_accumulation_demersal_RLS_df, all_accumulation_crypto_RLS_df, all_accumulation_pelagic_RLS_df)
+
+
+
+plot_acc_all_RLS <- ggplot(df_join_all_RLS) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5) +
+  ylab("Number of species") +
+  xlab("Transects") +
+  facet_wrap(~family, scales = "free") +
+  ggtitle("Visual census species")+
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "species")), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
+  theme_bw()
+
+plot_acc_all_RLS
+
+ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", plot_acc_all_RLS, width = 12, height = 4)
+
+# --------------------------------------------------------------------- # 
+#### Final figure - combine all levels  ----
+# --------------------------------------------------------------------- # 
+
+
+ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("a", "b"))
+ggsave("outputs/00_Figures_for_paper/Figure3.png", width=8, height = 6)
+
+
+
+
 
