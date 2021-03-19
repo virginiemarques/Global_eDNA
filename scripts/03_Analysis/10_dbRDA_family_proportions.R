@@ -87,9 +87,9 @@ grda_sites <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
-                    name = "Region", labels = c("Southeast_Pacific", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
+                    name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   scale_shape_manual(values = c(25:21),
-                     name = "Region", labels = c("Southeast_Pacific", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
+                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)"),
        title = "") +
   theme_bw() +
@@ -246,9 +246,9 @@ grda_sites <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
-                    name = "Region", labels = c("Southeast_Pacific", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
+                    name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   scale_shape_manual(values = c(25:21),
-                     name = "Region", labels = c("Southeast_Pacific", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
+                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)"),
        title = "") +
   theme_bw() +
