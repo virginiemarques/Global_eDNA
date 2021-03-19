@@ -33,6 +33,7 @@ site <- unique(RLS_species$site35)
 for (i in 1:length(site)) {
   s <- site[i]
   RLS_site <- RLS_species[RLS_species$site35 == site[i],]
+  p <- unique(RLS_site$Province)
   RLS_sp_site <- RLS_site%>%
     distinct(Species, .keep_all = TRUE)
   count_families <- data.frame(table(RLS_sp_site$Family))
@@ -40,12 +41,13 @@ for (i in 1:length(site)) {
   count_families$n_sp_total <- nrow(RLS_sp_site)
   count_families$prop <- count_families$n_species / count_families$n_sp_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
-  count_families$site <- s
+  count_families$site35 <- s
+  count_families$province <- p
   count_families_site_RLS <- rbind(count_families_site_RLS, count_families)
 }
 
 write.csv(count_families_site_RLS, "outputs/04_family_proportion/Site/family_proportion_site_RLS.csv")
-
+save(count_families_site_RLS, file="Rdata/family_proportion_site_RLS.rdata")
 
 
 #---------------------------------------------------------------------------------------------------------------------
