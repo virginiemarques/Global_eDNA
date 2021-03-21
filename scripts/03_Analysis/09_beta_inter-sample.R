@@ -56,4 +56,4 @@ ggplot(betastation, aes(region, beta))+
   theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x="", y="Jaccard dissimilarity (motus)")
 
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_beta_inter-replicate.png")
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure9.png")

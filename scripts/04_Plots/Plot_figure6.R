@@ -1,121 +1,388 @@
-library(png)
 library(ggplot2)
 library(cowplot)
 library(grid)
 library(gridExtra)
 library(ggpubr)
 library(scales)
+library(plyr)
 library(dplyr)
 library(conflicted)
 library(gambin)
 library(sads)
 library(vegan)
-library(plyr)
+library(bbmle)
+library(nlreg)
+library(MASS)
+library(fitdistrplus)
+library(broom)
 
-# 
-conflict_prefer("filter", "dplyr")
 conflict_prefer("summarise", "dplyr")
-'%ni%' <- Negate("%in%")
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer("ggsave", "ggplot2")
 
-
-## For panel a : Run scripts "scripts/03_Analysis/05_richess_motu_family.R"  
+## For panel a : Run script "scripts/03_Analysis/06b_Histograms_motus_families_ranks.R
 ## Or load Rdata :
-load("Rdata/richness_station_site_region.rdata")
-load("Rdata/richness_motu_region.rdata")
+load("Rdata/rarete_motu_station.rdata")
 
-# plot panel a left : motu richness per region
 
-all_motus <- ggplot(rich_site, aes(col=province))+
-  geom_point(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
-  geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
-  geom_point(aes(x=dist_to_CT, y=mean_motu), shape=21, size=2, fill="white", alpha=0.7, show.legend = FALSE) +
-  geom_point(data=all_province, aes(x=dist_to_CT, y=n_motus), shape=23, size=2.5, show.legend = FALSE) +
-  geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
-  scale_color_manual(values=c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
-  theme(legend.position = "none")+
+
+## For panel b load Rdata :
+
+
+RLS_species <- read.csv("data/RLS/RLS_species_NEW.csv", sep = ";", stringsAsFactors = F, check.names = F)
+RLS_species <- RLS_species[, c(1,11,7,18:2173)]
+RLS_species <- reshape2::melt(RLS_species, id=c("SurveyID", "site35", "Province"))
+RLS_species <- RLS_species%>%
+  filter(value!=0)
+RLS_species <- RLS_species[,-5]
+colnames(RLS_species) <- c("SurveyID", "site35", "Province", "Species")
+
+species_transects <- RLS_species %>%
+  group_by(Species) %>%
+  summarise(n = n_distinct(SurveyID)) %>%
+  ungroup() %>%
+  group_by(n) %>%
+  summarise(Freq = n_distinct(Species))
+colnames(species_transects) <- c("occ_RLS", "Freq")
+save(species_transects, file="Rdata/rarete_species_transects.rdata")
+
+
+# fit log-log models
+
+tab=as.data.frame(motu_station)
+tab$logn=log10(tab$n)
+tab$logmotus=log10(tab$n_motus)
+tab$mlogn=-log10(tab$n)
+
+tab2 <- species_transects
+tab2$logocc <- log10(tab2$occ_RLS)
+tab2$logfreq <- log10(tab2$Freq)
+tab2$mlogocc <- -log10(tab2$occ_RLS)
+
+
+
+# fit non linear regression by maximum likelihood
+
+  # power law (pareto)
+
+    # eDNA
+
+linmod.motus <- lm(log10(n_motus) ~ log10(n), data = tab)
+
+edna.po <- mle2(n_motus ~ dnbinom(mu=b0*n^b1, size=exp(logdisp)),data=tab,
+                start=list(b0 = 10^(coef(linmod.motus)[1]), b1 = coef(linmod.motus)[2],logdisp=0))
+
+confint(edna.po,method="quad")
+edna.po_tidy <- (as.data.frame(tidy(edna.po)))
+# recuperer parametre
+edna.po.AIC <- AIC(edna.po)
+
+edna.po.int <- edna.po_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+  
+edna.po.int_ci <- edna.po_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+edna.po.sl <- edna.po_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+edna.po.sl_ci <- edna.po_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error)
+
+      # RLS
+
+linmod.rls <- lm(log10(Freq) ~ log10(occ_RLS), data = tab2)
+
+rls.po <- mle2(Freq ~ dnbinom(mu=b0*occ_RLS^b1, size=exp(logdisp)),data=tab2,
+               start=list(b0 = 10^(coef(linmod.rls)[1]), b1 = coef(linmod.rls)[2],logdisp=0))
+
+confint(rls.po,method="quad")
+
+rls.po_tidy <- (as.data.frame(tidy(rls.po)))
+# recuperer parametre
+rls.po.AIC <- AIC(rls.po)
+
+rls.po.int <- rls.po_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+rls.po.int_ci <- rls.po_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+rls.po.sl <- rls.po_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+rls.po.sl_ci <- rls.po_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error)
+
+# log series
+    #eDNA
+edna.ls <- mle2(n_motus ~ dnbinom(mu=b0*(1/n)*exp(-b2*n), size=exp(logdisp)),data=tab,control=list(maxit=1E5,trace=0),
+                start=list(b0 = 426, b2 = 0,logdisp=0))
+
+confint(edna.ls,method="quad")
+
+edna.ls_tidy <- (as.data.frame(tidy(edna.ls)))
+# recuperer parametre
+edna.ls.AIC <- AIC(edna.ls)
+
+edna.ls.int <- edna.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+edna.ls.int_ci <- edna.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+edna.ls.sl <- -1
+
+edna.ls.bend <- edna.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+edna.ls.bend_ci <- edna.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+    # RLS
+rls.ls <- mle2(Freq ~ dnbinom(mu=b0*(1/occ_RLS)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
+               start=list(b0 = 256, b2 = 0,logdisp=0))
+
+confint(rls.ls,method="quad")
+rls.ls_tidy <- (as.data.frame(tidy(rls.ls)))
+# recuperer parametre
+rls.ls.AIC <- AIC(rls.ls)
+
+rls.ls.int <- rls.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+rls.ls.int_ci <- rls.ls_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+rls.ls.sl <- -1
+
+rls.ls.bend <- rls.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+rls.ls.bend_ci <- rls.ls_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+
+# power bended
+    
+    # eDNA
+edna.pb <- mle2(n_motus ~ dnbinom(mu=b0*(n^b1)*exp(-b2*n), size=exp(logdisp)),data=tab,control=list(maxit=1E5,trace=0),
+                start=list(b0 = 10^(coef(linmod.motus)[1]), b1=coef(linmod.motus)[2],b2 = 0,logdisp=0))
+
+confint(edna.pb,method="quad")
+
+edna.pb_tidy <- (as.data.frame(tidy(edna.pb)))
+# recuperer parametre
+edna.pb.AIC <- AIC(edna.pb)
+
+edna.pb.int <- edna.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+edna.pb.int_ci <- edna.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+edna.pb.sl <- edna.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+edna.pb.sl_ci <- edna.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error) 
+
+edna.pb.bend <- edna.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+edna.pb.bend_ci <- edna.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+    # RLS
+
+rls.pb <- mle2(Freq ~ dnbinom(mu=b0*(occ_RLS^b1)*exp(-b2*occ_RLS), size=exp(logdisp)),data=tab2,
+               start=list(b0 = 10^(coef(linmod.rls)[1]), b1=coef(linmod.rls)[2],b2 = 0,logdisp=0))
+
+confint(rls.pb,method="quad")
+rls.pb_tidy <- (as.data.frame(tidy(rls.pb)))
+# recuperer parametre
+rls.pb.AIC <- AIC(rls.pb)
+
+rls.pb.int <- rls.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(estimate) 
+
+rls.pb.int_ci <- rls.pb_tidy %>%
+  filter(term=="b0")%>%
+  select(std.error)
+
+rls.pb.sl <- rls.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(estimate)
+
+rls.pb.sl_ci <- rls.pb_tidy %>%
+  filter(term=="b1")%>%
+  select(std.error) 
+
+rls.pb.bend <- rls.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(estimate) 
+
+rls.pb.bend_ci <- rls.pb_tidy %>%
+  filter(term=="b2")%>%
+  select(std.error)
+
+
+
+# Figures
+
+# predict for each model
+tab$pb <- predict(edna.pb)
+tab$po <- predict(edna.po)
+tab$ls <- predict(edna.ls)
+
+tab2$pb <- predict(rls.pb)
+tab2$po <- predict(rls.po)
+tab2$ls <- predict(rls.ls)
+
+
+
+# plot figure 4a edna --> automate parameters
+edna_ls <- ggplot(tab, aes(x=logn, y=logmotus))+
+  geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logn, y=log10(ls)), linetype = "solid", size = 0.8)+
+  xlim(0,2)+
+  ylim(0,3)+
+  annotate(geom="text", x=2, y=3, label="Log-series", hjust=1, size=3.5, fontface = "bold")+
+  annotate(geom="text", x=2, y=2.5, label=paste("slope= -1\nBending=",round(edna.ls.bend,2), " (",round(edna.ls.bend_ci,3),")\nAIC=",round(edna.ls.AIC,0), sep = ""), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
         panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size = 10, face = "bold"), 
-        plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
-        text = element_text(size=12))+
-  labs(x="",y="MOTU richness")
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="log10(Nb of MOTUs)")
 
-# plot panel a right : family richness per region
-
-load("Rdata/richness_family_region.rdata")
-all_family <- ggplot(rich_site, aes(col=province))+
-  geom_jitter(aes(x=dist_to_CT, y=family), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
-  geom_errorbar(aes(x=dist_to_CT, ymin=mean_family-sd_family, ymax=mean_family+sd_family), show.legend = FALSE, alpha=0.7)+
-  geom_jitter(aes(x=dist_to_CT, y=mean_family), shape=21, size=2, alpha=0.7, fill="white", show.legend = FALSE) +
-  geom_point(data=all_province, aes(x=dist_to_CT, y=n_family), shape=23, size=2.5, show.legend = FALSE) +
-  geom_vline(xintercept = 14000, linetype="dashed", color="grey")+
-  scale_color_manual(values=c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
-  theme(legend.position = "none")+
+edna_pb <- ggplot(tab, aes(x=logn, y=logmotus))+
+  geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logn, y=log10(pb)), linetype = "solid", size = 0.8)+
+  xlim(0,2)+
+  ylim(0,3)+
+  annotate(geom="text", x=2, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold")+
+  annotate(geom="text", x=2, y=2.4, label=paste("slope=",round(edna.pb.sl,2)," (",round(edna.pb.sl_ci,2),")\nBending=",round(edna.pb.bend,2)," (",round(edna.pb.bend_ci,3),")\nAIC=",round(edna.pb.AIC,0), sep = ""), hjust=1, size=3.5)+
   theme(panel.grid.major = element_blank(), 
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
         panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size = 10, face = "bold"), 
-        plot.margin=unit(c(0.2,0.4,0,0.1), "cm"), 
-        text = element_text(size=12))+
-  labs(x="",y="Family richness")
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="")
 
-# plot panel a 
 
-plot <- ggarrange(all_motus, all_family, ncol = 2, nrow=1)
-x.grob <- textGrob("Distance to Coral Triangle (km, W-E)", 
+edna_po <- ggplot(tab, aes(x=logn, y=logmotus))+
+  geom_point(colour="#d2981a", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logn, y=log10(po)), linetype = "solid", size = 0.8)+
+  xlim(0,2)+
+  ylim(0,3)+
+  annotate(geom="text", x=2, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold")+
+  annotate(geom="text", x=2, y=2.6, label=paste("slope=",round(edna.po.sl,2)," (",round(edna.po.sl_ci,2),")\nAIC=",round(edna.po.AIC,0), sep = ""), hjust=1, size=3.5)+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="")
+
+plot <- ggarrange(edna_ls, edna_po, edna_pb, ncol = 3, nrow=1)
+x.grob <- textGrob("log10(Nb of stations)", 
                    gp=gpar(fontface="bold", col="black", fontsize=10), vjust = -0.5)
+
 
 a <- grid.arrange(plot, bottom=x.grob)
 
-## For panel b : Run scripts "scripts/03_Analysis/03a_family_presence_proportions.R"
-#                             "scripts/03_Analysis/03b_random_proportion_families.R"
-## Or load Rdata :
-load("Rdata/family_proportion_per_site.rdata")
-load("Rdata/CI_null_model_family_proportions.rdata")
+# plot figure 4b rls
+rls_ls <- ggplot(tab2, aes(x=logocc, y=logfreq))+
+  geom_point(colour = "darkgrey", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logocc, y=log10(ls)), linetype = "solid", size = 0.8)+
+  xlim(0,3)+
+  ylim(0,3)+
+  annotate(geom="text", x=3, y=3, label="Log-series", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.5, label=paste("slope= -1\nBending=",round(rls.ls.bend,3), " (",round(rls.ls.bend_ci,4),")\nAIC=",round(rls.ls.AIC,0), sep = ""), hjust=1, size=3.5) +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="log10(Number of species)")
+
+rls_pb <- ggplot(tab2, aes(x=logocc, y=logfreq))+
+  geom_point(colour = "darkgrey", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logocc, y=log10(pb)), linetype = "solid", size = 0.8)+
+  xlim(0,3)+
+  ylim(0,3)+
+  annotate(geom="text", x=3, y=3, label="Pareto-bended", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.4, label=paste("slope=",round(rls.pb.sl,2)," (",round(rls.pb.sl_ci,3),")\nBending=",round(rls.pb.bend,4)," (",round(rls.pb.bend_ci,4),")\nAIC=",round(rls.pb.AIC,0), sep = ""), hjust=1, size=3.5) +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="")
+
+rls_po <- ggplot(tab2, aes(x=logocc, y=logfreq))+
+  geom_point(colour = "darkgrey", size=2, show.legend = TRUE)+
+  geom_line(aes(x=logocc, y=log10(po)), linetype = "solid", size = 0.8)+
+  xlim(0,3)+
+  ylim(0,3)+
+  annotate(geom="text", x=3, y=3, label="Pareto", hjust=1, size=3.5, fontface="bold") +
+  annotate(geom="text", x=3, y=2.6, label=paste("slope=",round(rls.po.sl,2)," (",round(rls.po.sl_ci,3),")\nAIC=",round(rls.po.AIC,0), sep = ""), hjust=1, size=3.5) +
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.background = element_blank(), 
+        panel.border = element_rect(fill = NA),
+        axis.title.y = element_text(size = 10, face = "bold"),
+        axis.title.x = element_text(size = 10, face = "bold"),
+        plot.title = element_text(size=12, face = "bold"))+
+  labs(x="",y="")
+
+plot2 <- ggarrange(rls_ls, rls_po, rls_pb, ncol = 3, nrow=1)
+x.grob <- textGrob("log10(Nb of transects)", 
+                   gp=gpar(fontface="bold", col="black", fontsize=10), vjust = -0.5)
 
 
-
-# plot panel b
-
-family <- c("Acanthuridae", "Labridae", "Serranidae", "Carangidae", "Pomacentridae","Gobiidae")
-
-prop <- vector("list")
-for (i in 1:length(family)) {
-  fam <- df_all_site[df_all_site$family == family[i],]
-  fam_CI <- CI_family[CI_family$family == family[i],]
-  prop[[i]] <- ggplot(fam, aes(n_motus_total, prop))+
-    geom_smooth(data=fam_CI, aes(n_total, upper), col="black", size=0.5, show.legend = FALSE)+
-    geom_smooth(data=fam_CI, aes(n_total, lower), col="black", size=0.5, show.legend = FALSE)+
-    geom_point(size=2, aes(colour=province))+
-    xlim(0, 600)+
-    ylim(0,0.3)+
-    theme_bw()+
-    theme(legend.position = "none")+
-    scale_color_manual(values =c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"))+ 
-    labs(title=family[i], x="", y="")+
-    theme(panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank(), 
-          panel.background = element_blank(), 
-          panel.border = element_rect(fill = NA),
-          axis.title.y = element_text(size = 10, face = "bold"),
-          plot.title = element_text(size=10, face = "bold"),
-          plot.margin=unit(c(0,0.1,0,0), "cm"))
-}
-
-plot <- ggarrange(plotlist = prop, ncol=2, nrow = 3)
-
-x.grob <- textGrob("Total number of MOTUs per site", 
-                   gp=gpar(fontface="bold", col="black", fontsize=10))
-y.grob <- textGrob("Proportion of MOTUs assigned to the family in each site", 
-                   gp=gpar(fontface="bold", col="black", fontsize=10), rot = 90)
-b <- grid.arrange(plot, bottom=x.grob, left=y.grob)
+b <- grid.arrange(plot2, bottom=x.grob)
 
 
-# plot all together
+# Plot all together
 
-Fig2 <- ggarrange(a, b, nrow = 2, ncol = 1, labels = c("a", "b"), heights = c(1,2.5))
-Fig2
-ggsave("outputs/00_Figures_for_paper/Figure6.png", width = 7.5, height = 8, dpi = 300)
+Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
+Fig4
+ggsave("outputs/00_Figures_for_paper/Figure6.png", width = 8, height = 8, unit = "in")
+
+save.image(file = "Rdata/data_script_figure6.RData")

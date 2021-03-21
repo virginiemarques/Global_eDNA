@@ -535,7 +535,7 @@ family <- ggplot(rich_station_total)+
 ggarrange(motu, family, ncol=1, nrow=2, labels=c("a", "b"), heights = c(1,1.3))
 
 ggsave("outputs/05_richness_motus_families/violin_plot_per_rank.png", width = 12, height = 8)
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure8.png", width = 7.5, height = 6)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure6.png", width = 7.5, height = 6)
 
 
 

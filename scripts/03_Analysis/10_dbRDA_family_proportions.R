@@ -7,6 +7,7 @@ library(margins)
 # for (b)
 library(betapart)
 library(reshape)
+library(tidyverse)
 library(tidyselect)
 library(vegan)
 library(ggplot2)
@@ -45,19 +46,21 @@ edna_fam <- edna_fam[,-1]
 # Total dbRDA
 edna.tot.dbrda  <- capscale(edna_fam ~ province + n_motus_total, data = met_eDNA, distance = "bray")
 RsquareAdj(edna.tot.dbrda)
+anova(edna.tot.dbrda)
 anova(edna.tot.dbrda, by = "axis",   permutations = 9999)
-anova(edna.tot.dbrda, by = "margin", permutations = 9999)
+anova(edna.tot.dbrda, by = "terms", permutations = 9999)
 
  # partial dbRDA for Province
 edna.part.dbrda1  <- capscale(edna_fam ~ province + Condition(n_motus_total), data = met_eDNA, distance = "bray")
 RsquareAdj(edna.part.dbrda1)
 anova(edna.part.dbrda1,by="axis", permutations = 9999)
-
+anova(edna.part.dbrda1,by="margin", permutations = 9999)
 
 # partial dbRDA for site richness
 edna.part.dbrda2  <- capscale(edna_fam ~ n_motus_total + Condition(province), data = met_eDNA, distance = "bray")
 RsquareAdj(edna.part.dbrda2)
 anova(edna.part.dbrda2, by="axis", permutations = 9999)
+anova(edna.part.dbrda2, by="margin", permutations = 9999)
 
 
 # get scores

@@ -295,7 +295,7 @@ motus
 
 
 ggarrange(plot_acc_motus, plot_acc_family, nrow=2, labels=c("a", "b"), common.legend = T, legend = "right")
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure7.png", width=10, height = 12)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure5.png", width=10, height = 12)
 
 
 

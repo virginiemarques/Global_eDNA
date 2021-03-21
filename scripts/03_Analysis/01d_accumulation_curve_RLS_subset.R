@@ -191,4 +191,4 @@ species_RLS
 ## Combined plot
 
 ggarrange(species_RLS, family_RLS, ncol=2, common.legend = T, legend = "right")
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_acc_RLS_subset.png", width=8, height = 4)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure10.png", width=8, height = 4)

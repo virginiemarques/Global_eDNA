@@ -112,7 +112,7 @@ p1 <- upset(matrix_motus,
 p1
 
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
-png('outputs/00_Figures_for_paper/Figure4a.png', width = 7, height=3.6, units = "in", res=300)
+png('outputs/00_Figures_for_paper/Figure5a.png', width = 7, height=3.6, units = "in", res=300)
 p1
 grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
 dev.off()
@@ -230,7 +230,7 @@ p3_color <- upset(matrix_motus,
 p3_color
 
 # Save - w/ colors
-png('outputs/00_Figures_for_paper/Extended_Data/ED_Figure5.png', width = 12, height=12, units = "in", res=300)
+png('outputs/00_Figures_for_paper/Extended_Data/ED_Figure7.png', width = 12, height=12, units = "in", res=300)
 p3_color
 grid.text("Sites - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=15))
 dev.off()

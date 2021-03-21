@@ -136,7 +136,7 @@ resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) +
 
 plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_main
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 10.1, height = 8)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure2.png", width = 10.1, height = 8)
 
 
 ## plot each panel for second figure
@@ -188,5 +188,5 @@ resolution <- ggplot(family_coverage_ED, aes(x=order, y = coef_resolution)) +
 
 plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
 plot_all_ED
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure4.png", width = 10.1, height = 10)
+ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure3.png", width = 10.1, height = 10)
 
