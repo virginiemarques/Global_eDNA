@@ -13,7 +13,7 @@ library(patchwork)
 library(ggalt)
 library(ggrepel)
 library(grid)
-library(BiodiversityR)
+
 
 
 load("Rdata/family_proportion_per_site.rdata")

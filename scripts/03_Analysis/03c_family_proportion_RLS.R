@@ -38,7 +38,7 @@ for (i in 1:length(site)) {
     distinct(Species, .keep_all = TRUE)
   count_families <- data.frame(table(RLS_sp_site$Family))
   colnames(count_families) <- c("family", "n_species")
-  count_families$n_sp_total <- nrow(RLS_sp_site)
+  count_families$n_sp_total <- sum(count_families$n_species)
   count_families$prop <- count_families$n_species / count_families$n_sp_total
   count_families <- count_families[order(count_families$prop, decreasing = TRUE),]
   count_families$site35 <- s
