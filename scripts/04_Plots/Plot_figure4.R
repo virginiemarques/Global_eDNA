@@ -31,7 +31,7 @@ a <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_encircle(data=site_scores_region[site_scores_region$province!="Southeast_Polynesia",], aes(group = province, linetype = province, fill= province), s_shape = 1, expand = 0,
                 alpha = 0.4, show.legend = FALSE) + # hull area 
   geom_point(data = family_scores, aes(x= CAP1,y = CAP2), col = "grey", alpha = 0.5, cex = 0.5) +
-  geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
+  geom_point(data= family_scores_diff90, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
@@ -41,7 +41,7 @@ a <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
        title = "") +
   theme_bw() +
   theme(axis.line = element_line(colour = "black"),
-        legend.position = c(0,1),             # position in top left corner
+        legend.position = "none",             # position in top left corner
         legend.justification = c(0, 1),        # correct legend justificaton
         legend.box.margin=margin(c(0.8,0.5,0.5,0.5)),  # add margin as to not overlap with axis box
         legend.title = element_text(size=8),
@@ -50,7 +50,39 @@ a <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
         panel.background = element_rect(colour = "black", size=1)) 
 a
 
-# Panel b : rls
+b <- ggplot() + 
+  geom_segment(data= family_scores, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "grey",
+               arrow=arrow(length=unit(0.01,"npc"))) + # all species
+  geom_segment(data= family_scores_diff90, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
+               arrow=arrow(length=unit(0.01,"npc"))) + # most differentiated species
+  geom_hline(yintercept = 0, lty = 2, col = "grey") +
+  geom_vline(xintercept = 0, lty = 2, col = "grey") +
+  geom_label_repel(data= family_scores_diff90, 
+                   aes(x= CAP1, y=CAP2, #hjust=0.5*(1-sign(CAP1)),vjust=0.5*(1-sign(CAP2)),
+                       fontface=3), size = 3,
+                   label = rownames(family_scores_diff90),
+                   show.legend = F) +
+  labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)")) +
+  theme_bw() +
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
+        panel.background = element_rect(colour = "black", size=1),
+        legend.position = c(0, 1),              # position in top left corner
+        legend.justification = c(0, 1),         # correct legend justificaton
+        legend.box.margin=margin(c(2,2,2,2)),   # add margin as to not overlap with axis box
+        legend.background = element_rect(fill =  alpha("white", 0.0)),
+        legend.title = element_text(size=11),
+        legend.text = element_text(size=11)) +
+  # re-add legend and change text legend key by making invisible points and overriding its key shape
+  geom_point(data= family_scores_diff90, 
+             aes(x=CAP1, y=CAP2),
+             size = 0, stroke = 0) + 
+  guides(colour = guide_legend(override.aes = list(size = 5, 
+                                                   shape = c(utf8ToInt("C"), utf8ToInt("B"), utf8ToInt("D"), utf8ToInt("P")))))
+b
+
+
+# Panel c et d : rls
 
   #  load rdata
 
@@ -59,13 +91,13 @@ load("Rdata/dbRDA_data_rls.rdata")
   # plot
 
 
-b <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
+c <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_hline(yintercept = 0, lty = 2, col = "grey") +
   geom_vline(xintercept = 0, lty = 2, col = "grey") +
   geom_encircle(aes(group = province, linetype = province, fill= province), s_shape = 1, expand = 0,
                 alpha = 0.4, show.legend = FALSE) + # hull area 
   geom_point(data = family_scores, aes(x= CAP1,y = CAP2), col = "grey", alpha = 0.5, cex = 0.5) +
-  geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
+  geom_point(data= family_scores_diff90, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
@@ -82,10 +114,41 @@ b <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
         legend.text = element_text(size=9),
         panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
         panel.background = element_rect(colour = "black", size=1)) 
-b
+c
+
+d <- ggplot() + 
+  geom_segment(data= family_scores, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "grey",
+               arrow=arrow(length=unit(0.01,"npc"))) + # all species
+  geom_segment(data= family_scores_diff90, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
+               arrow=arrow(length=unit(0.01,"npc"))) + # most differentiated species
+  geom_hline(yintercept = 0, lty = 2, col = "grey") +
+  geom_vline(xintercept = 0, lty = 2, col = "grey") +
+  geom_label_repel(data= family_scores_diff90, 
+                   aes(x= CAP1, y=CAP2, #hjust=0.5*(1-sign(CAP1)),vjust=0.5*(1-sign(CAP2)),
+                       fontface=3), size = 3,
+                   label = rownames(family_scores_diff90),
+                   show.legend = F) +
+  labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)")) +
+  theme_bw() +
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
+        panel.background = element_rect(colour = "black", size=1),
+        legend.position = c(0, 1),              # position in top left corner
+        legend.justification = c(0, 1),         # correct legend justificaton
+        legend.box.margin=margin(c(2,2,2,2)),   # add margin as to not overlap with axis box
+        legend.background = element_rect(fill =  alpha("white", 0.0)),
+        legend.title = element_text(size=11),
+        legend.text = element_text(size=11)) +
+  # re-add legend and change text legend key by making invisible points and overriding its key shape
+  geom_point(data= family_scores_diff90, 
+             aes(x=CAP1, y=CAP2),
+             size = 0, stroke = 0) + 
+  guides(colour = guide_legend(override.aes = list(size = 5, 
+                                                   shape = c(utf8ToInt("C"), utf8ToInt("B"), utf8ToInt("D"), utf8ToInt("P")))))
+d
 
 
 # plot together
 
-ggarrange(a, b, nrow=2, labels=c("a", "b"))
-ggsave("outputs/00_Figures_for_paper/Figure4.png", width=6, height=10)
+ggarrange(a, b, c, d, ncol=2, nrow=2, labels=c("a", "b", "c", "d"), common.legend = T, legend="bottom")
+ggsave("outputs/00_Figures_for_paper/Figure4.png", width=9, height=6.5)

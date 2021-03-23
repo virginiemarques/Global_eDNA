@@ -75,9 +75,13 @@ site_scores <- scores(edna.part.dbrda1)$sites
 family_scores <- scores(edna.part.dbrda1)$species %>% data.frame()
 
 # get most differentiated species along first axis
-quant75 <- quantile(abs(family_scores$CAP1), probs = c(0.75))
-family_scores_diff75 <- family_scores[which(abs(family_scores$CAP1) > quant75["75%"]),]
-
+quant90_cap1 <- quantile(abs(family_scores$CAP1), probs = c(0.95))
+quant90_cap2 <- quantile(abs(family_scores$CAP2), probs = c(0.95))
+quant90 <- rbind(quant90_cap1, quant90_cap2 )
+family_scores_diff90_cap1 <- family_scores[which(abs(family_scores$CAP1) > quant90_cap1["95%"]),]
+family_scores_diff90_cap2 <- family_scores[which(abs(family_scores$CAP2) > quant90_cap2["95%"]),]
+family_scores_diff90 <- rbind(family_scores_diff90_cap1, family_scores_diff90_cap2)
+family_scores_diff90 <- unique(family_scores_diff90)
 # extract the percentage variability explained by axes
 sumdbrda <- summary(edna.part.dbrda1)
 CAP1 <- round(sumdbrda$cont$importance["Proportion Explained", "CAP1"]*100, 1)
@@ -85,11 +89,11 @@ CAP2 <- round(sumdbrda$cont$importance["Proportion Explained", "CAP2"]*100, 1)
 
 # add metadata
 identical(as.character(met_eDNA$site), rownames(site_scores)) # verify that data in same order
-site_scores_region <- cbind(site_scores,select(met_eDNA, province))
+site_scores_region <- cbind(site_scores,dplyr::select(met_eDNA, province))
 
 # save Rdata
 
-save(site_scores_region, CAP2, CAP1, family_scores_diff75, quant75, family_scores, site_scores, file="Rdata/dbRDA_data_edna.rdata")
+save(site_scores_region, CAP2, CAP1, family_scores_diff90, quant90, family_scores, site_scores, file="Rdata/dbRDA_data_edna.rdata")
 # plot
 grda_sites <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_hline(yintercept = 0, lty = 2, col = "grey") +
@@ -119,14 +123,14 @@ grda_sites
 grda_family <- ggplot() + 
   geom_segment(data= family_scores, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "grey",
                arrow=arrow(length=unit(0.01,"npc"))) + # all species
-  geom_segment(data= family_scores_diff75, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
+  geom_segment(data= family_scores_diff90, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
                arrow=arrow(length=unit(0.01,"npc"))) + # most differentiated species
   geom_hline(yintercept = 0, lty = 2, col = "grey") +
   geom_vline(xintercept = 0, lty = 2, col = "grey") +
-  geom_label_repel(data= family_scores_diff75, 
+  geom_label_repel(data= family_scores_diff90, 
                    aes(x= CAP1, y=CAP2, #hjust=0.5*(1-sign(CAP1)),vjust=0.5*(1-sign(CAP2)),
-                   fontface=3), #size = 3,
-                   label = rownames(family_scores_diff75),
+                   fontface=3, size = 3),
+                   label = rownames(family_scores_diff90),
                    show.legend = F) +
   labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)")) +
   theme_bw() +
@@ -140,7 +144,7 @@ grda_family <- ggplot() +
         legend.title = element_text(size=11),
         legend.text = element_text(size=11)) +
   # re-add legend and change text legend key by making invisible points and overriding its key shape
-  geom_point(data= family_scores_diff75, 
+  geom_point(data= family_scores_diff90, 
              aes(x=CAP1, y=CAP2),
              size = 0, stroke = 0) + 
   guides(colour = guide_legend(override.aes = list(size = 5, 
@@ -177,8 +181,13 @@ site_scores <- scores(rls.part.dbrda1)$sites
 family_scores <- scores(rls.part.dbrda1)$species %>% data.frame()
 
 # get most differentiated species along first axis
-quant75 <- quantile(abs(family_scores$CAP1), probs = c(0.75))
-family_scores_diff75 <- family_scores[which(abs(family_scores$CAP1) > quant75["75%"]),]
+quant90_cap1 <- quantile(abs(family_scores$CAP1), probs = c(0.95))
+quant90_cap2 <- quantile(abs(family_scores$CAP2), probs = c(0.95))
+quant90 <- rbind(quant90_cap1, quant90_cap2 )
+family_scores_diff90_cap1 <- family_scores[which(abs(family_scores$CAP1) > quant90_cap1["95%"]),]
+family_scores_diff90_cap2 <- family_scores[which(abs(family_scores$CAP2) > quant90_cap2["95%"]),]
+family_scores_diff90 <- rbind(family_scores_diff90_cap1, family_scores_diff90_cap2)
+family_scores_diff90 <- unique(family_scores_diff90)
 
 # extract the percentage variability explained by axes
 sumdbrda <- summary(rls.part.dbrda1)
@@ -187,11 +196,11 @@ CAP2 <- round(sumdbrda$cont$importance["Proportion Explained", "CAP2"]*100, 1)
 
 # add metadata
 identical(as.character(met_rls$site), rownames(site_scores)) # verify that data in same order
-site_scores_region <- cbind(site_scores,select(met_rls, province))
+site_scores_region <- cbind(site_scores,dplyr::select(met_rls, province))
 
 # save Rdata
 
-save(site_scores_region, CAP2, CAP1, family_scores_diff75, quant75, family_scores, site_scores, file="Rdata/dbRDA_data_rls.rdata")
+save(site_scores_region, CAP2, CAP1, family_scores_diff90, quant90, family_scores, site_scores, file="Rdata/dbRDA_data_rls.rdata")
 
 
 
@@ -225,14 +234,14 @@ grda_sites
 grda_family <- ggplot() + 
   geom_segment(data= family_scores, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "grey",
                arrow=arrow(length=unit(0.01,"npc"))) + # all species
-  geom_segment(data= family_scores_diff75, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
+  geom_segment(data= family_scores_diff90, aes(x=0, xend=CAP1,y = 0, yend=CAP2), col = "black",
                arrow=arrow(length=unit(0.01,"npc"))) + # most differentiated species
   geom_hline(yintercept = 0, lty = 2, col = "grey") +
   geom_vline(xintercept = 0, lty = 2, col = "grey") +
-  geom_label_repel(data= family_scores_diff75, 
+  geom_label_repel(data= family_scores_diff90, 
                    aes(x= CAP1, y=CAP2, #hjust=0.5*(1-sign(CAP1)),vjust=0.5*(1-sign(CAP2)),
                        fontface=3), #size = 3,
-                   label = rownames(family_scores_diff75),
+                   label = rownames(family_scores_diff90),
                    show.legend = F) +
   labs(x = paste0("CAP1 (", CAP1, "%)"), y = paste0("CAP2 (", CAP2, "%)")) +
   theme_bw() +
@@ -246,17 +255,12 @@ grda_family <- ggplot() +
         legend.title = element_text(size=11),
         legend.text = element_text(size=11)) +
   # re-add legend and change text legend key by making invisible points and overriding its key shape
-  geom_point(data= family_scores_diff75, 
+  geom_point(data= family_scores_diff90, 
              aes(x=CAP1, y=CAP2),
              size = 0, stroke = 0) + 
   guides(colour = guide_legend(override.aes = list(size = 5, 
                                                    shape = c(utf8ToInt("C"), utf8ToInt("B"), utf8ToInt("D"), utf8ToInt("P")))))
 grda_family
-
-
-# filter same region as eDNA
-
-
 
 
 
