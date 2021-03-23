@@ -56,9 +56,9 @@ b <- ggplot(all_accumulation_species_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=2268+150, label="Asymptote : 2268",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=1818+150, label="Visual census Species : 1818",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=600, label="Slope = 1.76",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2190, y=2268+150, label="Asymptote : 2268",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2190, y=1818+150, label="Visual census Species : 1818",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2190, y=600, label="Slope = 1.76",hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   xlab("Number of transects") +
   ylab("")+
@@ -100,9 +100,9 @@ d <- ggplot(all_accumulation_RLS_df) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 1, alpha=0.7) +
-  annotate(geom="text", x=2990, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.2) +
-  annotate(geom="text", x=2990, y=96+10, label="Visual census Families : 96",hjust=1, alpha=0.7, size=3.2)+
-  annotate(geom="text", x=2990, y=30, label="Slope = 1.44",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=2190, y=118+10, label="Asymptote : 118",hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=2190, y=96+10, label="Visual census Families : 96",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=2190, y=30, label="Slope = 1.44",hjust=1, alpha=0.7, size=3.2)+
   ylim(0,190)+
   xlab("Number of transects") +
   ylab("")+
