@@ -8,7 +8,7 @@ library(raster)
 
 
 ## open metadata uptodate
-metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ";", stringsAsFactors = F, na.strings=c("","NA"))
+metadata_sampling <- read.csv("metadata/Metadata_eDNA_global_V5.csv", header = T, sep = ",", stringsAsFactors = F, na.strings=c("","NA"))
 
 ## select samples with GPS data
 metadata_dist  <- metadata_sampling %>%
@@ -22,7 +22,7 @@ center_CT <- data.frame(longitude=133.679826, latitude=-1.307436)
 
 
 # calculate distance
-metadata_dist$dist_to_CT <- pointDistance(metadata_dist[,49:50], center_CT, lonlat=TRUE)
+metadata_dist$dist_to_CT <- pointDistance(metadata_dist[,43:44], center_CT, lonlat=TRUE)
 
 
 # transform in KM with 2 decimals

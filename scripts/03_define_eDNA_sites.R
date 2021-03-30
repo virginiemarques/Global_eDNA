@@ -35,18 +35,18 @@ geogdist <- function(lat1, lon1, lat2, lon2)
 
 # importation data
 
-data <- read.csv("metadata/Metadata_eDNA_global_V5.csv", sep=";")
+data <- read.csv("metadata/Metadata_eDNA_global_V4bis.csv", sep=",")
 coord <- data.frame(station=data$station, lat=data$latitude_start_clean, long=data$longitude_start_clean)
 coord_uni <- coord %>%
   distinct(station, lat, long)%>%
   filter(!is.na(lat))
 
-dgeo=matrix(0,nrow=507,ncol=507)
+dgeo=matrix(0,nrow=509,ncol=509)
 
-for (i in 1:506)
+for (i in 1:508)
 {
   
-  for (j in (i+1):507)
+  for (j in (i+1):509)
     dgeo[i,j]=dgeo[j,i]=geogdist(coord_uni[i,2],coord_uni[i,3],coord_uni[j,2],coord_uni[j,3])
   
 }
@@ -74,10 +74,10 @@ coord_uni$site5 <- paste("site",site5, sep="")
 
 write.csv(coord_uni, "metadata/site_eDNA_distance.csv")
 
-metadata <- read.csv("metadata/Metadata_eDNA_global_V4.csv", sep=",")
-metadata_new <- full_join(metadata, coord_uni[,-c(2,3)], by="station")
-metadata_new <- metadata_new %>%
+#metadata <- read.csv("metadata/Metadata_eDNA_global_V4bis.csv", sep=",")
+metadata <- full_join(data, coord_uni[,-c(2,3)], by="station")
+metadata <- metadata %>%
   distinct(station, code_spygen, .keep_all = T)
 
 
-write.csv(metadata_new, "metadata/Metadata_eDNA_global_V4.csv", row.names = F)
+write.csv(metadata, "metadata/Metadata_eDNA_global_V5.csv", row.names = F)
