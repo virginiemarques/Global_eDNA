@@ -43,6 +43,9 @@ for (i in 1:length(site)) {
   shared_site[i,"shared"] <- nrow(na.omit(df_site)) / nrow(df_site)
 }
 
+shared_site <- shared_site %>%
+  filter(shared != 1)
+
 mean(shared_site$shared)
 sd(shared_site$shared)
 
@@ -77,6 +80,9 @@ for (i in 1:length(site)) {
   shared_site[i,"site"] <- site[i]
   shared_site[i,"shared"] <- nrow(na.omit(df_site)) / nrow(df_site)
 }
+
+shared_site <- shared_site %>%
+  filter(shared != 1)
 
 mean(shared_site$shared)
 sd(shared_site$shared)
