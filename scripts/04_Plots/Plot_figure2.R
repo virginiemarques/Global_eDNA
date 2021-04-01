@@ -147,11 +147,11 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
         panel.grid.minor = element_blank(), 
         panel.background = element_blank(), 
         panel.border = element_rect(fill = NA),
-        axis.title.y = element_text(size=10),
-        axis.title.x = element_text(size=10),
+        axis.title.y = element_text(size=9),
+        axis.title.x = element_text(size=9),
         plot.title = element_text(size = 12, face="bold"),
         plot.margin=unit(c(0,0.1,0.1,0.2), "cm")) + 
-  labs(x="log(1+Nb of MOTUs in eDNA)", y="log(1+Nb of species in Visual Census)")+
+  labs(x="log(1+Nb of MOTUs per family in eDNA)", y="log(1+Nb of species per family in VC)")+
   ggtitle("e")
 
 
@@ -185,8 +185,8 @@ f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fi
 # plot all together
 
 a_e <- ggarrange(a, b, c, d, e, nrow = 3, ncol=2)
-Fig1 <- ggarrange(a_e, f, ncol=2, widths = c(2,1))
-Fig1
+Fig2 <- ggarrange(a_e, f, ncol=2, widths = c(2,1))
+Fig2
 ggsave("outputs/00_Figures_for_paper/Figure2.png", width = 7.5, height = 7.5)
 
 
