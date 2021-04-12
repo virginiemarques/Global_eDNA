@@ -123,24 +123,46 @@ df_join_all_dem <- all_accumulation_dem %>%
 df_join_all_dem$family <- "demersal"
 
 
-df_join_all <- rbind(df_join_all_cryp, df_join_all_pel, df_join_all_dem)
+#df_join_all <- rbind(df_join_all_cryp, df_join_all_pel, df_join_all_dem)
 
 # Plots
-plot_acc_all_eDNA <- ggplot(df_join_all) + 
+edna_crypto <- ggplot(df_join_all_cryp, aes(xmax=250)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5, fill="#d2981a") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5, col="#d2981a") +
+  ylab("Number of MOTUs") +
+  xlab("") +
+  ggtitle("eDNA")+
+  theme(axis.text.x = element_blank())+
+  facet_wrap(~family, scales = "free") +
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "MOTUs")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
+  theme_bw()
+
+edna_pelagic <- ggplot(df_join_all_pel) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5, fill="#d2981a") +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5, col="#d2981a") +
+  ylab("Number of MOTUs") +
+  xlab("") +
+  theme(axis.text.x = element_blank())+
+  facet_wrap(~family, scales = "free") +
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "MOTUs")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
+  theme_bw()
+
+edna_dem <- ggplot(df_join_all_dem) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5, col="#d2981a") +
   ylab("Number of MOTUs") +
   xlab("Samples (filter)") +
   facet_wrap(~family, scales = "free") +
-  ggtitle("eDNA MOTUs")+
-  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "MOTUs")), col = "black", size=3)+
-  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "MOTUs")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
   theme_bw()
 
-plot_acc_all_eDNA
 
-ggsave("outputs/03_accumulation_curves/accumulation_curve_eDNA_family_type.png", plot_acc_all_eDNA, width = 12, height = 4)
 
 
 
@@ -330,33 +352,54 @@ all_accumulation_demersal_RLS_df$position_slope_y = 0.20 * max(all_accumulation_
 
 ##join all
 
-df_join_all_RLS <- rbind(all_accumulation_demersal_RLS_df, all_accumulation_crypto_RLS_df, all_accumulation_pelagic_RLS_df)
+#df_join_all_RLS <- rbind(all_accumulation_demersal_RLS_df, all_accumulation_crypto_RLS_df, all_accumulation_pelagic_RLS_df)
 
 
 
-plot_acc_all_RLS <- ggplot(df_join_all_RLS) + 
+RLS_crypto <- ggplot(all_accumulation_crypto_RLS_df, aes(ymax=600)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5) +
+  ylab("Number of species") +
+  xlab("") +
+  ggtitle("Visual Census")+
+  theme(axis.text.x = element_blank())+
+  facet_wrap(~family, scales = "free") +
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "species")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
+  theme_bw()
+
+RLS_pel <- ggplot(all_accumulation_pelagic_RLS_df, aes(ymax=40)) + 
+  geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
+  geom_line(aes(x = sites, y = richness)) +
+  geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5) +
+  ylab("Number of species") +
+  xlab("") +
+  theme(axis.text.x = element_blank())+
+  facet_wrap(~family, scales = "free") +
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y+1, hjust = 1, label = paste(round(asymptote, 0), "species")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
+  theme_bw()
+
+RLS_dem <- ggplot(all_accumulation_demersal_RLS_df, aes(ymax=2000)) + 
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd), alpha = 0.5) +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "dashed", size = 0.5) +
   ylab("Number of species") +
   xlab("Transects") +
   facet_wrap(~family, scales = "free") +
-  ggtitle("Visual census species")+
-  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y, hjust = 1, label = paste(round(asymptote, 0), "species")), col = "black", size=3)+
-  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3)+
+  geom_text(aes(x = position_asymptote_x, y =position_asymptote_y+10, hjust = 1, label = paste(round(asymptote, 0), "species")), col = "black", size=3.5)+
+  geom_text(aes(x = position_asymptote_x, y =position_slope_y, hjust = 1, label = paste("slope=",round(slope, 1))), col = "black", size=3.5)+
   theme_bw()
 
-plot_acc_all_RLS
-
-ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", plot_acc_all_RLS, width = 12, height = 4)
 
 # --------------------------------------------------------------------- # 
 #### Final figure - combine all levels  ----
 # --------------------------------------------------------------------- # 
 
 
-ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("a", "b"))
-ggsave("outputs/00_Figures_for_paper/Figure3.png", width=8, height = 6)
+ggarrange(edna_crypto, RLS_crypto, edna_pelagic, RLS_pel, edna_dem, RLS_dem, nrow=3, ncol=2, labels=c("a", "", "b", "", "c", ""), heights = c(1.1, 1,1))
+ggsave("outputs/00_Figures_for_paper/Figure3.png", width=6, height = 8)
 
 
 

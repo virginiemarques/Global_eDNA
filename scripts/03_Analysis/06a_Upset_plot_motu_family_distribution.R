@@ -36,6 +36,8 @@ df_all_filters <- df_all_filters %>%
   filter(site35!="")
 
 unique(df_all_filters$province)
+df_all_filters$province <- gsub("Tropical_Southwestern_Pacific", "Tropical_SW_Pacific", df_all_filters$province)
+df_all_filters$province <- gsub("Tropical_Northwestern_Atlantic", "Tropical_NW_Atlantic", df_all_filters$province)
 
 # the motus 
 df_provinces <- split(df_all_filters, df_all_filters$province)
@@ -54,7 +56,6 @@ df_site <- split(df_all_filters, df_all_filters$site35)
 
 pal <- c("#80cdc1", "#E5A729", "#015462", "#a6611a", "#b2182b") 
 
-
 # Construct the inital matrix - add some important infos as a side
 motus_fam_region <-  df_all_filters %>%
   group_by(province) %>%
@@ -69,10 +70,10 @@ metadata1 <- df_all_filters %>%
   dplyr::mutate(sets = province) %>%
   select(sets, province) %>%
   dplyr::mutate(color = case_when(
-    province == "Tropical_Southwestern_Pacific" ~ pal[5],
+    province == "Tropical_SW_Pacific" ~ pal[5],
     province == "Southeast_Polynesia" ~ pal[4],
     province == "Western_Indian_Ocean" ~ pal[3],
-    province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
+    province == "Tropical_NW_Atlantic" ~ pal[2], 
     province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
   as.data.frame() %>%
@@ -83,20 +84,20 @@ matrix_motus <- df_all_filters %>%
   distinct(sequence, scientific_name_ncbi_corrected) %>%
   dplyr::mutate(`Western_Coral_Triangle` = ifelse(sequence %in% df_provinces$`Western_Coral_Triangle`$sequence, 1, 0), 
          Southeast_Polynesia = ifelse(sequence %in% df_provinces$Southeast_Polynesia$sequence, 1, 0),
-         Tropical_Northwestern_Atlantic = ifelse(sequence %in% df_provinces$Tropical_Northwestern_Atlantic$sequence, 1, 0),
+         Tropical_NW_Atlantic = ifelse(sequence %in% df_provinces$Tropical_NW_Atlantic$sequence, 1, 0),
          Western_Indian_Ocean = ifelse(sequence %in% df_provinces$Western_Indian_Ocean$sequence, 1, 0),
-         Tropical_Southwestern_Pacific = ifelse(sequence %in% df_provinces$Tropical_Southwestern_Pacific$sequence, 1, 0)) %>%
+         Tropical_SW_Pacific = ifelse(sequence %in% df_provinces$Tropical_SW_Pacific$sequence, 1, 0)) %>%
   as.data.frame()
 
 
 
 # Plot MOTUs distribution in regions
 p1 <- upset(matrix_motus, 
-            mb.ratio = c(0.7, 0.3),
+            #mb.ratio = c(0.7, 0.3),
       order.by = c("freq"),
       mainbar.y.label = "Number of MOTUs", 
       sets.x.label = "Number of MOTUs", 
-      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.2), 
+      text.scale = c(1.2, 1.2, 1.2,1.2,1.2,1.7), 
       # Color bar 
       sets.bar.color=c("#80cdc1", "#b2182b", "#E5A729", "#015462", "#a6611a"), 
       # Color matrix
@@ -105,16 +106,16 @@ p1 <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "province", 
-          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
+          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_NW_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_SW_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))
 p1
 
 save(p1, file = "Rdata/upset_plot_motus_region.rdata")
-png('outputs/00_Figures_for_paper/Figure5a.png', width = 7, height=3.6, units = "in", res=300)
+png('outputs/00_Figures_for_paper/Figure5a.png', width = 9, height=5, units = "in", res=300)
 p1
-grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=8))
+grid.text("Regions - MOTUs",x = 0.65, y=0.95, gp=gpar(fontsize=10))
 dev.off()
 
 # ------------------------------------------------------------------------------- # 
