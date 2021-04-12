@@ -6,3 +6,5 @@ data/All/*
 data/LULU/*fasta*
 data/LULU/*match*
 **/.DS_Store
+data/swarm/*/*
+!data/swarm/*/metadata/
