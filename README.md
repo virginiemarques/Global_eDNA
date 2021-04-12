@@ -10,9 +10,9 @@ It is only available for outputs of ecotag and swarm.
 
 #### NGS data
 
-For each project / campaign / group output of NGS, you must store the data in [data/All/](data/All/).  
+For each project / campaign / group output of NGS, you must store the data in [data/swarm/](data/All/).  
 There must be two files:  
-1. one Project\*.table containing the occurences of each MOTU - output of *SWARM*
+1. one Project\*.csv containing the occurences of each MOTU - output of *SWARM*
 2. one Project\*.csv file containing the taxonomical assignation of each MOTU - output of *ecotag*
 
 #### Metadata
