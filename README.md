@@ -34,19 +34,28 @@ set_entrez_key("e1b887b07de1764a6e68883fce0f9f69d108") # My API key
 Sys.getenv("ENTREZ_KEY") 
 ```
 
-### Output
+### Scripts
 
-#### 01 script - reading data
+#### 01_read_cleaning
 
-You obtain a list containing one dataframe per project. 
+Contains the scripts to read and clean the data.
+You obtain a list containing one dataframe per project and one big dataframe containing all projects cleaned with the thresholds you chose. (or you can keep the list). One of these sripts also calculate the number of reads after each step of cleaning.
 
-#### 02 script - cleaning data
+#### 02_Spatial_mapping
 
-You obtain one big dataframe containing all projects cleaned with the thresholds you chose. (or you can keep the list)
+Contains the scripts used for mapping the samples and measuring the distance to coast or to Coral triangle.
 
-#### 03 script - ?
+#### 03_Analysis
 
-First test or data wrangling for testing ?
+Contains all the scripts used for statistical analysis on the data.
+
+#### 04_Plots
+
+Contains scripts used to produce the figures for the publication.
+
+### outputs
+
+Contains all the outputs of the previously mentioned analysis, sorted by folders.
 
 ### Remarks
 
