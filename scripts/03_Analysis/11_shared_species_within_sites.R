@@ -20,7 +20,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 site <- unique(df_all_filters$site35)

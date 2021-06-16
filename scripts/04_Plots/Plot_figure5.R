@@ -43,7 +43,7 @@ load("Rdata/alpha_station.rdata")
 
 Region <- unique(beta_site$province)
 
-gamma_global = 2116
+gamma_global = 2023
 
 all_data <- data.frame()
 

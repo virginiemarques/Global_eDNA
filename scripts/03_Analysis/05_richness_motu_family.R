@@ -22,7 +22,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 # calculate nb of reads per family at global scale
 
@@ -542,7 +544,7 @@ ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_Figure6.png", width = 7.5,
 
 
 ## load useful metadata 
-metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", sep=",", stringsAsFactors = FALSE)
+metadata <- read.csv("metadata/Metadata_eDNA_global_V6.csv", sep=";", stringsAsFactors = FALSE)
 metadata <- metadata %>%
   filter(province%in%c("Western_Coral_Triangle", "Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Western_Indian_Ocean", "Tropical_Southwestern_Pacific"))%>%
   filter(station %ni% c("estuaire_rio_don_diego_1", "estuaire_rio_don_diego_2", "estuaire_rio_don_diego_3", "glorieuse_distance_300m")) %>%
@@ -550,7 +552,8 @@ metadata <- metadata %>%
   filter(project != "Curacao") %>%
   filter(habitat_type %ni% c("BAIE"))%>%
   subset(habitat=="marine")%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) 
 
 to_merge <- metadata %>%
   dplyr::select(site35, dist_to_CT) %>%
@@ -569,14 +572,21 @@ save(rich_site, file="Rdata/richness_station_site_region.rdata")
 
 ### MOTUs 
 # DF for plot - count number of motus per region and join precedent df to get distance to CT
+to_merge2 <- metadata %>%
+  dplyr::select(province, dist_to_CT) %>%
+  dplyr::group_by(province) %>%
+  dplyr::summarise(dist_to_CT = mean(dist_to_CT))
+colnames(to_merge) <- c("province", "dist_to_CT")
+
+
 all_province <- df_all_filters %>%
   group_by(province) %>%
   summarise(n_motus = n_distinct(sequence)) %>%
-  left_join(., to_merge)
+  left_join(., to_merge2)
 
 save(all_province, file = "Rdata/richness_motu_region.rdata")
 # Plot
-all_motus <- ggplot(rich_site, aes(col=province))+
+all_motus <- ggplot(data=rich_site, aes(col=province))+
   geom_jitter(aes(x=dist_to_CT, y=motu), shape=17, size=2, alpha=0.7, show.legend = FALSE) +
   geom_jitter(aes(x=dist_to_CT, y=mean_motu), shape=20, size=4, alpha=0.7, show.legend = FALSE) +
   geom_errorbar(aes(x=dist_to_CT, ymin=mean_motu-sd_motu, ymax=mean_motu+sd_motu), show.legend = FALSE, alpha=0.7)+
@@ -595,7 +605,7 @@ all_motus <- ggplot(rich_site, aes(col=province))+
 all_province <- df_all_filters %>%
   group_by(province) %>%
   summarise(n_family = n_distinct(family_name_corrected)) %>%
-  left_join(., to_merge)
+  left_join(., to_merge2)
 save(all_province, file = "Rdata/richness_family_region.rdata")
 
 # Plot

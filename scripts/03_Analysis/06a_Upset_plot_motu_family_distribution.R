@@ -33,7 +33,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 unique(df_all_filters$province)
 df_all_filters$province <- gsub("Tropical_Southwestern_Pacific", "Tropical_SW_Pacific", df_all_filters$province)
@@ -182,10 +184,10 @@ metadata1 <- df_all_filters %>%
   mutate(sets = site35) %>%
   select(sets, province) %>%
   mutate(color = case_when(
-    province == "Tropical_Southwestern_Pacific" ~ pal[5],
+    province == "Tropical_SW_Pacific" ~ pal[5],
     province == "Southeast_Polynesia" ~ pal[4], 
     province == "Western_Indian_Ocean" ~ pal[3],
-    province == "Tropical_Northwestern_Atlantic" ~ pal[2], 
+    province == "Tropical_NW_Atlantic" ~ pal[2], 
     province == "Western_Coral_Triangle" ~ pal[1]
   )) %>%
   left_join(., motus_sites, by = c("sets" = "site35")) %>%
@@ -223,7 +225,7 @@ p3_color <- upset(matrix_motus,
         plots = list(list(
           type = "matrix_rows",
           column = "province", 
-          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_Northwestern_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_Southwestern_Pacific = pal[5]),
+          colors = c(`Western_Coral_Triangle` = pal[1], Tropical_NW_Atlantic =  pal[2], Western_Indian_Ocean = pal[3], Southeast_Polynesia =  pal[4], Tropical_SW_Pacific = pal[5]),
           alpha = 0.3
         ))
       ))

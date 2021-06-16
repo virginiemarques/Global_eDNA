@@ -15,7 +15,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 # different tests

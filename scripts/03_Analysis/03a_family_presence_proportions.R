@@ -16,7 +16,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 df_all_filters <- df_all_filters %>%
@@ -529,7 +531,7 @@ ggsave("outputs/04_family_proportion/family_proportion_global_region.png", width
 
 ## Bellwood figures : proportion of families per site
 
-df_all_site <- rbind(count_families_site_lengguru, count_families_site_caribbean[,-7], count_families_site_eparse[,-7], count_families_site_fakarava, count_families_site_caledonia[,-7])
+df_all_site <- rbind(count_families_site_lengguru[,-7], count_families_site_caribbean[,-7], count_families_site_eparse[,-7], count_families_site_fakarava, count_families_site_caledonia[,-7])
 save(df_all_site, file = "Rdata/family_proportion_per_site.rdata")
 
 family <- c("Acanthuridae", "Chaetodontidae", "Labridae", "Lutjanidae", "Serranidae", "Carangidae", "Pomacentridae", "Apogonidae", "Gobiidae")

@@ -27,7 +27,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 fam_summary <- df_all_filters %>%
   filter(!is.na(family_name_corrected)) %>%
@@ -136,8 +138,8 @@ plot_motu <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.87, intercept = 0.48, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.87x+0.48\nR² = 0.59\np < 0.001", hjust=1, size=3.5) +
+  geom_abline(slope = 0.8, intercept = 0.49, size=0.8)+
+  annotate(geom="text", x=6, y=1, label="y = 0.8x+0.49\nR² = 0.6\np < 0.001", hjust=1, size=3.5) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank(), panel.border = element_rect(fill = NA)) + 

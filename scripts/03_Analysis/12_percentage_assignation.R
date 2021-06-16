@@ -20,7 +20,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 df_all_filters <- df_all_filters %>%
   filter(!is.na(family_name_corrected))
@@ -42,3 +44,4 @@ ggplot(perc_id2)+
         panel.background = element_blank())
   
 
+ggsave(filename = "outputs/00_Figures_for_paper/Extended_Data/ED_Figure10.png")

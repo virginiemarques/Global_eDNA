@@ -33,9 +33,9 @@ a <- ggplot(df_motus) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#d2981a") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#d2981a") +
-  annotate(geom="text", x=250, y=2724+150, label="Asymptote : 2724", hjust=1, color="#d2981a", size=3.2) +
-  annotate(geom="text", x=250, y=2116+150, label="eDNA MOTUs : 2116", hjust=1, color="#d2981a", size=3.2) +
-  annotate(geom="text", x=250, y=600, label="Slope = 2.3", hjust=1, alpha=0.7, size=3.2) +
+  annotate(geom="text", x=250, y=2650+150, label="Asymptote : 2650", hjust=1, color="#d2981a", size=3.2) +
+  annotate(geom="text", x=250, y=2023+150, label="eDNA MOTUs : 2023", hjust=1, color="#d2981a", size=3.2) +
+  annotate(geom="text", x=250, y=600, label="Slope = 2.27", hjust=1, alpha=0.7, size=3.2) +
   ylim(0,3000)+
   ylab("") +
   xlab("Number of samples")+
@@ -78,9 +78,9 @@ c <- ggplot(df_fam) +
   geom_ribbon(aes(x = sites, ymin = richness-sd, ymax = richness+sd),  alpha = 0.8, fill="#457277") +
   geom_line(aes(x = sites, y = richness)) +
   geom_hline(aes(yintercept = asymptote), linetype = "solid", size = 1, col="#457277") +
-  annotate(geom="text", x=250, y=154+10, label="Asymptote : 154",hjust=1,color="#457277", size=3.2) +
-  annotate(geom="text", x=250, y=133+10, label="eDNA Families : 133",hjust=1,color="#457277", size=3.2) +
-  annotate(geom="text", x=250, y=30, label="Slope = 1.95",hjust=1, alpha=0.7, size=3.2)+
+  annotate(geom="text", x=250, y=147+10, label="Asymptote : 147",hjust=1,color="#457277", size=3.2) +
+  annotate(geom="text", x=250, y=126+10, label="eDNA Families : 126",hjust=1,color="#457277", size=3.2) +
+  annotate(geom="text", x=250, y=30, label="Slope = 1.9",hjust=1, alpha=0.7, size=3.2)+
   ylim(0,190)+
   labs(y="", x="Number of samples")+
   ylab("Number of families") +
@@ -139,8 +139,8 @@ e <- ggplot(fam_summary, aes(log_motu, log_checklist))+
   annotation_custom(rasterGrob(kyphosidae), xmin = 1.2, xmax = 2, ymin = 3.3, ymax = 4)+
   geom_point(size=2)+
   geom_abline(slope = 1, intercept = 0, color="red", size=0.8)+
-  geom_abline(slope = 0.87, intercept = 0.48, size=0.8)+
-  annotate(geom="text", x=6, y=1, label="y = 0.87x+0.48\nR² = 0.59\np < 0.001", hjust=1, size=3.2) +
+  geom_abline(slope = 0.8, intercept = 0.49, size=0.8)+
+  annotate(geom="text", x=6, y=1, label="y = 0.8x+0.49\nR² = 0.6\np < 0.001", hjust=1, size=3.2) +
   xlim(0,6)+
   ylim(0,6)+
   theme(panel.grid.major = element_blank(), 

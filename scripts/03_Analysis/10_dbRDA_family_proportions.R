@@ -101,7 +101,7 @@ grda_sites <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_encircle(data=site_scores_region[site_scores_region$province!="Southeast_Polynesia",], aes(group = province, linetype = province, fill= province), s_shape = 1, expand = 0,
                 alpha = 0.4, show.legend = FALSE) + # hull area 
   geom_point(data = family_scores, aes(x= CAP1,y = CAP2), col = "grey", alpha = 0.5, cex = 0.5) +
-  geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
+  geom_point(data= family_scores_diff90, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
@@ -211,7 +211,7 @@ grda_sites <- ggplot(site_scores_region, aes(x= CAP1, y = CAP2)) +
   geom_encircle(aes(group = province, linetype = province, fill= province), s_shape = 1, expand = 0,
                 alpha = 0.4, show.legend = FALSE) + # hull area 
   geom_point(data = family_scores, aes(x= CAP1,y = CAP2), col = "grey", alpha = 0.5, cex = 0.5) +
-  geom_point(data= family_scores_diff75, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
+  geom_point(data= family_scores_diff90, aes(x= CAP1, y=CAP2), col = "black", alpha = 1, cex = 0.5) +
   geom_point(aes(pch = province, fill = province), cex = 4, col = "black") +
   scale_fill_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
                     name = "Region", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +

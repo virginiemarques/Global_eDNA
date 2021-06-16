@@ -20,7 +20,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 
@@ -66,25 +68,15 @@ colnames(families_prop_global_ED) <- c("family", "Province", "prop")
 
 order_main <- as.data.frame(levels(reorder(families_prop_global_main$family, families_prop_global_main$prop)))
 colnames(order_main) <- "fam"
+order_main <- order_main %>%
+  subset(fam %in% family_coverage_main$Family)
 order_ED <- as.data.frame(levels(reorder(families_prop_global_ED$family, families_prop_global_ED$prop)))
 colnames(order_ED) <- "fam"
-
+order_ED <- order_ED %>%
+  subset(fam %in% family_coverage_ED$Family)
 
 family_coverage_main$order<- order(order_main$fam)
 family_coverage_ED$order<- order(order_ED$fam)
-
-#prop_similarity_main <- prop_similarity %>%
-#  subset(family%in%families_main)
-#prop_similarity_main <- reshape2::melt(prop_similarity_main)
-#colnames(prop_similarity_main) <- c("family", "class", "percentage")
-#prop_similarity_main$order <- order(order_main$fam)
-
-#prop_similarity_ED <- prop_similarity %>%
-#  subset(family%in%family_coverage_ED$Family)
-#prop_similarity_ED <- reshape2::melt(prop_similarity_ED)
-#colnames(prop_similarity_ED) <- c("family", "class", "percentage")
-#prop_similarity_ED$order <- order(order_ED$fam)
-
 
 
 
@@ -120,18 +112,6 @@ resolution <- ggplot(family_coverage_main, aes(x=order, y = coef_resolution)) +
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-
-#pal <- brewer.pal(9, "Greys")
-#similarity <- ggplot(prop_similarity_main, aes(x=class, y = order)) + 
-  #geom_tile(aes(fill=percentage))+
-  #scale_fill_gradientn(colours = pal)+
-  #theme_bw() +
-  #labs(title="Percentage of reads \nby similarity class", x="", y="")+ 
-  #theme(legend.position = c(0.8,1.025), legend.direction = "horizontal", legend.text = element_text(size=4), legend.key.height =unit(0.25,"cm"), legend.key.width=unit(0.2,"cm"), legend.title = element_blank())+
-  #theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,-0.1,0), "cm"))+
-  #theme(axis.text.y = element_blank())+
-  #scale_y_continuous(breaks=prop_similarity_main$order, labels=prop_similarity_main$family, expand = c(0,0))+
-  #theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
 plot_all_main <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")
@@ -172,18 +152,6 @@ resolution <- ggplot(family_coverage_ED, aes(x=order, y = coef_resolution)) +
   scale_y_continuous(breaks = c(0, 0.5, 1))+
   coord_flip()
 
-
-#pal <- brewer.pal(9, "Greys")
-#similarity <- ggplot(prop_similarity_ED, aes(x=class, y = order)) + 
-  #geom_tile(aes(fill=percentage))+
-  #scale_fill_gradientn(colours = pal)+
-  #theme_bw() +
-  #labs(title="Percentage of reads \nby similarity class", x="", y="")+ 
-  #theme(legend.position = c(0.8,1.025), legend.direction = "horizontal", legend.text = element_text(size=4), legend.key.height =unit(0.25,"cm"), legend.key.width=unit(0.2,"cm"), legend.title = element_blank())+
-  #theme(plot.title = element_text(size = 6, face = "bold"), plot.margin=unit(c(0.1,0.1,-0.1,0), "cm"))+
-  #theme(axis.text.y = element_blank())+
-  #scale_y_continuous(breaks=prop_similarity_ED$order, labels=prop_similarity_ED$family, expand = c(0,0))+
-  #theme(axis.text.x = element_text(angle = 30, vjust = 0.8))
 
 
 plot_all_ED <- ggarrange(prop, coverage, resolution, ncol=3, nrow=1, widths = c(1.5,1,1), labels = c("a", "b", "c"), common.legend = TRUE, legend="bottom")

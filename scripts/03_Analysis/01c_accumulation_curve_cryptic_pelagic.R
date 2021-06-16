@@ -21,7 +21,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 # ------------------------------------------------------------------------------- # 
@@ -64,7 +66,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 load("Rdata/pelagic_family.Rdata")
 df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
@@ -97,7 +101,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 df_all_filters <- df_all_filters%>%
@@ -349,14 +355,6 @@ plot_acc_all_RLS <- ggplot(df_join_all_RLS) +
 plot_acc_all_RLS
 
 ggsave("outputs/03_accumulation_curves/accumulation_curve_RLS_family_type.png", plot_acc_all_RLS, width = 12, height = 4)
-
-# --------------------------------------------------------------------- # 
-#### Final figure - combine all levels  ----
-# --------------------------------------------------------------------- # 
-
-
-ggarrange(plot_acc_all_eDNA, plot_acc_all_RLS, nrow=2, labels=c("a", "b"))
-ggsave("outputs/00_Figures_for_paper/Extended_Data/ED_figure2.png", width=8, height = 6)
 
 
 

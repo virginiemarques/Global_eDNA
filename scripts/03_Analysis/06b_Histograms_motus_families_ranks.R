@@ -26,27 +26,29 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="")%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 # N global 
 Nmotus <- length(unique(df_all_filters$sequence))
 Nmotus
-# 2160 MOTUs in total
+# 2023 MOTUs in total
 
 # N families
 Nfamily <- df_all_filters %>%
   filter(!is.na(family_name_corrected)) %>%
   distinct(family_name_corrected) %>% pull() %>% length()
 Nfamily
-# 145
+# 126
 
 # N genus
 Ngenus <- df_all_filters %>%
   filter(!is.na(genus_name_corrected)) %>%
   distinct(genus_name_corrected) %>% pull() %>% length()
 Ngenus
-#373
+#351
 
 # --------------------------------------------------------------------- # 
 #### Functions ----

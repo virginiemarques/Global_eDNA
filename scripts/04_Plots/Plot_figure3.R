@@ -21,7 +21,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 # ------------------------------------------------------------------------------- # 
@@ -64,7 +66,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 load("Rdata/pelagic_family.Rdata")
 df_all_filters <- subset(df_all_filters, family_name_corrected %in% pelagic_family$family_name)
@@ -97,7 +101,9 @@ df_all_filters <- df_all_filters %>%
   filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
-  filter(habitat_type %ni% c("BAIE"))
+  filter(habitat_type %ni% c("BAIE"))%>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 
 df_all_filters <- df_all_filters%>%

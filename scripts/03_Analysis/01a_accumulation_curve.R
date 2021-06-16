@@ -29,7 +29,9 @@ list_read_step4 <- lapply(list_read_step4, function(x){
     filter(sample_method !="niskin" & comment %ni% c("Distance decay 600m", "Distance decay 300m"))%>%
     filter(project != "Curacao") %>%
     filter(habitat=="marine")%>%
-    filter(habitat_type %ni% c("BAIE"))
+    filter(habitat_type %ni% c("BAIE"))%>%
+    filter(depth<40) %>%
+    filter(family_name_corrected %ni% "Salmonidae")
 })
 
 # On the df as well
@@ -40,7 +42,9 @@ df_all_filters <- df_all_filters %>%
   filter(project != "Curacao") %>%
   filter(habitat=="marine")%>%
   filter(habitat_type %ni% c("BAIE"))%>%
-  filter(site35!="")
+  filter(site35!="") %>%
+  filter(depth<40) %>%
+  filter(family_name_corrected %ni% "Salmonidae")
 
 # Re-format at region scale
 # -----# After LULU 
@@ -51,7 +55,7 @@ list_read_step4 <- split(df_all_filters_temp, df_all_filters_temp$province)
 
 # Counts
 lapply(list_read_step4, function(x){
-  length(unique(x$amplicon))
+  length(unique(x$sequence))
 })
 
 lapply(list_read_step4, function(x){
