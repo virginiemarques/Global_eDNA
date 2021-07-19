@@ -383,6 +383,6 @@ b <- grid.arrange(plot2, bottom=x.grob)
 
 Fig4 <- ggarrange(a, b, nrow=2, labels = c("a", "b"), label.x =0, label.y=1)
 Fig4
-ggsave("outputs/00_Figures_for_paper/Figure6.png", width = 8, height = 8, unit = "in")
+ggsave("outputs/00_Figures_for_paper/Figure6.tiff", width = 8, height = 8, unit = "in")
 
 save.image(file = "Rdata/data_script_figure6.RData")

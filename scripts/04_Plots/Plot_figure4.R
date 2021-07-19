@@ -14,6 +14,8 @@ library(bbmle)
 library(nlreg)
 library(MASS)
 library(fitdistrplus)
+library(ggalt)
+library(ggrepel)
 
 ## Plot Figure 4 : dbRDA
 
@@ -151,4 +153,4 @@ d
 # plot together
 
 ggarrange(a, b, c, d, ncol=2, nrow=2, labels=c("a", "b", "c", "d"), common.legend = T, legend="bottom")
-ggsave("outputs/00_Figures_for_paper/Figure4.png", width=9, height=6.5)
+ggsave("outputs/00_Figures_for_paper/Figure4.tiff", width=9, height=6.5)

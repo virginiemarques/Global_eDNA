@@ -405,7 +405,7 @@ RLS_dem <- ggplot(all_accumulation_demersal_RLS_df, aes(ymax=2000)) +
 
 
 ggarrange(edna_crypto, RLS_crypto, edna_pelagic, RLS_pel, edna_dem, RLS_dem, nrow=3, ncol=2, labels=c("a", "", "b", "", "c", ""), heights = c(1.1, 1,1))
-ggsave("outputs/00_Figures_for_paper/Figure3.png", width=6, height = 8)
+ggsave("outputs/00_Figures_for_paper/Figure3.tiff", width=6, height = 8)
 
 
 

@@ -187,7 +187,7 @@ f <- ggplot(families_prop_global_main, aes(x=reorder(family, prop), y = prop, fi
 a_e <- ggarrange(a, b, c, d, e, nrow = 3, ncol=2)
 Fig2 <- ggarrange(a_e, f, ncol=2, widths = c(2,1))
 Fig2
-ggsave("outputs/00_Figures_for_paper/Figure2.png", width = 7.5, height = 7.5)
+ggsave("outputs/00_Figures_for_paper/Figure2.tiff", width = 7.5, height = 7.5)
 
 
 ## legend added on powerpoint afterward
