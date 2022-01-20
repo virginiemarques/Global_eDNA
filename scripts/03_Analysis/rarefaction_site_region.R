@@ -65,28 +65,31 @@ rarefied_regions <- vector("list", 50)
 
 for (j in 1:50) {
   
-  regions <- unique(df_all_filters$province)
+  regions <- df_all_filters %>%
+    filter(province != "Southeast_Polynesia") %>%
+    distinct(province)
+  regions <- as.character(regions$province)
   
-  stations <- vector("list", length(regions))
+  sites <- vector("list", length(regions))
   
   for (i in 1:length(regions)) {
-    stations[[i]] <- df_all_filters %>%
+    sites[[i]] <- df_all_filters %>%
       filter(province==regions[i])%>%
-      distinct(station)
-    stations[[i]] <- as.character(stations[[i]]$station)
-    stations[[i]] <- sample(stations[[i]], 4, replace = F)
+      distinct(site35)
+    sites[[i]] <- as.character(sites[[i]]$site35)
+    sites[[i]] <- sample(sites[[i]], 4, replace = F)
   }
   
-  selected_stations <- unlist(stations)
+  selected_sites <- unlist(sites)
   
   rarefied_regions[[j]] <- df_all_filters %>%
-    filter(station %in% selected_stations)
+    filter(site35 %in% selected_sites)
 }
 
 # On verifie qu'on a toujours le meme nombre de stations
 
 lapply(rarefied_regions, function(x){
-  length(unique(x$station))
+  length(unique(x$site35))
 })
 
 # on sauve
