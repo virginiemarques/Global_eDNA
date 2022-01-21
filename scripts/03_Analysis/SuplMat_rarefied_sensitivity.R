@@ -235,7 +235,7 @@ CT_motus <- ggplot(data=df_region_numbers_regions, aes(x=mean_dist_to_CT, y = mo
   geom_boxplot(alpha=0.5) +
   geom_point(data = for_plot_all, aes(x=mean_dist_to_CT, y = motus_richness), size=3,  col = "grey30", alpha=0.5, shape=17) +
   theme_bw() + 
-  scale_color_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
+  scale_color_manual(values = c("#E5A729","#b2182b", "#80cdc1", "#015462"),
                      name = "province", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   theme(legend.position = "none")
 CT_motus
@@ -245,7 +245,7 @@ CT_families <- ggplot(data=df_region_numbers_regions, aes(x=mean_dist_to_CT, y =
   geom_boxplot(alpha=0.5) +
   geom_point(data = for_plot_all, aes(x=mean_dist_to_CT, y = family_richness), size=3,  col = "grey30", alpha=0.5, shape=17) +
   theme_bw() + 
-  scale_color_manual(values = c("#a6611a", "#E5A729","#b2182b", "#80cdc1", "#015462"),
+  scale_color_manual(values = c("#E5A729","#b2182b", "#80cdc1", "#015462"),
                      name = "province", labels = c("Southeast_Polynesia", "Tropical_Northwestern_Atlantic", "Tropical_Southwestern_Pacific", "Western_Coral_Triangle", "Western_Indian_Ocean")) +
   theme(legend.position = "none")
 
