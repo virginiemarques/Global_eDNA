@@ -18,12 +18,10 @@ df_all_filters <- df_all_filters %>%
 # Rarefaction of 4 stations per site
 # ------------------------------------------------------------------------------------------------
 
-# je ne fais que 15 simulations car le plus grand nombre de station par site est de 10 
-# donc je pense que ça suffit pour avoir toutes les combinaisons
 
-rarefied_sites <- vector("list", 15)
+rarefied_sites <- vector("list", 50)
 
-for (j in 1:15) {
+for (j in 1:50) {
   
   sites <- unique(df_all_filters$site35)
   
