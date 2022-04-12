@@ -1,27 +1,41 @@
 # Global eDNA
-Code to assemble all datasets of eDNA using MOTUs (Teleo) and explore diversity patterns
+Code to assemble all datasets of eDNA using MOTUs (Teleo), explore diversity patterns and produce analyses and figures from [https://dx.doi.org/10.1098/rspb.2022.0162.](https://dx.doi.org/10.1098/rspb.2022.0162).
+Raw data is available from [https://doi.org/10.5061/dryad.3xsj3txj2](https://doi.org/10.5061/dryad.3xsj3txj2) and [https://doi.org/10.5281/zenodo.6381130](https://doi.org/10.5281/zenodo.6381130).
 
 ### Overview
 
 This repo presents a set of functions to automatize the treatment of raw eDNA data from MiSeq sequencing and cleaned HiSeq sequencing (RapidRun).   
-It is only available for outputs of ecotag and swarm.   
+It is only available for outputs of ecotag and swarm.
+
+The codes are used to perform ecological analyses on eDNA marine fish data and underwater visual census data.   
 
 ### Data
 
-#### NGS data
+#### NGS data (swarm)
 
-For each project / campaign / group output of NGS, you must store the data in [data/swarm/](data/All/).  
-There must be two files:  
-1. one Project\*.csv containing the occurences of each MOTU - output of *SWARM*
-2. one Project\*.csv file containing the taxonomical assignation of each MOTU - output of *ecotag*
+For each project / campaign / group output of NGS, you must store the data in [data/swarm/](data/swarm/).  
+In each project folder there are two types of files:  
+1. one \*teleo_table_motu.csv containing the occurences of each MOTU - output of *SWARM*
+2. one \*teleo_ecotag_ncbi_motu.csv file containing the taxonomical assignation of each MOTU - output of *ecotag*
 
-#### Metadata
+These files are available for samples belonging to the project, and sometimes for blank samples (empty wells on the same sequencing plate) and other samples (sequenced in the same batch as samples from the project).
 
-Two types of metadata are necessary.  
-1. the field metadata, from the big joint excel file located in [metadata](metadata), make sure it is updated with the most recent observations. All NGS data must have their field data in this file. 
-2. the sequencing metadata, associating each sample name (SPYGEN identification) to each sequencing run. This file is necessary to apply some quality filters. One file is generated for each project. 
+For each project, the sequencing metadata file is stored in the data/swarm/\*/metadata folder, This file contains the association of each sample name (SPYGEN identification) to each sequencing run. This file is necessary to apply some quality filters.
 
-### Details
+#### RLS (Reef Life Survey)
+
+The [data/RLS](data/RLS/) folder contains fish species and families counts per transects done in underwater visual census by the Reef Life Survey team.
+
+#### Reference database
+
+The [data/reference_database](data/reference_database/) folder contains the referencedatabase files used for the taxonomic assignment of our MOTUs.
+
+### Metadata
+ 
+The [metadata](metadata/) folder contains the field metadata for each sample : sample code, date, station, site, province, country, project, sample type, volume, depth of sampling, habitat and coordinates.
+
+
+### Scripts
 
 A set of functions is available in [scripts](scripts) to automatize the treatment. 
 They rely on the data described in the last part. And also on some R packages, notably `taxize`.  
@@ -34,12 +48,10 @@ set_entrez_key("e1b887b07de1764a6e68883fce0f9f69d108") # My API key
 Sys.getenv("ENTREZ_KEY") 
 ```
 
-### Scripts
-
 #### 01_read_cleaning
 
 Contains the scripts to read and clean the data.
-You obtain a list containing one dataframe per project and one big dataframe containing all projects cleaned with the thresholds you chose. (or you can keep the list). One of these sripts also calculate the number of reads after each step of cleaning.
+You obtain a list containing one dataframe per project and one big dataframe containing all projects cleaned with the thresholds you chose. (or you can keep the list). One of these scripts also calculate the number of reads after each step of cleaning.
 
 #### 02_Spatial_mapping
 
@@ -47,7 +59,7 @@ Contains the scripts used for mapping the samples and measuring the distance to 
 
 #### 03_Analysis
 
-Contains all the scripts used for statistical analysis on the data.
+Contains all the scripts used for statistical analysis on the data : species and family accumulation curves, family presence proportions, MOTU distribution, diversity partitionning, dbRDA, rarity.
 
 #### 04_Plots
 
@@ -55,11 +67,7 @@ Contains scripts used to produce the figures for the publication.
 
 ### outputs
 
-Contains all the outputs of the previously mentioned analysis, sorted by folders.
+Contains all the outputs of the previously mentioned analyses, sorted by folders, and the final figures used in the publication.
 
-### Remarks
-
-For the first reading step, some datasets are heavy enough to have a long computation time at some steps, and crash on some light computers (Lengguru). 
-I have already generated the list to read all dataset to ease the computer transfert. You can load it in .Rdata and proceeed to step 2 - 3 for the projects available at the moment.  
 
 If you encouter any error, please contact me & fill a detailed issue on this repo. 
