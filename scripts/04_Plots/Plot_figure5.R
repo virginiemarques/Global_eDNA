@@ -63,7 +63,7 @@ for (i in 1:length(Region)) {
   all_data[i+2,2] <- Region[i]
   all_data[i+2,3] <- beta_site %>%
     filter(province==Region[i])%>%
-    summarize(n=beta*100/gamma_global)
+    dplyr::summarize(n=beta*100/gamma_global)
   all_data[i+2,4] <- NA
 }
 
@@ -72,10 +72,10 @@ for (i in 1:length(Region)) {
   all_data[i+7,2] <- Region[i]
   all_data[i+7,3] <- beta_station %>%
     filter(province==Region[i])%>%
-    summarize(n=mean(beta)*100/gamma_global)
+    dplyr::summarize(n=mean(beta)*100/gamma_global)
   all_data[i+7,4] <- beta_station %>%
     filter(province==Region[i])%>%
-    summarize(n=sd(beta)*100/gamma_global)
+    dplyr::summarize(n=sd(beta)*100/gamma_global)
 }
 
 for (i in 1:length(Region)) {
@@ -83,10 +83,10 @@ for (i in 1:length(Region)) {
   all_data[i+12,2] <- Region[i]
   all_data[i+12,3] <- alpha_station %>%
     filter(province==Region[i])%>%
-    summarize(n=mean(motu)*100/gamma_global)
+    dplyr::summarize(n=mean(motu)*100/gamma_global)
   all_data[i+12,4] <- alpha_station %>%
     filter(province==Region[i])%>%
-    summarize(n=sd(motu)*100/gamma_global)
+    dplyr::summarize(n=sd(motu)*100/gamma_global)
 }
 all_data[9,4] <- 0
 all_data[4,3] <- 0.1
